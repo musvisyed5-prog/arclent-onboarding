@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "arclent-site",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["--yes", "serve", "site", "-l", "3002"],
+      "port": 3002,
+      "autoPort": true
+    }
+  ]
+}

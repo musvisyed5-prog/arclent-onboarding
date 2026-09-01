@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>arclent — Choose Your Role</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            "brand-green": "#034f46",
+            "brand-cream": "#ffffeb",
+          },
+          fontFamily: {
+            sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="min-h-screen font-sans">
+  <div class="min-h-screen flex items-start justify-center bg-[#f5f5e6] p-4 py-8 lg:items-center">
+    <div class="flex w-full max-w-[1440px] flex-col gap-6 lg:flex-row">
+
+      <!-- Sidebar -->
+      <aside
+        class="flex w-full flex-col rounded-3xl border-[1.5px] border-black px-5 py-6 text-white shadow-sm lg:w-[36%] lg:min-w-[280px] lg:px-7 lg:py-8"
+        style="background: linear-gradient(180deg, #000000 0%, #054d44 100%)"
+      >
+        <div class="mb-8 flex items-center">
+          <img src="https://i.ibb.co/nqP1hFK9/newwwww-removebg-preview.png" alt="arclent" class="h-8 w-auto lg:h-9" />
+        </div>
+
+        <!-- Illustration: profile + analytics cards -->
+        <div class="flex-1" style="perspective: 1000px">
+          <div class="card-premium relative overflow-hidden rounded-2xl border-[1.5px] border-black bg-brand-cream p-4 text-black shadow-lg">
+            <div class="pointer-events-none absolute -right-6 -bottom-6 h-32 w-32 rounded-full bg-black/[0.03]"></div>
+            <div class="mb-3 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <img src="https://i.pravatar.cc/64?img=12" alt="Syed Zeeshan" class="h-9 w-9 rounded-full object-cover" />
+                <p class="text-sm font-semibold leading-tight">Syed Zeeshan</p>
+              </div>
+              <span class="flex items-center gap-1 rounded-full bg-black px-2.5 py-1 text-[10px] font-semibold text-white">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 6.9L21 9.3l-5.5 4.6L17.4 21 12 17l-5.4 4 1.9-7.1L3 9.3l6.6-.4z"/></svg>
+                Verified
+              </span>
+            </div>
+            <p class="mb-3 text-sm text-black/70">Social Media Manager</p>
+
+            <div class="mb-3 flex items-center gap-4 border-t border-black/10 pt-3 text-xs">
+              <div>
+                <p class="text-black/40">Job Type</p>
+                <p class="font-semibold">Full Time</p>
+              </div>
+              <div class="h-6 w-px bg-black/10"></div>
+              <div>
+                <p class="text-black/40">Location</p>
+                <p class="font-semibold">London</p>
+              </div>
+              <div class="h-6 w-px bg-black/10"></div>
+              <div>
+                <p class="text-black/40">Availability</p>
+                <p class="font-semibold">Weekly hours</p>
+              </div>
+            </div>
+
+            <p class="mb-4 text-xs leading-relaxed text-black/50">
+              Drive our brand narrative and grow our global community of weather enthusiasts. You will coordinate multi-channel campaigns and manage social presence to bring atmospheric clarity to everyone.
+            </p>
+
+            <button type="button" class="btn-hard w-full rounded-md border-[1.5px] border-black bg-brand-green py-2.5 text-sm font-bold text-white hover:opacity-90">
+              Hire Now
+            </button>
+          </div>
+
+          <div class="mb-6 flex items-center gap-3 px-1 pt-4">
+            <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/20 text-white/70">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><ellipse cx="12" cy="12" rx="8" ry="3.2" transform="rotate(45 12 12)"/></svg>
+            </div>
+            <div>
+              <p class="text-sm font-semibold leading-tight text-white">Analytics</p>
+              <p class="text-xs leading-tight text-white/50">Keep track of your data</p>
+            </div>
+          </div>
+
+          <div class="card-rise rounded-2xl border-[1.5px] border-black bg-brand-cream p-4 text-black shadow-xl" style="background: linear-gradient(160deg, #0c1a17 0%, #062420 45%, #01130f 100%)">
+            <div class="mb-4 flex items-end justify-center gap-2" style="height:110px">
+              <div class="bar h-[35%] w-full rounded-full bg-white/15" style="animation-delay:.05s"></div>
+              <div class="bar h-[65%] w-full rounded-full bg-white/15" style="animation-delay:.1s"></div>
+              <div class="bar h-[45%] w-full rounded-full bg-white/15" style="animation-delay:.15s"></div>
+              <div class="bar h-[38%] w-full rounded-full bg-white/15" style="animation-delay:.2s"></div>
+              <div class="bar h-[30%] w-full rounded-full bg-white/15" style="animation-delay:.25s"></div>
+              <div class="bar h-[50%] w-full rounded-full bg-white/15" style="animation-delay:.3s"></div>
+              <div class="bar bar-glow relative h-[95%] w-full rounded-full border border-white/60" style="animation-delay:.35s; background: linear-gradient(180deg, #baf7d6, #22c55e)">
+                <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[11px] font-semibold text-white whitespace-nowrap">Week 7</span>
+              </div>
+              <div class="bar bar-glow relative h-[68%] w-full rounded-full border border-white/60" style="animation-delay:.4s; background: linear-gradient(180deg, #baf7d6, #22c55e)">
+                <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[11px] font-semibold text-white whitespace-nowrap">Week 4</span>
+              </div>
+              <div class="bar h-[80%] w-full rounded-full bg-white/15" style="animation-delay:.45s"></div>
+            </div>
+            <p class="mb-1 text-base font-bold text-white">Find creators who deliver real results.</p>
+            <p class="mb-4 text-sm text-white/60">
+              Discover verified creators, compare candidates instantly, and let AI suggest the perfect match for your team.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-white">Engagemnet +18%</span>
+              <span class="rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-white">Followers +48%</span>
+              <span class="rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-white">Reach +65%</span>
+              <span class="rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-white">Activity +34%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 flex items-center justify-between text-sm font-semibold">
+          <button type="button" class="flex items-center gap-2">
+            <span>&larr;</span> Back Home
+          </button>
+          <button type="button">Need Help ?</button>
+        </div>
+      </aside>
+
+      <!-- Main panel -->
+      <main class="flex-1 rounded-3xl border-[1.5px] border-black bg-brand-cream px-5 py-6 shadow-sm lg:px-10 lg:py-10">
+        <h1 class="mb-1 text-2xl font-bold text-black font-display">Choose Your Role</h1>
+        <p class="mb-2 text-base font-semibold text-black">Select how you'll be using arclent.</p>
+        <p class="mb-8 text-sm text-black/60">
+          Choose whether you're a recruiter seeking the perfect candidate or a talented professional looking for
+          meaningful opportunities, and we'll provide an experience tailored just for you.
+        </p>
+
+        <div class="flex flex-col gap-5">
+          <!-- Talent -->
+          <div class="rounded-2xl border-[1.5px] border-black p-5">
+            <div class="mb-2 flex items-center gap-2">
+              <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-green text-white">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4.52737 11.3358C3.9727 12.4992 3.37988 15.1803 5.44595 16.5981M5.67831 14.8162C5.53293 15.7889 5.68624 17.5284 6.24647 18.7455C6.94676 20.2668 9.20556 22.9961 12.9666 23C15.005 23.0001 18.2818 21.9974 19 16.7521M11.665 13.0965C11.6036 13.3618 11.3858 13.541 11.1784 13.4968M11.665 13.0965C11.7264 12.8312 11.608 12.5804 11.4007 12.5362M11.665 13.0965L10.9141 12.9365M11.1784 13.4968C10.9711 13.4527 10.8527 13.2018 10.9141 12.9365M11.1784 13.4968L11.4007 12.5362M10.9141 12.9365C10.9755 12.6713 11.1933 12.492 11.4007 12.5362M17.5049 13.5324C17.4435 13.7977 17.2443 13.9809 17.06 13.9416M17.5049 13.5324C17.5662 13.2671 17.4666 13.0203 17.2823 12.981M17.5049 13.5324L16.8374 13.3902M17.06 13.9416C16.8757 13.9024 16.776 13.6555 16.8374 13.3902M17.06 13.9416L17.2823 12.981M16.8374 13.3902C16.8988 13.125 17.098 12.9417 17.2823 12.981M14.1622 13.6976C14.2615 14.7881 15.1034 17.4055 13.0963 16.7811M9.96235 11.7543C10.0537 11.55 11.0981 10.3917 12.1694 11.4197M15.9188 11.7543C15.9188 11.4196 17.5257 10.9056 18.1856 11.7543M14 19.5C12.5 20 11.7778 19.486 10.9141 19M15 4.5C15.5 4 16.5 3 15.5 2M19.2323 5.87468C19.4764 6.50278 19.8182 8.0831 19.2323 9.3795M17.5 6.5C17.8333 6.16667 18.3 5.1 17.5 3.5M4.97558 11.8859C4.84836 11.4164 4.63467 10.9826 4.31298 11.0113C4.24007 11.0178 4.16222 10.9788 4.1475 10.9018C3.84195 9.30466 3.82077 6.18267 6.01077 5.32461C6.03235 5.31616 6.05175 5.30119 6.06602 5.28186C6.30364 4.95979 6.91699 4.31765 7.67218 4.06053C7.7036 4.04983 7.72951 4.02638 7.74552 3.99543C7.94227 3.61507 8.568 2.88273 9.71025 2.6426C11.2019 2.329 15.0065 0.803818 13.7494 3.96746C13.4787 4.60595 12.6115 5.8196 11.282 5.65416C11.2396 5.64888 11.1974 5.6676 11.1666 5.69941C11.0015 5.86985 10.5896 6.08997 9.9181 5.9466C9.8691 5.93614 9.81902 5.95786 9.79032 6.00178C9.46333 6.50226 8.65552 7.26862 7.62738 6.93924C7.56094 6.91796 7.4871 6.95829 7.44356 7.01624C7.34921 7.14184 7.14432 7.27739 6.766 7.27075C6.70109 7.26961 6.64425 7.32051 6.63778 7.38988C6.58147 7.99357 6.41293 9.09608 6.1003 9.52022C5.80619 9.91923 5.69853 10.9032 5.67339 11.5122C5.66925 11.6124 5.54004 11.7149 5.46658 11.7769C5.42979 11.808 5.39097 11.8541 5.35159 11.9197C5.27968 12.0395 5.01266 12.0228 4.97558 11.8859Z" stroke="currentColor" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h2 class="text-base font-bold text-black">I am a talent</h2>
+            </div>
+            <ol class="mb-4 flex flex-col gap-1 text-sm text-black/70">
+              <li>1. I want to get hired</li>
+              <li>2. Get a badge that proves I'm real and skilled</li>
+              <li>3. Show my work so recruiters notice me</li>
+              <li>4. Help verify others and earn rewards</li>
+            </ol>
+            <button type="button" class="btn-hard flex w-full items-center justify-center gap-2 rounded-md border-[1.5px] border-black bg-brand-green py-3 text-sm font-bold text-white hover:opacity-90">
+              <span class="flex h-5 w-5 items-center justify-center rounded-full bg-white">
+                <svg width="12" height="12" viewBox="0 0 48 48">
+                  <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l6-6C34.6 5.4 29.6 3 24 3 12.4 3 3 12.4 3 24s9.4 21 21 21 21-9.4 21-21c0-1.4-.1-2.7-.4-3.5z"/>
+                  <path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.6 15.9 18.9 13 24 13c3.1 0 5.8 1.1 8 3l6-6C34.6 5.4 29.6 3 24 3 16.3 3 9.7 7.4 6.3 14.7z"/>
+                  <path fill="#4CAF50" d="M24 45c5.5 0 10.4-2.1 14.2-5.6l-6.6-5.4C29.6 35.9 27 37 24 37c-5.2 0-9.6-3.3-11.3-8l-6.6 5.1C9.6 40.6 16.3 45 24 45z"/>
+                  <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.2-4 5.6l6.6 5.4C41.4 35.9 45 30.4 45 24c0-1.4-.1-2.7-.4-3.5z"/>
+                </svg>
+              </span>
+              Continue with Google
+            </button>
+          </div>
+
+          <!-- Recruiter -->
+          <div class="rounded-2xl border-[1.5px] border-black p-5">
+            <div class="mb-2 flex items-center gap-2">
+              <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-green text-white">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8.29844 6.20359C7.97518 5.36605 7.71658 3.59047 9.26819 3.18845C11.2077 2.68592 14.6019 3.18845 14.6019 4.69602V6.70611" stroke="currentColor" stroke-opacity="0.3" stroke-linecap="round"/>
+                  <path d="M1.58166 7.76534C5.21437 11.2165 8.25222 15.8218 12.5 15.3707M21.8751 7.71113C18.5377 12.3229 15.833 14.5113 13.5 15.1747M13.5 15.1747C14.8552 15.1164 18.5091 13.6 22.2828 7.99998M13.5 15.1747C13.159 15.2716 12.8259 15.336 12.5 15.3707M22.2828 7.99998C21.7267 7.28479 20.8313 7.20861 19.9356 7.20861C17.6082 7.20861 8.62176 6.53851 4.41949 6.20345C-0.429291 5.70093 1.51049 13.2389 1.02534 18.264C0.73569 21.2642 2.96485 20.7766 5.87412 20.7766C8.78339 20.7766 17.9961 21.2792 20.9053 20.7766C23.8146 20.2741 22.8448 13.7414 22.8448 10.2238C22.8448 9.5396 22.7589 9.0099 22.6079 8.59998M22.2828 7.99998C22.4104 8.16407 22.5201 8.36181 22.6079 8.59998M12.5 15.3707C14.5719 15.3138 19.4941 13.88 22.6079 8.59998" stroke="currentColor" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h2 class="text-base font-bold text-black">I am a recruiter</h2>
+            </div>
+            <ol class="mb-4 flex flex-col gap-1 text-sm text-black/70">
+              <li>1. I want to hire people</li>
+              <li>2. Show my talent who are already checked and trusted</li>
+              <li>3. Post a job in few minutes</li>
+              <li>4. Find the right person faster</li>
+            </ol>
+            <a href="recruiter.html" class="btn-hard block w-full rounded-md border-[1.5px] border-black bg-brand-green py-3 text-center text-sm font-bold text-white hover:opacity-90">
+              Continue
+            </a>
+          </div>
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll(".card-premium, .card-rise").forEach((card) => {
+      card.addEventListener("mouseenter", () => card.classList.add("tilt-active"));
+      card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width - 0.5;
+        const py = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `rotateX(${py * -14}deg) rotateY(${px * 14}deg) scale(1.02)`;
+      });
+      card.addEventListener("mouseleave", () => {
+        card.classList.remove("tilt-active");
+        card.style.transform = "";
+      });
+    });
+  </script>
+</body>
+</html>
