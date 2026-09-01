@@ -5,7 +5,7 @@ from . import views
 app_name = "onboarding"
 
 urlpatterns = [
-    path("", views.IndexView.as_view(), name="index"),
+    path("", views.TalentOnboardingView.as_view(), name="talent_onboarding"),
     path("signup/", views.SignupView.as_view(), name="signup"),
     path("recruiter/", views.RecruiterView.as_view(), name="recruiter"),
     path("login/", views.LoginView.as_view(), name="login"),

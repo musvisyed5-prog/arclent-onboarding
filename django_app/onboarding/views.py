@@ -1,8 +1,8 @@
 from django.views.generic import TemplateView
 
 
-class IndexView(TemplateView):
-    template_name = "onboarding/index.html"
+class TalentOnboardingView(TemplateView):
+    template_name = "onboarding/talent_onboarding.html"
 
 
 class SignupView(TemplateView):
