@@ -14,4 +14,9 @@ urlpatterns = [
     path("company/hiring/", views.CompanyHiringView.as_view(), name="company_hiring"),
     path("company/job-preferences/", views.CompanyJobPrefsView.as_view(), name="company_jobprefs"),
     path("company/connect/", views.CompanyConnectView.as_view(), name="company_connect"),
+    path("creator/onboarding/", views.CreatorOnboardingView.as_view(), name="creator_onboarding"),
+    path("creator/profile/", views.CreatorProfileView.as_view(), name="creator_profile"),
+    path("creator/connect/", views.CreatorConnectView.as_view(), name="creator_connect"),
+    path("creator/verify/", views.CreatorVerifyView.as_view(), name="creator_verify"),
+    path("creator/rewards/", views.CreatorRewardsView.as_view(), name="creator_rewards"),
 ]
