@@ -5,8 +5,8 @@ class TalentOnboardingView(TemplateView):
     template_name = "onboarding/talent_onboarding.html"
 
 
-class SignupView(TemplateView):
-    template_name = "onboarding/signup.html"
+class ChooseRoleView(TemplateView):
+    template_name = "onboarding/choose_role.html"
 
 
 class RecruiterView(TemplateView):

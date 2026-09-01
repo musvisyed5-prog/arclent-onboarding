@@ -6,7 +6,7 @@ app_name = "onboarding"
 
 urlpatterns = [
     path("", views.TalentOnboardingView.as_view(), name="talent_onboarding"),
-    path("signup/", views.SignupView.as_view(), name="signup"),
+    path("choose-role/", views.ChooseRoleView.as_view(), name="choose_role"),
     path("recruiter/", views.RecruiterView.as_view(), name="recruiter"),
     path("login/", views.LoginView.as_view(), name="login"),
     path("company/onboarding/", views.CompanyOnboardingView.as_view(), name="company_onboarding"),
