@@ -35,23 +35,3 @@ class CompanyJobPrefsView(TemplateView):
 
 class CompanyConnectView(TemplateView):
     template_name = "onboarding/company_connect.html"
-
-
-class CreatorOnboardingView(TemplateView):
-    template_name = "onboarding/creator_onboarding.html"
-
-
-class CreatorProfileView(TemplateView):
-    template_name = "onboarding/creator_profile.html"
-
-
-class CreatorConnectView(TemplateView):
-    template_name = "onboarding/creator_connect.html"
-
-
-class CreatorVerifyView(TemplateView):
-    template_name = "onboarding/creator_verify.html"
-
-
-class CreatorRewardsView(TemplateView):
-    template_name = "onboarding/creator_rewards.html"
