@@ -1,3 +1,6 @@
 __pycache__/
 *.pyc
 django_app.zip
+django_app/db.sqlite3
+django_app/staticfiles/
+.env.local
