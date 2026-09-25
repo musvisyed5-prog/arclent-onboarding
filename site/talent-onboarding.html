@@ -1,32 +1,576 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <script>
+    document.documentElement.classList.add("hero-pending");
+    setTimeout(function () { document.documentElement.classList.remove("hero-pending"); }, 4000);
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <meta name="theme-color" content="#C9CBBE" />
+  <meta name="description" content="arclent is the hiring platform built on verified work: portfolios confirmed by the people who worked on them, jobs posted and filled with AI." />
+  <meta property="og:title" content="arclent" />
+  <meta property="og:description" content="The hiring platform built on verified work." />
   <title>arclent — Talent Onboarding</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400&family=Roboto+Mono:wght@400&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/motion@11/dist/motion.js"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            "brand-green": "#034f46",
-            "brand-cream": "#ffffeb",
+            primary: "#4D5757",
+            brand: "#222F30",
+            ink: "#222F30",
+            surface: "#F7F7F5",
+            neutral: "#C9CBBE",
+            accent: "#CEF79E",
+            error: "#D64545",
           },
           fontFamily: {
-            sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+            serif: ['"Inter Tight"', "ui-sans-serif", "system-ui", "sans-serif"],
+            sans: ['"Inter Tight"', "ui-sans-serif", "system-ui", "sans-serif"],
+            mono: ['"Roboto Mono"', "ui-monospace", "monospace"],
           },
         },
       },
     };
   </script>
-  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Scroll-reveal system: fade + rise, corporate-editorial timing (see motion-design skill). */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    [data-reveal].is-visible { opacity: 1; transform: translateY(0); }
+
+    [data-reveal-group] > * {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    [data-reveal-group].is-visible > * { opacity: 1; transform: translateY(0); }
+    [data-reveal-group] > *:nth-child(1) { transition-delay: 0ms; }
+    [data-reveal-group] > *:nth-child(2) { transition-delay: 70ms; }
+    [data-reveal-group] > *:nth-child(3) { transition-delay: 140ms; }
+    [data-reveal-group] > *:nth-child(4) { transition-delay: 210ms; }
+    [data-reveal-group] > *:nth-child(5) { transition-delay: 280ms; }
+    [data-reveal-group] > *:nth-child(6) { transition-delay: 350ms; }
+
+    @media (prefers-reduced-motion: reduce) {
+      [data-reveal], [data-reveal-group] > * { opacity: 1 !important; transform: none !important; transition: none !important; }
+    }
+
+    /* ---- Y Combinator-inspired system: warm paper background, near-black ink,
+       one orange accent, Source Serif 4 headlines with italic emphasis, Outfit
+       light UI text, hairline borders, black pill buttons, no shadows. ---- */
+    .bg-noise { display: none; }
+    body { font-weight: 300; }
+    h1, h2, h3 { letter-spacing: -0.01em; font-weight: 400; }
+    em { font-style: italic; }
+
+    /* ---- Integrated Biosciences-style system: Abyssal Ink #222F30 + Bone White
+       #F7F7F5, single-weight Inter Tight (Aspekta substitute) with tight
+       tracking, Roboto Mono for labels, 1px hairlines, no shadows/gradients,
+       Bioluminescent Lime #CEF79E rationed to micro-surfaces. ---- */
+    .bg-noise { display: none; }
+    body { font-family: 'Inter Tight', ui-sans-serif, system-ui, sans-serif; letter-spacing: -0.001em; }
+    body *:not(svg):not(path) { font-weight: 400 !important; font-style: normal !important; }
+    h1, h2, h3 { letter-spacing: -0.02em; line-height: 1.1; }
+    .font-mono, .mono { font-family: 'Roboto Mono', ui-monospace, monospace; letter-spacing: -0.02em; }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid #4D5757;
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Filled action button: white on dark, mono, 8px radius, no border. */
+    .glass-pill {
+      background: #FFFFFF;
+      color: #222F30 !important;
+      border: 0;
+      border-radius: 8px !important;
+      font-family: 'Roboto Mono', ui-monospace, monospace !important;
+      font-size: 13px !important;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      transition: opacity 0.2s ease;
+    }
+    .glass-pill:hover { opacity: 0.85; }
+    .glass-pill--accent { background: #FFFFFF; }
+    /* Outlined ghost button */
+    .glass-pill--neutral { background: transparent; color: #FFFFFF !important; border: 1px solid #4D5757; }
+
+    .btn-brutal {
+      border-radius: 8px !important;
+      font-family: 'Roboto Mono', ui-monospace, monospace !important;
+      font-size: 13px !important;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      box-shadow: none !important;
+      transition: opacity 0.2s ease;
+    }
+    .btn-brutal:hover { opacity: 0.85; }
+    @media (prefers-reduced-motion: reduce) { .glass-pill, .btn-brutal { transition: none !important; } }
+
+    .glass-nav { background: transparent; }
+
+    /* ---- micro-interactions: expo-out (0.16,1,0.3,1) for colour/shape changes,
+       ease-in-out-quart (0.76,0,0.24,1) for quick text slides ---- */
+    :root { --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-io: cubic-bezier(0.76, 0, 0.24, 1); }
+
+    .nav-pill { transition: background-color 0.6s var(--ease-out), color 0.6s var(--ease-out), border-color 0.6s var(--ease-out); }
+    .nav-pill:hover { background: #CEF79E; border-color: #CEF79E; color: #222F30; }
+
+    .roll { display: block; height: 1.25em; line-height: 1.25em; overflow: hidden; }
+    .roll > span { display: block; transition: transform 0.3s var(--ease-io); }
+    .btn-roll:hover .roll > span, .btn-pair:hover .roll > span { transform: translateY(-100%); }
+
+    .btn-dark { transition: background-color 0.6s var(--ease-out), color 0.6s var(--ease-out); }
+    .btn-dark:hover { opacity: 1; background: #CEF79E; color: #222F30; }
+
+    .btn-ghost { transition: background-color 0.6s var(--ease-out), color 0.6s var(--ease-out), border-color 0.6s var(--ease-out); }
+    .btn-ghost:hover { opacity: 1; background: #FFFFFF; color: #222F30; border-color: #FFFFFF; }
+
+    /* label + arrow pair: hovering either swaps their fills */
+    .pair-a, .pair-b { transition: background-color 0.6s var(--ease-out), color 0.6s var(--ease-out); }
+    .pair-a { background: #222F30; color: #FFFFFF; }
+    .pair-b { background: #CEF79E; color: #222F30; }
+    .btn-pair:hover .pair-a { background: #CEF79E; color: #222F30; }
+    .btn-pair:hover .pair-b { background: #222F30; color: #CEF79E; }
+    .pair-b svg { transition: transform 0.4s var(--ease-io); }
+    .btn-pair:hover .pair-b svg { transform: translateX(3px); }
+
+    /* menu button: two lime lines that cross into an X */
+    .menu-btn { position: relative; width: 40px; height: 40px; border-radius: 10px; background: #222F30; border: 1px solid transparent; transition: background-color 0.6s var(--ease-out), border-color 0.6s var(--ease-out); }
+    .menu-btn:hover { border-color: #CEF79E; }
+    .menu-btn i { position: absolute; left: 11px; right: 11px; height: 1.5px; background: #CEF79E; transition: transform 0.6s var(--ease-out), top 0.6s var(--ease-out); }
+    .menu-btn i:nth-child(1) { top: 16px; } .menu-btn i:nth-child(2) { top: 22px; }
+    .menu-open .menu-btn i:nth-child(1) { top: 19px; transform: rotate(45deg); }
+    .menu-open .menu-btn i:nth-child(2) { top: 19px; transform: rotate(-45deg); }
+
+    .menu-overlay {
+      position: fixed; inset: 6px; z-index: 40; border-radius: 20px; background: #222F30; color: #fff;
+      clip-path: inset(0 0 100% 0 round 20px); visibility: hidden;
+      transition: clip-path 0.8s var(--ease-out), visibility 0s linear 0.8s;
+    }
+    .menu-open .menu-overlay { clip-path: inset(0 0 0 0 round 20px); visibility: visible; transition: clip-path 0.8s var(--ease-out), visibility 0s; }
+    .menu-overlay .m-item { display: block; opacity: 0; transform: translateY(36px); transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
+    .menu-open .menu-overlay .m-item { opacity: 1; transform: none; transition-delay: calc(0.18s + var(--i) * 0.07s); }
+    .menu-open { overflow: hidden; }
+
+
+    /* desktop: logo floats on its own, links + CTA live in one frosted group (right) */
+    @media (min-width: 1024px) {
+      .ib-nav { background: transparent !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; padding: 6px 0 !important; }
+      .nav-group { background: rgba(255, 255, 255, 0.8); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-radius: 12px; padding: 4px 4px 4px 12px; }
+    }
+
+
+    /* ---- two-part button: label + interlocking arrow tab. Hover swaps the fills
+       (label goes lime, tab goes dark), the label tightens toward the tab and the
+       tab slides forward. Easing cubic-bezier(.25,1,.5,1), 0.6s. ---- */
+    .ib-btn { --bg: #222F30; --fg: #FFFFFF; --tab: #CEF79E; --tab-ink: #222F30; --hov: #CEF79E; --hov-ink: #222F30;
+      display: inline-flex; align-items: stretch; height: 48px; cursor: pointer; border: 0; background: none; padding: 0;
+      font-family: 'Roboto Mono', ui-monospace, monospace; font-size: 13px; letter-spacing: -0.02em; text-transform: uppercase; text-decoration: none; }
+    .ib-btn--light { --bg: #FFFFFF; --fg: #222F30; }
+    .ib-btn .lbl, .ib-btn .corner path, .ib-btn .ico path, .ib-btn .ico, .ib-btn .arrow { transition-duration: 0.75s; transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1); }
+    .ib-btn .lbl { position: relative; display: flex; align-items: center; padding: 0 8px 0 20px; margin-inline-end: 16px; white-space: nowrap;
+      background: var(--bg); color: var(--fg); border-radius: 12px 0 0 12px;
+      transition-property: background-color, color, margin-inline-end, padding-right; }
+    .ib-btn .corner { position: absolute; top: 0; left: 100%; width: 16px; height: 100%; display: block; }
+    .ib-btn .corner svg { display: block; width: 100%; height: 100%; }
+    .ib-btn .corner path { fill: var(--bg); transition-property: fill; }
+    .ib-btn .ico { display: block; width: 46px; transition-property: transform; }
+    .ib-btn .ico svg { display: block; width: 100%; height: 100%; }
+    .ib-btn .ico .shape { fill: var(--tab); transform-box: fill-box; transform-origin: right center; transition-property: fill, transform; }
+    .ib-btn .ico .arrow { stroke: var(--tab-ink); transition-property: stroke; }
+    .ib-btn:hover .lbl, .ib-btn:focus-visible .lbl { background: var(--hov); color: var(--hov-ink); margin-inline-end: 13px; padding-right: 11px; }
+    .ib-btn:hover .corner path, .ib-btn:focus-visible .corner path { fill: var(--hov); }
+        .ib-btn:hover .ico .shape, .ib-btn:focus-visible .ico .shape { fill: #222F30; transform: scaleX(0.92); }
+    .ib-btn:hover .ico .arrow, .ib-btn:focus-visible .ico .arrow { stroke: #CEF79E; }
+    .ib-btn--light:hover .ico .shape { fill: #222F30; }
+    .ib-btn:active { transform: scale(0.98); }
+    @media (prefers-reduced-motion: reduce) { .ib-btn .lbl, .ib-btn .corner path, .ib-btn .ico, .ib-btn .ico path { transition: none !important; } }
+
+
+    /* smooth scrolling (Lenis) */
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+    .lenis.lenis-stopped { overflow: hidden; }
+    a, button { -webkit-tap-highlight-color: transparent; }
+
+
+    /* nav CTA (from the reference recording): dark button, a white fill wipes up from
+       the bottom while the label rolls up; final state white with dark text */
+    .cta-wipe { position: relative; overflow: hidden; background: #222F30 linear-gradient(#fff, #fff) no-repeat 0 100% / 100% 0%;
+      transition: background-size 0.3s cubic-bezier(0.76, 0, 0.24, 1); }
+    .cta-wipe:hover, .cta-wipe:focus-visible { background-color: #222F30; background-size: 100% 100%; color: #222F30; }
+    .cta-wipe .roll > span:nth-child(2) { color: #222F30; }
+    .btn-dark.cta-wipe:hover { background: #222F30 linear-gradient(#fff, #fff) no-repeat 0 100% / 100% 100%; color: #222F30; }
+
+    /* nav links: a soft light chip fades in behind the hovered link */
+    .nav-links a { position: relative; text-decoration: none; background: none !important; isolation: isolate; }
+    .nav-links a::before { content: ""; position: absolute; inset: 3px 2px; z-index: -1; border-radius: 8px; background: rgba(255, 255, 255, 0.75);
+      opacity: 0; transform: scale(0.94); transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .nav-links a:hover::before, .nav-links a:focus-visible::before { opacity: 1; transform: scale(1); }
+
+
+    /* footer back-to-top */
+    .to-top { transition: background-color 0.6s cubic-bezier(0.25, 1, 0.5, 1), color 0.6s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+    .to-top:hover { background: #CEF79E; color: #222F30; border-color: #CEF79E; }
+    .to-top svg { transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1); }
+    .to-top:hover svg { transform: translateY(-3px); }
+    #site-footer li a { display: inline-block; }
+
+
+    /* logo sits on a soft light chip so it reads over any background */
+    .logo-chip { display: inline-flex; align-items: center; padding: 12px 16px; border-radius: 12px;
+      background: rgba(247, 247, 245, 0.92); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+      transition: background-color 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+    .logo-chip:hover { background: #FFFFFF; }
+    /* over the hero: no chip, white logo; chip fades in once scrolling starts */
+    html:not(.is-scrolled) .logo-chip { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+    .nav-logo { transition: filter 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+    html:not(.is-scrolled) .nav-logo { filter: invert(1); }
+    @media (max-width: 1023px) { html:not(.is-scrolled) .nav-logo { filter: none; } }  /* mobile: the whole bar is frosted-light, keep the dark logo */
+    .btn-dark { white-space: nowrap; flex-shrink: 0; }
+    /* keyboard focus: quiet ink ring on light surfaces, lime on dark ones */
+    :where(a, button, input, select, textarea, [tabindex]):focus-visible { outline: 2px solid #222F30; outline-offset: 3px; }
+    :where(.bg-ink, footer, #menu-overlay, .menu-overlay) :where(a, button, input, select, textarea, [tabindex]):focus-visible { outline-color: #CEF79E; }
+
+
+    /* hero intro: copy stays hidden until GSAP is ready (no flash) */
+    .hero-pending #hero-h1, .hero-pending #hero-p, .hero-pending #hero-cta, .hero-pending .ib-nav { visibility: hidden; }
+    .line-mask { display: block; overflow: clip; padding-bottom: 0.14em; margin-bottom: -0.14em; }
+    .line-mask > .line { display: block; will-change: transform; }
+
+
+    /* GSAP owns these interactions once it loads (html.gsap-btn); plain CSS hovers remain as fallback */
+    .gsap-btn .btn-ghost { position: relative; isolation: isolate; overflow: hidden; }
+    .gsap-btn .btn-ghost:hover { background: transparent !important; color: #FFFFFF; border-color: rgba(255, 255, 255, 0.7); }
+    .gsap-btn .ib-btn:active { transform: none; }
+    .btn-ghost .gfill { position: absolute; left: 0; top: 0; z-index: -1; border-radius: 50%; background: #FFFFFF; pointer-events: none; transform: scale(0); }
+    .ib-btn, .btn-ghost, .cta-wipe, .to-top, .menu-btn { will-change: transform; touch-action: manipulation; }
+
+
+    #hero-tilt { will-change: transform; transform-style: preserve-3d; }
+
+    /* text links: underline grows in from the left */
+    .u-link, footer a { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size 0.3s var(--ease-out); }
+    .u-link:hover, footer a:hover { background-size: 100% 1px; }
+
+    /* scrolling text strip */
+    .marquee-track { display: flex; width: max-content; animation: marquee 45s linear infinite; }
+    .marquee-strip:hover .marquee-track { animation-play-state: paused; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) {
+      .marquee-track { animation: none; }
+      .menu-overlay, .menu-overlay .m-item, .nav-pill, .btn-dark, .btn-ghost, .pair-a, .pair-b, .roll > span { transition: none !important; }
+    }
+
+    .ib-nav {
+      background: rgba(247, 247, 245, 0.72);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      backdrop-filter: blur(20px) saturate(1.4);
+    }
+    .btn-dark, .btn-ghost {
+      border-radius: 12px;
+      font-family: 'Roboto Mono', ui-monospace, monospace;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      transition: opacity 0.2s ease;
+    }
+    .btn-dark { background: #222F30; color: #FFFFFF; }
+    .btn-ghost { border: 1px solid rgba(255, 255, 255, 0.7); color: #FFFFFF; }
+    .btn-dark:hover, .btn-ghost:hover { opacity: 0.85; }
+
+
+    /* Segmented toggles: hairline pills, lime fill when active. */
+    .glass-seg { background: transparent; border: 1px solid #C9CBBE; border-radius: 9999px; font-family: 'Roboto Mono', ui-monospace, monospace; }
+    #verify-stage .glass-seg, #outreach-stage .glass-seg { background: transparent; border-color: #4D5757; }
+    .glass-seg-active { background: #CEF79E !important; color: #222F30 !important; box-shadow: none; }
+
+    .glass-badge { background: #FFFFFF; border: 1px solid #C9CBBE; }
+
+    @keyframes demo-caret-blink { 0%, 45% { opacity: 1; } 50%, 95% { opacity: 0; } 100% { opacity: 1; } }
+    #demo-caret { animation: demo-caret-blink 1s step-end infinite; }
+    @keyframes demo-dot-bounce { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-3px); opacity: 1; } }
+    .demo-dot { animation: demo-dot-bounce 1.1s ease-in-out infinite; }
+  
+  </style>
+
+  <style>
+    html .nav-logo { filter: none !important; }
+    .mono { font: 400 11px/1.3 "Roboto Mono", monospace; text-transform: uppercase; }
+    .lbl-f { display: block; margin-bottom: 10px; font: 400 11px/1 "Roboto Mono", monospace; text-transform: uppercase; color: #fff; }
+    .field { width: 100%; min-height: 54px; border: 0; border-radius: 12px; background: #394546; padding: 0 18px; color: #fff; font-size: 16px; outline: 1px solid transparent; transition: outline-color .4s, background .4s; color-scheme: dark; }
+    textarea.field { padding: 16px 18px; resize: vertical; line-height: 1.35; }
+    .field::placeholder { color: rgba(255,255,255,.45); }
+    .field:focus { outline-color: #CEF79E; background: #3F4C4D; }
+    .pill, .tile { background: #394546; color: rgba(255,255,255,.8); border-radius: 12px; transition: background .5s cubic-bezier(.22,1,.36,1), color .5s; }
+    .pill { display: inline-flex; align-items: center; gap: 8px; padding: 13px 16px; font: 400 12px/1 "Roboto Mono", monospace; text-transform: uppercase; }
+    .tile { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 22px 12px; text-align: center; font: 400 12px/1.2 "Roboto Mono", monospace; text-transform: uppercase; }
+    .pill:hover, .tile:hover { background: #4A5859; color: #fff; }
+    .pill.on, .tile.on { background: #CEF79E; color: #222F30; }
+    .vrow { display: flex; align-items: center; gap: 14px; min-height: 54px; padding: 0 18px; border-radius: 12px; background: #394546; outline: 1px solid transparent; transition: outline-color .4s; }
+    .vrow:focus-within { outline-color: #CEF79E; }
+    .vrow input { flex: 1; background: transparent; color: #fff; font-size: 15px; outline: none; }
+    .vrow input::placeholder { color: rgba(255,255,255,.4); }
+    .switch { position: relative; display: inline-block; width: 46px; height: 26px; flex: none; border-radius: 999px; background: #4D5757; transition: background .4s; }
+    .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform .4s cubic-bezier(.22,1,.36,1), background .4s; }
+    input:checked + .switch { background: #CEF79E; } input:checked + .switch::after { transform: translateX(20px); background: #222F30; }
+    .acct { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; border-radius: 14px; background: #394546; padding: 14px; }
+    .mini { border-radius: 10px; padding: 11px 16px; font: 400 11px/1 "Roboto Mono", monospace; text-transform: uppercase; background: #fff; color: #222F30; transition: background .4s; }
+    .mini:hover { background: #CEF79E; }
+    .mini.off { background: transparent; color: #fff; outline: 1px solid rgba(255,255,255,.35); } .mini.off:hover { outline-color: #CEF79E; color: #CEF79E; }
+    .srow { display: flex; width: 100%; align-items: center; gap: 16px; padding: 18px 0; border-top: 1px solid #C9CBBE; text-align: left; transition: color .4s; }
+    .srow:disabled { cursor: not-allowed; }
+    .step-in { animation: step-in .8s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes step-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .step-in { animation: none; } }
+  </style>
 </head>
-<body class="min-h-screen font-sans">
-  <div id="app"></div>
+<body class="min-h-screen bg-surface font-sans text-ink">
+  <div class="bg-noise" aria-hidden="true"></div>
+
+  <!-- Liquid-glass displacement filter used by .glass-card's backdrop-filter (feTurbulence-based) -->
+  <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+    <filter id="glass-blur" x="0" y="0" width="100%" height="100%" filterUnits="objectBoundingBox">
+      <feTurbulence type="fractalNoise" baseFrequency="0.004 0.01" numOctaves="2" result="turbulence" />
+      <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="90" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </svg>
+
+  <!-- HERO -->
+  <!-- NAV: frosted light bar, fixed -->
+  <div class="fixed inset-x-4 top-4 z-50 mx-auto max-w-[1400px]">
+    <div class="ib-nav flex items-center justify-between gap-3 rounded-[12px] px-5 py-3">
+      <a href="landing.html" class="logo-chip shrink-0"><img id="nav-logo" src="assets/logo.png" alt="arclent." class="nav-logo h-6 w-auto" /></a>
+      <div class="nav-group flex items-center gap-1">
+        <nav class="nav-links hidden items-center font-mono text-[13px] uppercase lg:flex" aria-label="Primary">
+          <a href="landing.html" class="u-link px-3 py-2 text-ink">Home</a>
+          <a href="find-jobs.html" class="u-link px-3 py-2 text-ink">Find Jobs</a>
+          <a href="talents.html" class="u-link px-3 py-2 text-ink">Talents</a>
+        </nav>
+        <a href="choose-role.html" class="btn-dark cta-wipe btn-roll flex h-10 items-center rounded-[8px] px-5"><span class="roll"><span>Get Started</span><span aria-hidden="true">Get Started</span></span></a>
+        <button id="menu-btn" type="button" class="menu-btn lg:hidden" aria-label="Menu" aria-expanded="false" aria-controls="menu-overlay"><i></i><i></i></button>
+      </div>
+    </div>
+  </div>
+
+  <div id="menu-overlay" class="menu-overlay" aria-hidden="true">
+    <svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="mp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#mp)"/></svg>
+    <nav class="relative flex h-full flex-col items-center justify-center gap-3 text-center text-[clamp(40px,10vw,64px)] leading-[1.1] tracking-[-0.02em]">
+      <a href="landing.html" class="m-item" style="--i:0">Home</a>
+      <a href="find-jobs.html" class="m-item" style="--i:1">Find Jobs</a>
+      <a href="talents.html" class="m-item" style="--i:2">Talents</a>
+      <a href="choose-role.html" class="m-item" style="--i:3">Get Started</a>
+    </nav>
+    <a href="choose-role.html" class="m-item u-link absolute inset-x-0 bottom-10 mx-auto w-max font-mono text-[15px]" style="--i:5">Join arclent</a>
+  </div>
+
+
+  <main class="mx-auto max-w-[1400px] px-4 pb-24 pt-32 lg:px-10"><div id="app"></div></main>
+
+  <script src="assets/vendor/gsap.min.js"></script>
+  <script src="assets/vendor/ScrollTrigger.min.js"></script>
+  <script>
+    (function () {
+      var root = document.documentElement, btn = document.getElementById("menu-btn"), ov = document.getElementById("menu-overlay");
+      if (!btn || !ov) return;
+      function set(open) {
+        root.classList.toggle("menu-open", open);
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+        ov.setAttribute("aria-hidden", open ? "false" : "true");
+      }
+      btn.addEventListener("click", function () { set(!root.classList.contains("menu-open")); });
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") set(false); });
+      ov.querySelectorAll("a").forEach(function (a) { a.addEventListener("click", function () { set(false); }); });
+      matchMedia("(min-width: 1024px)").addEventListener("change", function (e) { if (e.matches) set(false); });
+    })();
+  </script>
+  <script>
+    (function () {
+      // logo turns dark while the nav sits over a light section, white over dark ones
+      var logo = document.getElementById("nav-logo");
+      if (!logo) return;
+      var dark = Array.prototype.slice.call(document.querySelectorAll("#hero, #scroller, section.bg-ink, footer, .bg-ink"));
+      var raf = 0;
+      function check() {
+        raf = 0;
+        var y = 45, over = false;
+        for (var i = 0; i < dark.length; i++) {
+          var r = dark[i].getBoundingClientRect();
+          if (r.top <= y && r.bottom >= y) { over = true; break; }
+        }
+        document.documentElement.classList.toggle("nav-on-light", !over);
+      }
+      function queue() { if (!raf) raf = requestAnimationFrame(check); document.documentElement.classList.toggle("is-scrolled", (window.scrollY || 0) > 8); }
+      addEventListener("scroll", queue, { passive: true });
+      addEventListener("resize", queue);
+      check(); queue();
+    })();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script>
+    (function () {
+      if (!window.Lenis || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      var lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.95, smoothWheel: true });
+      window.__lenis = lenis;
+      if (window.gsap && window.ScrollTrigger) {
+        lenis.on("scroll", ScrollTrigger.update);
+        gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+        gsap.ticker.lagSmoothing(0);
+      } else {
+        (function raf(t) { lenis.raf(t); requestAnimationFrame(raf); })(0);
+      }
+      // menu open/close pauses page scrolling
+      new MutationObserver(function () {
+        if (document.documentElement.classList.contains("menu-open")) lenis.stop(); else lenis.start();
+      }).observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+      // in-page anchors glide instead of jumping
+      document.addEventListener("click", function (e) {
+        var a = e.target.closest && e.target.closest('a[href^="#"]');
+        if (!a || a.getAttribute("href") === "#") return;
+        var t = document.querySelector(a.getAttribute("href"));
+        if (t) { e.preventDefault(); lenis.scrollTo(t, { offset: -80, duration: 1.4 }); }
+      });
+    })();
+  </script>
+  <!-- FOOTER -->
+  <footer id="site-footer" class="relative m-1.5 mt-3 overflow-hidden rounded-[20px] bg-ink text-white">
+    <img src="assets/footer-bg.webp" alt="" class="absolute inset-0 h-full w-full object-cover" style="filter: brightness(0.82);" />
+    <div class="relative z-10 mx-auto max-w-[1400px] px-4 pt-16 lg:px-10">
+      <div class="grid gap-14 lg:grid-cols-[1fr_1.9fr] lg:gap-10">
+        <div>
+          <p id="foot-statement" class="max-w-[760px] text-[clamp(30px,3.6vw,54px)] leading-[1.1] tracking-[-0.02em]">We are building the hiring platform where every portfolio is confirmed by the people who did the work.</p>
+          <div class="mt-10"><a class="ib-btn ib-btn--light" href="choose-role.html"><span class="lbl">Get Started<i class="corner"><svg viewBox="0 0 18 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h6c8 0 13.4 7.2 11.4 15L11 39a11.5 11.5 0 0 1-11 9V0Z"/></svg></i></span><i class="ico"><svg viewBox="0 0 51 48" preserveAspectRatio="none" aria-hidden="true"><path class="shape" d="M6.8 9.2A12 12 0 0 1 18.4 0H39c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H12.4C4.6 48-1.2 40.7.7 33.2L6.8 9.2Z"/><path class="arrow" d="M23 24h13m-5-5 5 5-5 5" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></a></div>
+        </div>
+        <div class="relative grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4 lg:pr-24">
+      <div class="foot-col relative pl-5"><span class="foot-rule absolute left-0 top-0 h-full w-px origin-top bg-white/25"></span>
+        <p class="mb-5 font-mono text-[13px] uppercase tracking-[-0.02em] text-white/70">Platform</p>
+        <ul class="space-y-3">
+          <li><a href="find-jobs.html" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Find Jobs</a></li>
+          <li><a href="talents.html" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Talents</a></li>
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">For Recruiters</a></li>
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Verification Tiers</a></li>
+        </ul>
+      </div>
+      <div class="foot-col relative pl-5"><span class="foot-rule absolute left-0 top-0 h-full w-px origin-top bg-white/25"></span>
+        <p class="mb-5 font-mono text-[13px] uppercase tracking-[-0.02em] text-white/70">Company</p>
+        <ul class="space-y-3">
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">About</a></li>
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Careers</a></li>
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Blog</a></li>
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Contact</a></li>
+        </ul>
+      </div>
+      <div class="foot-col relative pl-5"><span class="foot-rule absolute left-0 top-0 h-full w-px origin-top bg-white/25"></span>
+        <p class="mb-5 font-mono text-[13px] uppercase tracking-[-0.02em] text-white/70">Legal</p>
+        <ul class="space-y-3">
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Privacy Policy</a></li>
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Terms of Service</a></li>
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Security</a></li>
+        </ul>
+      </div>
+      <div class="foot-col relative pl-5"><span class="foot-rule absolute left-0 top-0 h-full w-px origin-top bg-white/25"></span>
+        <p class="mb-5 font-mono text-[13px] uppercase tracking-[-0.02em] text-white/70">Connect</p>
+        <ul class="space-y-3">
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">X</a></li>
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">LinkedIn</a></li>
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Instagram</a></li>
+        </ul>
+      </div>
+          <button id="to-top" type="button" aria-label="Back to top" class="to-top absolute right-0 top-0 hidden h-[60px] w-[60px] items-center justify-center rounded-[12px] border border-white/40 text-white lg:flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></button>
+        </div>
+      </div>
+      <div id="foot-mark" class="mt-20 select-none text-[clamp(84px,22vw,340px)] leading-[0.82] tracking-[-0.045em] text-white" aria-label="arclent.">arclent.</div>
+      <p id="foot-copy" class="pb-8 pt-10 font-mono text-[13px] uppercase tracking-[-0.02em] text-white/80">&copy; 2026 arclent. All rights reserved.</p>
+    </div>
+  </footer>
+  <script>
+    (function () {
+      var el = document.querySelector('[data-name="footer"]');
+      var up = document.getElementById("to-top");
+      if (up) up.addEventListener("click", function () {
+        if (window.__lenis) window.__lenis.scrollTo(0, { duration: 1.8 }); else window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    })();
+  </script>
+  <script>
+    /* Footer motion: the panel settles in as it scrolls up, the statement resolves word by
+       word out of blur, column rules draw down and their links stack up, and the wordmark
+       letters spring up out of a mask. Afterwards the letters ripple toward the cursor. */
+    (function () {
+      var foot = document.getElementById("site-footer");
+      if (!foot || !window.gsap || !window.ScrollTrigger || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      // 1. panel settles
+      gsap.fromTo(foot, { scale: 0.94, y: 60 }, { scale: 1, y: 0, ease: "none",
+        scrollTrigger: { trigger: foot, start: "top bottom", end: "top 35%", scrub: true } });
+
+      // 2. statement: words resolve from blur, scrubbed with scroll
+      var st = document.getElementById("foot-statement");
+      var text = st.textContent.trim();
+      st.setAttribute("aria-label", text);
+      st.innerHTML = text.split(/\s+/).map(function (w) {
+        return '<span class="fw" aria-hidden="true" style="display:inline-block">' + w + "</span>";
+      }).join(" ");
+      gsap.fromTo(st.querySelectorAll(".fw"), { opacity: 0.12, filter: "blur(8px)" },
+        { opacity: 1, filter: "blur(0px)", stagger: 0.09, ease: "none",
+          scrollTrigger: { trigger: st, start: "top 92%", end: "top 40%", scrub: true } });
+
+      // 3. wordmark letters (masked)
+      var mark = document.getElementById("foot-mark");
+      var word = mark.textContent.trim();
+      mark.style.overflow = "clip";
+      mark.style.paddingBottom = "0.12em";
+      mark.innerHTML = word.split("").map(function (c) {
+        return '<span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">' + c + "</span>";
+      }).join("");
+      var chars = mark.querySelectorAll(".fm-c");
+      var ready = false;
+
+      var tl = gsap.timeline({
+        scrollTrigger: { trigger: foot, start: "top 45%", toggleActions: "play none none reverse" },
+        onComplete: function () { ready = true; }, onReverseComplete: function () { ready = false; }
+      });
+      tl.from(foot.querySelectorAll(".foot-rule"), { scaleY: 0, duration: 1.1, stagger: 0.12, ease: "expo.out" }, 0)
+        .from(foot.querySelectorAll(".foot-col p, .foot-col li"), { y: 28, opacity: 0, duration: 0.9, stagger: 0.035, ease: "expo.out" }, 0.1)
+        .from(foot.querySelector(".ib-btn"), { y: 24, opacity: 0, scale: 0.92, duration: 0.9, ease: "power3.out" }, 0.15)
+        .from("#to-top", { scale: 0, rotate: -90, opacity: 0, duration: 0.8, ease: "back.out(1.8)" }, 0.5)
+        .from(chars, { yPercent: 118, rotate: 7, transformOrigin: "0% 100%", duration: 1.3, stagger: 0.06, ease: "expo.out" }, 0.05)
+        .from("#foot-copy", { y: 14, opacity: 0, duration: 0.8, ease: "power2.out" }, 0.7);
+
+      // 4. cursor ripple across the wordmark
+      var setY = Array.prototype.map.call(chars, function (c) { return gsap.quickTo(c, "yPercent", { duration: 0.6, ease: "power3.out" }); });
+      mark.addEventListener("pointermove", function (e) {
+        if (!ready) return;
+        var w = mark.getBoundingClientRect().width * 0.11;
+        Array.prototype.forEach.call(chars, function (c, i) {
+          var r = c.getBoundingClientRect();
+          var dx = (e.clientX - (r.left + r.width / 2)) / w;
+          setY[i](-16 * Math.exp(-dx * dx));
+        });
+      });
+      mark.addEventListener("pointerleave", function () { setY.forEach(function (fn) { fn(0); }); });
+    })();
+  </script>
   <script src="script.js"></script>
 </body>
 </html>

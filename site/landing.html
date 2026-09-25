@@ -1,0 +1,2387 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script>
+    document.documentElement.classList.add("hero-pending");
+    setTimeout(function () { document.documentElement.classList.remove("hero-pending"); }, 4000);
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <meta name="theme-color" content="#C9CBBE" />
+  <meta name="description" content="arclent is the hiring platform built on verified work: portfolios confirmed by the people who worked on them, jobs posted and filled with AI." />
+  <meta property="og:title" content="arclent" />
+  <meta property="og:description" content="The hiring platform built on verified work." />
+  <title>arclent — The Hiring Platform Built on Verified Work</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400&family=Roboto+Mono:wght@400&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/motion@11/dist/motion.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#4D5757",
+            brand: "#222F30",
+            ink: "#222F30",
+            surface: "#F7F7F5",
+            neutral: "#C9CBBE",
+            accent: "#CEF79E",
+            error: "#D64545",
+          },
+          fontFamily: {
+            serif: ['"Inter Tight"', "ui-sans-serif", "system-ui", "sans-serif"],
+            sans: ['"Inter Tight"', "ui-sans-serif", "system-ui", "sans-serif"],
+            mono: ['"Roboto Mono"', "ui-monospace", "monospace"],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    /* Scroll-reveal system: fade + rise, corporate-editorial timing (see motion-design skill). */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    [data-reveal].is-visible { opacity: 1; transform: translateY(0); }
+
+    [data-reveal-group] > * {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    [data-reveal-group].is-visible > * { opacity: 1; transform: translateY(0); }
+    [data-reveal-group] > *:nth-child(1) { transition-delay: 0ms; }
+    [data-reveal-group] > *:nth-child(2) { transition-delay: 70ms; }
+    [data-reveal-group] > *:nth-child(3) { transition-delay: 140ms; }
+    [data-reveal-group] > *:nth-child(4) { transition-delay: 210ms; }
+    [data-reveal-group] > *:nth-child(5) { transition-delay: 280ms; }
+    [data-reveal-group] > *:nth-child(6) { transition-delay: 350ms; }
+
+    @media (prefers-reduced-motion: reduce) {
+      [data-reveal], [data-reveal-group] > * { opacity: 1 !important; transform: none !important; transition: none !important; }
+    }
+
+    /* ---- Y Combinator-inspired system: warm paper background, near-black ink,
+       one orange accent, Source Serif 4 headlines with italic emphasis, Outfit
+       light UI text, hairline borders, black pill buttons, no shadows. ---- */
+    .bg-noise { display: none; }
+    body { font-weight: 300; }
+    h1, h2, h3 { letter-spacing: -0.01em; font-weight: 400; }
+    em { font-style: italic; }
+
+    /* ---- Integrated Biosciences-style system: Abyssal Ink #222F30 + Bone White
+       #F7F7F5, single-weight Inter Tight (Aspekta substitute) with tight
+       tracking, Roboto Mono for labels, 1px hairlines, no shadows/gradients,
+       Bioluminescent Lime #CEF79E rationed to micro-surfaces. ---- */
+    .bg-noise { display: none; }
+    body { font-family: 'Inter Tight', ui-sans-serif, system-ui, sans-serif; letter-spacing: -0.001em; }
+    body *:not(svg):not(path) { font-weight: 400 !important; font-style: normal !important; }
+    h1, h2, h3 { letter-spacing: -0.02em; line-height: 1.1; }
+    .font-mono, .mono { font-family: 'Roboto Mono', ui-monospace, monospace; letter-spacing: -0.02em; }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid #4D5757;
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Filled action button: white on dark, mono, 8px radius, no border. */
+    .glass-pill {
+      background: #FFFFFF;
+      color: #222F30 !important;
+      border: 0;
+      border-radius: 8px !important;
+      font-family: 'Roboto Mono', ui-monospace, monospace !important;
+      font-size: 13px !important;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      transition: opacity 0.2s ease;
+    }
+    .glass-pill:hover { opacity: 0.85; }
+    .glass-pill--accent { background: #FFFFFF; }
+    /* Outlined ghost button */
+    .glass-pill--neutral { background: transparent; color: #FFFFFF !important; border: 1px solid #4D5757; }
+
+    .btn-brutal {
+      border-radius: 8px !important;
+      font-family: 'Roboto Mono', ui-monospace, monospace !important;
+      font-size: 13px !important;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      box-shadow: none !important;
+      transition: opacity 0.2s ease;
+    }
+    .btn-brutal:hover { opacity: 0.85; }
+    @media (prefers-reduced-motion: reduce) { .glass-pill, .btn-brutal { transition: none !important; } }
+
+    .glass-nav { background: transparent; }
+
+    /* ---- micro-interactions: expo-out (0.16,1,0.3,1) for colour/shape changes,
+       ease-in-out-quart (0.76,0,0.24,1) for quick text slides ---- */
+    :root { --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-io: cubic-bezier(0.76, 0, 0.24, 1); }
+
+    .nav-pill { transition: background-color 0.6s var(--ease-out), color 0.6s var(--ease-out), border-color 0.6s var(--ease-out); }
+    .nav-pill:hover { background: #CEF79E; border-color: #CEF79E; color: #222F30; }
+
+    .roll { display: block; height: 1.25em; line-height: 1.25em; overflow: hidden; }
+    .roll > span { display: block; transition: transform 0.3s var(--ease-io); }
+    .btn-roll:hover .roll > span, .btn-pair:hover .roll > span { transform: translateY(-100%); }
+
+    .btn-dark { transition: background-color 0.6s var(--ease-out), color 0.6s var(--ease-out); }
+    .btn-dark:hover { opacity: 1; background: #CEF79E; color: #222F30; }
+
+    .btn-ghost { transition: background-color 0.6s var(--ease-out), color 0.6s var(--ease-out), border-color 0.6s var(--ease-out); }
+    .btn-ghost:hover { opacity: 1; background: #FFFFFF; color: #222F30; border-color: #FFFFFF; }
+
+    /* label + arrow pair: hovering either swaps their fills */
+    .pair-a, .pair-b { transition: background-color 0.6s var(--ease-out), color 0.6s var(--ease-out); }
+    .pair-a { background: #222F30; color: #FFFFFF; }
+    .pair-b { background: #CEF79E; color: #222F30; }
+    .btn-pair:hover .pair-a { background: #CEF79E; color: #222F30; }
+    .btn-pair:hover .pair-b { background: #222F30; color: #CEF79E; }
+    .pair-b svg { transition: transform 0.4s var(--ease-io); }
+    .btn-pair:hover .pair-b svg { transform: translateX(3px); }
+
+    /* menu button: two lime lines that cross into an X */
+    .menu-btn { position: relative; width: 40px; height: 40px; border-radius: 10px; background: #222F30; border: 1px solid transparent; transition: background-color 0.6s var(--ease-out), border-color 0.6s var(--ease-out); }
+    .menu-btn:hover { border-color: #CEF79E; }
+    .menu-btn i { position: absolute; left: 11px; right: 11px; height: 1.5px; background: #CEF79E; transition: transform 0.6s var(--ease-out), top 0.6s var(--ease-out); }
+    .menu-btn i:nth-child(1) { top: 16px; } .menu-btn i:nth-child(2) { top: 22px; }
+    .menu-open .menu-btn i:nth-child(1) { top: 19px; transform: rotate(45deg); }
+    .menu-open .menu-btn i:nth-child(2) { top: 19px; transform: rotate(-45deg); }
+
+    .menu-overlay {
+      position: fixed; inset: 6px; z-index: 40; border-radius: 20px; background: #222F30; color: #fff;
+      clip-path: inset(0 0 100% 0 round 20px); visibility: hidden;
+      transition: clip-path 0.8s var(--ease-out), visibility 0s linear 0.8s;
+    }
+    .menu-open .menu-overlay { clip-path: inset(0 0 0 0 round 20px); visibility: visible; transition: clip-path 0.8s var(--ease-out), visibility 0s; }
+    .menu-overlay .m-item { display: block; opacity: 0; transform: translateY(36px); transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
+    .menu-open .menu-overlay .m-item { opacity: 1; transform: none; transition-delay: calc(0.18s + var(--i) * 0.07s); }
+    .menu-open { overflow: hidden; }
+
+
+    /* desktop: logo floats on its own, links + CTA live in one frosted group (right) */
+    @media (min-width: 1024px) {
+      .ib-nav { background: transparent !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; padding: 6px 0 !important; }
+      .nav-group { background: rgba(255, 255, 255, 0.8); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-radius: 12px; padding: 4px 4px 4px 12px; }
+    }
+
+
+    /* ---- two-part button: label + interlocking arrow tab. Hover swaps the fills
+       (label goes lime, tab goes dark), the label tightens toward the tab and the
+       tab slides forward. Easing cubic-bezier(.25,1,.5,1), 0.6s. ---- */
+    .ib-btn { --bg: #222F30; --fg: #FFFFFF; --tab: #CEF79E; --tab-ink: #222F30; --hov: #CEF79E; --hov-ink: #222F30;
+      display: inline-flex; align-items: stretch; height: 48px; cursor: pointer; border: 0; background: none; padding: 0;
+      font-family: 'Roboto Mono', ui-monospace, monospace; font-size: 13px; letter-spacing: -0.02em; text-transform: uppercase; text-decoration: none; }
+    .ib-btn--light { --bg: #FFFFFF; --fg: #222F30; }
+    .ib-btn .lbl, .ib-btn .corner path, .ib-btn .ico path, .ib-btn .ico, .ib-btn .arrow { transition-duration: 0.75s; transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1); }
+    .ib-btn .lbl { position: relative; display: flex; align-items: center; padding: 0 8px 0 20px; margin-inline-end: 16px; white-space: nowrap;
+      background: var(--bg); color: var(--fg); border-radius: 12px 0 0 12px;
+      transition-property: background-color, color, margin-inline-end, padding-right; }
+    .ib-btn .corner { position: absolute; top: 0; left: 100%; width: 16px; height: 100%; display: block; }
+    .ib-btn .corner svg { display: block; width: 100%; height: 100%; }
+    .ib-btn .corner path { fill: var(--bg); transition-property: fill; }
+    .ib-btn .ico { display: block; width: 46px; transition-property: transform; }
+    .ib-btn .ico svg { display: block; width: 100%; height: 100%; }
+    .ib-btn .ico .shape { fill: var(--tab); transform-box: fill-box; transform-origin: right center; transition-property: fill, transform; }
+    .ib-btn .ico .arrow { stroke: var(--tab-ink); transition-property: stroke; }
+    .ib-btn:hover .lbl, .ib-btn:focus-visible .lbl { background: var(--hov); color: var(--hov-ink); margin-inline-end: 13px; padding-right: 11px; }
+    .ib-btn:hover .corner path, .ib-btn:focus-visible .corner path { fill: var(--hov); }
+        .ib-btn:hover .ico .shape, .ib-btn:focus-visible .ico .shape { fill: #222F30; transform: scaleX(0.92); }
+    .ib-btn:hover .ico .arrow, .ib-btn:focus-visible .ico .arrow { stroke: #CEF79E; }
+    .ib-btn--light:hover .ico .shape { fill: #222F30; }
+    .ib-btn:active { transform: scale(0.98); }
+    @media (prefers-reduced-motion: reduce) { .ib-btn .lbl, .ib-btn .corner path, .ib-btn .ico, .ib-btn .ico path { transition: none !important; } }
+
+
+    /* smooth scrolling (Lenis) */
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+    .lenis.lenis-stopped { overflow: hidden; }
+    a, button { -webkit-tap-highlight-color: transparent; }
+
+
+    /* nav CTA (from the reference recording): dark button, a white fill wipes up from
+       the bottom while the label rolls up; final state white with dark text */
+    .cta-wipe { position: relative; overflow: hidden; background: #222F30 linear-gradient(#fff, #fff) no-repeat 0 100% / 100% 0%;
+      transition: background-size 0.3s cubic-bezier(0.76, 0, 0.24, 1); }
+    .cta-wipe:hover, .cta-wipe:focus-visible { background-color: #222F30; background-size: 100% 100%; color: #222F30; }
+    .cta-wipe .roll > span:nth-child(2) { color: #222F30; }
+    .btn-dark.cta-wipe:hover { background: #222F30 linear-gradient(#fff, #fff) no-repeat 0 100% / 100% 100%; color: #222F30; }
+
+    /* nav links: a soft light chip fades in behind the hovered link */
+    .nav-links a { position: relative; text-decoration: none; background: none !important; isolation: isolate; }
+    .nav-links a::before { content: ""; position: absolute; inset: 3px 2px; z-index: -1; border-radius: 8px; background: rgba(255, 255, 255, 0.75);
+      opacity: 0; transform: scale(0.94); transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .nav-links a:hover::before, .nav-links a:focus-visible::before { opacity: 1; transform: scale(1); }
+
+
+    /* footer back-to-top */
+    .to-top { transition: background-color 0.6s cubic-bezier(0.25, 1, 0.5, 1), color 0.6s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+    .to-top:hover { background: #CEF79E; color: #222F30; border-color: #CEF79E; }
+    .to-top svg { transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1); }
+    .to-top:hover svg { transform: translateY(-3px); }
+    #site-footer li a { display: inline-block; }
+
+
+    /* logo sits on a soft light chip so it reads over any background */
+    .logo-chip { display: inline-flex; align-items: center; padding: 12px 16px; border-radius: 12px;
+      background: rgba(247, 247, 245, 0.92); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+      transition: background-color 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+    .logo-chip:hover { background: #FFFFFF; }
+    /* over the hero: no chip, white logo; chip fades in once scrolling starts */
+    html:not(.is-scrolled) .logo-chip { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+    .nav-logo { transition: filter 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+    html:not(.is-scrolled) .nav-logo { filter: invert(1); }
+    @media (max-width: 1023px) { html:not(.is-scrolled) .nav-logo { filter: none; } }  /* mobile: the whole bar is frosted-light, keep the dark logo */
+    .btn-dark { white-space: nowrap; flex-shrink: 0; }
+    /* keyboard focus: quiet ink ring on light surfaces, lime on dark ones */
+    :where(a, button, input, select, textarea, [tabindex]):focus-visible { outline: 2px solid #222F30; outline-offset: 3px; }
+    :where(.bg-ink, footer, #menu-overlay, .menu-overlay) :where(a, button, input, select, textarea, [tabindex]):focus-visible { outline-color: #CEF79E; }
+
+
+    /* hero intro: copy stays hidden until GSAP is ready (no flash) */
+    .hero-pending #hero-h1, .hero-pending #hero-p, .hero-pending #hero-cta, .hero-pending .ib-nav { visibility: hidden; }
+    .line-mask { display: block; overflow: clip; padding-bottom: 0.14em; margin-bottom: -0.14em; }
+    .line-mask > .line { display: block; will-change: transform; }
+
+
+    /* GSAP owns these interactions once it loads (html.gsap-btn); plain CSS hovers remain as fallback */
+    .gsap-btn .btn-ghost { position: relative; isolation: isolate; overflow: hidden; }
+    .gsap-btn .btn-ghost:hover { background: transparent !important; color: #FFFFFF; border-color: rgba(255, 255, 255, 0.7); }
+    .gsap-btn .ib-btn:active { transform: none; }
+    .btn-ghost .gfill { position: absolute; left: 0; top: 0; z-index: -1; border-radius: 50%; background: #FFFFFF; pointer-events: none; transform: scale(0); }
+    .ib-btn, .btn-ghost, .cta-wipe, .to-top, .menu-btn { will-change: transform; touch-action: manipulation; }
+
+
+    #hero-tilt { will-change: transform; transform-style: preserve-3d; }
+
+    /* text links: underline grows in from the left */
+    .u-link, footer a { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size 0.3s var(--ease-out); }
+    .u-link:hover, footer a:hover { background-size: 100% 1px; }
+
+    /* scrolling text strip */
+    .marquee-track { display: flex; width: max-content; animation: marquee 45s linear infinite; }
+    .marquee-strip:hover .marquee-track { animation-play-state: paused; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) {
+      .marquee-track { animation: none; }
+      .menu-overlay, .menu-overlay .m-item, .nav-pill, .btn-dark, .btn-ghost, .pair-a, .pair-b, .roll > span { transition: none !important; }
+    }
+
+    .ib-nav {
+      background: rgba(247, 247, 245, 0.72);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      backdrop-filter: blur(20px) saturate(1.4);
+    }
+    .btn-dark, .btn-ghost {
+      border-radius: 12px;
+      font-family: 'Roboto Mono', ui-monospace, monospace;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      transition: opacity 0.2s ease;
+    }
+    .btn-dark { background: #222F30; color: #FFFFFF; }
+    .btn-ghost { border: 1px solid rgba(255, 255, 255, 0.7); color: #FFFFFF; }
+    .btn-dark:hover, .btn-ghost:hover { opacity: 0.85; }
+
+
+    /* Segmented toggles: hairline pills, lime fill when active. */
+    .glass-seg { background: transparent; border: 1px solid #C9CBBE; border-radius: 9999px; font-family: 'Roboto Mono', ui-monospace, monospace; }
+    #verify-stage .glass-seg, #outreach-stage .glass-seg { background: transparent; border-color: #4D5757; }
+    .glass-seg-active { background: #CEF79E !important; color: #222F30 !important; box-shadow: none; }
+
+    .glass-badge { background: #FFFFFF; border: 1px solid #C9CBBE; }
+
+    @keyframes demo-caret-blink { 0%, 45% { opacity: 1; } 50%, 95% { opacity: 0; } 100% { opacity: 1; } }
+    #demo-caret { animation: demo-caret-blink 1s step-end infinite; }
+    @keyframes demo-dot-bounce { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-3px); opacity: 1; } }
+    .demo-dot { animation: demo-dot-bounce 1.1s ease-in-out infinite; }
+  
+    .seg { display: inline-flex; overflow: hidden; border-radius: 12px; background: #fff; }
+    .seg[hidden] { display: none; }
+    .seg button { padding: 13px 18px; font: 400 12px/1 "Roboto Mono", monospace; text-transform: uppercase; color: #4D5757; transition: background-color .5s, color .5s; }
+    .seg button:hover { color: #222F30; } .seg button.on { background: #222F30; color: #fff; }
+    .seg.sm button { padding: 10px 12px; white-space: nowrap; }
+    .step-card { transition: background-color .7s cubic-bezier(.16,1,.3,1), color .7s cubic-bezier(.16,1,.3,1); }
+    .step-card:hover { background: #222F30; color: #fff; }
+    .step-card:hover .seg button.on { background: #CEF79E; color: #222F30; }
+    .step-card:hover .sc-num { color: #CEF79E; } .step-card:hover .sc-ico { background: #CEF79E; color: #222F30; } .step-card:hover .sc-body { color: rgba(255,255,255,.72); }
+  </style>
+</head>
+<body class="min-h-screen bg-surface font-sans text-ink">
+  <div class="bg-noise" aria-hidden="true"></div>
+
+  <!-- Liquid-glass displacement filter used by .glass-card's backdrop-filter (feTurbulence-based) -->
+  <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+    <filter id="glass-blur" x="0" y="0" width="100%" height="100%" filterUnits="objectBoundingBox">
+      <feTurbulence type="fractalNoise" baseFrequency="0.004 0.01" numOctaves="2" result="turbulence" />
+      <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="90" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </svg>
+
+  <!-- HERO -->
+  <!-- NAV: frosted light bar, fixed -->
+  <div class="fixed inset-x-4 top-4 z-50 mx-auto max-w-[1400px]">
+    <div class="ib-nav flex items-center justify-between gap-3 rounded-[12px] px-5 py-3">
+      <a href="landing.html" class="logo-chip shrink-0"><img id="nav-logo" src="assets/logo.png" alt="arclent." class="nav-logo h-6 w-auto" /></a>
+      <div class="nav-group flex items-center gap-1">
+        <nav class="nav-links hidden items-center font-mono text-[13px] uppercase lg:flex" aria-label="Primary">
+          <a href="landing.html" class="u-link px-3 py-2 text-ink">Home</a>
+          <a href="find-jobs.html" class="u-link px-3 py-2 text-ink">Find Jobs</a>
+          <a href="talents.html" class="u-link px-3 py-2 text-ink">Talents</a>
+        </nav>
+        <a href="choose-role.html" class="btn-dark cta-wipe btn-roll flex h-10 items-center rounded-[8px] px-5"><span class="roll"><span>Get Started</span><span aria-hidden="true">Get Started</span></span></a>
+        <button id="menu-btn" type="button" class="menu-btn lg:hidden" aria-label="Menu" aria-expanded="false" aria-controls="menu-overlay"><i></i><i></i></button>
+      </div>
+    </div>
+  </div>
+
+  <div id="menu-overlay" class="menu-overlay" aria-hidden="true">
+    <svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="mp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#mp)"/></svg>
+    <nav class="relative flex h-full flex-col items-center justify-center gap-3 text-center text-[clamp(40px,10vw,64px)] leading-[1.1] tracking-[-0.02em]">
+      <a href="landing.html" class="m-item" style="--i:0">Home</a>
+      <a href="find-jobs.html" class="m-item" style="--i:1">Find Jobs</a>
+      <a href="talents.html" class="m-item" style="--i:2">Talents</a>
+      <a href="choose-role.html" class="m-item" style="--i:3">Get Started</a>
+    </nav>
+    <a href="choose-role.html" class="m-item u-link absolute inset-x-0 bottom-10 mx-auto w-max font-mono text-[15px]" style="--i:5">Join arclent</a>
+  </div>
+
+  <div id="hero" class="relative m-1.5 overflow-hidden rounded-[20px] bg-ink text-white">
+    <div id="hero-tilt" class="absolute inset-0" aria-hidden="true"><div id="silk-hero" data-name="hero" class="absolute inset-0"></div></div>
+    <div class="relative z-10 mx-auto flex min-h-[calc(100vh-12px)] max-w-[1400px] flex-col justify-between px-4 pb-14 pt-32 lg:px-10">
+      <div>
+        <h1 id="hero-h1" class="max-w-[1000px] text-[clamp(48px,7vw,104px)] font-normal leading-[1] tracking-[-0.03em] text-white">The hiring platform built on verified work.</h1>
+      </div>
+      <div class="mt-24 max-w-xl">
+        <p id="hero-p" class="text-[22px] leading-[1.3] text-white">
+          Every portfolio confirmed by the people who actually worked on it. Every job posted and filled with AI doing the busywork. No fakes, no guessing.
+        </p>
+        <div id="hero-cta" class="mt-8 flex flex-wrap items-center gap-3">
+          <a class="ib-btn" href="choose-role.html"><span class="lbl">Hire Now<i class="corner"><svg viewBox="0 0 18 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h6c8 0 13.4 7.2 11.4 15L11 39a11.5 11.5 0 0 1-11 9V0Z"/></svg></i></span><i class="ico"><svg viewBox="0 0 51 48" preserveAspectRatio="none" aria-hidden="true"><path class="shape" d="M6.8 9.2A12 12 0 0 1 18.4 0H39c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H12.4C4.6 48-1.2 40.7.7 33.2L6.8 9.2Z"/><path class="arrow" d="M23 24h13m-5-5 5 5-5 5" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></a>
+          <a href="choose-role.html" class="btn-ghost ml-2 flex h-12 items-center px-5">Apply Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCROLL SCENE: pinned panel, statements reveal character by character as you scroll -->
+  <section id="scroller" class="relative mx-1.5 overflow-hidden rounded-[20px] bg-ink text-white">
+    <div id="scroller-pin" class="relative z-10 flex h-screen flex-col">
+      <div id="silk-scene" data-name="scene" class="absolute inset-0" style="z-index: -1; opacity: 0.75;" aria-hidden="true"></div>
+      <div class="mx-auto flex w-full max-w-[1400px] items-center justify-between px-4 pt-28 lg:px-10">
+        <span class="inline-flex items-center gap-2 rounded-[8px] border border-white/20 bg-black/25 px-3 py-1.5 font-mono text-[13px] uppercase"><span class="h-2 w-2 bg-accent"></span>What we do</span>
+        <span id="scroller-count" class="inline-flex items-center gap-1.5 rounded-full border border-white/30 px-4 py-1.5 font-mono text-[13px]"><span id="scroller-cur">01</span><span class="text-white/40">/</span><span class="text-white/40">03</span></span>
+      </div>
+      <div class="mx-auto mt-6 h-px w-full max-w-[1400px] bg-white/25"><div id="scroller-bar" class="h-px origin-left bg-white" style="transform: scaleX(0);"></div></div>
+      <div class="relative mx-auto w-full max-w-[1400px] flex-1 px-4 lg:px-10">
+        <p class="scroller-item absolute inset-x-4 top-1/2 max-w-[1100px] -translate-y-1/2 text-[clamp(30px,4.4vw,64px)] leading-[1.12] tracking-[-0.02em] lg:inset-x-10" data-split>We are a hiring company building verified portfolios, so creators can prove the work they did and never be doubted for it.</p>
+        <p class="scroller-item absolute inset-x-4 top-1/2 max-w-[1100px] -translate-y-1/2 text-[clamp(30px,4.4vw,64px)] leading-[1.12] tracking-[-0.02em] lg:inset-x-10" data-split>Every collaboration is confirmed by the people who were actually there. No fakes, no guesswork, no cold emails.</p>
+        <p class="scroller-item absolute inset-x-4 top-1/2 max-w-[1100px] -translate-y-1/2 text-[clamp(30px,4.4vw,64px)] leading-[1.12] tracking-[-0.02em] lg:inset-x-10" data-split>Recruiters post a job in minutes, reach verified talent directly, and hire on evidence instead of claims.</p>
+      </div>
+    </div>
+  </section>
+  <script src="assets/vendor/gsap.min.js"></script>
+  <script src="assets/vendor/ScrollTrigger.min.js"></script>
+  <script>
+    (function () {
+      var items = Array.prototype.slice.call(document.querySelectorAll(".scroller-item"));
+      var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      // split into words (inline-block so they never break mid-word) and chars
+      items.forEach(function (p) {
+        var words = p.textContent.trim().split(/\s+/);
+        p.setAttribute("aria-label", p.textContent.trim());
+        p.innerHTML = words.map(function (w) {
+          return '<span aria-hidden="true" style="display:inline-block;white-space:nowrap;">' +
+            w.split("").map(function (c) { return '<span class="sc-char" style="display:inline-block;">' + c + "</span>"; }).join("") +
+            "</span>";
+        }).join(" ");
+      });
+      if (reduce || !window.gsap || !window.ScrollTrigger) {
+        // no motion: show statements stacked and readable
+        var wrap = items[0].parentElement;
+        wrap.style.overflow = "auto";
+        items.forEach(function (p) { p.style.position = "static"; p.style.transform = "none"; p.style.margin = "0 0 32px"; });
+        return;
+      }
+      gsap.registerPlugin(ScrollTrigger);
+      var cur = document.getElementById("scroller-cur");
+      var bar = document.getElementById("scroller-bar");
+      gsap.set(items, { autoAlpha: 0 });
+      gsap.set(".sc-char", { opacity: 0.4 });
+      var tl = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+          trigger: "#scroller",
+          start: "top top",
+          end: "+=" + (items.length * 1100),
+          pin: "#scroller-pin",
+          scrub: 0.8,
+          onUpdate: function (self) {
+            gsap.set(bar, { scaleX: self.progress });
+            var t = tl.time(), n = 1;
+            starts.forEach(function (st, i) { if (t >= st) n = i + 1; });
+            cur.textContent = "0" + n;
+          }
+        }
+      });
+      var starts = [];
+      items.forEach(function (p, i) {
+        var chars = p.querySelectorAll(".sc-char");
+        starts.push(tl.duration());
+        tl.to(p, { autoAlpha: 1, duration: 0.15 })
+          .to(chars, { opacity: 1, duration: 1, stagger: { each: 0.6 / chars.length } })
+          .to({}, { duration: 0.25 });
+        if (i < items.length - 1) tl.to(p, { autoAlpha: 0, duration: 0.15 });
+      });
+    })();
+  </script>
+
+  <section class="marquee-strip overflow-hidden border-y border-[#C9CBBE] bg-surface py-8" aria-label="Highlights">
+    <div class="marquee-track text-[clamp(40px,6vw,88px)] leading-none tracking-[-0.03em] text-ink"><span class="flex shrink-0 items-center gap-8 pr-8"><span>Verified work</span><span class="h-3 w-3 bg-accent"></span><span>Real collaborations</span><span class="h-3 w-3 bg-accent"></span><span>Hire on evidence</span><span class="h-3 w-3 bg-accent"></span><span>No fakes, no guessing</span><span class="h-3 w-3 bg-accent"></span></span><span class="flex shrink-0 items-center gap-8 pr-8"><span>Verified work</span><span class="h-3 w-3 bg-accent"></span><span>Real collaborations</span><span class="h-3 w-3 bg-accent"></span><span>Hire on evidence</span><span class="h-3 w-3 bg-accent"></span><span>No fakes, no guessing</span><span class="h-3 w-3 bg-accent"></span></span><span class="flex shrink-0 items-center gap-8 pr-8"><span>Verified work</span><span class="h-3 w-3 bg-accent"></span><span>Real collaborations</span><span class="h-3 w-3 bg-accent"></span><span>Hire on evidence</span><span class="h-3 w-3 bg-accent"></span><span>No fakes, no guessing</span><span class="h-3 w-3 bg-accent"></span></span><span class="flex shrink-0 items-center gap-8 pr-8"><span>Verified work</span><span class="h-3 w-3 bg-accent"></span><span>Real collaborations</span><span class="h-3 w-3 bg-accent"></span><span>Hire on evidence</span><span class="h-3 w-3 bg-accent"></span><span>No fakes, no guessing</span><span class="h-3 w-3 bg-accent"></span></span></div>
+  </section>
+
+  <script>
+    (function () {
+      var root = document.documentElement, btn = document.getElementById("menu-btn"), ov = document.getElementById("menu-overlay");
+      if (!btn || !ov) return;
+      function set(open) {
+        root.classList.toggle("menu-open", open);
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+        ov.setAttribute("aria-hidden", open ? "false" : "true");
+      }
+      btn.addEventListener("click", function () { set(!root.classList.contains("menu-open")); });
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") set(false); });
+      ov.querySelectorAll("a").forEach(function (a) { a.addEventListener("click", function () { set(false); }); });
+      matchMedia("(min-width: 1024px)").addEventListener("change", function (e) { if (e.matches) set(false); });
+    })();
+  </script>
+
+  <script src="assets/silk-bg.js"></script>
+  <script>["silk-hero", "silk-scene"].forEach(function (id) { window.SilkBackground(document.getElementById(id)); });</script>
+  <script>
+    (function () {
+      // logo turns dark while the nav sits over a light section, white over dark ones
+      var logo = document.getElementById("nav-logo");
+      if (!logo) return;
+      var dark = Array.prototype.slice.call(document.querySelectorAll("#hero, #scroller, section.bg-ink, footer, .bg-ink"));
+      var raf = 0;
+      function check() {
+        raf = 0;
+        var y = 45, over = false;
+        for (var i = 0; i < dark.length; i++) {
+          var r = dark[i].getBoundingClientRect();
+          if (r.top <= y && r.bottom >= y) { over = true; break; }
+        }
+        document.documentElement.classList.toggle("nav-on-light", !over);
+      }
+      function queue() { if (!raf) raf = requestAnimationFrame(check); document.documentElement.classList.toggle("is-scrolled", (window.scrollY || 0) > 8); }
+      addEventListener("scroll", queue, { passive: true });
+      addEventListener("resize", queue);
+      check(); queue();
+    })();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script>
+    (function () {
+      if (!window.Lenis || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      var lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.95, smoothWheel: true });
+      window.__lenis = lenis;
+      if (window.gsap && window.ScrollTrigger) {
+        lenis.on("scroll", ScrollTrigger.update);
+        gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+        gsap.ticker.lagSmoothing(0);
+      } else {
+        (function raf(t) { lenis.raf(t); requestAnimationFrame(raf); })(0);
+      }
+      // menu open/close pauses page scrolling
+      new MutationObserver(function () {
+        if (document.documentElement.classList.contains("menu-open")) lenis.stop(); else lenis.start();
+      }).observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+      // in-page anchors glide instead of jumping
+      document.addEventListener("click", function (e) {
+        var a = e.target.closest && e.target.closest('a[href^="#"]');
+        if (!a || a.getAttribute("href") === "#") return;
+        var t = document.querySelector(a.getAttribute("href"));
+        if (t) { e.preventDefault(); lenis.scrollTo(t, { offset: -80, duration: 1.4 }); }
+      });
+    })();
+  </script>
+
+  <script>
+    /* Hero intro (GSAP): headline and paragraph rise line by line out of clipped masks,
+       the buttons scale/fade up, the nav drops in, the shader fades up. On scroll the
+       hero copy drifts up and dims while the shader eases back. */
+    (function () {
+      var root = document.documentElement;
+      var h1 = document.getElementById("hero-h1"), p = document.getElementById("hero-p"), cta = document.getElementById("hero-cta");
+      if (!h1 || !p || !cta) { root.classList.remove("hero-pending"); return; }
+      if (!window.gsap || matchMedia("(prefers-reduced-motion: reduce)").matches) { root.classList.remove("hero-pending"); return; }
+
+      var texts = new Map();
+      function splitLines(el) {
+        if (!texts.has(el)) texts.set(el, el.textContent.trim().replace(/\s+/g, " "));
+        var text = texts.get(el);
+        el.setAttribute("aria-label", text);
+        el.innerHTML = text.split(" ").map(function (w) {
+          return '<span class="w" aria-hidden="true" style="display:inline-block">' + w + "</span>";
+        }).join(" ");
+        var lines = [], top = null;
+        Array.prototype.forEach.call(el.querySelectorAll(".w"), function (sp) {
+          var t = sp.offsetTop;
+          if (top === null || Math.abs(t - top) > 4) { lines.push([]); top = t; }
+          lines[lines.length - 1].push(sp.textContent);
+        });
+        el.innerHTML = lines.map(function (l) {
+          return '<span class="line-mask" aria-hidden="true"><span class="line">' + l.join(" ") + "</span></span>";
+        }).join("");
+        return el.querySelectorAll(".line");
+      }
+
+      function run() {
+        var hLines = splitLines(h1), pLines = splitLines(p);
+        // same recipe as integratedbio.com: the panel opens from a point at its centre
+        // (clip-path, 2s expo.inOut, 0.3s delay); copy rises out of masks at 1.6s, button pops in last
+        var tl = gsap.timeline({ delay: 1.6, defaults: { ease: "power2.out" } });
+        var wide = matchMedia("(min-width: 1025px)").matches;
+        gsap.set(hLines, { y: 110 });
+        gsap.set(pLines, { y: 110 });
+        gsap.set(cta, { autoAlpha: 0, y: 20, scale: 0.9 });
+        gsap.set(".ib-nav", { autoAlpha: 0, y: -18 });
+        gsap.fromTo("#hero", { clipPath: "inset(50% 50% 50% 50% round " + (wide ? 200 : 100) + "px)" },
+          { clipPath: "inset(0% 0% 0% 0% round 20px)", duration: 2, delay: 0.3, ease: "expo.inOut", onComplete: function () { gsap.set("#hero", { clearProps: "clipPath" }); } });
+        gsap.to(".ib-nav", { autoAlpha: 1, y: 0, duration: 0.9, delay: 1.4, ease: "power3.out" });
+        root.classList.remove("hero-pending");          // everything is in its start state now
+        gsap.set([h1, p], { visibility: "visible" });
+
+        tl.to(hLines, { y: 0, duration: 0.8, stagger: 0.05 }, 0)
+          .to(pLines, { y: 0, duration: 0.8, stagger: 0.05 }, 0)
+          .to(cta, { autoAlpha: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.7)" }, 0.4);
+
+        // scroll: copy drifts up and dims, shader eases back (scrubbed, plays with Lenis)
+        if (window.ScrollTrigger) {
+          gsap.registerPlugin(ScrollTrigger);
+          var st = { trigger: "#hero", start: "top top", end: "bottom top", scrub: true };
+          // footer-style scroll: panel settles back, copy dissolves line by line into blur
+          gsap.to("#hero", { scale: 0.94, y: 40, transformOrigin: "50% 100%", ease: "none", immediateRender: false, scrollTrigger: st });
+          gsap.to(h1.querySelectorAll(".line"), { opacity: 0.12, filter: "blur(8px)", stagger: 0.25, ease: "none", immediateRender: false, scrollTrigger: Object.assign({}, st, { end: "bottom 35%" }) });
+          gsap.to(p.querySelectorAll(".line"), { opacity: 0.12, filter: "blur(8px)", stagger: 0.15, ease: "none", immediateRender: false, scrollTrigger: Object.assign({}, st, { end: "bottom 45%" }) });
+          gsap.to(cta, { opacity: 0, filter: "blur(8px)", ease: "none", immediateRender: false, scrollTrigger: Object.assign({}, st, { end: "60% top" }) });
+          gsap.to('[data-name="hero"]', { scale: 1.08, ease: "none", scrollTrigger: st });
+        }
+      }
+
+      function start() { run(); }
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
+
+      // re-break lines when the width changes (text already visible: no replay)
+      var lastW = innerWidth, timer = 0;
+      addEventListener("resize", function () {
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          if (Math.abs(innerWidth - lastW) < 24) return;
+          lastW = innerWidth;
+          gsap.set(splitLines(h1), { yPercent: 0 });
+          gsap.set(splitLines(p), { yPercent: 0 });
+        }, 250);
+      });
+    })();
+  </script>
+
+  <script>
+    /* Hero depth (GSAP): the shader plane tilts and drifts toward the cursor. Fine pointers
+       only; skipped for reduced motion. */
+    (function () {
+      var hero = document.getElementById("hero"), tilt = document.getElementById("hero-tilt");
+      if (!hero || !tilt || !window.gsap) return;
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches || !matchMedia("(pointer: fine)").matches) return;
+
+      gsap.set(tilt, { scale: 1.1, transformPerspective: 1400 });
+      var o = { duration: 1.4, ease: "power3.out" };
+      var rx = gsap.quickTo(tilt, "rotationX", o), ry = gsap.quickTo(tilt, "rotationY", o),
+          tx = gsap.quickTo(tilt, "x", o), ty = gsap.quickTo(tilt, "y", o);
+
+      function aim(nx, ny) { ry(nx * 6); rx(-ny * 4); tx(-nx * 16); ty(-ny * 12); }
+      addEventListener("pointermove", function (e) {
+        var r = hero.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > innerHeight) return;
+        aim((e.clientX - r.left) / r.width - 0.5, (e.clientY - r.top) / r.height - 0.5);
+      }, { passive: true });
+      document.addEventListener("pointerleave", function () { aim(0, 0); });
+    })();
+  </script>
+
+  <div id="hero-next" class="mx-auto max-w-[1200px] px-4 lg:px-8">
+
+    <!-- HOW IT WORKS -->
+    <div class="py-24">
+      <div data-reveal-group>
+        <p class="mono flex items-center gap-2 text-primary"><span class="h-1.5 w-1.5 rounded-full bg-primary"></span>The process</p>
+        <h2 class="mt-4 text-[clamp(48px,7.4vw,112px)] font-normal leading-[.94] tracking-[-0.055em] text-ink">How it <span class="text-primary/45">works.</span></h2>
+        <p class="mt-5 max-w-[640px] text-[18px] leading-snug text-primary">Different paths, one goal &mdash; real hires built on verified trust. Select your role to see your journey.</p>
+        <div class="mt-8 flex flex-wrap items-center gap-3">
+          <div class="seg" id="toggle1"><button data-mode="talent" class="on">I'm Talent</button><button data-mode="recruiter">I'm a Recruiter</button></div>
+          <div class="seg" id="toggle2" hidden><button data-sub="creator" class="on">As a Creator</button><button data-sub="company">As a Company</button></div>
+          <span class="mono rounded-full bg-[#CEF79E] px-4 py-3 text-ink" id="journeyPill">&#9733; TALENT JOURNEY</span>
+        </div>
+      </div>
+
+      <div class="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4" id="cards"></div>
+
+      <div class="mt-4" id="shortcut" data-reveal>
+        <div class="relative overflow-hidden rounded-[20px] bg-ink p-6 text-white sm:p-8">
+          <svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="hwp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#hwp)"/></svg>
+          <div class="relative grid gap-4 lg:grid-cols-[260px_1fr] lg:gap-10">
+            <div><span class="mono rounded-full bg-[#CEF79E] px-3 py-1.5 text-ink">Shortcut</span><p class="mt-4 text-[26px] leading-tight tracking-[-0.03em]">Already credited by name?</p></div>
+            <p class="text-[17px] leading-snug text-white/75">If the creator already tagged you in their description &mdash; like "thumbnails by @xyz" &mdash; and your Instagram is connected, we match the handle automatically and your work gets verified with no outreach at all. Haven't connected Instagram yet? We'll ask you to first, then check.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUPPORTED PLATFORMS -->
+    <div class="flex flex-col gap-6 border-b border-neutral py-12 sm:flex-row sm:items-center sm:gap-12">
+      <div class="flex shrink-0 items-center gap-2 font-mono text-[13px] tracking-[-0.02em] uppercase text-ink/60">
+        <span class="h-1.5 w-1.5 rounded-full bg-ink/60"></span>
+        WORKS WITH
+      </div>
+      <div data-reveal-group class="flex flex-wrap items-center gap-x-10 gap-y-5 text-ink/50">
+        <div class="flex items-center gap-2.5 transition-transform duration-200 hover:-translate-y-0.5 hover:text-ink">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><title>Facebook</title><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/></svg>
+          <span class="font-sans text-sm">Facebook</span>
+        </div>
+        <div class="flex items-center gap-2.5 transition-transform duration-200 hover:-translate-y-0.5 hover:text-ink">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><title>Instagram</title><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg>
+          <span class="font-sans text-sm">Instagram</span>
+        </div>
+        <div class="flex items-center gap-2.5 transition-transform duration-200 hover:-translate-y-0.5 hover:text-ink">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><title>YouTube</title><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          <span class="font-sans text-sm">YouTube</span>
+        </div>
+        <div class="flex items-center gap-2.5 transition-transform duration-200 hover:-translate-y-0.5 hover:text-ink">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><title>Twitch</title><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/></svg>
+          <span class="font-sans text-sm">Twitch</span>
+        </div>
+        <div class="flex items-center gap-2.5 transition-transform duration-200 hover:-translate-y-0.5 hover:text-ink">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><title>Discord</title><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+          <span class="font-sans text-sm">Discord</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BADGE SYSTEM -->
+    <div class="border-t border-[#C9CBBE] py-24">
+      <div data-reveal-group>
+        <p class="mono flex items-center gap-2 text-primary"><span class="h-1.5 w-1.5 rounded-full bg-primary"></span>Verification tiers</p>
+        <h2 class="mt-4 text-[clamp(48px,7.4vw,112px)] font-normal leading-[.94] tracking-[-0.055em] text-ink">The badge <span class="text-primary/45">system.</span></h2>
+        <p class="mt-5 max-w-[640px] text-[18px] leading-snug text-primary">Every tier reflects the size of the audience behind the verified collaboration &mdash; not how many times you've done it.</p>
+      </div>
+      <div data-reveal class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5 lg:items-end">
+        <article class="tier group relative flex flex-col overflow-hidden rounded-[20px] bg-white text-ink p-6 lg:min-h-[var(--h)]" style="--h:340px">
+          
+          <div class="relative flex items-start justify-between gap-3">
+            <span class="mono rounded-full px-3 py-1.5 text-white" style="background-color:#B5732E">Entry</span>
+            <span class="mono text-primary">01</span>
+          </div>
+          <img src="assets/badge-bronze-new.png" alt="Bronze tier badge" width="88" height="88" class="relative mt-8 h-[88px] w-[88px] object-contain transition-transform duration-700 group-hover:-rotate-6 group-hover:scale-110" />
+          <div class="relative mt-auto pt-8">
+            <p class="text-[clamp(40px,4vw,56px)] leading-none tracking-[-0.05em]">&lt;100K</p>
+            <h3 class="mt-3 text-[22px] leading-tight tracking-[-0.02em]" style="color:#B5732E">Bronze</h3>
+            <p class="mt-3 text-[15px] leading-snug text-primary">Verified collaboration with a channel under 100K subscribers or followers.</p>
+          </div>
+        </article>
+        <article class="tier group relative flex flex-col overflow-hidden rounded-[20px] bg-white text-ink p-6 lg:min-h-[var(--h)]" style="--h:390px">
+          
+          <div class="relative flex items-start justify-between gap-3">
+            <span class="mono rounded-full px-3 py-1.5 text-white" style="background-color:#5B6B76">Growing</span>
+            <span class="mono text-primary">02</span>
+          </div>
+          <img src="assets/badge-silver-new.png" alt="Silver tier badge" width="88" height="88" class="relative mt-8 h-[88px] w-[88px] object-contain transition-transform duration-700 group-hover:-rotate-6 group-hover:scale-110" />
+          <div class="relative mt-auto pt-8">
+            <p class="text-[clamp(40px,4vw,56px)] leading-none tracking-[-0.05em]">100K+</p>
+            <h3 class="mt-3 text-[22px] leading-tight tracking-[-0.02em]" style="color:#5B6B76">Silver</h3>
+            <p class="mt-3 text-[15px] leading-snug text-primary">Verified collaboration with a channel of 100K+ subscribers or followers.</p>
+          </div>
+        </article>
+        <article class="tier group relative flex flex-col overflow-hidden rounded-[20px] bg-white text-ink p-6 lg:min-h-[var(--h)]" style="--h:440px">
+          
+          <div class="relative flex items-start justify-between gap-3">
+            <span class="mono rounded-full px-3 py-1.5 text-white" style="background-color:#C9932E">Established</span>
+            <span class="mono text-primary">03</span>
+          </div>
+          <img src="assets/badge-gold-new.gif" alt="Gold tier badge" width="88" height="88" class="relative mt-8 h-[88px] w-[88px] object-contain transition-transform duration-700 group-hover:-rotate-6 group-hover:scale-110" />
+          <div class="relative mt-auto pt-8">
+            <p class="text-[clamp(40px,4vw,56px)] leading-none tracking-[-0.05em]">1M+</p>
+            <h3 class="mt-3 text-[22px] leading-tight tracking-[-0.02em]" style="color:#C9932E">Gold</h3>
+            <p class="mt-3 text-[15px] leading-snug text-primary">Verified collaboration with a channel of 1M+ subscribers or followers.</p>
+          </div>
+        </article>
+        <article class="tier group relative flex flex-col overflow-hidden rounded-[20px] bg-white text-ink p-6 lg:min-h-[var(--h)]" style="--h:490px">
+          
+          <div class="relative flex items-start justify-between gap-3">
+            <span class="mono rounded-full px-3 py-1.5 text-white" style="background-color:#2E7FB5">Elite</span>
+            <span class="mono text-primary">04</span>
+          </div>
+          <img src="assets/badge-diamond-new.gif" alt="Diamond tier badge" width="88" height="88" class="relative mt-8 h-[88px] w-[88px] object-contain transition-transform duration-700 group-hover:-rotate-6 group-hover:scale-110" />
+          <div class="relative mt-auto pt-8">
+            <p class="text-[clamp(40px,4vw,56px)] leading-none tracking-[-0.05em]">10M+</p>
+            <h3 class="mt-3 text-[22px] leading-tight tracking-[-0.02em]" style="color:#2E7FB5">Diamond</h3>
+            <p class="mt-3 text-[15px] leading-snug text-primary">Verified collaboration with a channel of 10M+ subscribers or followers.</p>
+          </div>
+        </article>
+        <article class="tier group relative flex flex-col overflow-hidden rounded-[20px] bg-ink text-white p-6 lg:min-h-[var(--h)]" style="--h:540px">
+          <svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="bdp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#bdp)"/></svg>
+          <div class="relative flex items-start justify-between gap-3">
+            <span class="mono rounded-full px-3 py-1.5 text-white" style="background-color:#C93E4E">Rarest</span>
+            <span class="mono text-white/70">05</span>
+          </div>
+          <img src="assets/badge-reddiamond-new.gif" alt="Red Diamond tier badge" width="88" height="88" class="relative mt-8 h-[88px] w-[88px] object-contain transition-transform duration-700 group-hover:-rotate-6 group-hover:scale-110" />
+          <div class="relative mt-auto pt-8">
+            <p class="text-[clamp(40px,4vw,56px)] leading-none tracking-[-0.05em]">100M+</p>
+            <h3 class="mt-3 text-[22px] leading-tight tracking-[-0.02em]" style="color:#F2879A">Red Diamond</h3>
+            <p class="mt-3 text-[15px] leading-snug text-white/70">Verified collaboration with a channel of 100M+ subscribers or followers.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- FOR TALENT -->
+    <div class="border-t border-[#C9CBBE] py-24">
+      <div data-reveal-group class="grid grid-cols-1 gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+        <div class="relative overflow-hidden rounded-[24px] bg-ink lg:sticky lg:top-24 lg:self-start">
+          <img src="https://images.unsplash.com/photo-1611784728558-6c7d9b409cdf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080" alt="Creator filming content with a camera" class="aspect-[4/5] w-full object-cover" />
+          <span class="mono absolute left-5 top-5 rounded-full bg-[#CEF79E] px-4 py-2 text-ink">For talent</span>
+          <div class="mono absolute bottom-5 left-5 right-5 flex items-center justify-between rounded-[14px] bg-white/90 px-4 py-3 text-ink backdrop-blur"><span class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-[#7FD34A]"></span>Work verified</span><span class="text-primary">Confirmed by collaborator</span></div>
+        </div>
+        <div class="flex flex-col justify-center">
+          <p class="mono flex items-center gap-2 text-primary"><span class="h-1.5 w-1.5 rounded-full bg-primary"></span>For talent</p>
+          <h3 class="mt-4 text-[clamp(40px,5.4vw,84px)] font-normal leading-[.96] tracking-[-0.05em] text-ink">Get credit for work <span class="text-primary/45">that's actually yours.</span></h3>
+          <p class="mt-5 max-w-[560px] text-[18px] leading-snug text-primary">The person you worked with confirms it happened. That's what makes your profile worth something &mdash; not what you type into a bio.</p>
+          <ul class="mt-8 border-b border-[#DADCD0]">
+          <li class="group flex items-start gap-5 border-t border-[#DADCD0] py-5 transition-transform duration-500 hover:translate-x-1">
+            <span class="mono w-7 shrink-0 pt-1 text-primary">01</span>
+            <span class="flex-1 text-[19px] leading-snug tracking-[-0.01em] text-ink">Verified by the person you worked with, not just your word</span>
+            <span class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#CEF79E] text-ink"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span>
+          </li>
+          <li class="group flex items-start gap-5 border-t border-[#DADCD0] py-5 transition-transform duration-500 hover:translate-x-1">
+            <span class="mono w-7 shrink-0 pt-1 text-primary">02</span>
+            <span class="flex-1 text-[19px] leading-snug tracking-[-0.01em] text-ink">Bigger collaborations earn a higher badge, Bronze to Red Diamond</span>
+            <span class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#CEF79E] text-ink"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span>
+          </li>
+          <li class="group flex items-start gap-5 border-t border-[#DADCD0] py-5 transition-transform duration-500 hover:translate-x-1">
+            <span class="mono w-7 shrink-0 pt-1 text-primary">03</span>
+            <span class="flex-1 text-[19px] leading-snug tracking-[-0.01em] text-ink">Once verified, recruiters can find you without you applying</span>
+            <span class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#CEF79E] text-ink"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span>
+          </li>
+          <li class="group flex items-start gap-5 border-t border-[#DADCD0] py-5 transition-transform duration-500 hover:translate-x-1">
+            <span class="mono w-7 shrink-0 pt-1 text-primary">04</span>
+            <span class="flex-1 text-[19px] leading-snug tracking-[-0.01em] text-ink">Add work in minutes — paste a link, we handle the rest</span>
+            <span class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#CEF79E] text-ink"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span>
+          </li>
+          </ul>
+          <div class="mt-8"><button class="ib-btn" type="button"><span class="lbl">Join as Talent<i class="corner"><svg viewBox="0 0 18 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h6c8 0 13.4 7.2 11.4 15L11 39a11.5 11.5 0 0 1-11 9V0Z"/></svg></i></span><i class="ico"><svg viewBox="0 0 51 48" preserveAspectRatio="none" aria-hidden="true"><path class="shape" d="M6.8 9.2A12 12 0 0 1 18.4 0H39c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H12.4C4.6 48-1.2 40.7.7 33.2L6.8 9.2Z"/><path class="arrow" d="M23 24h13m-5-5 5 5-5 5" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- WORK VERIFICATION DEMO: auto-playing mock of the talent outreach/verify flow -->
+  <section class="relative mx-1.5 my-1.5 overflow-hidden rounded-[20px] bg-ink py-24 text-white">
+    <svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="vfp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#vfp)"/></svg>
+    <div class="relative mx-auto grid max-w-[1200px] grid-cols-1 items-center gap-14 px-4 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-8">
+      <div data-reveal-group>
+        <p class="mono flex items-center gap-2 text-white/60"><span class="h-1.5 w-1.5 rounded-full bg-accent"></span>AI-powered verification</p>
+        <h2 class="mt-4 text-[clamp(44px,5.6vw,88px)] font-normal leading-[.96] tracking-[-0.05em] text-white">Get your work verified <span class="text-white/45">in four clicks.</span></h2>
+        <p class="mt-5 max-w-[520px] text-[18px] leading-snug text-white/70">Paste a link to something you made. Our AI finds the creator, reaches out on your behalf, and confirms the collaboration &mdash; no cold emails, no chasing replies.</p>
+        <div class="mt-10 flex items-start">
+          <div class="flex min-w-0 flex-col items-start gap-3" data-verify-dot="0">
+            <span class="verify-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent font-mono text-[12px] text-ink transition-colors duration-500">1</span>
+            <p class="verify-label mono text-white transition-colors duration-500">Paste link</p>
+          </div>
+          <div class="verify-line mt-[18px] h-px min-w-3 flex-1 bg-white/15"><div class="verify-fill h-full w-0 bg-accent transition-[width] duration-500 ease-out"></div></div>
+          <div class="flex min-w-0 flex-col items-start gap-3" data-verify-dot="1">
+            <span class="verify-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500">2</span>
+            <p class="verify-label mono text-white/40 transition-colors duration-500">AI finds creator</p>
+          </div>
+          <div class="verify-line mt-[18px] h-px min-w-3 flex-1 bg-white/15"><div class="verify-fill h-full w-0 bg-accent transition-[width] duration-500 ease-out"></div></div>
+          <div class="flex min-w-0 flex-col items-start gap-3" data-verify-dot="2">
+            <span class="verify-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500">3</span>
+            <p class="verify-label mono text-white/40 transition-colors duration-500">AI reaches out</p>
+          </div>
+          <div class="verify-line mt-[18px] h-px min-w-3 flex-1 bg-white/15"><div class="verify-fill h-full w-0 bg-accent transition-[width] duration-500 ease-out"></div></div>
+          <div class="flex min-w-0 flex-col items-start gap-3" data-verify-dot="3">
+            <span class="verify-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500">4</span>
+            <p class="verify-label mono text-white/40 transition-colors duration-500">Confirmed</p>
+          </div>
+        </div>
+        <div class="mt-10"><button class="ib-btn ib-btn--light" type="button"><span class="lbl">Verify Your Work<i class="corner"><svg viewBox="0 0 18 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h6c8 0 13.4 7.2 11.4 15L11 39a11.5 11.5 0 0 1-11 9V0Z"/></svg></i></span><i class="ico"><svg viewBox="0 0 51 48" preserveAspectRatio="none" aria-hidden="true"><path class="shape" d="M6.8 9.2A12 12 0 0 1 18.4 0H39c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H12.4C4.6 48-1.2 40.7.7 33.2L6.8 9.2Z"/><path class="arrow" d="M23 24h13m-5-5 5 5-5 5" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></button></div>
+      </div>
+      <div data-reveal class="relative">
+        <div id="verify-stage" class="relative flex min-h-[440px] flex-col items-center justify-center overflow-hidden rounded-[24px] bg-[#2F3C3D] p-8 text-center"></div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var stage = document.getElementById("verify-stage");
+      var section = stage && stage.closest("section");
+      if (!stage) return;
+      var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var EASE = "cubic-bezier(0.16,1,0.3,1)";
+      var CREATOR_AVATAR = "https://images.unsplash.com/photo-1713039973246-abeb431c6c42?crop=faces&fit=crop&w=96&h=96&q=80";
+      var dots = Array.prototype.slice.call(document.querySelectorAll("[data-verify-dot] .verify-dot"));
+      var labels = Array.prototype.slice.call(document.querySelectorAll("[data-verify-dot] .verify-label"));
+      var fills = Array.prototype.slice.call(document.querySelectorAll(".verify-fill"));
+
+      function setActiveStep(n) {
+        for (var i = 0; i < dots.length; i++) {
+          if (i < n) {
+            dots[i].className = "verify-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#CEF79E]/25 font-mono text-[12px] text-[#CEF79E] transition-colors duration-500";
+            dots[i].innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+            labels[i].className = "verify-label mono text-white/70 transition-colors duration-500";
+          } else if (i === n) {
+            dots[i].className = "verify-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent font-mono text-[12px] text-ink transition-colors duration-500";
+            dots[i].textContent = String(i + 1);
+            labels[i].className = "verify-label mono text-white transition-colors duration-500";
+          } else {
+            dots[i].className = "verify-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500";
+            dots[i].textContent = String(i + 1);
+            labels[i].className = "verify-label mono text-white/40 transition-colors duration-500";
+          }
+        }
+        fills.forEach(function (fill, i) { fill.style.width = i < n ? "100%" : "0%"; });
+      }
+
+      function swapStage(html) {
+        return new Promise(function (resolve) {
+          var old = stage.firstElementChild;
+          function place() {
+            stage.insertAdjacentHTML("beforeend", html);
+            var el = stage.lastElementChild;
+            el.style.opacity = "0";
+            el.style.transform = "translateY(8px) scale(0.97)";
+            el.style.transition = "opacity 450ms " + EASE + ", transform 450ms " + EASE;
+            requestAnimationFrame(function () {
+              requestAnimationFrame(function () {
+                el.style.opacity = "1";
+                el.style.transform = "translateY(0) scale(1)";
+              });
+            });
+            setTimeout(resolve, 460);
+          }
+          if (old) {
+            old.style.transition = "opacity 250ms ease, transform 250ms ease";
+            old.style.opacity = "0";
+            old.style.transform = "translateY(-8px) scale(0.97)";
+            setTimeout(function () { old.remove(); place(); }, 250);
+          } else {
+            place();
+          }
+        });
+      }
+
+      function tag(text) {
+        return '<span class="mono mb-5 inline-block rounded-full bg-white/10 px-3 py-1.5 text-[#CEF79E]">' + text + '</span>';
+      }
+
+      function linkStepHtml() {
+        return '<div class="flex w-full flex-col items-center">' + tag("STEP 1 · LINK YOUR WORK") +
+          '<div class="w-full max-w-[260px] rounded-xl border border-white/15 bg-white/5 p-3.5 text-left">' +
+          '<p class="font-sans text-[10px] uppercase tracking-wide text-white/40">Work link</p>' +
+          '<p class="mt-1 truncate font-sans text-[13px] text-white">youtube.com/watch?v=nova-ep12</p>' +
+          '</div>' +
+          '<div class="mt-2.5 w-full max-w-[260px] rounded-xl border border-white/15 bg-white/5 p-3.5 text-left">' +
+          '<p class="font-sans text-[10px] uppercase tracking-wide text-white/40">Your role</p>' +
+          '<p class="mt-1 font-sans text-[13px] text-white">Thumbnail Designer</p>' +
+          '</div>' +
+          '<div class="mt-4 flex h-10 w-full max-w-[260px] items-center justify-center rounded-full bg-accent font-sans text-[13px] font-medium text-ink">Find the Creator →</div>' +
+          '</div>';
+      }
+
+      function searchingStepHtml() {
+        return '<div class="flex w-full flex-col items-center">' + tag("STEP 2 · AI FINDS THE CREATOR") +
+          '<span class="mb-4 flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/15" style="border-top-color: rgb(206 247 158); animation: spin 900ms linear infinite;">' +
+          '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/60"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>' +
+          '<p class="font-sans text-[13px] text-white/70">Searching YouTube for a match…</p>' +
+          '</div>';
+      }
+
+      function creatorFoundHtml() {
+        return '<div class="flex w-full flex-col items-center">' + tag("STEP 2 · AI FINDS THE CREATOR") +
+          '<img src="' + CREATOR_AVATAR + '" alt="Nova Gaming" class="h-20 w-20 rounded-full object-cover ring-4 ring-white/15" />' +
+          '<p class="mt-3 font-serif text-xl font-medium text-white">Nova Gaming</p>' +
+          '<p class="mt-0.5 font-sans text-xs text-white/50">2.4M subscribers · YouTube</p>' +
+          '<span class="mt-2.5 rounded-full bg-primary/25 px-3 py-1 font-sans text-[11px] font-medium text-white">Match found ✓</span>' +
+          '</div>';
+      }
+
+      function reachingOutHtml() {
+        return '<div class="flex w-full flex-col items-center">' + tag("STEP 3 · AI REACHES OUT") +
+          '<div class="w-full max-w-[260px] rounded-xl border border-white/15 bg-white/5 p-3.5 text-left">' +
+          '<p class="font-sans text-[10px] uppercase tracking-wide text-white/40">To</p>' +
+          '<p class="mt-0.5 font-sans text-[13px] text-white">contact@novagaming.biz</p>' +
+          '<p class="mt-2.5 font-sans text-[10px] uppercase tracking-wide text-white/40">Message</p>' +
+          '<p class="mt-0.5 font-sans text-[12px] leading-relaxed text-white/70">"Hi! Just confirming — did this person design your latest thumbnail? Reply Yes or No."</p>' +
+          '</div>' +
+          '<p class="mt-3 font-sans text-[12px] text-white/50">Sending…</p>' +
+          '</div>';
+      }
+
+      function outreachSentHtml() {
+        return '<div class="flex w-full flex-col items-center">' + tag("STEP 3 · AI REACHES OUT") +
+          '<span class="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>' +
+          '<p class="mt-3 font-serif text-base font-medium text-white">Outreach sent</p>' +
+          '<p class="mt-1 font-sans text-[12px] text-white/50">Waiting for Nova Gaming to confirm…</p>' +
+          '</div>';
+      }
+
+      function verifiedHtml() {
+        return '<div class="flex w-full flex-col items-center">' + tag("STEP 4 · CONFIRMED") +
+          '<div class="relative">' +
+          '<img src="' + CREATOR_AVATAR + '" alt="Nova Gaming" class="h-20 w-20 rounded-full object-cover ring-4 ring-primary" />' +
+          '<span class="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-primary text-white ring-4 ring-ink">' +
+          '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>' +
+          '</div>' +
+          '<p class="mt-3 font-serif text-2xl font-medium text-white">Verified!</p>' +
+          '<span class="mt-2 rounded-full bg-accent/25 px-3 py-1.5 font-sans text-[11px] font-medium tracking-wide text-white">GOLD TIER</span>' +
+          '<p class="mt-3 max-w-[240px] font-sans text-[12px] leading-relaxed text-white/50">Nova Gaming confirmed the collaboration. Your profile is now verified and visible to recruiters.</p>' +
+          '</div>';
+      }
+
+      var active = false;
+      var resumeResolvers = [];
+      function waitActive() {
+        if (active) return Promise.resolve();
+        return new Promise(function (res) { resumeResolvers.push(res); });
+      }
+      function sleep(ms) {
+        return waitActive().then(function () {
+          return new Promise(function (res) { setTimeout(res, ms); });
+        }).then(waitActive);
+      }
+
+      async function cycle() {
+        while (true) {
+          setActiveStep(0);
+          await swapStage(linkStepHtml());
+          await sleep(1600);
+
+          setActiveStep(1);
+          await swapStage(searchingStepHtml());
+          await sleep(1300);
+          await swapStage(creatorFoundHtml());
+          await sleep(1500);
+
+          setActiveStep(2);
+          await swapStage(reachingOutHtml());
+          await sleep(1400);
+          await swapStage(outreachSentHtml());
+          await sleep(1600);
+
+          setActiveStep(3);
+          await swapStage(verifiedHtml());
+          await sleep(3600);
+        }
+      }
+
+      if (reduced) {
+        setActiveStep(3);
+        swapStage(verifiedHtml());
+        return;
+      }
+
+      cycle();
+
+      if ("IntersectionObserver" in window && section) {
+        var io2 = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              active = true;
+              resumeResolvers.forEach(function (r) { r(); });
+              resumeResolvers = [];
+            } else {
+              active = false;
+            }
+          });
+        }, { threshold: 0.3 });
+        io2.observe(section);
+      } else {
+        active = true;
+      }
+    })();
+  </script>
+  <style>
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #verify-stage > *, #demo-stage > * , #outreach-stage > * { zoom: 1.25; }
+  </style>
+
+  <div class="mx-auto max-w-[1200px] px-4 lg:px-8">
+    <!-- FOR RECRUITERS -->
+    <div class="border-t border-[#C9CBBE] py-24">
+      <div data-reveal-group class="grid grid-cols-1 gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+        <div class="order-2 flex flex-col justify-center lg:order-1">
+          <p class="mono flex items-center gap-2 text-primary"><span class="h-1.5 w-1.5 rounded-full bg-primary"></span>For recruiters</p>
+          <h3 class="mt-4 text-[clamp(40px,5.4vw,84px)] font-normal leading-[.96] tracking-[-0.05em] text-ink">Hire based on proof, <span class="text-primary/45">not follower counts.</span></h3>
+          <p class="mt-5 max-w-[560px] text-[18px] leading-snug text-primary">Every badge on Arclent means a real person confirmed the work behind it. No inflated numbers, no guessing.</p>
+          <ul class="mt-8 border-b border-[#DADCD0]">
+          <li class="group flex items-start gap-5 border-t border-[#DADCD0] py-5 transition-transform duration-500 hover:translate-x-1">
+            <span class="mono w-7 shrink-0 pt-1 text-primary">01</span>
+            <span class="flex-1 text-[19px] leading-snug tracking-[-0.01em] text-ink">Browse talent by verified tier, Bronze to Red Diamond</span>
+            <span class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#CEF79E] text-ink"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span>
+          </li>
+          <li class="group flex items-start gap-5 border-t border-[#DADCD0] py-5 transition-transform duration-500 hover:translate-x-1">
+            <span class="mono w-7 shrink-0 pt-1 text-primary">02</span>
+            <span class="flex-1 text-[19px] leading-snug tracking-[-0.01em] text-ink">AI drafts your job post — you just describe what you need</span>
+            <span class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#CEF79E] text-ink"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span>
+          </li>
+          <li class="group flex items-start gap-5 border-t border-[#DADCD0] py-5 transition-transform duration-500 hover:translate-x-1">
+            <span class="mono w-7 shrink-0 pt-1 text-primary">03</span>
+            <span class="flex-1 text-[19px] leading-snug tracking-[-0.01em] text-ink">Manage applicants and shortlist without spreadsheets</span>
+            <span class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#CEF79E] text-ink"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span>
+          </li>
+          <li class="group flex items-start gap-5 border-t border-[#DADCD0] py-5 transition-transform duration-500 hover:translate-x-1">
+            <span class="mono w-7 shrink-0 pt-1 text-primary">04</span>
+            <span class="flex-1 text-[19px] leading-snug tracking-[-0.01em] text-ink">Reach out to applicants in bulk with AI-drafted messages</span>
+            <span class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#CEF79E] text-ink"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span>
+          </li>
+          </ul>
+          <div class="mt-8"><button class="ib-btn" type="button"><span class="lbl">Post Your First Job<i class="corner"><svg viewBox="0 0 18 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h6c8 0 13.4 7.2 11.4 15L11 39a11.5 11.5 0 0 1-11 9V0Z"/></svg></i></span><i class="ico"><svg viewBox="0 0 51 48" preserveAspectRatio="none" aria-hidden="true"><path class="shape" d="M6.8 9.2A12 12 0 0 1 18.4 0H39c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H12.4C4.6 48-1.2 40.7.7 33.2L6.8 9.2Z"/><path class="arrow" d="M23 24h13m-5-5 5 5-5 5" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></button></div>
+        </div>
+        <div class="relative order-1 overflow-hidden rounded-[24px] bg-ink lg:order-2 lg:sticky lg:top-24 lg:self-start">
+          <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080" alt="Recruiters reviewing a candidate in an interview" class="aspect-[4/5] w-full object-cover" />
+          <span class="mono absolute left-5 top-5 rounded-full bg-[#CEF79E] px-4 py-2 text-ink">For recruiters</span>
+          <div class="mono absolute bottom-5 left-5 right-5 flex items-center justify-between rounded-[14px] bg-white/90 px-4 py-3 text-ink backdrop-blur"><span class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-[#7FD34A]"></span>Verified applicant</span><span class="text-primary">Gold tier</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- AI JOB POSTING DEMO: auto-playing mock of the recruiter Copilot flow -->
+  <section class="relative mx-1.5 my-1.5 overflow-hidden rounded-[20px] bg-ink py-24 text-white">
+    <svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="jpp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#jpp)"/></svg>
+    <div class="relative mx-auto grid max-w-[1200px] grid-cols-1 items-center gap-14 px-4 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:px-8">
+      <div data-reveal class="relative">
+        <div id="demo-stage" class="relative flex min-h-[440px] flex-col items-center justify-center overflow-hidden rounded-[24px] bg-[#2F3C3D] p-8 text-center"></div>
+      </div>
+      <div data-reveal-group>
+        <p class="mono flex items-center gap-2 text-white/60"><span class="h-1.5 w-1.5 rounded-full bg-accent"></span>AI-powered hiring</p>
+        <h2 class="mt-4 text-[clamp(44px,5.6vw,88px)] font-normal leading-[.96] tracking-[-0.05em] text-white">Post a job <span class="text-white/45">in three taps.</span></h2>
+        <p class="mt-5 max-w-[520px] text-[18px] leading-snug text-white/70">No forms. Tell our Copilot what you're hiring for, answer two quick questions, and it drafts a complete, high-converting job post — ready to publish instantly.</p>
+        <div class="mt-10 flex items-start">
+          <div class="flex min-w-0 flex-col items-start gap-3" data-demo-dot="0">
+            <span class="demo-dot-el grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent font-mono text-[12px] text-ink transition-colors duration-500">1</span>
+            <p class="demo-label mono text-white transition-colors duration-500">Tell Copilot</p>
+          </div>
+          <div class="demo-line mt-[18px] h-px min-w-3 flex-1 bg-white/15"><div class="demo-fill h-full w-0 bg-accent transition-[width] duration-500 ease-out"></div></div>
+          <div class="flex min-w-0 flex-col items-start gap-3" data-demo-dot="1">
+            <span class="demo-dot-el grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500">2</span>
+            <p class="demo-label mono text-white/40 transition-colors duration-500">AI drafts it</p>
+          </div>
+          <div class="demo-line mt-[18px] h-px min-w-3 flex-1 bg-white/15"><div class="demo-fill h-full w-0 bg-accent transition-[width] duration-500 ease-out"></div></div>
+          <div class="flex min-w-0 flex-col items-start gap-3" data-demo-dot="2">
+            <span class="demo-dot-el grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500">3</span>
+            <p class="demo-label mono text-white/40 transition-colors duration-500">Published</p>
+          </div>
+        </div>
+        <div class="mt-10"><button class="ib-btn ib-btn--light" type="button"><span class="lbl">Post Your First Job<i class="corner"><svg viewBox="0 0 18 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h6c8 0 13.4 7.2 11.4 15L11 39a11.5 11.5 0 0 1-11 9V0Z"/></svg></i></span><i class="ico"><svg viewBox="0 0 51 48" preserveAspectRatio="none" aria-hidden="true"><path class="shape" d="M6.8 9.2A12 12 0 0 1 18.4 0H39c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H12.4C4.6 48-1.2 40.7.7 33.2L6.8 9.2Z"/><path class="arrow" d="M23 24h13m-5-5 5 5-5 5" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></button></div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var stage = document.getElementById("demo-stage");
+      var section = stage && stage.closest("section");
+      if (!stage) return;
+      var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var EASE = "cubic-bezier(0.16,1,0.3,1)";
+      var YOU_AVATAR = "https://images.unsplash.com/photo-1741455620227-3b1c51e01419?crop=faces&fit=crop&w=64&h=64&q=80";
+
+      var dots = Array.prototype.slice.call(document.querySelectorAll("[data-demo-dot] .demo-dot-el"));
+      var labels = Array.prototype.slice.call(document.querySelectorAll("[data-demo-dot] .demo-label"));
+      var fills = Array.prototype.slice.call(document.querySelectorAll(".demo-fill"));
+
+      function setActiveStep(n) {
+        for (var i = 0; i < dots.length; i++) {
+          if (i < n) {
+            dots[i].className = "demo-dot-el grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#CEF79E]/25 font-mono text-[12px] text-[#CEF79E] transition-colors duration-500";
+            dots[i].innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+            labels[i].className = "demo-label mono text-white/70 transition-colors duration-500";
+          } else if (i === n) {
+            dots[i].className = "demo-dot-el grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent font-mono text-[12px] text-ink transition-colors duration-500";
+            dots[i].textContent = String(i + 1);
+            labels[i].className = "demo-label mono text-white transition-colors duration-500";
+          } else {
+            dots[i].className = "demo-dot-el grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500";
+            dots[i].textContent = String(i + 1);
+            labels[i].className = "demo-label mono text-white/40 transition-colors duration-500";
+          }
+        }
+        fills.forEach(function (fill, i) { fill.style.width = i < n ? "100%" : "0%"; });
+      }
+
+      function swapStage(html) {
+        return new Promise(function (resolve) {
+          var old = stage.firstElementChild;
+          function place() {
+            stage.insertAdjacentHTML("beforeend", html);
+            var el = stage.lastElementChild;
+            el.style.opacity = "0";
+            el.style.transform = "translateY(8px) scale(0.97)";
+            el.style.transition = "opacity 450ms " + EASE + ", transform 450ms " + EASE;
+            requestAnimationFrame(function () {
+              requestAnimationFrame(function () {
+                el.style.opacity = "1";
+                el.style.transform = "translateY(0) scale(1)";
+              });
+            });
+            setTimeout(resolve, 460);
+          }
+          if (old) {
+            old.style.transition = "opacity 250ms ease, transform 250ms ease";
+            old.style.opacity = "0";
+            old.style.transform = "translateY(-8px) scale(0.97)";
+            setTimeout(function () { old.remove(); place(); }, 250);
+          } else {
+            place();
+          }
+        });
+      }
+
+      function tag(text) {
+        return '<span class="mono mb-5 inline-block rounded-full bg-white/10 px-3 py-1.5 text-[#CEF79E]">' + text + '</span>';
+      }
+
+      function askHtml() {
+        return '<div class="flex w-full flex-col items-center">' + tag("STEP 1 · TELL COPILOT") +
+          '<div class="flex w-full max-w-[320px] items-end gap-1.5">' +
+          '<span class="flex h-6 w-6 shrink-0 items-center justify-center self-end rounded-full bg-primary font-sans text-[9px] font-bold text-white shadow-[0_2px_6px_rgba(0,0,0,0.35)]">AI</span>' +
+          '<div class="max-w-[78%] rounded-lg bg-white/10 px-3 py-2 text-left font-sans text-[12px] leading-snug text-white">What are you hiring for today?</div>' +
+          '</div>' +
+          '<div id="demo-input-row" class="mt-4 flex w-full max-w-[320px] items-center gap-2">' +
+          '<div class="flex h-10 flex-1 items-center rounded-full border border-white/15 bg-white/5 px-3">' +
+          '<span id="demo-typed" class="font-sans text-[13px] text-white/85"></span><span id="demo-caret" class="ml-px inline-block h-[14px] w-px bg-white/70 align-middle"></span>' +
+          '</div>' +
+          '<span id="demo-send" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent text-ink transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]">' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>' +
+          '</span>' +
+          '</div>' +
+          '</div>';
+      }
+
+      function replyHtml() {
+        return '<div class="flex w-full flex-row-reverse items-end gap-1.5">' +
+          '<img src="' + YOU_AVATAR + '" alt="Syed" class="h-6 w-6 shrink-0 self-end rounded-full object-cover shadow-[0_2px_6px_rgba(0,0,0,0.35)] ring-1 ring-white/25" />' +
+          '<div class="max-w-[78%] rounded-lg bg-accent px-3 py-2 text-right font-sans text-[12px] leading-snug text-ink">Video Editor</div>' +
+          '</div>';
+      }
+
+      function draftingHtml() {
+        return '<div class="flex w-full flex-col items-center">' + tag("STEP 2 · AI DRAFTS IT") +
+          '<span class="mb-4 flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/15" style="border-top-color: rgb(206 247 158); animation: spin 900ms linear infinite;"></span>' +
+          '<p class="font-sans text-[13px] text-white/70">Writing a complete job post…</p>' +
+          '</div>';
+      }
+
+      function draftReadyHtml() {
+        return '<div class="flex w-full flex-col items-center">' + tag("STEP 2 · AI DRAFTS IT") +
+          '<div class="w-full max-w-[320px] text-left">' +
+          '<span class="mb-2 inline-block rounded-full bg-accent/25 px-2 py-0.5 font-sans text-[10px] font-medium tracking-wide text-white">AI GENERATED</span>' +
+          '<p class="font-serif text-[15px] font-medium leading-snug text-white">Video Editor for YouTube Channel</p>' +
+          '<div class="mt-2 flex flex-wrap gap-1.5">' +
+          '<span class="rounded-full border border-white/20 px-2 py-0.5 font-sans text-[10px] text-white/70">$800–1200/mo</span>' +
+          '<span class="rounded-full border border-white/20 px-2 py-0.5 font-sans text-[10px] text-white/70">Remote</span>' +
+          '<span class="rounded-full border border-white/20 px-2 py-0.5 font-sans text-[10px] text-white/70">Freelance</span>' +
+          '</div>' +
+          '<p class="mt-2 font-sans text-[11px] leading-relaxed text-white/50" style="display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">Looking for a skilled editor to cut long-form and Shorts content. Fast turnaround, strong pacing.</p>' +
+          '<div class="mt-2.5 flex h-7 items-center justify-center rounded-full bg-white font-sans text-[11px] font-medium text-ink">Publish Job</div>' +
+          '</div>' +
+          '</div>';
+      }
+
+      function publishedHtml() {
+        return '<div class="flex w-full flex-col items-center">' + tag("STEP 3 · PUBLISHED") +
+          '<span class="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>' +
+          '<p class="mt-3 font-serif text-base font-medium text-white">Job Published!</p>' +
+          '<p class="mt-1 max-w-[240px] font-sans text-[12px] leading-relaxed text-white/50">Live and visible to 12k+ verified creators.</p>' +
+          '</div>';
+      }
+
+      var active = false;
+      var resumeResolvers = [];
+      function waitActive() {
+        if (active) return Promise.resolve();
+        return new Promise(function (res) { resumeResolvers.push(res); });
+      }
+      function sleep(ms) {
+        return waitActive().then(function () {
+          return new Promise(function (res) { setTimeout(res, ms); });
+        }).then(waitActive);
+      }
+
+      async function typeInto(text) {
+        var typed = document.getElementById("demo-typed");
+        var sendBtn = document.getElementById("demo-send");
+        typed.textContent = "";
+        for (var i = 0; i < text.length; i++) {
+          await sleep(26 + Math.random() * 34);
+          typed.textContent += text[i];
+        }
+        await sleep(320);
+        sendBtn.style.transform = "scale(0.82)";
+        await sleep(110);
+        sendBtn.style.transform = "scale(1)";
+        await sleep(150);
+      }
+
+      async function cycle() {
+        while (true) {
+          setActiveStep(0);
+          await swapStage(askHtml());
+          await sleep(500);
+          await typeInto("Video Editor");
+          document.getElementById("demo-input-row").insertAdjacentHTML("beforebegin", replyHtml());
+          await sleep(900);
+
+          setActiveStep(1);
+          await swapStage(draftingHtml());
+          await sleep(1200);
+          await swapStage(draftReadyHtml());
+          await sleep(3200);
+
+          setActiveStep(2);
+          await swapStage(publishedHtml());
+          await sleep(2800);
+        }
+      }
+
+      if (reduced) {
+        setActiveStep(1);
+        swapStage(draftReadyHtml());
+        return;
+      }
+
+      cycle();
+
+      if ("IntersectionObserver" in window && section) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              active = true;
+              resumeResolvers.forEach(function (r) { r(); });
+              resumeResolvers = [];
+            } else {
+              active = false;
+            }
+          });
+        }, { threshold: 0.3 });
+        io.observe(section);
+      } else {
+        active = true;
+      }
+    })();
+  </script>
+
+  <!-- RECRUITER TOOLS DIVIDER -->
+  <div class="py-24" data-reveal-group>
+    <div class="mx-auto flex max-w-[1200px] flex-col items-center gap-6 px-4 text-center lg:px-8">
+      <p class="mono flex items-center gap-2 text-primary"><span class="h-1.5 w-1.5 rounded-full bg-primary"></span>The recruiter toolkit</p>
+      <h2 class="max-w-[980px] text-[clamp(36px,5vw,76px)] font-normal leading-[.98] tracking-[-0.05em] text-ink">Posting the job is step one. <span class="text-primary/45">Here's how arclent's AI keeps working after it's live.</span></h2>
+      <p class="max-w-[560px] text-[18px] leading-snug text-primary">Finding and messaging the right candidates for you, so nothing waits on a spreadsheet.</p>
+    </div>
+  </div>
+
+  <!-- RECRUITER OUTREACH DEMO: auto-playing mock of AI-drafted candidate messaging -->
+  <section class="relative mx-1.5 my-1.5 overflow-hidden rounded-[20px] bg-ink py-24 text-white">
+    <svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="orp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#orp)"/></svg>
+    <div class="relative mx-auto grid max-w-[1200px] grid-cols-1 items-center gap-14 px-4 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-8">
+      <div data-reveal-group>
+        <p class="mono flex items-center gap-2 text-white/60"><span class="h-1.5 w-1.5 rounded-full bg-accent"></span>AI-powered outreach</p>
+        <h2 class="mt-4 text-[clamp(44px,5.6vw,88px)] font-normal leading-[.96] tracking-[-0.05em] text-white">Reach out to candidates <span class="text-white/45">in four clicks.</span></h2>
+        <p class="mt-5 max-w-[520px] text-[18px] leading-snug text-white/70">Pick who you want to message, tell the AI what to say, and it drafts a personalized message for every candidate — sent right from your built-in inbox.</p>
+        <div class="mt-10 flex items-start">
+          <div class="flex min-w-0 flex-col items-start gap-3" data-outreach-dot="0">
+            <span class="outreach-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent font-mono text-[12px] text-ink transition-colors duration-500">1</span>
+            <p class="outreach-label mono text-white transition-colors duration-500">Pick candidates</p>
+          </div>
+          <div class="outreach-line mt-[18px] h-px min-w-3 flex-1 bg-white/15"><div class="outreach-fill h-full w-0 bg-accent transition-[width] duration-500 ease-out"></div></div>
+          <div class="flex min-w-0 flex-col items-start gap-3" data-outreach-dot="1">
+            <span class="outreach-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500">2</span>
+            <p class="outreach-label mono text-white/40 transition-colors duration-500">Tell the AI</p>
+          </div>
+          <div class="outreach-line mt-[18px] h-px min-w-3 flex-1 bg-white/15"><div class="outreach-fill h-full w-0 bg-accent transition-[width] duration-500 ease-out"></div></div>
+          <div class="flex min-w-0 flex-col items-start gap-3" data-outreach-dot="2">
+            <span class="outreach-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500">3</span>
+            <p class="outreach-label mono text-white/40 transition-colors duration-500">AI drafts it</p>
+          </div>
+          <div class="outreach-line mt-[18px] h-px min-w-3 flex-1 bg-white/15"><div class="outreach-fill h-full w-0 bg-accent transition-[width] duration-500 ease-out"></div></div>
+          <div class="flex min-w-0 flex-col items-start gap-3" data-outreach-dot="3">
+            <span class="outreach-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500">4</span>
+            <p class="outreach-label mono text-white/40 transition-colors duration-500">Sent</p>
+          </div>
+        </div>
+        <div class="mt-10"><button class="ib-btn ib-btn--light" type="button"><span class="lbl">Post Your First Job<i class="corner"><svg viewBox="0 0 18 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h6c8 0 13.4 7.2 11.4 15L11 39a11.5 11.5 0 0 1-11 9V0Z"/></svg></i></span><i class="ico"><svg viewBox="0 0 51 48" preserveAspectRatio="none" aria-hidden="true"><path class="shape" d="M6.8 9.2A12 12 0 0 1 18.4 0H39c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H12.4C4.6 48-1.2 40.7.7 33.2L6.8 9.2Z"/><path class="arrow" d="M23 24h13m-5-5 5 5-5 5" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></button></div>
+      </div>
+      <div data-reveal class="relative">
+        <div id="outreach-stage" class="relative flex min-h-[440px] flex-col items-center justify-center overflow-hidden rounded-[24px] bg-[#2F3C3D] p-8 text-center"></div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var stage = document.getElementById("outreach-stage");
+      var section = stage && stage.closest("section");
+      if (!stage) return;
+      var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var EASE = "cubic-bezier(0.16,1,0.3,1)";
+      var CANDIDATE_AVATAR = "https://images.unsplash.com/photo-1699899657675-1003c7d28f2d?crop=faces&fit=crop&w=96&h=96&q=80";
+      var dots = Array.prototype.slice.call(document.querySelectorAll("[data-outreach-dot] .outreach-dot"));
+      var labels = Array.prototype.slice.call(document.querySelectorAll("[data-outreach-dot] .outreach-label"));
+      var fills = Array.prototype.slice.call(document.querySelectorAll(".outreach-fill"));
+
+      function setActiveStep(n) {
+        for (var i = 0; i < dots.length; i++) {
+          if (i < n) {
+            dots[i].className = "outreach-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#CEF79E]/25 font-mono text-[12px] text-[#CEF79E] transition-colors duration-500";
+            dots[i].innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+            labels[i].className = "outreach-label mono text-white/70 transition-colors duration-500";
+          } else if (i === n) {
+            dots[i].className = "outreach-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent font-mono text-[12px] text-ink transition-colors duration-500";
+            dots[i].textContent = String(i + 1);
+            labels[i].className = "outreach-label mono text-white transition-colors duration-500";
+          } else {
+            dots[i].className = "outreach-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500";
+            dots[i].textContent = String(i + 1);
+            labels[i].className = "outreach-label mono text-white/40 transition-colors duration-500";
+          }
+        }
+        fills.forEach(function (fill, i) { fill.style.width = i < n ? "100%" : "0%"; });
+      }
+
+      function swapStage(html) {
+        return new Promise(function (resolve) {
+          var old = stage.firstElementChild;
+          function place() {
+            stage.insertAdjacentHTML("beforeend", html);
+            var el = stage.lastElementChild;
+            el.style.opacity = "0";
+            el.style.transform = "translateY(8px) scale(0.97)";
+            el.style.transition = "opacity 450ms " + EASE + ", transform 450ms " + EASE;
+            requestAnimationFrame(function () {
+              requestAnimationFrame(function () {
+                el.style.opacity = "1";
+                el.style.transform = "translateY(0) scale(1)";
+              });
+            });
+            setTimeout(resolve, 460);
+          }
+          if (old) {
+            old.style.transition = "opacity 250ms ease, transform 250ms ease";
+            old.style.opacity = "0";
+            old.style.transform = "translateY(-8px) scale(0.97)";
+            setTimeout(function () { old.remove(); place(); }, 250);
+          } else {
+            place();
+          }
+        });
+      }
+
+      function tag(text) {
+        return '<span class="mono mb-5 inline-block rounded-full bg-white/10 px-3 py-1.5 text-[#CEF79E]">' + text + '</span>';
+      }
+
+      function pickStepHtml() {
+        return '<div class="flex w-full flex-col items-center">' + tag("STEP 1 · PICK CANDIDATES") +
+          '<div class="flex w-full max-w-[280px] gap-1.5 rounded-full border border-white/15 bg-white/5 p-1">' +
+          '<span class="flex-1 rounded-full px-2 py-1.5 font-sans text-[10px] text-white/40">All 5</span>' +
+          '<span class="flex-1 rounded-full bg-accent px-2 py-1.5 font-sans text-[10px] font-medium text-ink">Shortlisted 2</span>' +
+          '<span class="flex-1 rounded-full px-2 py-1.5 font-sans text-[10px] text-white/40">Rejected 3</span>' +
+          '</div>' +
+          '<div class="mt-4 flex w-full max-w-[280px] flex-col gap-2">' +
+          '<div class="flex items-center gap-2.5 rounded-xl border border-white/15 bg-white/5 p-2.5 text-left">' +
+          '<img src="' + CANDIDATE_AVATAR + '" alt="Priya Nair" class="h-9 w-9 rounded-full object-cover" />' +
+          '<div><p class="font-sans text-[12px] font-medium text-white">Priya Nair</p><p class="font-sans text-[10px] text-white/50">Product Designer</p></div>' +
+          '<svg class="ml-auto text-primary" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>' +
+          '</div>' +
+          '<div class="flex items-center gap-2.5 rounded-xl border border-white/15 bg-white/5 p-2.5 text-left opacity-60">' +
+          '<span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10 font-sans text-[11px] font-bold text-white/70">L</span>' +
+          '<div><p class="font-sans text-[12px] font-medium text-white">Lucas Bennett</p><p class="font-sans text-[10px] text-white/50">Product Designer</p></div>' +
+          '<svg class="ml-auto text-primary" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>' +
+          '</div>' +
+          '</div>' +
+          '</div>';
+      }
+
+      function instructHtml() {
+        return '<div class="flex w-full flex-col items-center">' + tag("STEP 2 · TELL THE AI") +
+          '<div class="w-full max-w-[280px] rounded-xl border border-white/15 bg-white/5 p-3.5 text-left">' +
+          '<p class="font-sans text-[10px] uppercase tracking-wide text-white/40">Instruction to the AI</p>' +
+          '<p class="mt-1.5 font-sans text-[13px] leading-relaxed text-white" id="outreach-typed"></p>' +
+          '</div>' +
+          '</div>';
+      }
+
+      function draftingHtml() {
+        return '<div class="flex w-full flex-col items-center">' + tag("STEP 3 · AI DRAFTS IT") +
+          '<span class="mb-4 flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/15" style="border-top-color: rgb(206 247 158); animation: spin 900ms linear infinite;">' +
+          '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/60"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg></span>' +
+          '<p class="font-sans text-[13px] text-white/70">Writing a personalized message…</p>' +
+          '</div>';
+      }
+
+      function draftHtml() {
+        return '<div class="flex w-full flex-col items-center">' + tag("STEP 3 · AI DRAFTS IT") +
+          '<div class="flex w-full max-w-[280px] items-center gap-2 text-left">' +
+          '<img src="' + CANDIDATE_AVATAR + '" alt="Priya Nair" class="h-7 w-7 rounded-full object-cover" />' +
+          '<p class="font-sans text-[11px] font-medium text-white/70">To Priya Nair</p>' +
+          '</div>' +
+          '<div class="mt-2 w-full max-w-[280px] rounded-xl border border-white/15 bg-white/5 p-3.5 text-left">' +
+          '<p class="font-sans text-[12px] leading-relaxed text-white/85">Hi Priya, I\'m Jordan from Nimbus Robotics. We\'d love to invite you to a first-round interview for the Product Designer role — could you share your availability this week?</p>' +
+          '</div>' +
+          '<div class="mt-3 flex h-9 w-full max-w-[280px] items-center justify-center rounded-full bg-accent font-sans text-[12px] font-medium text-ink">Send to 2 candidates</div>' +
+          '</div>';
+      }
+
+      function sentHtml() {
+        return '<div class="flex w-full flex-col items-center">' + tag("STEP 4 · SENT") +
+          '<span class="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>' +
+          '<p class="mt-3 font-serif text-2xl font-medium text-white">Message sent!</p>' +
+          '<p class="mt-2 max-w-[240px] font-sans text-[12px] leading-relaxed text-white/50">2 candidates messaged. Replies land right in your built-in inbox.</p>' +
+          '</div>';
+      }
+
+      function typeInto(el, text) {
+        return new Promise(function (resolve) {
+          var i = 0;
+          el.textContent = "";
+          function step() {
+            if (!el.isConnected) { resolve(); return; }
+            el.textContent = text.slice(0, i);
+            i++;
+            if (i <= text.length) { setTimeout(step, 22 + Math.random() * 30); }
+            else { resolve(); }
+          }
+          step();
+        });
+      }
+
+      var active = false;
+      var resumeResolvers = [];
+      function waitActive() {
+        if (active) return Promise.resolve();
+        return new Promise(function (res) { resumeResolvers.push(res); });
+      }
+      function sleep(ms) {
+        return waitActive().then(function () {
+          return new Promise(function (res) { setTimeout(res, ms); });
+        }).then(waitActive);
+      }
+
+      async function cycle() {
+        while (true) {
+          setActiveStep(0);
+          await swapStage(pickStepHtml());
+          await sleep(1700);
+
+          setActiveStep(1);
+          await swapStage(instructHtml());
+          var typedEl = document.getElementById("outreach-typed");
+          if (typedEl) { await typeInto(typedEl, "Invite them to a first-round interview next week."); }
+          await sleep(700);
+
+          setActiveStep(2);
+          await swapStage(draftingHtml());
+          await sleep(1300);
+          await swapStage(draftHtml());
+          await sleep(2400);
+
+          setActiveStep(3);
+          await swapStage(sentHtml());
+          await sleep(3400);
+        }
+      }
+
+      if (reduced) {
+        setActiveStep(3);
+        swapStage(sentHtml());
+        return;
+      }
+
+      cycle();
+
+      if ("IntersectionObserver" in window && section) {
+        var io3 = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              active = true;
+              resumeResolvers.forEach(function (r) { r(); });
+              resumeResolvers = [];
+            } else {
+              active = false;
+            }
+          });
+        }, { threshold: 0.3 });
+        io3.observe(section);
+      } else {
+        active = true;
+      }
+    })();
+  </script>
+
+  <!-- FOOTER -->
+  <footer id="site-footer" class="relative m-1.5 mt-3 overflow-hidden rounded-[20px] bg-ink text-white">
+    <img src="assets/footer-bg.webp" alt="" class="absolute inset-0 h-full w-full object-cover" style="filter: brightness(0.82);" />
+    <div class="relative z-10 mx-auto max-w-[1400px] px-4 pt-16 lg:px-10">
+      <div class="grid gap-14 lg:grid-cols-[1fr_1.9fr] lg:gap-10">
+        <div>
+          <p id="foot-statement" class="max-w-[760px] text-[clamp(30px,3.6vw,54px)] leading-[1.1] tracking-[-0.02em]">We are building the hiring platform where every portfolio is confirmed by the people who did the work.</p>
+          <div class="mt-10"><a class="ib-btn ib-btn--light" href="choose-role.html"><span class="lbl">Get Started<i class="corner"><svg viewBox="0 0 18 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h6c8 0 13.4 7.2 11.4 15L11 39a11.5 11.5 0 0 1-11 9V0Z"/></svg></i></span><i class="ico"><svg viewBox="0 0 51 48" preserveAspectRatio="none" aria-hidden="true"><path class="shape" d="M6.8 9.2A12 12 0 0 1 18.4 0H39c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H12.4C4.6 48-1.2 40.7.7 33.2L6.8 9.2Z"/><path class="arrow" d="M23 24h13m-5-5 5 5-5 5" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></a></div>
+        </div>
+        <div class="relative grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4 lg:pr-24">
+      <div class="foot-col relative pl-5"><span class="foot-rule absolute left-0 top-0 h-full w-px origin-top bg-white/25"></span>
+        <p class="mb-5 font-mono text-[13px] uppercase tracking-[-0.02em] text-white/70">Platform</p>
+        <ul class="space-y-3">
+          <li><a href="find-jobs.html" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Find Jobs</a></li>
+          <li><a href="talents.html" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Talents</a></li>
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">For Recruiters</a></li>
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Verification Tiers</a></li>
+        </ul>
+      </div>
+      <div class="foot-col relative pl-5"><span class="foot-rule absolute left-0 top-0 h-full w-px origin-top bg-white/25"></span>
+        <p class="mb-5 font-mono text-[13px] uppercase tracking-[-0.02em] text-white/70">Company</p>
+        <ul class="space-y-3">
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">About</a></li>
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Careers</a></li>
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Blog</a></li>
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Contact</a></li>
+        </ul>
+      </div>
+      <div class="foot-col relative pl-5"><span class="foot-rule absolute left-0 top-0 h-full w-px origin-top bg-white/25"></span>
+        <p class="mb-5 font-mono text-[13px] uppercase tracking-[-0.02em] text-white/70">Legal</p>
+        <ul class="space-y-3">
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Privacy Policy</a></li>
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Terms of Service</a></li>
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Security</a></li>
+        </ul>
+      </div>
+      <div class="foot-col relative pl-5"><span class="foot-rule absolute left-0 top-0 h-full w-px origin-top bg-white/25"></span>
+        <p class="mb-5 font-mono text-[13px] uppercase tracking-[-0.02em] text-white/70">Connect</p>
+        <ul class="space-y-3">
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">X</a></li>
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">LinkedIn</a></li>
+          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Instagram</a></li>
+        </ul>
+      </div>
+          <button id="to-top" type="button" aria-label="Back to top" class="to-top absolute right-0 top-0 hidden h-[60px] w-[60px] items-center justify-center rounded-[12px] border border-white/40 text-white lg:flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></button>
+        </div>
+      </div>
+      <div id="foot-mark" class="mt-20 select-none text-[clamp(84px,22vw,340px)] leading-[0.82] tracking-[-0.045em] text-white" aria-label="arclent.">arclent.</div>
+      <p id="foot-copy" class="pb-8 pt-10 font-mono text-[13px] uppercase tracking-[-0.02em] text-white/80">&copy; 2026 arclent. All rights reserved.</p>
+    </div>
+  </footer>
+  <script>
+    (function () {
+      var el = document.querySelector('[data-name="footer"]');
+      var up = document.getElementById("to-top");
+      if (up) up.addEventListener("click", function () {
+        if (window.__lenis) window.__lenis.scrollTo(0, { duration: 1.8 }); else window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    })();
+  </script>
+  <script>
+    /* Footer motion: the panel settles in as it scrolls up, the statement resolves word by
+       word out of blur, column rules draw down and their links stack up, and the wordmark
+       letters spring up out of a mask. Afterwards the letters ripple toward the cursor. */
+    (function () {
+      var foot = document.getElementById("site-footer");
+      if (!foot || !window.gsap || !window.ScrollTrigger || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      // 1. panel settles
+      gsap.fromTo(foot, { scale: 0.94, y: 60 }, { scale: 1, y: 0, ease: "none",
+        scrollTrigger: { trigger: foot, start: "top bottom", end: "top 35%", scrub: true } });
+
+      // 2. statement: words resolve from blur, scrubbed with scroll
+      var st = document.getElementById("foot-statement");
+      var text = st.textContent.trim();
+      st.setAttribute("aria-label", text);
+      st.innerHTML = text.split(/\s+/).map(function (w) {
+        return '<span class="fw" aria-hidden="true" style="display:inline-block">' + w + "</span>";
+      }).join(" ");
+      gsap.fromTo(st.querySelectorAll(".fw"), { opacity: 0.12, filter: "blur(8px)" },
+        { opacity: 1, filter: "blur(0px)", stagger: 0.09, ease: "none",
+          scrollTrigger: { trigger: st, start: "top 92%", end: "top 40%", scrub: true } });
+
+      // 3. wordmark letters (masked)
+      var mark = document.getElementById("foot-mark");
+      var word = mark.textContent.trim();
+      mark.style.overflow = "clip";
+      mark.style.paddingBottom = "0.12em";
+      mark.innerHTML = word.split("").map(function (c) {
+        return '<span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">' + c + "</span>";
+      }).join("");
+      var chars = mark.querySelectorAll(".fm-c");
+      var ready = false;
+
+      var tl = gsap.timeline({
+        scrollTrigger: { trigger: foot, start: "top 45%", toggleActions: "play none none reverse" },
+        onComplete: function () { ready = true; }, onReverseComplete: function () { ready = false; }
+      });
+      tl.from(foot.querySelectorAll(".foot-rule"), { scaleY: 0, duration: 1.1, stagger: 0.12, ease: "expo.out" }, 0)
+        .from(foot.querySelectorAll(".foot-col p, .foot-col li"), { y: 28, opacity: 0, duration: 0.9, stagger: 0.035, ease: "expo.out" }, 0.1)
+        .from(foot.querySelector(".ib-btn"), { y: 24, opacity: 0, scale: 0.92, duration: 0.9, ease: "power3.out" }, 0.15)
+        .from("#to-top", { scale: 0, rotate: -90, opacity: 0, duration: 0.8, ease: "back.out(1.8)" }, 0.5)
+        .from(chars, { yPercent: 118, rotate: 7, transformOrigin: "0% 100%", duration: 1.3, stagger: 0.06, ease: "expo.out" }, 0.05)
+        .from("#foot-copy", { y: 14, opacity: 0, duration: 0.8, ease: "power2.out" }, 0.7);
+
+      // 4. cursor ripple across the wordmark
+      var setY = Array.prototype.map.call(chars, function (c) { return gsap.quickTo(c, "yPercent", { duration: 0.6, ease: "power3.out" }); });
+      mark.addEventListener("pointermove", function (e) {
+        if (!ready) return;
+        var w = mark.getBoundingClientRect().width * 0.11;
+        Array.prototype.forEach.call(chars, function (c, i) {
+          var r = c.getBoundingClientRect();
+          var dx = (e.clientX - (r.left + r.width / 2)) / w;
+          setY[i](-16 * Math.exp(-dx * dx));
+        });
+      });
+      mark.addEventListener("pointerleave", function () { setY.forEach(function (fn) { fn(0); }); });
+    })();
+  </script>
+
+  <script>
+    const ICONS = {
+      link: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>',
+      shieldCheck: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>',
+      briefcase: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>',
+      badgeCheck: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>',
+      edit: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 21h8"/><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/></svg>',
+      target: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
+      handshake: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>',
+      building: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12h4"/><path d="M10 8h4"/><path d="M14 21v-3a2 2 0 0 0-4 0v3"/><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"/><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/></svg>',
+      clipboardList: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>',
+      send: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>',
+      trendingUp: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg>',
+    };
+
+    const journeys = {
+      talent: {
+        pill: "&#9733; TALENT JOURNEY",
+        steps: [
+          { icon: ICONS.link, title: "Add Your Work", body: "Paste the link to something you made — a video, a post, a stream — and tell us what you did on it." },
+          { icon: ICONS.shieldCheck, title: "Get Confirmed", special: "verify" },
+          { icon: ICONS.briefcase, title: "Apply or Sit Back", body: "Apply to jobs yourself, or let your verified profile bring the jobs to you." },
+          { icon: ICONS.badgeCheck, title: "Land the Job", body: "Recruiters see verified work instead of just claims — so you get hired for what you're actually good at." },
+        ],
+      },
+      "recruiter-creator": {
+        pill: "&#9733; CREATOR HIRING JOURNEY",
+        steps: [
+          { icon: ICONS.edit, title: "Post a Role in Seconds", body: "Describe what you need in a few prompts — AI drafts the full job post. No HR jargon required." },
+          { icon: ICONS.target, title: "Get Matched Talent", body: "Verified editors, designers, and creators who fit your channel apply — or get recommended to you directly." },
+          { icon: ICONS.shieldCheck, title: "Review Verified Profiles", body: "Every applicant's portfolio is peer-confirmed, so you're never guessing if the work claimed is real." },
+          { icon: ICONS.handshake, title: "Hire With Confidence", body: "Message and hire directly, all in one place — no spreadsheets, no back-and-forth." },
+        ],
+      },
+      "recruiter-company": {
+        pill: "&#9733; COMPANY HIRING JOURNEY",
+        steps: [
+          { icon: ICONS.building, title: "Set Up Your Company Profile", body: "Paste your company URL — AI autofills your profile through a quick 3-step wizard." },
+          { icon: ICONS.clipboardList, title: "Post Jobs & Review Applicants", body: "Post roles and manage every applicant with shortlist toggles built for fast decisions." },
+          { icon: ICONS.send, title: "Bulk AI Outreach", body: "Message applicants in bulk, filtered by status, with AI-drafted outreach ready to send." },
+          { icon: ICONS.trendingUp, title: "Hire at Scale", body: "Build your team on verified, trustworthy talent — across as many roles as you need." },
+        ],
+      },
+    };
+
+    let mode = "talent";
+    let sub = "creator";
+    let verifyMode = "we";
+
+    const verifyCopy = {
+      we: "We find the email of the person you worked with. You confirm it's the right one, and we send them a one-click link to verify.",
+      you: "Can't find an email? We find their Instagram instead. You confirm it's them, then we hand you a ready-made message with the link — you just hit send.",
+    };
+
+    function render() {
+      const key = mode === "talent" ? "talent" : `recruiter-${sub}`;
+      const j = journeys[key];
+      document.getElementById("journeyPill").innerHTML = j.pill;
+
+      const cardsEl = document.getElementById("cards");
+      cardsEl.innerHTML = j.steps
+        .map((s, i) => `
+          <article class="step-card group flex min-h-[320px] flex-col rounded-[20px] bg-white p-6 sm:p-7">
+            <div class="flex items-start justify-between">
+              <span class="sc-num mono text-primary">0${i + 1}</span>
+              <span class="sc-ico grid h-12 w-12 place-items-center rounded-[12px] bg-[#F3F3F1] text-ink transition-colors duration-700">${s.icon}</span>
+            </div>
+            <div class="mt-16">
+              <h3 class="text-[clamp(24px,2.2vw,30px)] font-normal leading-[1.08] tracking-[-0.03em]">${s.title}</h3>
+              ${s.special === "verify" ? `
+                <div class="seg sm mt-4" id="verifyToggle"><button data-v="we" class="${verifyMode === "we" ? "on" : ""}">We reach out</button><button data-v="you" class="${verifyMode === "you" ? "on" : ""}">You reach out</button></div>
+                <p class="sc-body mt-4 text-[16px] leading-snug text-primary transition-colors duration-700">${verifyCopy[verifyMode]}</p>` : `
+                <p class="sc-body mt-4 text-[16px] leading-snug text-primary transition-colors duration-700">${s.body}</p>`}
+            </div>
+          </article>`)
+        .join("");
+
+      document.getElementById("toggle2").hidden = mode !== "recruiter";
+      document.getElementById("shortcut").style.display = mode === "talent" ? "block" : "none";
+
+      const vt = document.getElementById("verifyToggle");
+      if (vt) {
+        vt.addEventListener("click", (e) => {
+          if (e.target.tagName !== "BUTTON") return;
+          verifyMode = e.target.dataset.v;
+          render();
+        });
+      }
+
+      // Stagger the journey cards in on every render (initial load + role/mode switches).
+      const items = [...cardsEl.children];
+      items.forEach((el, idx) => {
+        el.style.opacity = "0";
+        el.style.transform = "translateY(14px)";
+        el.style.transition = "opacity .45s cubic-bezier(.2,0,0,1), transform .45s cubic-bezier(.2,0,0,1)";
+        el.style.transitionDelay = idx * 70 + "ms";
+      });
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          items.forEach((el) => {
+            el.style.opacity = "1";
+            el.style.transform = "translateY(0)";
+          });
+        });
+      });
+    }
+
+    const seg = (id, key, set) => document.getElementById(id).addEventListener("click", (e) => {
+      const b = e.target.closest("button"); if (!b) return;
+      set(b.dataset[key]);
+      [...document.getElementById(id).children].forEach((x) => x.classList.toggle("on", x === b));
+      render();
+    });
+    seg("toggle1", "mode", (v) => { mode = v; });
+    seg("toggle2", "sub", (v) => { sub = v; });
+
+    render();
+  </script>
+
+  <script>
+    // Scroll-triggered reveal for every [data-reveal] / [data-reveal-group] section on the page.
+    const revealTargets = document.querySelectorAll("[data-reveal], [data-reveal-group]");
+    const revealIO = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          revealIO.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -60px 0px" }
+    );
+    revealTargets.forEach((el) => revealIO.observe(el));
+  </script>
+
+  <script>
+    // Hero visual: WebGL2 port of paper-design/shaders' "GrainGradient" (Apache-2.0,
+    // https://github.com/paper-design/shaders) — vertex sizing math and fragment shader
+    // ported verbatim from packages/shaders/src/{vertex-shader.ts,shaders/grain-gradient.ts},
+    // with the texture-based `randomR` swapped for a procedural hash (no noise texture asset).
+    (function () {
+      const canvas = document.getElementById("hero-shader");
+      if (!canvas) return;
+      const gl = canvas.getContext("webgl2", { preserveDrawingBuffer: true });
+      if (!gl) return;
+
+      const vertexSrc = `#version 300 es
+        precision highp float;
+
+        const vec2 pos[3] = vec2[3](vec2(-1.0,-1.0), vec2(3.0,-1.0), vec2(-1.0,3.0));
+
+        uniform vec2 u_resolution;
+        uniform float u_pixelRatio;
+        uniform float u_originX;
+        uniform float u_originY;
+        uniform float u_worldWidth;
+        uniform float u_worldHeight;
+        uniform float u_fit;
+        uniform float u_scale;
+        uniform float u_rotation;
+        uniform float u_offsetX;
+        uniform float u_offsetY;
+
+        out vec2 v_objectUV;
+        out vec2 v_objectBoxSize;
+        out vec2 v_patternUV;
+        out vec2 v_patternBoxSize;
+
+        vec3 getBoxSize(float boxRatio, vec2 givenBoxSize) {
+          vec2 box = vec2(0.);
+          box.x = boxRatio * min(givenBoxSize.x / boxRatio, givenBoxSize.y);
+          float noFitBoxWidth = box.x;
+          if (u_fit == 1.) {
+            box.x = boxRatio * min(u_resolution.x / boxRatio, u_resolution.y);
+          } else if (u_fit == 2.) {
+            box.x = boxRatio * max(u_resolution.x / boxRatio, u_resolution.y);
+          }
+          box.y = box.x / boxRatio;
+          return vec3(box, noFitBoxWidth);
+        }
+
+        void main() {
+          gl_Position = vec4(pos[gl_VertexID], 0.0, 1.0);
+
+          vec2 uv = gl_Position.xy * .5;
+          vec2 boxOrigin = vec2(.5 - u_originX, u_originY - .5);
+          vec2 givenBoxSize = vec2(u_worldWidth, u_worldHeight);
+          givenBoxSize = max(givenBoxSize, vec2(1.)) * u_pixelRatio;
+          float r = u_rotation * 3.14159265358979323846 / 180.;
+          mat2 graphicRotation = mat2(cos(r), sin(r), -sin(r), cos(r));
+          vec2 graphicOffset = vec2(-u_offsetX, u_offsetY);
+
+          float fixedRatio = 1.;
+          vec2 fixedRatioBoxGivenSize = vec2(
+            (u_worldWidth == 0.) ? u_resolution.x : givenBoxSize.x,
+            (u_worldHeight == 0.) ? u_resolution.y : givenBoxSize.y
+          );
+          v_objectBoxSize = getBoxSize(fixedRatio, fixedRatioBoxGivenSize).xy;
+          vec2 objectWorldScale = u_resolution.xy / v_objectBoxSize;
+
+          v_objectUV = uv;
+          v_objectUV *= objectWorldScale;
+          v_objectUV += boxOrigin * (objectWorldScale - 1.);
+          v_objectUV += graphicOffset;
+          v_objectUV /= u_scale;
+          v_objectUV = graphicRotation * v_objectUV;
+
+          float patternBoxRatio = givenBoxSize.x / givenBoxSize.y;
+          vec2 patternBoxGivenSize = vec2(
+            (u_worldWidth == 0.) ? u_resolution.x : givenBoxSize.x,
+            (u_worldHeight == 0.) ? u_resolution.y : givenBoxSize.y
+          );
+          patternBoxRatio = patternBoxGivenSize.x / patternBoxGivenSize.y;
+          vec3 boxSizeData = getBoxSize(patternBoxRatio, patternBoxGivenSize);
+          v_patternBoxSize = boxSizeData.xy;
+          float patternBoxNoFitBoxWidth = boxSizeData.z;
+          vec2 patternBoxScale = u_resolution.xy / v_patternBoxSize;
+
+          v_patternUV = uv;
+          v_patternUV += graphicOffset / patternBoxScale;
+          v_patternUV += boxOrigin;
+          v_patternUV -= boxOrigin / patternBoxScale;
+          v_patternUV *= u_resolution.xy;
+          v_patternUV /= u_pixelRatio;
+          if (u_fit > 0.) {
+            v_patternUV *= (patternBoxNoFitBoxWidth / v_patternBoxSize.x);
+          }
+          v_patternUV /= u_scale;
+          v_patternUV = graphicRotation * v_patternUV;
+          v_patternUV += boxOrigin / patternBoxScale;
+          v_patternUV -= boxOrigin;
+          v_patternUV *= .01;
+        }
+      `;
+
+      const fragmentSrc = `#version 300 es
+        precision highp float;
+
+        #define TWO_PI 6.28318530718
+        #define PI 3.14159265358979323846
+
+        uniform float u_time;
+        uniform vec2 u_resolution;
+        uniform float u_pixelRatio;
+
+        uniform vec4 u_colorBack;
+        uniform vec4 u_colors[7];
+        uniform float u_colorsCount;
+        uniform float u_softness;
+        uniform float u_intensity;
+        uniform float u_noise;
+        uniform float u_shape;
+        uniform float u_subtlety; // arclent addition (not a paper-design prop): overall opacity of the gradient layer
+
+        uniform float u_worldWidth;
+        uniform float u_worldHeight;
+        uniform float u_fit;
+
+        uniform float u_scale;
+        uniform float u_rotation;
+        uniform float u_offsetX;
+        uniform float u_offsetY;
+
+        in vec2 v_objectUV;
+        in vec2 v_patternUV;
+        in vec2 v_objectBoxSize;
+        in vec2 v_patternBoxSize;
+
+        out vec4 fragColor;
+
+        vec2 rotate(vec2 uv, float th) {
+          return mat2(cos(th), sin(th), -sin(th), cos(th)) * uv;
+        }
+
+        vec3 permute(vec3 x) { return mod(((x * 34.0) + 1.0) * x, 289.0); }
+        float snoise(vec2 v) {
+          const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
+          vec2 i = floor(v + dot(v, C.yy));
+          vec2 x0 = v - i + dot(i, C.xx);
+          vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+          vec4 x12 = x0.xyxy + C.xxzz;
+          x12.xy -= i1;
+          i = mod(i, 289.0);
+          vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0)) + i.x + vec3(0.0, i1.x, 1.0));
+          vec3 m = max(0.5 - vec3(dot(x0, x0), dot(x12.xy, x12.xy), dot(x12.zw, x12.zw)), 0.0);
+          m = m * m;
+          m = m * m;
+          vec3 x = 2.0 * fract(p * C.www) - 1.0;
+          vec3 h = abs(x) - 0.5;
+          vec3 ox = floor(x + 0.5);
+          vec3 a0 = x - ox;
+          m *= 1.79284291400159 - 0.85373472095314 * (a0 * a0 + h * h);
+          vec3 g;
+          g.x = a0.x * x0.x + h.x * x0.y;
+          g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+          return 130.0 * dot(m, g);
+        }
+
+        float hash11(float p) {
+          p = fract(p * 0.3183099) + 0.1;
+          p *= p + 19.19;
+          return fract(p * p);
+        }
+
+        // Procedural stand-in for paper-design's texture-backed randomR (no noise texture asset here).
+        float randomR(vec2 p) {
+          vec2 i = floor(p);
+          return fract(sin(dot(i, vec2(12.9898, 78.233))) * 43758.5453123);
+        }
+
+        float valueNoiseR(vec2 st) {
+          vec2 i = floor(st);
+          vec2 f = fract(st);
+          float a = randomR(i);
+          float b = randomR(i + vec2(1.0, 0.0));
+          float c = randomR(i + vec2(0.0, 1.0));
+          float d = randomR(i + vec2(1.0, 1.0));
+          vec2 u = f * f * (3.0 - 2.0 * f);
+          float x1 = mix(a, b, u.x);
+          float x2 = mix(c, d, u.x);
+          return mix(x1, x2, u.y);
+        }
+
+        vec4 fbmR(vec2 n0, vec2 n1, vec2 n2, vec2 n3) {
+          float amplitude = 0.2;
+          vec4 total = vec4(0.);
+          for (int i = 0; i < 3; i++) {
+            n0 = rotate(n0, 0.3);
+            n1 = rotate(n1, 0.3);
+            n2 = rotate(n2, 0.3);
+            n3 = rotate(n3, 0.3);
+            total.x += valueNoiseR(n0) * amplitude;
+            total.y += valueNoiseR(n1) * amplitude;
+            total.z += valueNoiseR(n2) * amplitude;
+            total.z += valueNoiseR(n3) * amplitude;
+            n0 *= 1.99;
+            n1 *= 1.99;
+            n2 *= 1.99;
+            n3 *= 1.99;
+            amplitude *= 0.6;
+          }
+          return total;
+        }
+
+        void main() {
+          const float firstFrameOffset = 7.;
+          float t = .1 * (u_time + firstFrameOffset);
+
+          vec2 shape_uv = vec2(0.);
+          vec2 grain_uv = vec2(0.);
+
+          float r = u_rotation * PI / 180.;
+          float cr = cos(r);
+          float sr = sin(r);
+          mat2 graphicRotation = mat2(cr, sr, -sr, cr);
+          vec2 graphicOffset = vec2(-u_offsetX, u_offsetY);
+
+          if (u_shape > 3.5) {
+            shape_uv = v_objectUV;
+            grain_uv = shape_uv;
+            grain_uv = transpose(graphicRotation) * grain_uv;
+            grain_uv *= u_scale;
+            grain_uv -= graphicOffset;
+            grain_uv *= v_objectBoxSize;
+            grain_uv *= .7;
+          } else {
+            shape_uv = .5 * v_patternUV;
+            grain_uv = 100. * v_patternUV;
+            grain_uv = transpose(graphicRotation) * grain_uv;
+            grain_uv *= u_scale;
+            if (u_fit > 0.) {
+              vec2 givenBoxSize = vec2(u_worldWidth, u_worldHeight);
+              givenBoxSize = max(givenBoxSize, vec2(1.)) * u_pixelRatio;
+              vec2 patternBoxGivenSize = vec2(
+                (u_worldWidth == 0.) ? u_resolution.x : givenBoxSize.x,
+                (u_worldHeight == 0.) ? u_resolution.y : givenBoxSize.y
+              );
+              float patternBoxRatio = patternBoxGivenSize.x / patternBoxGivenSize.y;
+              float patternBoxNoFitBoxWidth = patternBoxRatio * min(patternBoxGivenSize.x / patternBoxRatio, patternBoxGivenSize.y);
+              grain_uv /= (patternBoxNoFitBoxWidth / v_patternBoxSize.x);
+            }
+            vec2 patternBoxScale = u_resolution.xy / v_patternBoxSize;
+            grain_uv -= graphicOffset / patternBoxScale;
+            grain_uv *= 1.6;
+          }
+
+          float shape = 0.;
+
+          if (u_shape < 1.5) {
+            float wave = cos(.5 * shape_uv.x - 4. * t) * sin(1.5 * shape_uv.x + 2. * t) * (.75 + .25 * cos(6. * t));
+            shape = 1. - smoothstep(-1., 1., shape_uv.y + wave);
+          } else if (u_shape < 2.5) {
+            float stripeIdx = floor(2. * shape_uv.x / TWO_PI);
+            float rnd = hash11(stripeIdx * 100.);
+            rnd = sign(rnd - .5) * pow(4. * abs(rnd), .3);
+            shape = sin(shape_uv.x) * cos(shape_uv.y - 5. * rnd * t);
+            shape = pow(abs(shape), 4.);
+          } else if (u_shape < 3.5) {
+            float n2v = valueNoiseR(shape_uv * .4 - 3.75 * t);
+            shape_uv.x += 10.;
+            shape_uv *= .6;
+            vec2 fuv = fract(shape_uv);
+            float idx = fract((randomR(floor(shape_uv)) - .5) * 2.);
+            vec2 tile = fuv;
+            if (idx > 0.75) { tile = vec2(1.0) - fuv; }
+            else if (idx > 0.5) { tile = vec2(1.0 - fuv.x, fuv.y); }
+            else if (idx > 0.25) { tile = 1.0 - vec2(1.0 - fuv.x, fuv.y); }
+            float distance1 = length(tile);
+            float distance2 = length(tile - vec2(1.));
+            n2v -= .5;
+            n2v *= .1;
+            shape = smoothstep(.2, .55, distance1 + n2v) * (1. - smoothstep(.45, .8, distance1 - n2v));
+            shape += smoothstep(.2, .55, distance2 + n2v) * (1. - smoothstep(.45, .8, distance2 - n2v));
+            shape = pow(shape, 1.5);
+          } else if (u_shape < 4.5) {
+            shape_uv *= .6;
+            vec2 outer = vec2(.5);
+            vec2 bl = smoothstep(vec2(0.), outer, shape_uv + vec2(.1 + .1 * sin(3. * t), .2 - .1 * sin(5.25 * t)));
+            vec2 tr = smoothstep(vec2(0.), outer, 1. - shape_uv);
+            shape = 1. - bl.x * bl.y * tr.x * tr.y;
+
+            shape_uv = -shape_uv;
+            bl = smoothstep(vec2(0.), outer, shape_uv + vec2(.1 + .1 * sin(3. * t), .2 - .1 * cos(5.25 * t)));
+            tr = smoothstep(vec2(0.), outer, 1. - shape_uv);
+            shape -= bl.x * bl.y * tr.x * tr.y;
+
+            shape = 1. - smoothstep(0., 1., shape);
+          } else if (u_shape < 5.5) {
+            shape_uv *= 2.;
+            float dist = length(.4 * shape_uv);
+            float waves = sin(pow(dist, 1.2) * 5. - 3. * t) * .5 + .5;
+            shape = waves;
+          } else if (u_shape < 6.5) {
+            t *= 2.;
+            vec2 f1_traj = .25 * vec2(1.3 * sin(t), .2 + 1.3 * cos(.6 * t + 4.));
+            vec2 f2_traj = .2 * vec2(1.2 * sin(-t), 1.3 * sin(1.6 * t));
+            vec2 f3_traj = .25 * vec2(1.7 * cos(-.6 * t), cos(-1.6 * t));
+            vec2 f4_traj = .3 * vec2(1.4 * cos(.8 * t), 1.2 * sin(-.6 * t - 3.));
+            shape = .5 * pow(1. - clamp(length(shape_uv + f1_traj), 0., 1.), 5.);
+            shape += .5 * pow(1. - clamp(length(shape_uv + f2_traj), 0., 1.), 5.);
+            shape += .5 * pow(1. - clamp(length(shape_uv + f3_traj), 0., 1.), 5.);
+            shape += .5 * pow(1. - clamp(length(shape_uv + f4_traj), 0., 1.), 5.);
+            shape = smoothstep(.0, .9, shape);
+            float edge = smoothstep(.25, .3, shape);
+            shape = mix(.0, shape, edge);
+          } else {
+            shape_uv *= 2.;
+            float d = 1. - pow(length(shape_uv), 2.);
+            vec3 spos = vec3(shape_uv, sqrt(max(d, 0.)));
+            vec3 lightPos = normalize(vec3(cos(1.5 * t), .8, sin(1.25 * t)));
+            shape = .5 + .5 * dot(lightPos, spos);
+            shape *= step(0., d);
+          }
+
+          float baseNoise = snoise(grain_uv * .5);
+          vec4 fbmVals = fbmR(
+            .002 * grain_uv + 10.,
+            .003 * grain_uv,
+            .001 * grain_uv,
+            rotate(.4 * grain_uv, 2.)
+          );
+          float grainDist = baseNoise * snoise(grain_uv * .2) - fbmVals.x - fbmVals.y;
+          float rawNoise = .75 * baseNoise - fbmVals.w - fbmVals.z;
+          float noiseV = clamp(rawNoise, 0., 1.);
+
+          shape += u_intensity * 2. / u_colorsCount * (grainDist + .5);
+          shape += u_noise * 10. / u_colorsCount * noiseV;
+
+          float aa = fwidth(shape);
+
+          shape = clamp(shape - .5 / u_colorsCount, 0., 1.);
+          float totalShape = smoothstep(0., u_softness + 2. * aa, clamp(shape * u_colorsCount, 0., 1.));
+          totalShape *= u_subtlety;
+          float mixer = shape * (u_colorsCount - 1.);
+
+          int cntStop = int(u_colorsCount) - 1;
+          vec4 gradient = u_colors[0];
+          gradient.rgb *= gradient.a;
+          for (int i = 1; i < 7; i++) {
+            if (i > cntStop) break;
+            float localT = clamp(mixer - float(i - 1), 0., 1.);
+            localT = smoothstep(.5 - .5 * u_softness - aa, .5 + .5 * u_softness + aa, localT);
+            vec4 c = u_colors[i];
+            c.rgb *= c.a;
+            gradient = mix(gradient, c, localT);
+          }
+
+          vec3 color = gradient.rgb * totalShape;
+          float opacity = gradient.a * totalShape;
+
+          vec3 bgColor = u_colorBack.rgb * u_colorBack.a;
+          color = color + bgColor * (1.0 - opacity);
+          opacity = opacity + u_colorBack.a * (1.0 - opacity);
+
+          fragColor = vec4(color, 1.0);
+        }
+      `;
+
+      function compile(type, src) {
+        const s = gl.createShader(type);
+        gl.shaderSource(s, src);
+        gl.compileShader(s);
+        if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+          console.error(gl.getShaderInfoLog(s));
+          return null;
+        }
+        return s;
+      }
+
+      const vs = compile(gl.VERTEX_SHADER, vertexSrc);
+      const fs = compile(gl.FRAGMENT_SHADER, fragmentSrc);
+      if (!vs || !fs) return;
+
+      const program = gl.createProgram();
+      gl.attachShader(program, vs);
+      gl.attachShader(program, fs);
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.error(gl.getProgramInfoLog(program));
+        return;
+      }
+      gl.useProgram(program);
+
+      const loc = (name) => gl.getUniformLocation(program, name);
+      const uTime = loc("u_time");
+      const uResolution = loc("u_resolution");
+      const uPixelRatio = loc("u_pixelRatio");
+      const uColorBack = loc("u_colorBack");
+      const uColors0 = loc("u_colors[0]");
+      const uColorsCount = loc("u_colorsCount");
+      const uSoftness = loc("u_softness");
+      const uIntensity = loc("u_intensity");
+      const uNoise = loc("u_noise");
+      const uShape = loc("u_shape");
+      const uSubtlety = loc("u_subtlety");
+      const uWorldWidth = loc("u_worldWidth");
+      const uWorldHeight = loc("u_worldHeight");
+      const uFit = loc("u_fit");
+      const uScale = loc("u_scale");
+      const uRotation = loc("u_rotation");
+      const uOffsetX = loc("u_offsetX");
+      const uOffsetY = loc("u_offsetY");
+      const uOriginX = loc("u_originX");
+      const uOriginY = loc("u_originY");
+
+      function hexToRGBA(hex, alpha) {
+        const clean = hex.replace("#", "");
+        return [
+          parseInt(clean.substring(0, 2), 16) / 255,
+          parseInt(clean.substring(2, 4), 16) / 255,
+          parseInt(clean.substring(4, 6), 16) / 255,
+          alpha,
+        ];
+      }
+
+      // ---- Props (as given for the GrainGradient component) ----
+      const props = {
+        colors: ["#ff6a00"],
+        colorBack: "#f6f6ef",
+        softness: 1,
+        intensity: 0.35,
+        noise: 0,
+        shape: 6, // blob
+        speed: 2,
+        scale: 3.36,
+        offsetX: 0,
+        offsetY: 0,
+        rotation: 276,
+        fit: 2, // cover
+      };
+
+      const colorFloats = new Float32Array(7 * 4);
+      props.colors.forEach((hex, i) => colorFloats.set(hexToRGBA(hex, 1), i * 4));
+      for (let i = props.colors.length; i < 7; i++) colorFloats.set(hexToRGBA(props.colors[props.colors.length - 1], 1), i * 4);
+
+      gl.uniform4fv(uColors0, colorFloats);
+      gl.uniform1f(uColorsCount, props.colors.length);
+      gl.uniform4fv(uColorBack, hexToRGBA(props.colorBack, 1));
+      gl.uniform1f(uSoftness, props.softness);
+      gl.uniform1f(uIntensity, props.intensity);
+      gl.uniform1f(uNoise, props.noise);
+      gl.uniform1f(uShape, props.shape);
+      gl.uniform1f(uSubtlety, 0.45); // arclent addition: dial the layer back for a subtler wash
+      gl.uniform1f(uWorldWidth, 0);
+      gl.uniform1f(uWorldHeight, 0);
+      gl.uniform1f(uFit, props.fit);
+      gl.uniform1f(uScale, props.scale);
+      gl.uniform1f(uRotation, props.rotation);
+      gl.uniform1f(uOffsetX, props.offsetX);
+      gl.uniform1f(uOffsetY, props.offsetY);
+      gl.uniform1f(uOriginX, 0.5);
+      gl.uniform1f(uOriginY, 0.5);
+
+      function resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const w = Math.max(1, Math.round(canvas.clientWidth * dpr));
+        const h = Math.max(1, Math.round(canvas.clientHeight * dpr));
+        if (canvas.width !== w || canvas.height !== h) {
+          canvas.width = w;
+          canvas.height = h;
+          gl.viewport(0, 0, w, h);
+        }
+        gl.uniform1f(uPixelRatio, dpr);
+      }
+
+      function draw(timeSeconds) {
+        resize();
+        gl.uniform1f(uTime, timeSeconds * props.speed);
+        gl.uniform2f(uResolution, canvas.width, canvas.height);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+      }
+
+      const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let paused = false;
+      const io = new IntersectionObserver((entries) => { paused = !entries[0].isIntersecting; }, { threshold: 0.05 });
+      io.observe(canvas);
+      window.addEventListener("resize", resize);
+
+      resize();
+      if (reduceMotion) {
+        draw(0);
+        return;
+      }
+
+      function frame(now) {
+        requestAnimationFrame(frame);
+        if (paused) return;
+        draw(now * 0.001);
+      }
+      requestAnimationFrame(frame);
+    })();
+  </script>
+  <script src="motion.js"></script>
+  <script>
+    /* Button interactions (GSAP): magnetic pull toward the cursor with an elastic release,
+       a springy press, an arrow that flies out and back in on hover, and a ghost button
+       that fills with a circle growing from wherever the cursor enters (and shrinking
+       toward wherever it leaves). Fine-pointer devices only; skipped for reduced motion. */
+    (function () {
+      if (!window.gsap || matchMedia("(prefers-reduced-motion: reduce)").matches || !matchMedia("(pointer: fine)").matches) return;
+      document.documentElement.classList.add("gsap-btn");
+
+      // one shared ticker loop eases every magnetic button toward its target each frame,
+      // so following and releasing both stay continuous (no tween restarts, no wobble)
+      var mags = [], running = false;
+      function tick() {
+        var dr = gsap.ticker.deltaRatio(), busy = false;
+        mags.forEach(function (m) {
+          var f = 1 - Math.pow(1 - m.lerp, dr);
+          var dx = m.tx - m.x, dy = m.ty - m.y;
+          if (Math.abs(dx) < 0.02 && Math.abs(dy) < 0.02 && m.tx === 0 && m.ty === 0) {
+            if (m.x !== 0 || m.y !== 0) { m.x = 0; m.y = 0; gsap.set(m.el, { x: 0, y: 0 }); }
+            return;
+          }
+          m.x += dx * f; m.y += dy * f; busy = true;
+          gsap.set(m.el, { x: m.x, y: m.y });
+        });
+        if (!busy) { gsap.ticker.remove(tick); running = false; }
+      }
+      function wake() { if (!running) { running = true; gsap.ticker.add(tick); } }
+      function magnet(el, k) {
+        var m = { el: el, tx: 0, ty: 0, x: 0, y: 0, lerp: 0.14 };
+        mags.push(m);
+        el.addEventListener("pointermove", function (e) {
+          var r = el.getBoundingClientRect();
+          m.tx = (e.clientX - (r.left + r.width / 2 - m.x)) * k;
+          m.ty = (e.clientY - (r.top + r.height / 2 - m.y)) * k;
+          m.lerp = 0.14; wake();
+        });
+        el.addEventListener("pointerleave", function () { m.tx = 0; m.ty = 0; m.lerp = 0.075; wake(); });
+      }
+      function press(el, depth) {
+        var down = false;
+        el.addEventListener("pointerdown", function () { down = true; gsap.to(el, { scale: depth, duration: 0.3, ease: "power3.out", overwrite: "auto" }); });
+        function up() { if (!down) return; down = false; gsap.to(el, { scale: 1, duration: 0.9, ease: "elastic.out(1, 0.7)", overwrite: "auto" }); }
+        el.addEventListener("pointerup", up); el.addEventListener("pointercancel", up); el.addEventListener("pointerleave", up);
+      }
+
+      // two-part buttons: magnet + press + arrow fly
+      document.querySelectorAll(".ib-btn").forEach(function (b) {
+        magnet(b, 0.18); press(b, 0.96);
+        var arrow = b.querySelector(".arrow");
+        if (!arrow) return;
+        b.addEventListener("pointerenter", function () {
+          gsap.timeline({ overwrite: "auto" })
+            .to(arrow, { x: 14, opacity: 0, duration: 0.3, ease: "power2.inOut" })
+            .set(arrow, { x: -15 })
+            .to(arrow, { x: 0, opacity: 1, duration: 0.75, ease: "expo.out" });
+        });
+      });
+
+      // nav CTA, back-to-top, menu button: lighter magnet / press
+      document.querySelectorAll(".cta-wipe, .to-top").forEach(function (b) { magnet(b, 0.15); press(b, 0.95); });
+      document.querySelectorAll(".menu-btn").forEach(function (b) { press(b, 0.92); });
+
+      // ghost button: circle fill from the pointer
+      document.querySelectorAll(".btn-ghost").forEach(function (b) {
+        magnet(b, 0.16); press(b, 0.96);
+        var fill = document.createElement("span");
+        fill.className = "gfill"; fill.setAttribute("aria-hidden", "true");
+        b.appendChild(fill);
+        function place(e) {
+          var r = b.getBoundingClientRect(), d = Math.hypot(r.width, r.height) * 2;
+          gsap.set(fill, { width: d, height: d, x: e.clientX - r.left - d / 2, y: e.clientY - r.top - d / 2 });
+        }
+        b.addEventListener("pointerenter", function (e) {
+          place(e);
+          gsap.fromTo(fill, { scale: 0 }, { scale: 1, duration: 1.0, ease: "expo.out", overwrite: "auto" });
+          gsap.to(b, { color: "#222F30", duration: 0.5, ease: "power2.out", overwrite: "auto" });
+        });
+        b.addEventListener("pointerleave", function (e) {
+          place(e);
+          gsap.to(fill, { scale: 0, duration: 0.75, ease: "power3.inOut", overwrite: "auto" });
+          gsap.to(b, { color: "#FFFFFF", duration: 0.6, ease: "power2.out", overwrite: "auto" });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

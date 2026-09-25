@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script>
+    document.documentElement.classList.add("hero-pending");
+    setTimeout(function () { document.documentElement.classList.remove("hero-pending"); }, 4000);
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <meta name="theme-color" content="#C9CBBE" />
+  <meta name="description" content="arclent is the hiring platform built on verified work: portfolios confirmed by the people who worked on them, jobs posted and filled with AI." />
+  <meta property="og:title" content="arclent" />
+  <meta property="og:description" content="The hiring platform built on verified work." />
+  <title>arclent — My Applications</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400&family=Roboto+Mono:wght@400&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/motion@11/dist/motion.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#4D5757",
+            brand: "#222F30",
+            ink: "#222F30",
+            surface: "#F7F7F5",
+            neutral: "#C9CBBE",
+            accent: "#CEF79E",
+            error: "#D64545",
+          },
+          fontFamily: {
+            serif: ['"Inter Tight"', "ui-sans-serif", "system-ui", "sans-serif"],
+            sans: ['"Inter Tight"', "ui-sans-serif", "system-ui", "sans-serif"],
+            mono: ['"Roboto Mono"', "ui-monospace", "monospace"],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    /* Scroll-reveal system: fade + rise, corporate-editorial timing (see motion-design skill). */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    [data-reveal].is-visible { opacity: 1; transform: translateY(0); }
+
+    [data-reveal-group] > * {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    [data-reveal-group].is-visible > * { opacity: 1; transform: translateY(0); }
+    [data-reveal-group] > *:nth-child(1) { transition-delay: 0ms; }
+    [data-reveal-group] > *:nth-child(2) { transition-delay: 70ms; }
+    [data-reveal-group] > *:nth-child(3) { transition-delay: 140ms; }
+    [data-reveal-group] > *:nth-child(4) { transition-delay: 210ms; }
+    [data-reveal-group] > *:nth-child(5) { transition-delay: 280ms; }
+    [data-reveal-group] > *:nth-child(6) { transition-delay: 350ms; }
+
+    @media (prefers-reduced-motion: reduce) {
+      [data-reveal], [data-reveal-group] > * { opacity: 1 !important; transform: none !important; transition: none !important; }
+    }
+
+    /* ---- Y Combinator-inspired system: warm paper background, near-black ink,
+       one orange accent, Source Serif 4 headlines with italic emphasis, Outfit
+       light UI text, hairline borders, black pill buttons, no shadows. ---- */
+    .bg-noise { display: none; }
+    body { font-weight: 300; }
+    h1, h2, h3 { letter-spacing: -0.01em; font-weight: 400; }
+    em { font-style: italic; }
+
+    /* ---- Integrated Biosciences-style system: Abyssal Ink #222F30 + Bone White
+       #F7F7F5, single-weight Inter Tight (Aspekta substitute) with tight
+       tracking, Roboto Mono for labels, 1px hairlines, no shadows/gradients,
+       Bioluminescent Lime #CEF79E rationed to micro-surfaces. ---- */
+    .bg-noise { display: none; }
+    body { font-family: 'Inter Tight', ui-sans-serif, system-ui, sans-serif; letter-spacing: -0.001em; }
+    body *:not(svg):not(path) { font-weight: 400 !important; font-style: normal !important; }
+    h1, h2, h3 { letter-spacing: -0.02em; line-height: 1.1; }
+    .font-mono, .mono { font-family: 'Roboto Mono', ui-monospace, monospace; letter-spacing: -0.02em; }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid #4D5757;
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Filled action button: white on dark, mono, 8px radius, no border. */
+    .glass-pill {
+      background: #FFFFFF;
+      color: #222F30 !important;
+      border: 0;
+      border-radius: 8px !important;
+      font-family: 'Roboto Mono', ui-monospace, monospace !important;
+      font-size: 13px !important;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      transition: opacity 0.2s ease;
+    }
+    .glass-pill:hover { opacity: 0.85; }
+    .glass-pill--accent { background: #FFFFFF; }
+    /* Outlined ghost button */
+    .glass-pill--neutral { background: transparent; color: #FFFFFF !important; border: 1px solid #4D5757; }
+
+    .btn-brutal {
+      border-radius: 8px !important;
+      font-family: 'Roboto Mono', ui-monospace, monospace !important;
+      font-size: 13px !important;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      box-shadow: none !important;
+      transition: opacity 0.2s ease;
+    }
+    .btn-brutal:hover { opacity: 0.85; }
+    @media (prefers-reduced-motion: reduce) { .glass-pill, .btn-brutal { transition: none !important; } }
+
+    .glass-nav { background: transparent; }
+
+    /* ---- micro-interactions: expo-out (0.16,1,0.3,1) for colour/shape changes,
+       ease-in-out-quart (0.76,0,0.24,1) for quick text slides ---- */
+    :root { --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-io: cubic-bezier(0.76, 0, 0.24, 1); }
+
+    .nav-pill { transition: background-color 0.6s var(--ease-out), color 0.6s var(--ease-out), border-color 0.6s var(--ease-out); }
+    .nav-pill:hover { background: #CEF79E; border-color: #CEF79E; color: #222F30; }
+
+    .roll { display: block; height: 1.25em; line-height: 1.25em; overflow: hidden; }
+    .roll > span { display: block; transition: transform 0.3s var(--ease-io); }
+    .btn-roll:hover .roll > span, .btn-pair:hover .roll > span { transform: translateY(-100%); }
+
+    .btn-dark { transition: background-color 0.6s var(--ease-out), color 0.6s var(--ease-out); }
+    .btn-dark:hover { opacity: 1; background: #CEF79E; color: #222F30; }
+
+    .btn-ghost { transition: background-color 0.6s var(--ease-out), color 0.6s var(--ease-out), border-color 0.6s var(--ease-out); }
+    .btn-ghost:hover { opacity: 1; background: #FFFFFF; color: #222F30; border-color: #FFFFFF; }
+
+    /* label + arrow pair: hovering either swaps their fills */
+    .pair-a, .pair-b { transition: background-color 0.6s var(--ease-out), color 0.6s var(--ease-out); }
+    .pair-a { background: #222F30; color: #FFFFFF; }
+    .pair-b { background: #CEF79E; color: #222F30; }
+    .btn-pair:hover .pair-a { background: #CEF79E; color: #222F30; }
+    .btn-pair:hover .pair-b { background: #222F30; color: #CEF79E; }
+    .pair-b svg { transition: transform 0.4s var(--ease-io); }
+    .btn-pair:hover .pair-b svg { transform: translateX(3px); }
+
+    /* menu button: two lime lines that cross into an X */
+    .menu-btn { position: relative; width: 40px; height: 40px; border-radius: 10px; background: #222F30; border: 1px solid transparent; transition: background-color 0.6s var(--ease-out), border-color 0.6s var(--ease-out); }
+    .menu-btn:hover { border-color: #CEF79E; }
+    .menu-btn i { position: absolute; left: 11px; right: 11px; height: 1.5px; background: #CEF79E; transition: transform 0.6s var(--ease-out), top 0.6s var(--ease-out); }
+    .menu-btn i:nth-child(1) { top: 16px; } .menu-btn i:nth-child(2) { top: 22px; }
+    .menu-open .menu-btn i:nth-child(1) { top: 19px; transform: rotate(45deg); }
+    .menu-open .menu-btn i:nth-child(2) { top: 19px; transform: rotate(-45deg); }
+
+    .menu-overlay {
+      position: fixed; inset: 6px; z-index: 40; border-radius: 20px; background: #222F30; color: #fff;
+      clip-path: inset(0 0 100% 0 round 20px); visibility: hidden;
+      transition: clip-path 0.8s var(--ease-out), visibility 0s linear 0.8s;
+    }
+    .menu-open .menu-overlay { clip-path: inset(0 0 0 0 round 20px); visibility: visible; transition: clip-path 0.8s var(--ease-out), visibility 0s; }
+    .menu-overlay .m-item { display: block; opacity: 0; transform: translateY(36px); transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
+    .menu-open .menu-overlay .m-item { opacity: 1; transform: none; transition-delay: calc(0.18s + var(--i) * 0.07s); }
+    .menu-open { overflow: hidden; }
+
+
+    /* desktop: logo floats on its own, links + CTA live in one frosted group (right) */
+    @media (min-width: 1024px) {
+      .ib-nav { background: transparent !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; padding: 6px 0 !important; }
+      .nav-group { background: rgba(255, 255, 255, 0.8); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-radius: 12px; padding: 4px 4px 4px 12px; }
+    }
+
+
+    /* ---- two-part button: label + interlocking arrow tab. Hover swaps the fills
+       (label goes lime, tab goes dark), the label tightens toward the tab and the
+       tab slides forward. Easing cubic-bezier(.25,1,.5,1), 0.6s. ---- */
+    .ib-btn { --bg: #222F30; --fg: #FFFFFF; --tab: #CEF79E; --tab-ink: #222F30; --hov: #CEF79E; --hov-ink: #222F30;
+      display: inline-flex; align-items: stretch; height: 48px; cursor: pointer; border: 0; background: none; padding: 0;
+      font-family: 'Roboto Mono', ui-monospace, monospace; font-size: 13px; letter-spacing: -0.02em; text-transform: uppercase; text-decoration: none; }
+    .ib-btn--light { --bg: #FFFFFF; --fg: #222F30; }
+    .ib-btn .lbl, .ib-btn .corner path, .ib-btn .ico path, .ib-btn .ico, .ib-btn .arrow { transition-duration: 0.75s; transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1); }
+    .ib-btn .lbl { position: relative; display: flex; align-items: center; padding: 0 8px 0 20px; margin-inline-end: 16px; white-space: nowrap;
+      background: var(--bg); color: var(--fg); border-radius: 12px 0 0 12px;
+      transition-property: background-color, color, margin-inline-end, padding-right; }
+    .ib-btn .corner { position: absolute; top: 0; left: 100%; width: 16px; height: 100%; display: block; }
+    .ib-btn .corner svg { display: block; width: 100%; height: 100%; }
+    .ib-btn .corner path { fill: var(--bg); transition-property: fill; }
+    .ib-btn .ico { display: block; width: 46px; transition-property: transform; }
+    .ib-btn .ico svg { display: block; width: 100%; height: 100%; }
+    .ib-btn .ico .shape { fill: var(--tab); transform-box: fill-box; transform-origin: right center; transition-property: fill, transform; }
+    .ib-btn .ico .arrow { stroke: var(--tab-ink); transition-property: stroke; }
+    .ib-btn:hover .lbl, .ib-btn:focus-visible .lbl { background: var(--hov); color: var(--hov-ink); margin-inline-end: 13px; padding-right: 11px; }
+    .ib-btn:hover .corner path, .ib-btn:focus-visible .corner path { fill: var(--hov); }
+        .ib-btn:hover .ico .shape, .ib-btn:focus-visible .ico .shape { fill: #222F30; transform: scaleX(0.92); }
+    .ib-btn:hover .ico .arrow, .ib-btn:focus-visible .ico .arrow { stroke: #CEF79E; }
+    .ib-btn--light:hover .ico .shape { fill: #222F30; }
+    .ib-btn:active { transform: scale(0.98); }
+    @media (prefers-reduced-motion: reduce) { .ib-btn .lbl, .ib-btn .corner path, .ib-btn .ico, .ib-btn .ico path { transition: none !important; } }
+
+
+    /* smooth scrolling (Lenis) */
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+    .lenis.lenis-stopped { overflow: hidden; }
+    a, button { -webkit-tap-highlight-color: transparent; }
+
+
+    /* nav CTA (from the reference recording): dark button, a white fill wipes up from
+       the bottom while the label rolls up; final state white with dark text */
+    .cta-wipe { position: relative; overflow: hidden; background: #222F30 linear-gradient(#fff, #fff) no-repeat 0 100% / 100% 0%;
+      transition: background-size 0.3s cubic-bezier(0.76, 0, 0.24, 1); }
+    .cta-wipe:hover, .cta-wipe:focus-visible { background-color: #222F30; background-size: 100% 100%; color: #222F30; }
+    .cta-wipe .roll > span:nth-child(2) { color: #222F30; }
+    .btn-dark.cta-wipe:hover { background: #222F30 linear-gradient(#fff, #fff) no-repeat 0 100% / 100% 100%; color: #222F30; }
+
+    /* nav links: a soft light chip fades in behind the hovered link */
+    .nav-links a { position: relative; text-decoration: none; background: none !important; isolation: isolate; }
+    .nav-links a::before { content: ""; position: absolute; inset: 3px 2px; z-index: -1; border-radius: 8px; background: rgba(255, 255, 255, 0.75);
+      opacity: 0; transform: scale(0.94); transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .nav-links a:hover::before, .nav-links a:focus-visible::before { opacity: 1; transform: scale(1); }
+
+
+    /* footer back-to-top */
+    .to-top { transition: background-color 0.6s cubic-bezier(0.25, 1, 0.5, 1), color 0.6s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+    .to-top:hover { background: #CEF79E; color: #222F30; border-color: #CEF79E; }
+    .to-top svg { transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1); }
+    .to-top:hover svg { transform: translateY(-3px); }
+    #site-footer li a { display: inline-block; }
+
+
+    /* logo sits on a soft light chip so it reads over any background */
+    .logo-chip { display: inline-flex; align-items: center; padding: 12px 16px; border-radius: 12px;
+      background: rgba(247, 247, 245, 0.92); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+      transition: background-color 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+    .logo-chip:hover { background: #FFFFFF; }
+    /* over the hero: no chip, white logo; chip fades in once scrolling starts */
+    html:not(.is-scrolled) .logo-chip { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+    .nav-logo { transition: filter 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+    html:not(.is-scrolled) .nav-logo { filter: invert(1); }
+    @media (max-width: 1023px) { html:not(.is-scrolled) .nav-logo { filter: none; } }  /* mobile: the whole bar is frosted-light, keep the dark logo */
+    .btn-dark { white-space: nowrap; flex-shrink: 0; }
+    /* keyboard focus: quiet ink ring on light surfaces, lime on dark ones */
+    :where(a, button, input, select, textarea, [tabindex]):focus-visible { outline: 2px solid #222F30; outline-offset: 3px; }
+    :where(.bg-ink, footer, #menu-overlay, .menu-overlay) :where(a, button, input, select, textarea, [tabindex]):focus-visible { outline-color: #CEF79E; }
+
+
+    /* hero intro: copy stays hidden until GSAP is ready (no flash) */
+    .hero-pending #hero-h1, .hero-pending #hero-p, .hero-pending #hero-cta, .hero-pending .ib-nav { visibility: hidden; }
+    .line-mask { display: block; overflow: clip; padding-bottom: 0.14em; margin-bottom: -0.14em; }
+    .line-mask > .line { display: block; will-change: transform; }
+
+
+    /* GSAP owns these interactions once it loads (html.gsap-btn); plain CSS hovers remain as fallback */
+    .gsap-btn .btn-ghost { position: relative; isolation: isolate; overflow: hidden; }
+    .gsap-btn .btn-ghost:hover { background: transparent !important; color: #FFFFFF; border-color: rgba(255, 255, 255, 0.7); }
+    .gsap-btn .ib-btn:active { transform: none; }
+    .btn-ghost .gfill { position: absolute; left: 0; top: 0; z-index: -1; border-radius: 50%; background: #FFFFFF; pointer-events: none; transform: scale(0); }
+    .ib-btn, .btn-ghost, .cta-wipe, .to-top, .menu-btn { will-change: transform; touch-action: manipulation; }
+
+
+    #hero-tilt { will-change: transform; transform-style: preserve-3d; }
+
+    /* text links: underline grows in from the left */
+    .u-link, footer a { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size 0.3s var(--ease-out); }
+    .u-link:hover, footer a:hover { background-size: 100% 1px; }
+
+    /* scrolling text strip */
+    .marquee-track { display: flex; width: max-content; animation: marquee 45s linear infinite; }
+    .marquee-strip:hover .marquee-track { animation-play-state: paused; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) {
+      .marquee-track { animation: none; }
+      .menu-overlay, .menu-overlay .m-item, .nav-pill, .btn-dark, .btn-ghost, .pair-a, .pair-b, .roll > span { transition: none !important; }
+    }
+
+    .ib-nav {
+      background: rgba(247, 247, 245, 0.72);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      backdrop-filter: blur(20px) saturate(1.4);
+    }
+    .btn-dark, .btn-ghost {
+      border-radius: 12px;
+      font-family: 'Roboto Mono', ui-monospace, monospace;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      transition: opacity 0.2s ease;
+    }
+    .btn-dark { background: #222F30; color: #FFFFFF; }
+    .btn-ghost { border: 1px solid rgba(255, 255, 255, 0.7); color: #FFFFFF; }
+    .btn-dark:hover, .btn-ghost:hover { opacity: 0.85; }
+
+
+    /* Segmented toggles: hairline pills, lime fill when active. */
+    .glass-seg { background: transparent; border: 1px solid #C9CBBE; border-radius: 9999px; font-family: 'Roboto Mono', ui-monospace, monospace; }
+    #verify-stage .glass-seg, #outreach-stage .glass-seg { background: transparent; border-color: #4D5757; }
+    .glass-seg-active { background: #CEF79E !important; color: #222F30 !important; box-shadow: none; }
+
+    .glass-badge { background: #FFFFFF; border: 1px solid #C9CBBE; }
+
+    @keyframes demo-caret-blink { 0%, 45% { opacity: 1; } 50%, 95% { opacity: 0; } 100% { opacity: 1; } }
+    #demo-caret { animation: demo-caret-blink 1s step-end infinite; }
+    @keyframes demo-dot-bounce { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-3px); opacity: 1; } }
+    .demo-dot { animation: demo-dot-bounce 1.1s ease-in-out infinite; }
+  
+  </style>
+
+  <style>
+    html .nav-logo { filter: none !important; }
+    .mono { font: 400 11px/1.3 "Roboto Mono", monospace; text-transform: uppercase; }
+    #sidebar { overflow-x: hidden; transition: transform 0.3s, width 0.3s; }
+    #sidebar.collapsed { width: 72px; padding-left: 0.75rem; padding-right: 0.75rem; }
+    #sidebar.collapsed nav a,
+    #sidebar.collapsed > button { font-size: 0; gap: 0; justify-content: center; padding-left: 0; padding-right: 0; }
+    #sidebar.collapsed .sb-footer { display: none; }
+    #sidebar .sb-logo img { flex-shrink: 0; max-width: none; }
+    #sidebar .sb-head { padding-left: 0.5rem; padding-right: 0.5rem; }
+    #sidebar.collapsed .sb-head { flex-direction: column; align-items: center; gap: 12px; padding: 0; }
+    #sidebar.collapsed .sb-head .sb-logo { margin-left: 0; }
+    #sidebar.collapsed .sb-logo { width: 2rem; padding: 0; margin-left: 0.5rem; overflow: hidden; }
+    .dcard { transition: transform .6s cubic-bezier(.22,1,.36,1); } .dcard:hover { transform: translateY(-3px); }
+    .vlink { background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat; padding-bottom: 2px; }
+  </style>
+  <style>
+    .field-l { width: 100%; min-height: 50px; border: 0; border-radius: 12px; background: #fff; padding: 0 16px; color: #222F30; font-size: 16px; outline: 1px solid #E7E8E1; transition: outline-color .4s; }
+    .field-l::placeholder { color: rgba(77,87,87,.6); }
+    .field-l:focus { outline: 1px solid #222F30; }
+    select.field-l { appearance: none; -webkit-appearance: none; padding-right: 42px; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23222F30' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+    .lbl-l { display: block; margin-bottom: 8px; font: 400 11px/1 "Roboto Mono", monospace; text-transform: uppercase; color: #4D5757; }
+    [hidden] { display: none !important; }
+    .row-in { animation: rowIn .6s cubic-bezier(.22,1,.36,1) both; } @keyframes rowIn { from { opacity: 0; transform: translateY(14px); } }
+    .tab { display:inline-flex; align-items:center; gap:8px; padding:12px 18px; font-family:"Roboto Mono",monospace; font-size:12px; text-transform:uppercase; color:#4D5757; transition:background-color .4s,color .4s; }
+    .tab:hover { color:#222F30; } .tab.on { background:#222F30; color:#fff; }
+  </style>
+</head>
+<body class="min-h-screen bg-surface font-sans text-ink">
+  <div id="sidebar-backdrop" class="fixed inset-0 z-30 hidden bg-black/30"></div>
+
+  <div class="flex min-h-screen">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 flex w-[260px] shrink-0 flex-col border-r border-[#DADCD0] bg-surface px-4 py-6 transition-transform duration-300">
+      <div class="sb-head mb-8 flex items-center justify-between gap-2 px-2">
+        <a href="landing.html" class="sb-logo flex items-center gap-2">
+          <img src="assets/logo.png" alt="arclent." class="h-6 w-auto" />
+        </a>
+        <button id="sidebar-toggle-in" type="button" class="sb-tog grid h-9 w-9 shrink-0 place-items-center rounded-[10px] text-primary transition-colors hover:bg-white hover:text-ink" aria-label="Collapse or expand navigation"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg></button>
+      </div>
+
+      <nav class="flex flex-1 flex-col gap-1 font-mono text-[12px] uppercase">
+        <a href="talent-dashboard.html" class="flex items-center gap-3 rounded-[10px] px-3 py-3 text-primary transition-colors hover:bg-white hover:text-ink">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+          Dashboard
+        </a>
+        <a href="profile.html" class="flex items-center gap-3 rounded-[10px] px-3 py-3 text-primary transition-colors hover:bg-white hover:text-ink">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>
+          Profile
+        </a>
+        <a href="notifications.html" class="flex items-center gap-3 rounded-[10px] px-3 py-3 text-primary transition-colors hover:bg-white hover:text-ink">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg>
+          Notifications
+        </a>
+        <a href="messages.html" class="flex items-center gap-3 rounded-[10px] px-3 py-3 text-primary transition-colors hover:bg-white hover:text-ink">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg>
+          Messages
+        </a>
+        <a href="talents.html" class="flex items-center gap-3 rounded-[10px] px-3 py-3 text-primary transition-colors hover:bg-white hover:text-ink">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
+          Talents
+        </a>
+        <a href="settings.html" class="flex items-center gap-3 rounded-[10px] px-3 py-3 text-primary transition-colors hover:bg-white hover:text-ink">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg>
+          Settings
+        </a>
+        <a href="connected-account.html" class="flex items-center gap-3 rounded-[10px] px-3 py-3 text-primary transition-colors hover:bg-white hover:text-ink">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5"/><path d="M15 8V2"/><path d="M17 8a1 1 0 0 1 1 1v4a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1z"/><path d="M9 8V2"/></svg>
+          Connected account
+        </a>
+
+        <div class="my-3 border-t border-[#DADCD0]"></div>
+
+        <a href="my-portfolio.html" class="flex items-center gap-3 rounded-[10px] px-3 py-3 text-primary transition-colors hover:bg-white hover:text-ink">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>
+          My portfolio
+        </a>
+        <a href="history.html" class="flex items-center gap-3 rounded-[10px] px-3 py-3 text-primary transition-colors hover:bg-white hover:text-ink">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+          History
+        </a>
+        <a href="find-jobs.html" class="flex items-center gap-3 rounded-[10px] px-3 py-3 text-primary transition-colors hover:bg-white hover:text-ink">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
+          Find Jobs
+        </a>
+        <a href="my-applications.html" class="flex items-center gap-3 rounded-[10px] bg-ink px-3 py-3 text-white">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+          My Applications
+        </a>
+      </nav>
+
+      <button class="mt-4 flex items-center justify-center gap-2 rounded-[10px] bg-ink px-5 py-3 font-mono text-[12px] uppercase text-white transition-colors duration-500 hover:bg-error">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
+        Logout
+      </button>
+
+      <div class="sb-footer mono mt-5 flex flex-col gap-2 px-2 text-primary/60">
+        <a href="#" class="transition-colors hover:text-ink">About</a>
+        <a href="#" class="transition-colors hover:text-ink">Privacy policy</a>
+        <a href="#" class="transition-colors hover:text-ink">Terms of service</a>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div id="main-wrapper" class="flex min-w-0 flex-1 flex-col transition-[margin-left] duration-300">
+
+      <!-- TOPBAR -->
+      <div class="sticky top-0 z-40 border-b border-[#DADCD0] bg-surface/90 backdrop-blur-md">
+        <div class="flex items-center justify-between px-4 py-4 lg:px-8">
+          <div class="flex items-center gap-4">
+            <button id="sidebar-toggle" class="text-primary hover:text-ink lg:hidden" aria-label="Toggle navigation menu">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg>
+            </button>
+            <a href="landing.html" class="flex items-center gap-2 lg:hidden">
+              <img src="assets/logo.png" alt="arclent." class="h-6 w-auto" />
+            </a>
+          </div>
+
+          <div class="hidden items-center gap-8 font-mono text-[12px] uppercase text-primary sm:flex">
+            <a href="landing.html" class="flex items-center gap-1.5 text-ink transition-colors"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home</a>
+            <a href="find-jobs.html" class="flex items-center gap-1.5 transition-colors hover:text-ink"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>Find Jobs</a>
+            <a href="my-applications.html" class="flex items-center gap-1.5 transition-colors hover:text-ink"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>My Applications</a>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <a href="notifications.html" class="text-primary transition-colors hover:text-ink" aria-label="Notifications">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg>
+            </a>
+            <a href="messages.html" class="text-primary transition-colors hover:text-ink" aria-label="Messages">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg>
+            </a>
+            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-[#7c3aed] font-mono text-sm text-white">M</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTENT -->
+      <div class="flex-1 px-4 pb-28 pt-8 lg:px-8">
+        <p class="mono text-primary">Application tracker</p>
+        <h1 class="mt-4 text-[clamp(52px,8vw,128px)] font-normal leading-[.92] tracking-[-0.055em] text-ink">My <span class="text-primary/45">applications.</span></h1>
+        <p class="mt-5 max-w-[720px] text-[18px] leading-snug text-primary">Track the status of every job you have applied to, from first submission to final decision.</p>
+
+        <div id="stats" class="mt-10 grid grid-cols-3 overflow-hidden rounded-[24px] bg-ink text-white"></div>
+
+        <div class="mt-4 flex flex-wrap items-center gap-3">
+          <form class="flex min-w-[260px] flex-1 items-center gap-2 rounded-[14px] bg-white p-1.5" role="search" onsubmit="return false">
+            <svg class="ml-3 shrink-0 text-primary" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input id="q" type="search" placeholder="Search by job name" class="h-11 min-w-0 flex-1 border-0 bg-transparent font-mono text-[13px] uppercase text-ink placeholder:text-primary/60 focus:outline-none" aria-label="Search applications" />
+          </form>
+          <div id="tabs" class="inline-flex overflow-hidden rounded-[12px] bg-white" role="tablist"></div>
+        </div>
+
+        <div id="list" class="mt-6 flex flex-col gap-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const $ = (i) => document.getElementById(i), esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    let APPS = [
+      { id: "notjasonvlogs-video-editor", t: "Video Editor", co: "NotJasonVlogs", s: "Applied", applied: "2 weeks, 5 days ago", upd: "2 weeks, 5 days ago", q: ["Portfolio link", "Years of editing experience", "Which editing software do you use?", "Availability (hours per week)", "When can you start?"] },
+      { id: "social-media-intern", t: "Social Media Intern", co: "Arclent AI", s: "Applied", applied: "3 weeks, 3 days ago", upd: "3 weeks, 3 days ago", q: ["Phone / WhatsApp", "City", "Links (X, LinkedIn, Instagram \u2014 personal or any you've managed)", "Share 1\u20132 examples of content you've created", "Which tools are you comfortable with?", "When can you start?"] },
+      { id: "jess-longform-video-editor", t: "Video Editor", co: "Jess", s: "Applied", applied: "1 month ago", upd: "1 month ago", q: ["Link to a longform edit you're proud of", "Familiarity with pop culture & commentary content", "Typical turnaround time for a 20-minute video", "When can you start?"] },
+    ];
+    const STEPS = ["Applied", "Under review", "Shortlisted", "Decision"], STEP_OF = { Applied: 0, Shortlisted: 2, Rejected: 3 };
+    const PILL = { Applied: "bg-[#CEF79E] text-ink", Shortlisted: "bg-ink text-[#CEF79E]", Rejected: "bg-[#F9DDDD] text-[#B93A3A]" };
+    let filter = "", q = "", open = "", asking = "";
+    const say = (m) => { const t = document.createElement("p"); t.className = "mono fixed bottom-24 right-6 z-40 rounded-[10px] bg-ink px-4 py-3 text-[#CEF79E]"; t.textContent = m; document.body.appendChild(t); setTimeout(() => t.remove(), 2200); };
+    const count = (st) => APPS.filter((a) => a.s === st).length;
+    function render() {
+      $("stats").innerHTML = [["Applied", count("Applied"), "text-[#CEF79E]"], ["Shortlisted", count("Shortlisted"), ""], ["Rejected", count("Rejected"), ""]].map(([l, n, c], i) => `<div class="${i ? "border-l border-white/15 " : ""}p-5 sm:p-8"><p class="mono text-white/60">${l}</p><p class="mt-4 text-[clamp(44px,5.5vw,84px)] leading-none tracking-[-0.05em] ${c}">${n}</p></div>`).join("");
+      $("tabs").innerHTML = [["", "All"], ["Applied", "Applied"], ["Shortlisted", "Shortlisted"], ["Rejected", "Rejected"]].map(([k, l]) => `<button type="button" role="tab" data-f="${k}" aria-selected="${filter === k}" class="tab ${filter === k ? "on" : ""}">${l}</button>`).join("");
+      const list = APPS.filter((a) => (!filter || a.s === filter) && (!q || a.t.toLowerCase().includes(q) || a.co.toLowerCase().includes(q)));
+      $("list").innerHTML = list.length ? list.map((a, k) => {
+        const on = open === a.id, step = STEP_OF[a.s];
+        return `<article class="row-in rounded-[20px] bg-white" style="animation-delay:${k * 50}ms">
+          <button type="button" data-open="${a.id}" aria-expanded="${on}" class="grid w-full gap-4 p-5 text-left sm:grid-cols-[auto_1fr_auto] sm:items-center sm:p-6">
+            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-ink text-[#CEF79E]">${esc(a.co[0])}</span>
+            <span class="min-w-0"><span class="block text-[clamp(20px,2vw,26px)] leading-tight tracking-[-0.02em] text-ink">${esc(a.t)}</span><span class="mono mt-1.5 block text-primary">${esc(a.co)} &middot; Applied ${esc(a.applied)}</span></span>
+            <span class="flex items-center gap-3"><span class="mono rounded-[8px] px-3 py-1.5 ${PILL[a.s]}">${a.s}</span><svg class="transition-transform duration-500 ${on ? "rotate-180" : ""}" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </button>
+          <div class="px-5 pb-5 sm:px-6 sm:pb-6">
+            <ol class="grid grid-cols-4 gap-2">${STEPS.map((x, i) => `<li><span class="block h-1.5 rounded-full ${i <= step ? (a.s === "Rejected" && i === 3 ? "bg-[#B93A3A]" : "bg-ink") : "bg-[#E7E8E1]"}"></span><span class="mono mt-2 block ${i <= step ? "text-ink" : "text-primary/50"}">${a.s === "Rejected" && i === 3 ? "Rejected" : x}</span></li>`).join("")}</ol>
+            ${on ? `<div class="mt-6 border-t border-[#E7E8E1] pt-5"><p class="mono text-primary">Your answers</p>
+              <ul class="mt-3">${a.q.map((x, i) => `<li class="flex gap-5 border-t border-[#E7E8E1] py-3 first:border-t-0"><span class="mono w-7 shrink-0 pt-0.5 text-primary">0${i + 1}</span><span class="text-[16px] leading-snug text-ink">${esc(x)}</span></li>`).join("")}</ul>
+              <p class="mono mt-4 text-primary">Last update: ${esc(a.upd)}</p>
+              <div class="mt-5 flex flex-wrap items-center gap-3"><a href="job-details?id=${a.id}" class="mono inline-flex h-11 items-center rounded-[10px] bg-ink px-5 text-white transition-colors hover:bg-[#CEF79E] hover:text-ink">View job</a>
+                ${asking === a.id ? `<span class="mono text-primary">Withdraw this application?</span><button type="button" data-yes="${a.id}" class="mono h-11 rounded-[10px] bg-[#B23B3B] px-5 text-white">Yes, withdraw</button><button type="button" data-no class="mono h-11 px-3 text-primary hover:text-ink">Cancel</button>` : `<button type="button" data-wd="${a.id}" class="mono h-11 rounded-[10px] px-5 text-[#B23B3B] outline outline-1 -outline-offset-1 outline-[#B23B3B]/40 transition-colors hover:bg-[#B23B3B] hover:text-white">Withdraw</button>`}</div></div>` : ""}
+          </div></article>`;
+      }).join("") : `<p class="mono rounded-[20px] bg-white px-4 py-16 text-center text-primary">${APPS.length ? "No applications match." : "No applications yet. Jobs you apply to will show up here."}</p>`;
+    }
+    document.addEventListener("click", (e) => {
+      const f = e.target.closest("[data-f]"), o = e.target.closest("[data-open]"), w = e.target.closest("[data-wd]"), y = e.target.closest("[data-yes]");
+      if (f) { filter = f.dataset.f; render(); }
+      else if (o) { open = open === o.dataset.open ? "" : o.dataset.open; asking = ""; render(); }
+      else if (w) { asking = w.dataset.wd; render(); }
+      else if (e.target.closest("[data-no]")) { asking = ""; render(); }
+      else if (y) { APPS = APPS.filter((a) => a.id !== y.dataset.yes); asking = ""; open = ""; render(); say("Application withdrawn"); }
+    });
+    $("q").addEventListener("input", (e) => { q = e.target.value.trim().toLowerCase(); render(); });
+    render();
+  </script>
+
+  <script>
+    // Sidebar navigation toggle: overlay drawer on mobile, push-content collapse on desktop.
+    const sidebar = document.getElementById("sidebar");
+    const backdrop = document.getElementById("sidebar-backdrop");
+    const mainWrapper = document.getElementById("main-wrapper");
+    const sidebarToggle = document.getElementById("sidebar-toggle");
+
+    const isDesktop = () => window.innerWidth >= 1024;
+    let sidebarOpen = isDesktop();
+
+    function applySidebarState() {
+      const desktop = isDesktop();
+      sidebar.classList.toggle("collapsed", !sidebarOpen && desktop);
+      sidebar.style.transform = sidebarOpen || desktop ? "translateX(0)" : "translateX(-100%)";
+      mainWrapper.style.marginLeft = desktop ? (sidebarOpen ? "260px" : "72px") : "0px";
+      backdrop.classList.toggle("hidden", !(sidebarOpen && !isDesktop()));
+    }
+
+    document.getElementById("sidebar-toggle-in").addEventListener("click", () => sidebarToggle.click());
+    sidebarToggle.addEventListener("click", () => {
+      sidebarOpen = !sidebarOpen;
+      applySidebarState();
+    });
+    backdrop.addEventListener("click", () => {
+      sidebarOpen = false;
+      applySidebarState();
+    });
+    window.addEventListener("resize", applySidebarState);
+
+    sidebar.querySelectorAll("nav a, :scope > button").forEach((el) => { el.title = el.textContent.trim(); });
+    applySidebarState();
+  </script>
+  <script src="assets/help-fab.js" defer></script>
+</body>
+</html>

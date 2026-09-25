@@ -7,6 +7,13 @@
       "runtimeArgs": ["--yes", "serve", "site", "-l", "3002"],
       "port": 3002,
       "autoPort": true
+    },
+    {
+      "name": "arclent-django",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["django_app/manage.py", "runserver", "--insecure", "0.0.0.0:3003"],
+      "port": 3003,
+      "autoPort": true
     }
   ]
 }
