@@ -64,6 +64,8 @@
     [data-reveal-group] > *:nth-child(5) { transition-delay: 280ms; }
     [data-reveal-group] > *:nth-child(6) { transition-delay: 350ms; }
 
+    .rv-badge { display: inline-flex; vertical-align: -3px; margin-left: 6px; }
+    .rv-badge svg { display: block; }
     @media (prefers-reduced-motion: reduce) {
       [data-reveal], [data-reveal-group] > * { opacity: 1 !important; transform: none !important; transition: none !important; }
     }
@@ -460,6 +462,7 @@
         <p class="mono text-primary">Integrations</p>
         <h1 class="mt-4 text-[clamp(48px,7.4vw,120px)] font-normal leading-[.92] tracking-[-0.055em] text-ink">Connect <span class="text-primary/45">your platforms.</span></h1>
         <p class="mt-5 max-w-[720px] text-[18px] leading-snug text-primary">Link your accounts so we can publish your jobs and verify applicants' work.</p>
+        <div id="rv-banner" class="mono mt-6 inline-flex max-w-[720px] items-center gap-3 rounded-[14px] px-4 py-3"></div>
 
         <div class="mt-8 flex max-w-[520px] items-center gap-4"><span id="count" class="mono shrink-0 text-ink"></span><span class="block h-1.5 flex-1 overflow-hidden rounded-full bg-[#DADCD0]"><i id="bar" class="block h-full rounded-full bg-ink transition-[width] duration-700"></i></span></div>
 
@@ -467,6 +470,7 @@
       </div>
     </div>
   </div>
+  <script src="assets/verify-badge.js"></script>
 
   <script>
     const $ = (i) => document.getElementById(i), esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -481,6 +485,11 @@
     function render() {
       const n = PLATFORMS.filter((p) => p.on).length;
       $("count").textContent = n + " of " + PLATFORMS.length + " connected"; $("bar").style.width = (n / PLATFORMS.length * 100) + "%";
+      RVerify.set("creator", n > 0);
+      $("rv-banner").className = "mono mt-6 inline-flex max-w-[720px] items-center gap-3 rounded-[14px] px-4 py-3 " + (n > 0 ? "bg-[#EAF6FF] text-ink" : "bg-white text-primary outline outline-1 -outline-offset-1 outline-ink/15");
+      $("rv-banner").innerHTML = n > 0
+        ? RVerify.badge() + " Recruiters see your blue checkmark on this profile and every job you post."
+        : "No platform connected yet \u2014 job posts and your profile go out without a checkmark until you connect one.";
       $("tiles").innerHTML = PLATFORMS.map((p, i) => `<article class="fadein relative flex min-h-[320px] flex-col overflow-hidden rounded-[24px] p-6 sm:p-8 ${p.on ? "bg-ink text-white" : "bg-white text-ink"}" style="animation-delay:${i * 70}ms">${p.on ? PATTERN : ""}
         <div class="relative flex items-start justify-between gap-3"><span class="grid h-14 w-14 place-items-center rounded-[16px] text-white" style="background:${p.color}">${LOGO[p.key]}</span>
           <span class="mono rounded-full px-3 py-1.5 ${p.on ? "bg-[#CEF79E] text-ink" : "border border-[#C9CBBE] text-primary"}">${p.on ? "Connected" : "Not connected"}</span></div>

@@ -64,6 +64,8 @@
     [data-reveal-group] > *:nth-child(5) { transition-delay: 280ms; }
     [data-reveal-group] > *:nth-child(6) { transition-delay: 350ms; }
 
+    .rv-badge { display: inline-flex; vertical-align: -3px; margin-left: 6px; }
+    .rv-badge svg { display: block; }
     @media (prefers-reduced-motion: reduce) {
       [data-reveal], [data-reveal-group] > * { opacity: 1 !important; transform: none !important; transition: none !important; }
     }
@@ -443,7 +445,7 @@
         <div class="flex flex-wrap items-end justify-between gap-6">
           <div>
             <p id="today-date" class="mono text-primary"></p>
-            <h1 class="mt-4 text-[clamp(48px,7vw,112px)] font-normal leading-[.94] tracking-[-0.055em] text-ink">Welcome back, <span class="text-primary/45">Mike.</span></h1>
+            <h1 class="mt-4 text-[clamp(48px,7vw,112px)] font-normal leading-[.94] tracking-[-0.055em] text-ink">Welcome back, <span class="text-primary/45">Mike.</span><span id="rv-mount"></span></h1>
             <p class="mt-4 text-[18px] text-primary">Here's what's happening with your applications.</p>
           </div>
           <a href="post-job.html" class="mono mb-2 inline-flex h-12 items-center gap-3 rounded-[12px] bg-ink px-5 text-white transition-colors hover:bg-[#CEF79E] hover:text-ink"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>Post a job</a>
@@ -593,5 +595,7 @@
   </script>
   <script src="motion.js"></script>
   <script src="assets/help-fab.js" defer></script>
+  <script src="assets/verify-badge.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () { if (window.RVerify) RVerify.mount(document.getElementById("rv-mount"), "creator"); });</script>
 </body>
 </html>

@@ -355,7 +355,7 @@
     .switch { position: relative; display: inline-block; width: 46px; height: 26px; flex: none; border-radius: 999px; background: #4D5757; transition: background .4s; }
     .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform .4s cubic-bezier(.22,1,.36,1), background .4s; }
     input:checked + .switch { background: #CEF79E; } input:checked + .switch::after { transform: translateX(20px); background: #222F30; }
-    #copilot[hidden] { display: none; }
+    #copilot[hidden], #rv-gate[hidden] { display: none; }
   </style>
 </head>
 <body class="min-h-screen bg-surface font-sans text-ink">
@@ -536,6 +536,21 @@
         </section>
       </div>
 
+
+      <!-- CHECKMARK GATE -->
+      <div id="rv-gate" hidden class="fixed inset-0 z-[90] flex items-center justify-center bg-ink/70 p-3 backdrop-blur-sm sm:p-6" role="dialog" aria-modal="true" aria-labelledby="rv-gate-title">
+        <div class="step-in relative w-full max-w-[520px] overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-8">
+          <button type="button" id="rv-gate-close" class="absolute right-5 top-5 grid h-10 w-10 place-items-center rounded-[10px] bg-[#394546] transition-colors hover:bg-[#CEF79E] hover:text-ink" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button>
+          <p class="mono text-[#CEF79E]">Before you publish</p>
+          <h2 id="rv-gate-title" class="mt-2 flex items-center gap-2 text-[28px] leading-none tracking-[-0.03em]">Get the blue checkmark<span id="rv-gate-badge"></span></h2>
+          <p class="mt-4 text-[16px] leading-snug text-white/70">Connect a platform account and this job goes out with a verified checkmark next to your name, so talent knows it is really you. Without one, it still posts — just without the checkmark.</p>
+          <div class="mt-6 flex flex-wrap items-center gap-3">
+            <a href="co-connected-account.html" class="mono inline-flex h-12 items-center gap-2 rounded-[12px] bg-[#CEF79E] px-5 text-ink transition-colors hover:bg-white">Connect a platform</a>
+            <button type="button" id="rv-gate-skip" class="mono h-12 rounded-[12px] px-5 text-white/70 outline outline-1 -outline-offset-1 outline-white/25 transition-colors hover:text-white">Post without checkmark</button>
+          </div>
+        </div>
+      </div>
+
       <!-- COPILOT MODAL -->
       <div id="copilot" hidden class="fixed inset-0 z-[80] flex items-center justify-center bg-ink/70 p-3 backdrop-blur-sm sm:p-6" role="dialog" aria-modal="true" aria-labelledby="cp-title">
         <div class="step-in relative flex h-[min(760px,calc(100vh-24px))] w-full max-w-[1100px] flex-col overflow-hidden rounded-[24px] bg-white text-ink lg:flex-row">
@@ -566,6 +581,7 @@
     </div>
   </div>
 
+  <script src="assets/verify-badge.js"></script>
   <script>
     const $ = (id) => document.getElementById(id);
     const esc = (t) => String(t ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
@@ -631,9 +647,10 @@
       const v = (id) => { const el = $(px + id); return el ? el.value.trim() : ""; };
       return { title: v("title"), type: v("type"), desc: v("desc"), reqs: v("reqs"), platform: v("platform"), loc: v("loc"), min: v("min"), max: v("max"), period: v("period"), expMin: v("expmin"), expMax: v("expmax"), tags: v("tags"), expires: v("expires") };
     }
-    function publish(j) {
+    function __doPublish(j) {
       if (!j.title || !j.desc) return false;
-      $("done-msg").textContent = `"${j.title}"${j.loc ? " (" + j.loc + ")" : ""} is published on ${j.platform}. Verified talent can now find it and apply.`;
+      const verified = window.RVerify && RVerify.get("company");
+      $("done-msg").innerHTML = `&quot;${j.title}&quot;${j.loc ? " (" + j.loc + ")" : ""} is published on ${j.platform}` + (verified ? ` with your <span class="mono inline-flex items-center gap-1.5">verified checkmark${RVerify.badge()}</span>` : " without a verified checkmark") + `. Verified talent can now find it and apply.`;
       show("done"); return true;
     }
 
@@ -688,7 +705,7 @@
       if (wz === 0 && !j.title) return fail("Add a job title to continue.");
       if (wz === 1 && !j.desc) return fail("Add a job description to continue.");
       if (wz < 3) { stash(); wz++; return renderWizard(); }
-      stash(); const all = { ...wzData }; publish(all) || fail("Go back and add a title and a description.");
+      stash(); const all = { ...wzData }; __gatedPublish(all) || fail("Go back and add a title and a description.");
     });
     $("m-fields").addEventListener("change", (e) => { if (e.target.id === "sq-type") renderSq(); });
     $("m-fields").addEventListener("keydown", (e) => { if (e.key === "Enter" && e.target.closest("#sq-q, #sq-opts")) { e.preventDefault(); sqSave(); } });
@@ -808,7 +825,7 @@
             <button type="button" id="cp-create" class="mono h-12 rounded-[12px] bg-white px-6 text-ink transition-colors hover:bg-[#CEF79E]">Create job posting</button></div></div>`;
         $("d-title").addEventListener("input", () => { $("d-head").textContent = $("d-title").value || "Untitled job"; });
         $("cp-again").addEventListener("click", draftAgain);
-        $("cp-create").addEventListener("click", () => { const j = readForm("d-"); if (publish(j)) closeCopilot(); else $("d-err").classList.remove("hidden"); });
+        $("cp-create").addEventListener("click", () => { const j = readForm("d-"); if (__gatedPublish(j)) closeCopilot(); else $("d-err").classList.remove("hidden"); });
       } else {
         const dots = [0, 1, 2].map((i) => `<span class="h-2 w-2 rounded-full ${i < n ? "bg-[#CEF79E]" : i === n ? "bg-white" : "bg-white/25"}"></span>`).join("");
         box.innerHTML = `<div class="m-auto flex flex-col items-center p-8 text-center"><span class="grid h-20 w-20 place-items-center rounded-[22px] bg-[#CEF79E] text-ink"><svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c.6 4.9 2.6 7.4 8 8-5.4.6-7.4 3.1-8 8-.6-4.9-2.6-7.4-8-8 5.4-.6 7.4-3.1 8-8z"/></svg></span>
@@ -826,7 +843,7 @@
       $("cp-input").value = "";
       if (isDone()) {                                   // after the draft: chat is a command line
         if (/again|redo|regenerate|rewrite/i.test(text)) return draftAgain();
-        if (/^(create|publish|post)/i.test(text)) { const j = readForm("d-"); return publish(j) && closeCopilot(); }
+        if (/^(create|publish|post)/i.test(text)) { const j = readForm("d-"); return __gatedPublish(j) && closeCopilot(); }
         cp.msgs.splice(cp.msgs.length - 1, 0, text);   // treat anything else as an extra requirement, keep "done" last
         return startDraft();
       }
@@ -885,5 +902,19 @@
   </script>
   <script src="motion.js"></script>
   <script src="assets/help-fab.js" defer></script>
+  <script>
+    (function () {
+      var $ = function (id) { return document.getElementById(id); };
+      if (window.RVerify) $("rv-gate-badge").innerHTML = RVerify.badge();
+      var pendingJob = null;
+      window.__gatedPublish = function (j) {
+        if (!j || !j.title || !j.desc) return false;
+        if (window.RVerify && RVerify.get("company")) return __doPublish(j);
+        pendingJob = j; $("rv-gate").hidden = false; return true;
+      };
+      $("rv-gate-close").addEventListener("click", function () { $("rv-gate").hidden = true; });
+      $("rv-gate-skip").addEventListener("click", function () { $("rv-gate").hidden = true; if (pendingJob) __doPublish(pendingJob); pendingJob = null; });
+    })();
+  </script>
 </body>
 </html>

@@ -64,6 +64,8 @@
     [data-reveal-group] > *:nth-child(5) { transition-delay: 280ms; }
     [data-reveal-group] > *:nth-child(6) { transition-delay: 350ms; }
 
+    .rv-badge { display: inline-flex; vertical-align: -3px; margin-left: 6px; }
+    .rv-badge svg { display: block; }
     @media (prefers-reduced-motion: reduce) {
       [data-reveal], [data-reveal-group] > * { opacity: 1 !important; transform: none !important; transition: none !important; }
     }
@@ -495,6 +497,7 @@
   </div>
 
   
+  <script src="assets/verify-badge.js"></script>
 
   <script>
     const $ = (id) => document.getElementById(id);
@@ -506,7 +509,7 @@
     const CHECK = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>';
     function paint() {
       const f = $("p-first").value.trim() || "Creator", l = $("p-last").value.trim();
-      $("h-name").innerHTML = f + (l ? ` <span class="text-white/45">${l.replace(/[&<>]/g, "")}</span>` : "");
+      $("h-name").innerHTML = f + (l ? ` <span class="text-white/45">${l.replace(/[&<>]/g, "")}</span>` : "") + (RVerify.get("creator") ? RVerify.badge() : "");
       $("h-mail").textContent = $("p-email").value.trim(); $("av").setAttribute("aria-label", f);
       const items = [["Email added", !!$("p-email").value.trim()], ["First name added", !!$("p-first").value.trim()], ["Last name added", !!l], ["Profile photo added", true]];
       const done = items.filter((i) => i[1]).length, pct = Math.round(done / items.length * 100);

@@ -473,6 +473,7 @@
 
   
 
+  <script src="assets/verify-badge.js"></script>
   <script>
     const $ = (i) => document.getElementById(i), esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
     let ITEMS = [{"id": 1, "k": "star", "t": "You are the best person on planet earth", "b": "Hi Zeeshan, I want you to say that I have witnessed a burning desire in you to win and you will win surely.", "w": "Today, 10:51 PM", "unread": true, "cta": "Earn your Badge", "href": "#"}, {"id": 2, "k": "user", "t": "New applicant for Video Editor", "b": "Cristóvao Gonçalves applied to your Video Editor role. Review their portfolio and move them through your pipeline.", "w": "Today, 9:12 AM", "unread": true, "cta": "Review applicants", "href": "co-applicants.html"}, {"id": 3, "k": "clock", "t": "A job is about to expire", "b": "Your Short-form Editor posting has 29 days left. Extend it from Manage Jobs to keep receiving applications.", "w": "Yesterday, 4:30 PM", "unread": false, "cta": "Manage jobs", "href": "co-manage-jobs.html"}, {"id": 4, "k": "building", "t": "Your company profile is live", "b": "Verified talent can now discover your company and jobs. Keep your details up to date in Manage Company.", "w": "3 days ago", "unread": false, "cta": "Manage company", "href": "co-manage-company.html"}];
@@ -486,6 +487,7 @@
     const svg = (k, n = 18) => `<svg width="${n}" height="${n}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${IC[k]}</svg>`;
     const ARROW = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>';
     const PATTERN = '<svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="ntp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#ntp)"/></svg>';
+    if (window.RVerify && !RVerify.get("company")) ITEMS.unshift({ "id": 0, "k": "shield", "t": "Get your blue checkmark", "b": "Connect a platform account to earn the verified checkmark on your profile and every job you post. It only takes a minute.", "w": "Just now", "unread": true, "cta": "Connect a platform", "href": "co-connected-account.html" });
     let filter = "all", sel = (ITEMS.find((i) => i.unread) || ITEMS[0] || {}).id;
     const say = (m) => { const t = document.createElement("p"); t.className = "mono fixed bottom-24 right-6 z-40 rounded-[10px] bg-ink px-4 py-3 text-[#CEF79E]"; t.textContent = m; document.body.appendChild(t); setTimeout(() => t.remove(), 2200); };
     function render() {
