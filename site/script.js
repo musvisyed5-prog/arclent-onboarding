@@ -90,6 +90,7 @@ function render(animate) {
   const isLastStep = state.currentStep === steps.length - 1;
   const s = steps[state.currentStep];
   app.innerHTML = `
+    <div class="mb-12">${renderImportCard(false, true)}</div>
     <div class="grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
       <div class="lg:sticky lg:top-28 lg:self-start">
         <p class="mono text-primary">Step ${state.currentStep + 1} of ${steps.length}</p>
@@ -114,6 +115,26 @@ function render(animate) {
     ${state.showSuccess ? renderSuccessModal() : ""}
   `;
   bindEvents(isLastStep);
+}
+
+function renderImportCard(unlocked, wide) {
+  const done = unlocked ? steps.length : state.currentStep, pct = Math.round(done / steps.length * 100);
+  const lock = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>`;
+  const left = steps.length - done;
+  return `<div class="lk relative overflow-hidden rounded-[16px] border ${unlocked ? "border-ink bg-ink text-white" : "border-[#C9CBBE] bg-white text-ink"} p-4 sm:p-5" data-lk="${unlocked ? "open" : "locked"}">
+    <div class="flex flex-wrap items-center gap-x-6 gap-y-4 ${wide ? "lg:flex-nowrap" : ""}">
+      <span class="grid h-14 shrink-0 place-items-center rounded-[12px] bg-white px-4 ${unlocked ? "" : "border border-[#E3E5DB]"}"><img src="assets/ytjobs-logo.png" alt="YT Jobs" class="h-8 w-auto" /></span>
+      <div class="min-w-0 flex-1 basis-[240px]">
+        <p class="flex items-center gap-2 text-[19px] leading-tight tracking-[-0.01em]">Import from YTJobs
+          <span class="mono inline-flex items-center gap-1.5 rounded-[6px] px-2 py-1 ${unlocked ? "bg-[#CEF79E] text-ink" : "bg-[#F0F1EA] text-primary"}">${unlocked ? icon.check + " Unlocked" : lock + " Locked"}</span></p>
+        <p class="mt-1.5 text-[14px] leading-snug ${unlocked ? "text-white/70" : "text-primary"}">${unlocked ? "Bring your videos over from YTJobs in one go." : `Unlocks when onboarding is complete. ${left === 1 ? "One step left." : left + " steps left."}`}</p>
+      </div>
+      <div class="flex w-full items-center gap-4 ${wide ? "lg:w-[300px]" : ""}">
+        <div class="lk-bar h-1.5 flex-1 overflow-hidden rounded-full ${unlocked ? "bg-white/15" : "bg-[#E3E5DB]"}"><i class="block h-full rounded-full ${unlocked ? "bg-[#CEF79E]" : "lk-stripe"}" style="width:${Math.max(pct, 6)}%"></i></div>
+        <span class="mono shrink-0 ${unlocked ? "text-[#CEF79E]" : "text-ink"}">${pct}%</span>
+      </div>
+    </div>
+  </div>`;
 }
 
 function renderStepper() {
@@ -215,7 +236,8 @@ function renderSuccessModal() {
         <h2 class="text-[clamp(34px,4vw,48px)] font-normal leading-none tracking-[-0.04em]">You're all set</h2>
         <p class="mx-auto mt-5 max-w-[340px] text-[17px] leading-snug text-primary">Your profile has been successfully set up. You're ready to explore opportunities, connect with others, and showcase your work.</p>
         <div class="mt-8 flex justify-center gap-1.5">${dots}</div>
-        <div class="mt-9 flex justify-center">${ibBtn("Continue", "close-success", true)}</div>
+        <div class="mt-8 text-left">${renderImportCard(true)}</div>
+        <div class="mt-8 flex flex-wrap justify-center gap-3"><a href="my-portfolio.html#import" class="mono inline-flex h-12 items-center rounded-[12px] bg-ink px-5 text-white transition-colors hover:bg-[#CEF79E] hover:text-ink">Import from YTJobs</a>${ibBtn("Continue", "close-success", true)}</div>
       </div>
     </div>`;
 }

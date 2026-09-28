@@ -14,7 +14,7 @@
   <meta name="description" content="arclent is the hiring platform built on verified work: portfolios confirmed by the people who worked on them, jobs posted and filled with AI." />
   <meta property="og:title" content="arclent" />
   <meta property="og:description" content="The hiring platform built on verified work." />
-  <title>arclent — Talent Onboarding</title>
+  <title>arclent — Terms &amp; Conditions</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400&family=Roboto+Mono:wght@400&display=swap" rel="stylesheet" />
@@ -313,38 +313,42 @@
   </style>
 
   <style>
+    /* jobs page: force the light logo chip (page is light from the top) */
     html .nav-logo { filter: none !important; }
+    .tl { background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat; padding-bottom: 3px;
+      -webkit-box-decoration-break: clone; box-decoration-break: clone; transition: background-size .5s cubic-bezier(.22,1,.36,1); }
+    a:hover .tl { background-size: 100% 2px; }
+    .jcard { position: relative; display: flex; flex-direction: column; overflow: hidden; border-radius: 20px; padding: 24px 24px 76px; min-height: 340px;
+      transition: transform .6s cubic-bezier(.22,1,.36,1); }
+    .jcard:hover { transform: translateY(-4px); }
+    .jc-0 { background: #fff; color: #222F30; } .jc-1 { background: #EEEEEE; color: #222F30; } .jc-2 { background: #222F30; color: #fff; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border-radius: 8px; padding: 6px 10px; font: 400 11px/1 "Roboto Mono", monospace; text-transform: uppercase; }
+    .jc-0 .chip, .jc-1 .chip, .feat .chip { background: #F3F3F1; color: #222F30; } .jc-2 .chip { background: #2F3E3F; color: #fff; }
+    .chip::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: #B6F26E; }
     .mono { font: 400 11px/1.3 "Roboto Mono", monospace; text-transform: uppercase; }
-    .lbl-f { display: block; margin-bottom: 10px; font: 400 11px/1 "Roboto Mono", monospace; text-transform: uppercase; color: #fff; }
-    .field { width: 100%; min-height: 54px; border: 0; border-radius: 12px; background: #394546; padding: 0 18px; color: #fff; font-size: 16px; outline: 1px solid transparent; transition: outline-color .4s, background .4s; color-scheme: dark; }
-    textarea.field { padding: 16px 18px; resize: vertical; line-height: 1.35; }
-    .field::placeholder { color: rgba(255,255,255,.45); }
-    .field:focus { outline-color: #CEF79E; background: #3F4C4D; }
-    .pill, .tile { background: #394546; color: rgba(255,255,255,.8); border-radius: 12px; transition: background .5s cubic-bezier(.22,1,.36,1), color .5s; }
-    .pill { display: inline-flex; align-items: center; gap: 8px; padding: 13px 16px; font: 400 12px/1 "Roboto Mono", monospace; text-transform: uppercase; }
-    .tile { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 22px 12px; text-align: center; font: 400 12px/1.2 "Roboto Mono", monospace; text-transform: uppercase; }
-    .pill:hover, .tile:hover { background: #4A5859; color: #fff; }
-    .pill.on, .tile.on { background: #CEF79E; color: #222F30; }
-    .vrow { display: flex; align-items: center; gap: 14px; min-height: 54px; padding: 0 18px; border-radius: 12px; background: #394546; outline: 1px solid transparent; transition: outline-color .4s; }
-    .vrow:focus-within { outline-color: #CEF79E; }
-    .vrow input { flex: 1; background: transparent; color: #fff; font-size: 15px; outline: none; }
-    .vrow input::placeholder { color: rgba(255,255,255,.4); }
-    .switch { position: relative; display: inline-block; width: 46px; height: 26px; flex: none; border-radius: 999px; background: #4D5757; transition: background .4s; }
-    .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform .4s cubic-bezier(.22,1,.36,1), background .4s; }
-    input:checked + .switch { background: #CEF79E; } input:checked + .switch::after { transform: translateX(20px); background: #222F30; }
-    .acct { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; border-radius: 14px; background: #394546; padding: 14px; }
-    .mini { border-radius: 10px; padding: 11px 16px; font: 400 11px/1 "Roboto Mono", monospace; text-transform: uppercase; background: #fff; color: #222F30; transition: background .4s; }
-    .mini:hover { background: #CEF79E; }
-    .mini.off { background: transparent; color: #fff; outline: 1px solid rgba(255,255,255,.35); } .mini.off:hover { outline-color: #CEF79E; color: #CEF79E; }
-    .srow { display: flex; width: 100%; align-items: center; gap: 16px; padding: 18px 0; border-top: 1px solid #C9CBBE; text-align: left; transition: color .4s; }
-    .srow:disabled { cursor: not-allowed; }
-    .lk-stripe { background: repeating-linear-gradient(115deg, #222F30 0 10px, #4D5757 10px 20px); background-size: 28px 100%; animation: lk-move 1s linear infinite; }
-    @keyframes lk-move { to { background-position: 28px 0; } }
-    .lk-bar i { transition: width .8s cubic-bezier(.22,1,.36,1); }
-    @media (prefers-reduced-motion: reduce) { .lk-stripe { animation: none; } }
-    .step-in { animation: step-in .8s cubic-bezier(.22,1,.36,1) both; }
-    @keyframes step-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-    @media (prefers-reduced-motion: reduce) { .step-in { animation: none; } }
+    .notch { position: absolute; right: 0; bottom: 0; width: 68px; height: 58px; background: #F7F7F5; border-top-left-radius: 22px; }
+    .notch::before, .notch::after { content: ""; position: absolute; width: 22px; height: 22px; background: radial-gradient(circle at 0 0, transparent 21.5px, #F7F7F5 22px); }
+    .notch::before { left: -22px; bottom: 0; } .notch::after { right: 0; top: -22px; }
+    .notch i { position: absolute; right: 8px; bottom: 8px; display: grid; place-items: center; width: 52px; height: 42px; border-radius: 14px; background: #CEF79E; color: #222F30;
+      transition: transform .6s cubic-bezier(.22,1,.36,1), border-radius .6s cubic-bezier(.22,1,.36,1); }
+    a:hover .notch i { transform: translateX(-3px); border-radius: 18px; }
+    .fchip { border-radius: 8px; padding: 9px 12px; font: 400 12px/1 "Roboto Mono", monospace; text-transform: uppercase; background: #fff; color: #222F30; transition: background .4s, color .4s; }
+    .fchip.on { background: #222F30; color: #fff; }
+    .skill { border: 1px solid currentColor; border-color: rgba(127,140,140,.45); border-radius: 999px; padding: 5px 11px; font: 400 10px/1 "Roboto Mono", monospace; text-transform: uppercase; }
+
+    .fstack { display: grid; }
+    .fslide { grid-area: 1 / 1; opacity: 0; pointer-events: none; transform: translateY(14px) scale(.985); transition: opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1); }
+    .fslide.on { opacity: 1; pointer-events: auto; transform: none; }
+    .fslide .fimg { transform: scale(1.06); transition: transform 6s cubic-bezier(.22,1,.36,1); }
+    .fslide.on .fimg { transform: scale(1); }
+    .fseg { position: relative; height: 27px; flex: 1; border-radius: 3px; background: #D9DBCF; overflow: hidden; padding: 12px 0; background-clip: content-box; cursor: pointer; }
+    .fseg i { position: absolute; left: 0; right: 0; top: 50%; height: 3px; margin-top: -1.5px; border-radius: 3px; background: #222F30; transform-origin: left; transform: scaleX(0); }
+    .fseg.done i { transform: scaleX(1); }
+    .fseg.cur i { animation: fseg-fill 6s linear forwards; }
+    @keyframes fseg-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    @media (prefers-reduced-motion: reduce) { .fseg.cur i { animation: none; transform: scaleX(1); } .fslide { transition: none; } }
+    .co-row { border-top: 1px solid #C9CBBE; }
+    #pg-title-mask { overflow: clip; padding-bottom: .08em; margin-bottom: -.08em; }
   </style>
 </head>
 <body class="min-h-screen bg-surface font-sans text-ink">
@@ -368,6 +372,7 @@
           <a href="landing.html" class="u-link px-3 py-2 text-ink">Home</a>
           <a href="find-jobs.html" class="u-link px-3 py-2 text-ink">Find Jobs</a>
           <a href="talents.html" class="u-link px-3 py-2 text-ink">Talents</a>
+          <a href="about.html" class="u-link px-3 py-2 text-ink">About</a>
         </nav>
         <a href="choose-role.html" class="btn-dark cta-wipe btn-roll flex h-10 items-center rounded-[8px] px-5"><span class="roll"><span>Get Started</span><span aria-hidden="true">Get Started</span></span></a>
         <button id="menu-btn" type="button" class="menu-btn lg:hidden" aria-label="Menu" aria-expanded="false" aria-controls="menu-overlay"><i></i><i></i></button>
@@ -381,13 +386,27 @@
       <a href="landing.html" class="m-item" style="--i:0">Home</a>
       <a href="find-jobs.html" class="m-item" style="--i:1">Find Jobs</a>
       <a href="talents.html" class="m-item" style="--i:2">Talents</a>
+      <a href="about.html" class="m-item" style="--i:3">About</a>
       <a href="choose-role.html" class="m-item" style="--i:3">Get Started</a>
     </nav>
     <a href="choose-role.html" class="m-item u-link absolute inset-x-0 bottom-10 mx-auto w-max font-mono text-[15px]" style="--i:5">Join arclent</a>
   </div>
 
 
-  <main class="mx-auto max-w-[1400px] px-4 pb-24 pt-32 lg:px-10"><div id="app"></div></main>
+  <main class="mx-auto max-w-[1400px] px-4 pb-24 pt-32 lg:px-10">
+    <span id="pg-chip" class="chip">Legal</span>
+    <div id="pg-title-mask" class="mt-8"><h1 id="pg-title" class="text-[clamp(52px,9.5vw,160px)] font-normal leading-[.94] tracking-[-0.05em] text-ink">Terms <span class="text-primary/55">&amp; Conditions</span></h1></div>
+    <p id="pg-sub" class="mono mt-8 text-primary">Last updated: May 2025 &nbsp;/&nbsp; Effective upon account creation or use of the platform</p>
+    <p class="mt-10 max-w-[760px] rounded-[16px] bg-accent/60 px-5 py-4 text-[17px] leading-snug text-ink">Please read these Terms carefully before using Arclent. By creating an account or using any part of the platform, you agree to be bound by these Terms.</p>
+
+    <div class="mt-16 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,2.4fr)]">
+      <aside class="lg:sticky lg:top-28 lg:self-start">
+        <p class="mono mb-4 text-primary">Table of contents <sup>15</sup></p>
+        <ul id="toc"><li><a href="#acceptance" data-toc="acceptance" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">01</span>Acceptance of Terms</a></li><li><a href="#definitions" data-toc="definitions" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">02</span>Definitions</a></li><li><a href="#eligibility" data-toc="eligibility" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">03</span>Eligibility</a></li><li><a href="#accounts" data-toc="accounts" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">04</span>User Accounts</a></li><li><a href="#verification" data-toc="verification" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">05</span>Verification System &amp; Badges</a></li><li><a href="#talent" data-toc="talent" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">06</span>Talent Users</a></li><li><a href="#recruiter" data-toc="recruiter" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">07</span>Recruiter Users</a></li><li><a href="#payments" data-toc="payments" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">08</span>Payments &amp; Subscriptions</a></li><li><a href="#conduct" data-toc="conduct" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">09</span>Prohibited Conduct</a></li><li><a href="#ip" data-toc="ip" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">10</span>Intellectual Property</a></li><li><a href="#liability" data-toc="liability" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">11</span>Disclaimers &amp; Limitation of Liability</a></li><li><a href="#termination" data-toc="termination" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">12</span>Termination</a></li><li><a href="#law" data-toc="law" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">13</span>Governing Law</a></li><li><a href="#changes" data-toc="changes" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">14</span>Changes to Terms</a></li><li><a href="#contact" data-toc="contact" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">15</span>Contact</a></li></ul>
+      </aside>
+      <div class="border-b border-[#C9CBBE]"><section id="acceptance" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">01</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">Acceptance of Terms</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>These Terms and Conditions (“Terms”) constitute a legally binding agreement between you (“User”) and Arclent governing your access to and use of the Arclent platform, including all related websites, applications, features, and services.</p><p>By registering for an account, clicking “Agree,” or otherwise accessing or using the Platform, you confirm that you have read, understood, and agree to be bound by these Terms and our <a class="tl text-ink" href="privacy.html">Privacy Policy</a>.</p></div></section><section id="definitions" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">02</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">Definitions</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><ul class="space-y-3 border-t border-[#C9CBBE] pt-4"><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-sm bg-[#B6F26E] ring-1 ring-ink/30"></span><span><b class="font-normal text-ink">“Platform”</b> refers to the Arclent website, mobile application, and associated services.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-sm bg-[#B6F26E] ring-1 ring-ink/30"></span><span><b class="font-normal text-ink">“Talent User”</b> refers to creators, freelancers, or job seekers using the platform.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-sm bg-[#B6F26E] ring-1 ring-ink/30"></span><span><b class="font-normal text-ink">“Recruiter User”</b> refers to recruiters, companies, or hiring organizations.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-sm bg-[#B6F26E] ring-1 ring-ink/30"></span><span><b class="font-normal text-ink">“Verification Badge”</b> refers to Bronze, Silver, Gold, Diamond, or Red Diamond verification tiers.</span></li></ul><div class="flex gap-4 rounded-[16px] bg-ink p-5 text-white"><span class="mono shrink-0 text-accent">!</span><div><p class="text-[19px] leading-tight tracking-[-0.01em]">Misrepresentation is strictly prohibited</p><p class="mt-2 text-[15px] leading-snug text-white/70">Submitting work, credentials, or accounts that do not belong to you — or manipulating verification data in any way — may result in permanent suspension and possible legal action.</p></div></div></div></section><section id="eligibility" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">03</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">Eligibility</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>To use the Platform, you must be at least 18 years of age (or the age of legal majority in your jurisdiction).</p><p>The Platform is intended for professional use within the creator economy. We reserve the right to refuse access or terminate accounts of any User who provides false information.</p></div></section><section id="accounts" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">04</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">User Accounts</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>You are responsible for maintaining the confidentiality of your account credentials and all activities that occur under your account.</p><p>You may not create more than one account per role type without prior written consent.</p><p>You agree to provide accurate and complete registration information.</p></div></section><section id="verification" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">05</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">Verification System &amp; Badges</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>Arclent employs an AI-powered verification system that uses OAuth authentication, channel matching, and perceptual hashing to confirm authenticity.</p><p>Verification Badges are awarded based on the outcome of this process.</p><p>Connecting social or professional accounts grants Arclent limited rights to verify publicly available data.</p></div></section><section id="talent" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">06</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">Talent Users</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>Talent Users may access the platform under Free or Talent Pro plans.</p><ul class="space-y-3 border-t border-[#C9CBBE] pt-4"><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-sm bg-[#B6F26E] ring-1 ring-ink/30"></span><span><b class="font-normal text-ink">Free Tier:</b> Includes up to 1 proposal per month and verification access.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-sm bg-[#B6F26E] ring-1 ring-ink/30"></span><span><b class="font-normal text-ink">Talent Pro:</b> Includes AI-assisted cover letters, profile boost, featured listings, pinned videos, and enhanced proposal ranking.</span></li></ul></div></section><section id="recruiter" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">07</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">Recruiter Users</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>Recruiter Users may access the Platform under Free or Recruiter Pro plans.</p><ul class="space-y-3 border-t border-[#C9CBBE] pt-4"><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-sm bg-[#B6F26E] ring-1 ring-ink/30"></span><span><b class="font-normal text-ink">Free Tier:</b> Post up to 1 job listing per month.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-sm bg-[#B6F26E] ring-1 ring-ink/30"></span><span><b class="font-normal text-ink">Recruiter Pro:</b> Includes unlimited job postings, AI talent matching, and enhanced visibility.</span></li></ul></div></section><section id="payments" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">08</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">Payments &amp; Subscriptions</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>Subscriptions are billed monthly and automatically renew unless canceled.</p><p>Refunds are not provided for partial billing periods.</p><p>We reserve the right to update pricing with reasonable notice.</p></div></section><section id="conduct" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">09</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">Prohibited Conduct</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><ul class="space-y-3 border-t border-[#C9CBBE] pt-4"><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-sm bg-[#B6F26E] ring-1 ring-ink/30"></span><span>Submitting false or misleading information.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-sm bg-[#B6F26E] ring-1 ring-ink/30"></span><span>Impersonating any person or organization.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-sm bg-[#B6F26E] ring-1 ring-ink/30"></span><span>Using automated scraping tools without permission.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-sm bg-[#B6F26E] ring-1 ring-ink/30"></span><span>Uploading malicious code or harmful software.</span></li><li class="flex gap-3"><span class="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-sm bg-[#B6F26E] ring-1 ring-ink/30"></span><span>Reverse-engineering the Platform.</span></li></ul></div></section><section id="ip" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">10</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">Intellectual Property</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>All platform branding, technology, systems, and design elements are owned by Arclent.</p><p>You retain ownership of your uploaded content while granting Arclent a limited license to display and use it for platform operations.</p></div></section><section id="liability" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">11</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">Disclaimers &amp; Limitation of Liability</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>The Platform is provided on an “as is” and “as available” basis.</p><p>Arclent does not guarantee employment outcomes, uninterrupted service, or verification success.</p></div></section><section id="termination" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">12</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">Termination</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>You may terminate your account at any time.</p><p>Arclent reserves the right to suspend or terminate accounts that violate these Terms.</p></div></section><section id="law" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">13</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">Governing Law</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>These Terms are governed by the laws of India.</p><p>Any disputes shall fall under the jurisdiction of courts located in Jammu &amp; Kashmir, India.</p></div></section><section id="changes" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">14</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">Changes to Terms</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>We may revise these Terms periodically and update the effective date accordingly.</p><p>Continued use of the Platform constitutes acceptance of updated Terms.</p></div></section><section id="contact" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">15</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">Contact</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>If you have questions about these Terms, please contact us.</p><dl class="border-b border-[#C9CBBE] text-ink"><div class="grid gap-1 border-t border-[#C9CBBE] py-4 sm:grid-cols-[190px_1fr] sm:gap-6"><dt class="mono pt-1">Company</dt><dd class="text-[16px]">Arclent</dd></div><div class="grid gap-1 border-t border-[#C9CBBE] py-4 sm:grid-cols-[190px_1fr] sm:gap-6"><dt class="mono pt-1">Email</dt><dd class="text-[16px]"><a class="tl" href="mailto:legal@arclent.com">legal@arclent.com</a></dd></div><div class="grid gap-1 border-t border-[#C9CBBE] py-4 sm:grid-cols-[190px_1fr] sm:gap-6"><dt class="mono pt-1">Location</dt><dd class="text-[16px]">Srinagar, Jammu &amp; Kashmir, India</dd></div></dl></div></section></div>
+    </div>
+  </main>
 
   <script src="assets/vendor/gsap.min.js"></script>
   <script src="assets/vendor/ScrollTrigger.min.js"></script>
@@ -455,6 +474,35 @@
       });
     })();
   </script>
+
+  <style>
+    .toc-a { transition: color .3s, border-color .3s; } .toc-a.on { color: #222F30; border-color: #222F30; }
+    .ptab { border: 1px solid #C9CBBE; border-radius: 999px; padding: 8px 14px; font: 400 11px/1 "Roboto Mono", monospace; text-transform: uppercase; color: #222F30; transition: background .3s, color .3s; }
+    .ptab.on { background: #222F30; color: #fff; border-color: #222F30; }
+    .pv-body b { color: inherit; }
+  </style>
+  <script>
+    (function () {
+      // contents scroll-spy
+      var links = document.querySelectorAll(".toc-a"), secs = document.querySelectorAll(".pv-sec");
+      function spy() { var cur = secs[0]; secs.forEach(function (s) { if (s.getBoundingClientRect().top < innerHeight * 0.35) cur = s; });
+        links.forEach(function (a) { a.classList.toggle("on", a.dataset.toc === cur.id); }); }
+      addEventListener("scroll", spy, { passive: true }); spy();
+    })();
+    /* page intro */
+    (function () {
+      document.documentElement.classList.remove("hero-pending");
+      if (!window.gsap || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      gsap.set(".ib-nav", { autoAlpha: 0, y: -18 });
+      gsap.set("#pg-title", { yPercent: 105 });
+      gsap.set(["#pg-chip", "#pg-sub"], { autoAlpha: 0, y: 24 });
+      gsap.timeline({ defaults: { ease: "expo.out" } })
+        .to(".ib-nav", { autoAlpha: 1, y: 0, duration: 0.8 }, 0.05)
+        .to("#pg-chip", { autoAlpha: 1, y: 0, duration: 0.9 }, 0.05)
+        .to("#pg-title", { yPercent: 0, duration: 1.3 }, 0.1)
+        .to("#pg-sub", { autoAlpha: 1, y: 0, duration: 1 }, 0.4);
+    })();
+  </script>
   <!-- FOOTER -->
   <footer id="site-footer" class="relative m-1.5 mt-3 overflow-hidden rounded-[20px] bg-ink text-white">
     <img src="assets/footer-bg.webp" alt="" class="absolute inset-0 h-full w-full object-cover" style="filter: brightness(0.82);" />
@@ -477,17 +525,17 @@
       <div class="foot-col relative pl-5"><span class="foot-rule absolute left-0 top-0 h-full w-px origin-top bg-white/25"></span>
         <p class="mb-5 font-mono text-[13px] uppercase tracking-[-0.02em] text-white/70">Company</p>
         <ul class="space-y-3">
-          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">About</a></li>
+          <li><a href="about.html" class="text-[20px] leading-[1.15] tracking-[-0.01em]">About</a></li>
           <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Careers</a></li>
           <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Blog</a></li>
-          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Contact</a></li>
+          <li><a href="contact.html" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Contact</a></li>
         </ul>
       </div>
       <div class="foot-col relative pl-5"><span class="foot-rule absolute left-0 top-0 h-full w-px origin-top bg-white/25"></span>
         <p class="mb-5 font-mono text-[13px] uppercase tracking-[-0.02em] text-white/70">Legal</p>
         <ul class="space-y-3">
-          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Privacy Policy</a></li>
-          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Terms of Service</a></li>
+          <li><a href="privacy.html" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Privacy Policy</a></li>
+          <li><a href="terms.html" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Terms of Service</a></li>
           <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Security</a></li>
         </ul>
       </div>
@@ -575,6 +623,91 @@
       mark.addEventListener("pointerleave", function () { setY.forEach(function (fn) { fn(0); }); });
     })();
   </script>
-  <script src="script.js"></script>
+  <script src="motion.js"></script>
+  <script>
+    /* Button interactions (GSAP): magnetic pull toward the cursor with an elastic release,
+       a springy press, an arrow that flies out and back in on hover, and a ghost button
+       that fills with a circle growing from wherever the cursor enters (and shrinking
+       toward wherever it leaves). Fine-pointer devices only; skipped for reduced motion. */
+    (function () {
+      if (!window.gsap || matchMedia("(prefers-reduced-motion: reduce)").matches || !matchMedia("(pointer: fine)").matches) return;
+      document.documentElement.classList.add("gsap-btn");
+
+      // one shared ticker loop eases every magnetic button toward its target each frame,
+      // so following and releasing both stay continuous (no tween restarts, no wobble)
+      var mags = [], running = false;
+      function tick() {
+        var dr = gsap.ticker.deltaRatio(), busy = false;
+        mags.forEach(function (m) {
+          var f = 1 - Math.pow(1 - m.lerp, dr);
+          var dx = m.tx - m.x, dy = m.ty - m.y;
+          if (Math.abs(dx) < 0.02 && Math.abs(dy) < 0.02 && m.tx === 0 && m.ty === 0) {
+            if (m.x !== 0 || m.y !== 0) { m.x = 0; m.y = 0; gsap.set(m.el, { x: 0, y: 0 }); }
+            return;
+          }
+          m.x += dx * f; m.y += dy * f; busy = true;
+          gsap.set(m.el, { x: m.x, y: m.y });
+        });
+        if (!busy) { gsap.ticker.remove(tick); running = false; }
+      }
+      function wake() { if (!running) { running = true; gsap.ticker.add(tick); } }
+      function magnet(el, k) {
+        var m = { el: el, tx: 0, ty: 0, x: 0, y: 0, lerp: 0.14 };
+        mags.push(m);
+        el.addEventListener("pointermove", function (e) {
+          var r = el.getBoundingClientRect();
+          m.tx = (e.clientX - (r.left + r.width / 2 - m.x)) * k;
+          m.ty = (e.clientY - (r.top + r.height / 2 - m.y)) * k;
+          m.lerp = 0.14; wake();
+        });
+        el.addEventListener("pointerleave", function () { m.tx = 0; m.ty = 0; m.lerp = 0.075; wake(); });
+      }
+      function press(el, depth) {
+        var down = false;
+        el.addEventListener("pointerdown", function () { down = true; gsap.to(el, { scale: depth, duration: 0.3, ease: "power3.out", overwrite: "auto" }); });
+        function up() { if (!down) return; down = false; gsap.to(el, { scale: 1, duration: 0.9, ease: "elastic.out(1, 0.7)", overwrite: "auto" }); }
+        el.addEventListener("pointerup", up); el.addEventListener("pointercancel", up); el.addEventListener("pointerleave", up);
+      }
+
+      // two-part buttons: magnet + press + arrow fly
+      document.querySelectorAll(".ib-btn").forEach(function (b) {
+        magnet(b, 0.18); press(b, 0.96);
+        var arrow = b.querySelector(".arrow");
+        if (!arrow) return;
+        b.addEventListener("pointerenter", function () {
+          gsap.timeline({ overwrite: "auto" })
+            .to(arrow, { x: 14, opacity: 0, duration: 0.3, ease: "power2.inOut" })
+            .set(arrow, { x: -15 })
+            .to(arrow, { x: 0, opacity: 1, duration: 0.75, ease: "expo.out" });
+        });
+      });
+
+      // nav CTA, back-to-top, menu button: lighter magnet / press
+      document.querySelectorAll(".cta-wipe, .to-top").forEach(function (b) { magnet(b, 0.15); press(b, 0.95); });
+      document.querySelectorAll(".menu-btn").forEach(function (b) { press(b, 0.92); });
+
+      // ghost button: circle fill from the pointer
+      document.querySelectorAll(".btn-ghost").forEach(function (b) {
+        magnet(b, 0.16); press(b, 0.96);
+        var fill = document.createElement("span");
+        fill.className = "gfill"; fill.setAttribute("aria-hidden", "true");
+        b.appendChild(fill);
+        function place(e) {
+          var r = b.getBoundingClientRect(), d = Math.hypot(r.width, r.height) * 2;
+          gsap.set(fill, { width: d, height: d, x: e.clientX - r.left - d / 2, y: e.clientY - r.top - d / 2 });
+        }
+        b.addEventListener("pointerenter", function (e) {
+          place(e);
+          gsap.fromTo(fill, { scale: 0 }, { scale: 1, duration: 1.0, ease: "expo.out", overwrite: "auto" });
+          gsap.to(b, { color: "#222F30", duration: 0.5, ease: "power2.out", overwrite: "auto" });
+        });
+        b.addEventListener("pointerleave", function (e) {
+          place(e);
+          gsap.to(fill, { scale: 0, duration: 0.75, ease: "power3.inOut", overwrite: "auto" });
+          gsap.to(b, { color: "#FFFFFF", duration: 0.6, ease: "power2.out", overwrite: "auto" });
+        });
+      });
+    })();
+  </script>
 </body>
 </html>

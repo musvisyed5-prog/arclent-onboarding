@@ -14,7 +14,7 @@
   <meta name="description" content="arclent is the hiring platform built on verified work: portfolios confirmed by the people who worked on them, jobs posted and filled with AI." />
   <meta property="og:title" content="arclent" />
   <meta property="og:description" content="The hiring platform built on verified work." />
-  <title>arclent — Talent Onboarding</title>
+  <title>arclent — Privacy Policy</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400&family=Roboto+Mono:wght@400&display=swap" rel="stylesheet" />
@@ -313,38 +313,42 @@
   </style>
 
   <style>
+    /* jobs page: force the light logo chip (page is light from the top) */
     html .nav-logo { filter: none !important; }
+    .tl { background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat; padding-bottom: 3px;
+      -webkit-box-decoration-break: clone; box-decoration-break: clone; transition: background-size .5s cubic-bezier(.22,1,.36,1); }
+    a:hover .tl { background-size: 100% 2px; }
+    .jcard { position: relative; display: flex; flex-direction: column; overflow: hidden; border-radius: 20px; padding: 24px 24px 76px; min-height: 340px;
+      transition: transform .6s cubic-bezier(.22,1,.36,1); }
+    .jcard:hover { transform: translateY(-4px); }
+    .jc-0 { background: #fff; color: #222F30; } .jc-1 { background: #EEEEEE; color: #222F30; } .jc-2 { background: #222F30; color: #fff; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border-radius: 8px; padding: 6px 10px; font: 400 11px/1 "Roboto Mono", monospace; text-transform: uppercase; }
+    .jc-0 .chip, .jc-1 .chip, .feat .chip { background: #F3F3F1; color: #222F30; } .jc-2 .chip { background: #2F3E3F; color: #fff; }
+    .chip::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: #B6F26E; }
     .mono { font: 400 11px/1.3 "Roboto Mono", monospace; text-transform: uppercase; }
-    .lbl-f { display: block; margin-bottom: 10px; font: 400 11px/1 "Roboto Mono", monospace; text-transform: uppercase; color: #fff; }
-    .field { width: 100%; min-height: 54px; border: 0; border-radius: 12px; background: #394546; padding: 0 18px; color: #fff; font-size: 16px; outline: 1px solid transparent; transition: outline-color .4s, background .4s; color-scheme: dark; }
-    textarea.field { padding: 16px 18px; resize: vertical; line-height: 1.35; }
-    .field::placeholder { color: rgba(255,255,255,.45); }
-    .field:focus { outline-color: #CEF79E; background: #3F4C4D; }
-    .pill, .tile { background: #394546; color: rgba(255,255,255,.8); border-radius: 12px; transition: background .5s cubic-bezier(.22,1,.36,1), color .5s; }
-    .pill { display: inline-flex; align-items: center; gap: 8px; padding: 13px 16px; font: 400 12px/1 "Roboto Mono", monospace; text-transform: uppercase; }
-    .tile { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 22px 12px; text-align: center; font: 400 12px/1.2 "Roboto Mono", monospace; text-transform: uppercase; }
-    .pill:hover, .tile:hover { background: #4A5859; color: #fff; }
-    .pill.on, .tile.on { background: #CEF79E; color: #222F30; }
-    .vrow { display: flex; align-items: center; gap: 14px; min-height: 54px; padding: 0 18px; border-radius: 12px; background: #394546; outline: 1px solid transparent; transition: outline-color .4s; }
-    .vrow:focus-within { outline-color: #CEF79E; }
-    .vrow input { flex: 1; background: transparent; color: #fff; font-size: 15px; outline: none; }
-    .vrow input::placeholder { color: rgba(255,255,255,.4); }
-    .switch { position: relative; display: inline-block; width: 46px; height: 26px; flex: none; border-radius: 999px; background: #4D5757; transition: background .4s; }
-    .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform .4s cubic-bezier(.22,1,.36,1), background .4s; }
-    input:checked + .switch { background: #CEF79E; } input:checked + .switch::after { transform: translateX(20px); background: #222F30; }
-    .acct { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; border-radius: 14px; background: #394546; padding: 14px; }
-    .mini { border-radius: 10px; padding: 11px 16px; font: 400 11px/1 "Roboto Mono", monospace; text-transform: uppercase; background: #fff; color: #222F30; transition: background .4s; }
-    .mini:hover { background: #CEF79E; }
-    .mini.off { background: transparent; color: #fff; outline: 1px solid rgba(255,255,255,.35); } .mini.off:hover { outline-color: #CEF79E; color: #CEF79E; }
-    .srow { display: flex; width: 100%; align-items: center; gap: 16px; padding: 18px 0; border-top: 1px solid #C9CBBE; text-align: left; transition: color .4s; }
-    .srow:disabled { cursor: not-allowed; }
-    .lk-stripe { background: repeating-linear-gradient(115deg, #222F30 0 10px, #4D5757 10px 20px); background-size: 28px 100%; animation: lk-move 1s linear infinite; }
-    @keyframes lk-move { to { background-position: 28px 0; } }
-    .lk-bar i { transition: width .8s cubic-bezier(.22,1,.36,1); }
-    @media (prefers-reduced-motion: reduce) { .lk-stripe { animation: none; } }
-    .step-in { animation: step-in .8s cubic-bezier(.22,1,.36,1) both; }
-    @keyframes step-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-    @media (prefers-reduced-motion: reduce) { .step-in { animation: none; } }
+    .notch { position: absolute; right: 0; bottom: 0; width: 68px; height: 58px; background: #F7F7F5; border-top-left-radius: 22px; }
+    .notch::before, .notch::after { content: ""; position: absolute; width: 22px; height: 22px; background: radial-gradient(circle at 0 0, transparent 21.5px, #F7F7F5 22px); }
+    .notch::before { left: -22px; bottom: 0; } .notch::after { right: 0; top: -22px; }
+    .notch i { position: absolute; right: 8px; bottom: 8px; display: grid; place-items: center; width: 52px; height: 42px; border-radius: 14px; background: #CEF79E; color: #222F30;
+      transition: transform .6s cubic-bezier(.22,1,.36,1), border-radius .6s cubic-bezier(.22,1,.36,1); }
+    a:hover .notch i { transform: translateX(-3px); border-radius: 18px; }
+    .fchip { border-radius: 8px; padding: 9px 12px; font: 400 12px/1 "Roboto Mono", monospace; text-transform: uppercase; background: #fff; color: #222F30; transition: background .4s, color .4s; }
+    .fchip.on { background: #222F30; color: #fff; }
+    .skill { border: 1px solid currentColor; border-color: rgba(127,140,140,.45); border-radius: 999px; padding: 5px 11px; font: 400 10px/1 "Roboto Mono", monospace; text-transform: uppercase; }
+
+    .fstack { display: grid; }
+    .fslide { grid-area: 1 / 1; opacity: 0; pointer-events: none; transform: translateY(14px) scale(.985); transition: opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1); }
+    .fslide.on { opacity: 1; pointer-events: auto; transform: none; }
+    .fslide .fimg { transform: scale(1.06); transition: transform 6s cubic-bezier(.22,1,.36,1); }
+    .fslide.on .fimg { transform: scale(1); }
+    .fseg { position: relative; height: 27px; flex: 1; border-radius: 3px; background: #D9DBCF; overflow: hidden; padding: 12px 0; background-clip: content-box; cursor: pointer; }
+    .fseg i { position: absolute; left: 0; right: 0; top: 50%; height: 3px; margin-top: -1.5px; border-radius: 3px; background: #222F30; transform-origin: left; transform: scaleX(0); }
+    .fseg.done i { transform: scaleX(1); }
+    .fseg.cur i { animation: fseg-fill 6s linear forwards; }
+    @keyframes fseg-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    @media (prefers-reduced-motion: reduce) { .fseg.cur i { animation: none; transform: scaleX(1); } .fslide { transition: none; } }
+    .co-row { border-top: 1px solid #C9CBBE; }
+    #pg-title-mask { overflow: clip; padding-bottom: .08em; margin-bottom: -.08em; }
   </style>
 </head>
 <body class="min-h-screen bg-surface font-sans text-ink">
@@ -368,6 +372,7 @@
           <a href="landing.html" class="u-link px-3 py-2 text-ink">Home</a>
           <a href="find-jobs.html" class="u-link px-3 py-2 text-ink">Find Jobs</a>
           <a href="talents.html" class="u-link px-3 py-2 text-ink">Talents</a>
+          <a href="about.html" class="u-link px-3 py-2 text-ink">About</a>
         </nav>
         <a href="choose-role.html" class="btn-dark cta-wipe btn-roll flex h-10 items-center rounded-[8px] px-5"><span class="roll"><span>Get Started</span><span aria-hidden="true">Get Started</span></span></a>
         <button id="menu-btn" type="button" class="menu-btn lg:hidden" aria-label="Menu" aria-expanded="false" aria-controls="menu-overlay"><i></i><i></i></button>
@@ -381,13 +386,26 @@
       <a href="landing.html" class="m-item" style="--i:0">Home</a>
       <a href="find-jobs.html" class="m-item" style="--i:1">Find Jobs</a>
       <a href="talents.html" class="m-item" style="--i:2">Talents</a>
+      <a href="about.html" class="m-item" style="--i:3">About</a>
       <a href="choose-role.html" class="m-item" style="--i:3">Get Started</a>
     </nav>
     <a href="choose-role.html" class="m-item u-link absolute inset-x-0 bottom-10 mx-auto w-max font-mono text-[15px]" style="--i:5">Join arclent</a>
   </div>
 
 
-  <main class="mx-auto max-w-[1400px] px-4 pb-24 pt-32 lg:px-10"><div id="app"></div></main>
+  <main class="mx-auto max-w-[1400px] px-4 pb-24 pt-32 lg:px-10">
+    <span id="pg-chip" class="chip">Legal</span>
+    <div id="pg-title-mask" class="mt-8"><h1 id="pg-title" class="text-[clamp(64px,12vw,200px)] font-normal leading-[.94] tracking-[-0.05em] text-ink">Privacy <span class="text-primary/55">Policy</span></h1></div>
+    <p id="pg-sub" class="mono mt-8 text-primary">Effective date: June 2025 &nbsp;/&nbsp; Last updated: June 2026</p>
+
+    <div class="mt-20 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,2.4fr)]">
+      <aside class="lg:sticky lg:top-28 lg:self-start">
+        <p class="mono mb-4 text-primary">Contents</p>
+        <ul id="toc"><li><a href="#who" data-toc="who" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">01</span>Who we are</a></li><li><a href="#collect" data-toc="collect" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">02</span>Information we collect</a></li><li><a href="#use" data-toc="use" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">03</span>How we use your information</a></li><li><a href="#oauth" data-toc="oauth" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">04</span>OAuth & platform verification data</a></li><li><a href="#sharing" data-toc="sharing" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">05</span>Data sharing</a></li><li><a href="#retention" data-toc="retention" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">06</span>Data retention & deletion</a></li><li><a href="#cookies" data-toc="cookies" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">07</span>Cookies</a></li><li><a href="#rights" data-toc="rights" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">08</span>Your rights</a></li><li><a href="#children" data-toc="children" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">09</span>Children’s privacy</a></li><li><a href="#changes" data-toc="changes" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">10</span>Changes to this policy</a></li><li><a href="#contact" data-toc="contact" class="toc-a flex gap-3 border-l border-[#C9CBBE] py-2 pl-4 text-[15px] leading-snug text-primary"><span class="mono w-6 shrink-0">11</span>Contact & data controller</a></li></ul>
+      </aside>
+      <div class="border-b border-[#C9CBBE]"><section id="who" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">01</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">Who we are</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>Arclent (OPC) Private Limited (“Arclent”, “we”, “our”, “us”) operates arclent.co — a verified talent marketplace for the creator economy. We connect creator economy talent (video editors, thumbnail artists, scriptwriters, community managers) with recruiters globally.</p><p>This policy explains what data we collect, why we collect it, and how we protect it. By using Arclent, you agree to the practices described here.</p></div></section><section id="collect" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">02</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">Information we collect</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>We collect information you provide directly (account registration, profile creation, job applications), information generated through your use of the platform (proposals sent, jobs posted, messages), and — for talent who connect a social or content platform — information from OAuth services (described fully in Section 04).</p><p>We also collect standard technical data: IP address, browser type, device identifiers, and page interaction data, used for security and to improve the platform.</p></div></section><section id="use" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">03</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">How we use your information</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>We use your information to: operate and improve the platform, verify talent credentials and assign verification badges, match talent with relevant job opportunities, process payments, send transactional and account-related emails, and comply with applicable law.</p><p>We do not sell your personal data. We do not use your data for advertising. We do not use your data to train AI or machine-learning models.</p></div></section><section id="oauth" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">04</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">OAuth & platform verification data</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>Talent on Arclent can connect one or more content platforms to verify their work history and earn verification badges. We use OAuth 2.0 to request read-only access — we never ask for permission to post, message, or take any action on your behalf.</p><p>Select a platform below to see exactly what data we request and why.</p><div id="plat-tabs" class="flex flex-wrap gap-1.5" role="tablist"></div><div id="plat-panel" class="border border-[#C9CBBE] bg-white/60 rounded-[16px] p-2"></div><div class="rounded-[16px] bg-ink p-5 text-[15px] leading-snug text-white/80"><b class="font-normal text-accent">What we never access across all platforms:</b> Private messages, direct messages, contacts, browsing history, or any data unrelated to identity and channel/account verification. We never post, like, follow, or take any action on your behalf.</div><h3 class="pt-4 text-[22px] tracking-[-0.02em] text-ink">How this data is used</h3><p>Platform data accessed via OAuth is used exclusively to: (1) verify your identity and account ownership, (2) assign verification badges (Bronze through Red Diamond tiers), and (3) display your public verification status to recruiters on the platform.</p><div class="flex flex-wrap gap-2"><span class="skill text-ink">✓ Identity verification</span><span class="skill text-ink">✓ Badge assignment</span><span class="skill text-ink">✓ Recruiter visibility</span></div><div class="flex flex-wrap gap-2"><span class="skill text-error">✕ Advertising</span><span class="skill text-error">✕ AI/ML training</span><span class="skill text-error">✕ Sold to third parties</span></div><h3 class="pt-4 text-[22px] tracking-[-0.02em] text-ink">Sharing of OAuth platform data</h3><p>Platform data obtained via OAuth is not sold or shared with third parties for commercial purposes. It is processed by two infrastructure providers strictly to operate the platform.</p><dl class="border-b border-[#C9CBBE] text-ink"><div class="grid gap-1 border-t border-[#C9CBBE] py-4 sm:grid-cols-[190px_1fr] sm:gap-6"><dt class="mono pt-1">Railway (hosting)</dt><dd class="text-[16px] leading-snug text-primary">Hosts the Arclent application and database. Processes all user data solely to run the platform, under a data processing agreement prohibiting any other use.</dd></div><div class="grid gap-1 border-t border-[#C9CBBE] py-4 sm:grid-cols-[190px_1fr] sm:gap-6"><dt class="mono pt-1">Brevo (email)</dt><dd class="text-[16px] leading-snug text-primary">Processes your email address to send transactional emails (verification notices, account alerts). Brevo does not use your email for its own marketing or share it onward.</dd></div></dl><p>No other third party accesses your platform data. We do not share it with advertisers, data brokers, or analytics platforms.</p><h3 class="pt-4 text-[22px] tracking-[-0.02em] text-ink">Storage &amp; security</h3><p>OAuth tokens and platform data are encrypted in transit (TLS) and at rest. Access is restricted to authorised Arclent personnel on a strict need-to-know basis. We do not store OAuth refresh tokens beyond what is necessary to maintain your verified status.</p><h3 class="pt-4 text-[22px] tracking-[-0.02em] text-ink">Retention &amp; deletion</h3><p>We retain platform data only as long as your account is active and your verification status needs to be maintained. If you disconnect a platform account or delete your Arclent account, all associated platform data is permanently deleted within 30 days. You can request earlier deletion at any time by emailing <a class="tl text-ink" href="mailto:privacy@arclent.co">privacy@arclent.co</a>.</p><p>Arclent’s use of data received from Google APIs adheres to the Google API Services User Data Policy, including the Limited Use requirements.</p></div></section><section id="sharing" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">05</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">Data sharing</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>We do not sell your personal data. We share data only in the following limited circumstances:</p><dl class="border-b border-[#C9CBBE] text-ink"><div class="grid gap-1 border-t border-[#C9CBBE] py-4 sm:grid-cols-[190px_1fr] sm:gap-6"><dt class="mono pt-1">Public profiles</dt><dd class="text-[16px] leading-snug text-primary">Your Arclent profile (name, verification badges, portfolio) is visible to recruiters on the platform. You control what information you add to your profile.</dd></div><div class="grid gap-1 border-t border-[#C9CBBE] py-4 sm:grid-cols-[190px_1fr] sm:gap-6"><dt class="mono pt-1">OAuth platform data</dt><dd class="text-[16px] leading-snug text-primary">Shared only with Railway (hosting) and Brevo (email). See Section 04 for full detail.</dd></div><div class="grid gap-1 border-t border-[#C9CBBE] py-4 sm:grid-cols-[190px_1fr] sm:gap-6"><dt class="mono pt-1">Payment processors</dt><dd class="text-[16px] leading-snug text-primary">Payment information is processed by our payment provider. We do not store card details ourselves.</dd></div><div class="grid gap-1 border-t border-[#C9CBBE] py-4 sm:grid-cols-[190px_1fr] sm:gap-6"><dt class="mono pt-1">Legal compliance</dt><dd class="text-[16px] leading-snug text-primary">We may disclose information if required by law, court order, or to protect the rights and safety of Arclent users.</dd></div><div class="grid gap-1 border-t border-[#C9CBBE] py-4 sm:grid-cols-[190px_1fr] sm:gap-6"><dt class="mono pt-1">Business transfers</dt><dd class="text-[16px] leading-snug text-primary">In the event of a merger or acquisition, user data may be transferred. We will notify affected users in advance.</dd></div></dl></div></section><section id="retention" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">06</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">Data retention & deletion</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>We retain data only as long as necessary to provide the service and comply with legal obligations.</p><dl class="border-b border-[#C9CBBE] text-ink"><div class="grid gap-1 border-t border-[#C9CBBE] py-4 sm:grid-cols-[190px_1fr] sm:gap-6"><dt class="mono pt-1">Active account data</dt><dd class="text-[16px] leading-snug text-primary">Retained while your account is active.</dd></div><div class="grid gap-1 border-t border-[#C9CBBE] py-4 sm:grid-cols-[190px_1fr] sm:gap-6"><dt class="mono pt-1">OAuth platform data</dt><dd class="text-[16px] leading-snug text-primary">Deleted within 30 days of account deletion or platform disconnection. See Section 04.</dd></div><div class="grid gap-1 border-t border-[#C9CBBE] py-4 sm:grid-cols-[190px_1fr] sm:gap-6"><dt class="mono pt-1">Deleted account data</dt><dd class="text-[16px] leading-snug text-primary">Removed within 30 days of account deletion, except where legally required to retain.</dd></div><div class="grid gap-1 border-t border-[#C9CBBE] py-4 sm:grid-cols-[190px_1fr] sm:gap-6"><dt class="mono pt-1">Financial records</dt><dd class="text-[16px] leading-snug text-primary">May be retained for up to 7 years for legal and accounting compliance.</dd></div></dl><p class="rounded-[12px] bg-accent/60 px-4 py-3 text-[15px] text-ink">To request deletion of your data at any time, email <b class="font-normal underline">privacy@arclent.co</b>. We will respond within 30 days.</p></div></section><section id="cookies" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">07</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">Cookies</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>We use essential cookies to keep you logged in and to ensure the platform functions correctly. We do not use advertising or tracking cookies. You can manage cookie preferences in your browser settings, though disabling essential cookies may affect platform functionality.</p></div></section><section id="rights" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">08</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">Your rights</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>Depending on your location, you may have rights to: access the personal data we hold about you, correct inaccurate data, request deletion of your data, restrict or object to certain processing, and receive your data in a portable format.</p><p>To exercise any of these rights, contact us at <a class="tl text-ink" href="mailto:privacy@arclent.co">privacy@arclent.co</a>. We will respond within 30 days.</p></div></section><section id="children" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">09</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">Children’s privacy</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>Arclent is not directed at individuals under the age of 18. We do not knowingly collect personal data from minors. If you believe a minor has provided us with personal data, please contact us at <a class="tl text-ink" href="mailto:privacy@arclent.co">privacy@arclent.co</a> and we will delete it promptly.</p></div></section><section id="changes" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">10</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">Changes to this policy</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>We may update this policy from time to time. We will notify you of material changes by email or by a prominent notice on the platform. The “Last updated” date at the top of this page reflects the most recent revision. Continued use of Arclent after changes take effect constitutes acceptance of the updated policy.</p></div></section><section id="contact" class="pv-sec scroll-mt-28 border-t border-[#C9CBBE] py-12"><span class="mono text-primary">11</span><h2 class="mt-4 text-[clamp(30px,3.4vw,46px)] font-normal leading-[1.05] tracking-[-0.03em]">Contact & data controller</h2><div class="pv-body mt-6 max-w-[720px] space-y-4 text-[17px] leading-[1.5] text-primary"><p>Arclent (OPC) Private Limited is the data controller for personal data processed through arclent.co.</p><dl class="border-b border-[#C9CBBE] text-ink"><div class="grid gap-1 border-t border-[#C9CBBE] py-4 sm:grid-cols-[190px_1fr] sm:gap-6"><dt class="mono pt-1">Company</dt><dd class="text-[16px] leading-snug text-primary">Arclent (OPC) Private Limited</dd></div><div class="grid gap-1 border-t border-[#C9CBBE] py-4 sm:grid-cols-[190px_1fr] sm:gap-6"><dt class="mono pt-1">Email</dt><dd class="text-[16px] leading-snug text-primary"><a class="tl text-ink" href="mailto:privacy@arclent.co">privacy@arclent.co</a></dd></div><div class="grid gap-1 border-t border-[#C9CBBE] py-4 sm:grid-cols-[190px_1fr] sm:gap-6"><dt class="mono pt-1">Website</dt><dd class="text-[16px] leading-snug text-primary">arclent.co</dd></div><div class="grid gap-1 border-t border-[#C9CBBE] py-4 sm:grid-cols-[190px_1fr] sm:gap-6"><dt class="mono pt-1">Location</dt><dd class="text-[16px] leading-snug text-primary">Srinagar, Jammu &amp; Kashmir, India</dd></div></dl></div></section></div>
+    </div>
+  </main>
 
   <script src="assets/vendor/gsap.min.js"></script>
   <script src="assets/vendor/ScrollTrigger.min.js"></script>
@@ -455,6 +473,50 @@
       });
     })();
   </script>
+
+  <style>
+    .toc-a { transition: color .3s, border-color .3s; } .toc-a.on { color: #222F30; border-color: #222F30; }
+    .ptab { border: 1px solid #C9CBBE; border-radius: 999px; padding: 8px 14px; font: 400 11px/1 "Roboto Mono", monospace; text-transform: uppercase; color: #222F30; transition: background .3s, color .3s; }
+    .ptab.on { background: #222F30; color: #fff; border-color: #222F30; }
+    .pv-body b { color: inherit; }
+  </style>
+  <script>
+    var PLAT = {
+      YouTube: [["Email address", "Used to create and identify your Arclent account, and to send account-related notifications via Brevo."], ["Basic profile (name, photo)", "Used to populate your Arclent profile so recruiters can identify you."], ["YouTube channel data \u2014 read-only", "Channel ID, channel name, and public channel statistics. Used to confirm you own the channel you are verifying and to display verification badges on your profile."], ["YouTube channel analytics \u2014 read-only", "Subscriber count and view counts on public videos. Used to support our verification system and to display credibility signals (badge tiers) to recruiters."]],
+      Twitch: [["Email address", "Used to create and identify your Arclent account."], ["Basic profile (name, photo)", "Used to populate your Arclent profile."], ["Channel data \u2014 read-only", "Channel ID, display name, and follower count. Used to confirm ownership and assign badge tiers."]],
+      Discord: [["Email address", "Used to create and identify your Arclent account."], ["Basic profile (name, photo)", "Used to populate your Arclent profile."], ["Server membership \u2014 read-only", "The servers you own or manage and their member counts, used to verify community-management experience. Never message contents."]],
+      Instagram: [["Basic profile (name, photo)", "Used to populate your Arclent profile."], ["Account data \u2014 read-only", "Username, account type, and follower count. Used to confirm ownership and assign badge tiers."]],
+      Facebook: [["Email address", "Used to create and identify your Arclent account."], ["Basic profile (name, photo)", "Used to populate your Arclent profile."], ["Page data \u2014 read-only", "Page ID, name, and follower count for pages you manage. Used to confirm ownership and assign badge tiers."]]
+    };
+    (function () {
+      var tabs = document.getElementById("plat-tabs"), panel = document.getElementById("plat-panel");
+      function show(n) {
+        Array.prototype.forEach.call(tabs.children, function (b) { b.classList.toggle("on", b.textContent === n); b.setAttribute("aria-selected", b.textContent === n); });
+        panel.innerHTML = '<p class="px-4 pb-1 pt-4 text-[20px] tracking-[-0.02em] text-ink">' + n + '</p><p class="mono px-4 pb-3 text-primary">OAuth 2.0 \u00b7 read-only</p>' +
+          PLAT[n].map(function (r) { return '<div class="grid gap-1 border-t border-[#C9CBBE] px-4 py-4 sm:grid-cols-[210px_1fr] sm:gap-6"><p class="mono pt-1 text-ink">' + r[0] + '</p><p class="text-[16px] leading-snug text-primary">' + r[1] + '</p></div>'; }).join("");
+      }
+      Object.keys(PLAT).forEach(function (n) { var b = document.createElement("button"); b.type = "button"; b.className = "ptab"; b.setAttribute("role", "tab"); b.textContent = n; b.onclick = function () { show(n); }; tabs.appendChild(b); });
+      show("YouTube");
+      // contents scroll-spy
+      var links = document.querySelectorAll(".toc-a"), secs = document.querySelectorAll(".pv-sec");
+      function spy() { var cur = secs[0]; secs.forEach(function (s) { if (s.getBoundingClientRect().top < innerHeight * 0.35) cur = s; });
+        links.forEach(function (a) { a.classList.toggle("on", a.dataset.toc === cur.id); }); }
+      addEventListener("scroll", spy, { passive: true }); spy();
+    })();
+    /* page intro */
+    (function () {
+      document.documentElement.classList.remove("hero-pending");
+      if (!window.gsap || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      gsap.set(".ib-nav", { autoAlpha: 0, y: -18 });
+      gsap.set("#pg-title", { yPercent: 105 });
+      gsap.set(["#pg-chip", "#pg-sub"], { autoAlpha: 0, y: 24 });
+      gsap.timeline({ defaults: { ease: "expo.out" } })
+        .to(".ib-nav", { autoAlpha: 1, y: 0, duration: 0.8 }, 0.05)
+        .to("#pg-chip", { autoAlpha: 1, y: 0, duration: 0.9 }, 0.05)
+        .to("#pg-title", { yPercent: 0, duration: 1.3 }, 0.1)
+        .to("#pg-sub", { autoAlpha: 1, y: 0, duration: 1 }, 0.4);
+    })();
+  </script>
   <!-- FOOTER -->
   <footer id="site-footer" class="relative m-1.5 mt-3 overflow-hidden rounded-[20px] bg-ink text-white">
     <img src="assets/footer-bg.webp" alt="" class="absolute inset-0 h-full w-full object-cover" style="filter: brightness(0.82);" />
@@ -477,17 +539,17 @@
       <div class="foot-col relative pl-5"><span class="foot-rule absolute left-0 top-0 h-full w-px origin-top bg-white/25"></span>
         <p class="mb-5 font-mono text-[13px] uppercase tracking-[-0.02em] text-white/70">Company</p>
         <ul class="space-y-3">
-          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">About</a></li>
+          <li><a href="about.html" class="text-[20px] leading-[1.15] tracking-[-0.01em]">About</a></li>
           <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Careers</a></li>
           <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Blog</a></li>
-          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Contact</a></li>
+          <li><a href="contact.html" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Contact</a></li>
         </ul>
       </div>
       <div class="foot-col relative pl-5"><span class="foot-rule absolute left-0 top-0 h-full w-px origin-top bg-white/25"></span>
         <p class="mb-5 font-mono text-[13px] uppercase tracking-[-0.02em] text-white/70">Legal</p>
         <ul class="space-y-3">
-          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Privacy Policy</a></li>
-          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Terms of Service</a></li>
+          <li><a href="privacy.html" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Privacy Policy</a></li>
+          <li><a href="terms.html" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Terms of Service</a></li>
           <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Security</a></li>
         </ul>
       </div>
@@ -575,6 +637,91 @@
       mark.addEventListener("pointerleave", function () { setY.forEach(function (fn) { fn(0); }); });
     })();
   </script>
-  <script src="script.js"></script>
+  <script src="motion.js"></script>
+  <script>
+    /* Button interactions (GSAP): magnetic pull toward the cursor with an elastic release,
+       a springy press, an arrow that flies out and back in on hover, and a ghost button
+       that fills with a circle growing from wherever the cursor enters (and shrinking
+       toward wherever it leaves). Fine-pointer devices only; skipped for reduced motion. */
+    (function () {
+      if (!window.gsap || matchMedia("(prefers-reduced-motion: reduce)").matches || !matchMedia("(pointer: fine)").matches) return;
+      document.documentElement.classList.add("gsap-btn");
+
+      // one shared ticker loop eases every magnetic button toward its target each frame,
+      // so following and releasing both stay continuous (no tween restarts, no wobble)
+      var mags = [], running = false;
+      function tick() {
+        var dr = gsap.ticker.deltaRatio(), busy = false;
+        mags.forEach(function (m) {
+          var f = 1 - Math.pow(1 - m.lerp, dr);
+          var dx = m.tx - m.x, dy = m.ty - m.y;
+          if (Math.abs(dx) < 0.02 && Math.abs(dy) < 0.02 && m.tx === 0 && m.ty === 0) {
+            if (m.x !== 0 || m.y !== 0) { m.x = 0; m.y = 0; gsap.set(m.el, { x: 0, y: 0 }); }
+            return;
+          }
+          m.x += dx * f; m.y += dy * f; busy = true;
+          gsap.set(m.el, { x: m.x, y: m.y });
+        });
+        if (!busy) { gsap.ticker.remove(tick); running = false; }
+      }
+      function wake() { if (!running) { running = true; gsap.ticker.add(tick); } }
+      function magnet(el, k) {
+        var m = { el: el, tx: 0, ty: 0, x: 0, y: 0, lerp: 0.14 };
+        mags.push(m);
+        el.addEventListener("pointermove", function (e) {
+          var r = el.getBoundingClientRect();
+          m.tx = (e.clientX - (r.left + r.width / 2 - m.x)) * k;
+          m.ty = (e.clientY - (r.top + r.height / 2 - m.y)) * k;
+          m.lerp = 0.14; wake();
+        });
+        el.addEventListener("pointerleave", function () { m.tx = 0; m.ty = 0; m.lerp = 0.075; wake(); });
+      }
+      function press(el, depth) {
+        var down = false;
+        el.addEventListener("pointerdown", function () { down = true; gsap.to(el, { scale: depth, duration: 0.3, ease: "power3.out", overwrite: "auto" }); });
+        function up() { if (!down) return; down = false; gsap.to(el, { scale: 1, duration: 0.9, ease: "elastic.out(1, 0.7)", overwrite: "auto" }); }
+        el.addEventListener("pointerup", up); el.addEventListener("pointercancel", up); el.addEventListener("pointerleave", up);
+      }
+
+      // two-part buttons: magnet + press + arrow fly
+      document.querySelectorAll(".ib-btn").forEach(function (b) {
+        magnet(b, 0.18); press(b, 0.96);
+        var arrow = b.querySelector(".arrow");
+        if (!arrow) return;
+        b.addEventListener("pointerenter", function () {
+          gsap.timeline({ overwrite: "auto" })
+            .to(arrow, { x: 14, opacity: 0, duration: 0.3, ease: "power2.inOut" })
+            .set(arrow, { x: -15 })
+            .to(arrow, { x: 0, opacity: 1, duration: 0.75, ease: "expo.out" });
+        });
+      });
+
+      // nav CTA, back-to-top, menu button: lighter magnet / press
+      document.querySelectorAll(".cta-wipe, .to-top").forEach(function (b) { magnet(b, 0.15); press(b, 0.95); });
+      document.querySelectorAll(".menu-btn").forEach(function (b) { press(b, 0.92); });
+
+      // ghost button: circle fill from the pointer
+      document.querySelectorAll(".btn-ghost").forEach(function (b) {
+        magnet(b, 0.16); press(b, 0.96);
+        var fill = document.createElement("span");
+        fill.className = "gfill"; fill.setAttribute("aria-hidden", "true");
+        b.appendChild(fill);
+        function place(e) {
+          var r = b.getBoundingClientRect(), d = Math.hypot(r.width, r.height) * 2;
+          gsap.set(fill, { width: d, height: d, x: e.clientX - r.left - d / 2, y: e.clientY - r.top - d / 2 });
+        }
+        b.addEventListener("pointerenter", function (e) {
+          place(e);
+          gsap.fromTo(fill, { scale: 0 }, { scale: 1, duration: 1.0, ease: "expo.out", overwrite: "auto" });
+          gsap.to(b, { color: "#222F30", duration: 0.5, ease: "power2.out", overwrite: "auto" });
+        });
+        b.addEventListener("pointerleave", function (e) {
+          place(e);
+          gsap.to(fill, { scale: 0, duration: 0.75, ease: "power3.inOut", overwrite: "auto" });
+          gsap.to(b, { color: "#FFFFFF", duration: 0.6, ease: "power2.out", overwrite: "auto" });
+        });
+      });
+    })();
+  </script>
 </body>
 </html>

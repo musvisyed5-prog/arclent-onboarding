@@ -310,6 +310,10 @@
     @keyframes demo-dot-bounce { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-3px); opacity: 1; } }
     .demo-dot { animation: demo-dot-bounce 1.1s ease-in-out infinite; }
   
+    .wl-blur { filter: blur(7px); -webkit-user-select: none; user-select: none; pointer-events: none; transition: filter .6s cubic-bezier(.16,1,.3,1); }
+    .wl-blur-av { filter: blur(6px) saturate(.8); }
+    .tag { border: 1px solid #C9CBBE; border-radius: 999px; padding: 7px 12px; font: 400 10px/1 "Roboto Mono", monospace; text-transform: uppercase; color: #4D5757; }
+    html { scroll-behavior: smooth; }
   </style>
 
   <style>
@@ -318,6 +322,9 @@
     .chip { display: inline-flex; align-items: center; gap: 8px; border-radius: 8px; padding: 6px 10px; background: #fff; color: #222F30; font: 400 11px/1 "Roboto Mono", monospace; text-transform: uppercase; }
     .chip::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: #B6F26E; }
     .field { width: 100%; min-height: 54px; border: 0; border-radius: 12px; background: #394546; padding: 0 18px; color: #fff; font-size: 16px; outline: 1px solid transparent; transition: outline-color .4s, background .4s; }
+    select.field { appearance: none; -webkit-appearance: none; padding-right: 46px; cursor: pointer; color-scheme: dark; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 18px center; }
+    select.field option { background: #222F30; color: #fff; }
+    select.field:invalid { color: rgba(255,255,255,.55); }
     .field::placeholder { color: rgba(255,255,255,.45); }
     .field:focus { outline-color: #CEF79E; background-color: #3F4C4D; }
     .fcard { border-radius: 20px; background: #fff; padding: 28px; transition: transform .6s cubic-bezier(.22,1,.36,1); } .fcard:hover { transform: translateY(-4px); }
@@ -375,15 +382,28 @@
   <main class="mx-auto max-w-[1400px] px-4 pb-24 pt-32 lg:px-10">
     <div class="grid gap-12 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:gap-20">
       <div class="flex flex-col">
-        <span id="pg-chip" class="chip self-start">Early access &middot; limited founding cohort</span>
+        <span id="pg-chip" class="chip self-start">Early access &middot; limited spots every week</span>
         <div id="pg-mask" class="mt-8"><h1 id="pg-title" class="text-[clamp(56px,9vw,140px)] font-normal leading-[.93] tracking-[-0.055em] text-ink">Be first<br><span style="color:#C9CBBE">through the door.</span></h1></div>
         <p id="pg-sub" class="mt-8 max-w-[520px] text-[clamp(19px,1.8vw,25px)] leading-[1.22] tracking-[-0.01em] text-ink">arclent opens to a small early cohort before public launch: verified work, AI-matched hiring, zero fakes. Leave your email and we'll let you in first.</p>
+
+        <!-- WEEKLY BATCH COUNTDOWN -->
+        <section id="batch-cd" class="mt-10 max-w-[560px] rounded-[24px] bg-white p-5 sm:p-7" aria-label="Countdown to the next batch">
+          <div class="flex flex-wrap items-center justify-between gap-3"><p class="mono flex items-center gap-2 text-primary"><span class="h-2 w-2 animate-pulse rounded-full bg-[#7FD34A]"></span>Next batch onboards in</p><span id="bc-batch" class="mono rounded-full bg-[#CEF79E] px-3 py-1.5 text-ink">Batch</span></div>
+          <p class="mt-4 text-[clamp(30px,3.2vw,44px)] leading-none tracking-[-0.04em] text-ink"><span id="bc-headline">&nbsp;</span></p>
+          <div class="mt-5 grid grid-cols-4 gap-2 sm:gap-3" role="timer" aria-live="off"><div class="min-w-0 rounded-[16px] bg-[#F3F3F1] px-3 py-4 text-center sm:px-5 sm:py-5"><p id="bc-d" class="text-[clamp(34px,4vw,56px)] leading-none tracking-[-0.05em] text-ink">--</p><p class="mono mt-2 text-primary">Days</p></div><div class="min-w-0 rounded-[16px] bg-[#F3F3F1] px-3 py-4 text-center sm:px-5 sm:py-5"><p id="bc-h" class="text-[clamp(34px,4vw,56px)] leading-none tracking-[-0.05em] text-ink">--</p><p class="mono mt-2 text-primary">Hours</p></div><div class="min-w-0 rounded-[16px] bg-[#F3F3F1] px-3 py-4 text-center sm:px-5 sm:py-5"><p id="bc-m" class="text-[clamp(34px,4vw,56px)] leading-none tracking-[-0.05em] text-ink">--</p><p class="mono mt-2 text-primary">Min</p></div><div class="min-w-0 rounded-[16px] bg-[#F3F3F1] px-3 py-4 text-center sm:px-5 sm:py-5"><p id="bc-s" class="text-[clamp(34px,4vw,56px)] leading-none tracking-[-0.05em] text-ink">--</p><p class="mono mt-2 text-primary">Sec</p></div></div>
+          <span class="mt-5 block h-1.5 overflow-hidden rounded-full bg-[#E7E8E1]"><i id="bc-bar" class="block h-full rounded-full bg-ink transition-[width] duration-1000" style="width:0%"></i></span>
+          <div class="mt-5 rounded-[14px] bg-[#F3F3F1] p-4"><div class="flex items-center justify-between gap-3"><p class="mono text-ink">Spots left in this batch</p><p class="mono text-ink"><span class="bc-spots">--</span> / 100</p></div>
+            <span class="mt-3 block h-2 overflow-hidden rounded-full bg-[#DADCD0]"><i id="bc-fill" class="block h-full rounded-full bg-[#D64545] transition-[width] duration-1000" style="width:0%"></i></span>
+            <p class="mono mt-2 text-primary"><span id="bc-hint">Filling fast</span></p></div>
+          <p class="mono mt-3 text-primary">A new batch is let in every week &middot; <span id="bc-date">&nbsp;</span></p>
+        </section>
       </div>
 
       <div id="wl-card" class="relative self-start overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-10">
         <svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="op" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#op)"/></svg>
         <div class="relative">
           <form id="wl-form" novalidate>
+            <p class="mono mb-5 text-[#CEF79E]">Step 1 of 3</p>
             <label class="mono mb-3 block text-white" for="wl-input">Email</label>
             <input id="wl-input" type="email" required autocomplete="email" placeholder="you@email.com" class="field" />
             <p id="wl-error" class="mono mt-3 hidden text-[#FF8A8A]">Enter a valid email address.</p>
@@ -393,29 +413,53 @@
 
           <!-- ROLE STEP (after a valid email) -->
           <div id="wl-role" class="hidden">
-            <p class="mono text-[#CEF79E]">One more thing</p>
-            <p class="mt-3 text-[clamp(28px,3vw,42px)] font-normal leading-[1] tracking-[-0.035em]">Are you a talent or a recruiter?</p>
-            <p class="mt-3 text-[16px] leading-snug text-white/65">We open early access in waves, so this puts you in the right one.</p>
-            <div class="mt-6 grid gap-3 sm:grid-cols-2">
-              <button type="button" data-role="talent" class="group flex min-h-[170px] flex-col rounded-[18px] bg-[#394546] p-5 text-left transition-colors duration-500 hover:bg-[#CEF79E] hover:text-ink">
-                <span class="grid h-10 w-10 place-items-center rounded-[10px] bg-white/10 text-white transition-colors group-hover:bg-ink group-hover:text-[#CEF79E]"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></span>
-                <span class="mt-auto block pt-6 text-[24px] leading-tight tracking-[-0.03em]">I'm talent</span>
-                <span class="mt-1 block text-[15px] leading-snug text-white/60 group-hover:text-ink/70">Editor, designer or creator getting my work verified.</span></button>
-              <button type="button" data-role="recruiter" class="group flex min-h-[170px] flex-col rounded-[18px] bg-[#394546] p-5 text-left transition-colors duration-500 hover:bg-[#CEF79E] hover:text-ink">
-                <span class="grid h-10 w-10 place-items-center rounded-[10px] bg-white/10 text-white transition-colors group-hover:bg-ink group-hover:text-[#CEF79E]"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg></span>
-                <span class="mt-auto block pt-6 text-[24px] leading-tight tracking-[-0.03em]">I'm a recruiter</span>
-                <span class="mt-1 block text-[15px] leading-snug text-white/60 group-hover:text-ink/70">Creator or company hiring verified talent.</span></button>
+            <p class="mono text-[#CEF79E]">Step 2 of 3</p>
+            <div class="mt-5 grid gap-3 sm:grid-cols-2" role="radiogroup" aria-label="What brings you to arclent?">
+              <button type="button" role="radio" aria-checked="false" data-role="talent" class="wl-opt flex min-h-[110px] flex-col justify-center rounded-[18px] bg-[#394546] p-5 text-left transition-colors duration-500 hover:bg-[#4A5859]">
+                <span class="text-[22px] leading-tight tracking-[-0.02em]">I'm looking for work</span>
+                <span class="wl-d mt-1 block text-[15px] leading-snug text-white/60">Editors, designers, writers, managers</span></button>
+              <button type="button" role="radio" aria-checked="false" data-role="recruiter" class="wl-opt flex min-h-[110px] flex-col justify-center rounded-[18px] bg-[#394546] p-5 text-left transition-colors duration-500 hover:bg-[#4A5859]">
+                <span class="text-[22px] leading-tight tracking-[-0.02em]">I'm hiring</span>
+                <span class="wl-d mt-1 block text-[15px] leading-snug text-white/60">Creator or company</span></button>
             </div>
+            <button type="button" id="wl-continue" disabled class="mono mt-4 h-14 w-full rounded-[12px] bg-[#CEF79E] text-ink transition-[opacity,background-color] duration-500 hover:bg-white disabled:cursor-not-allowed disabled:bg-[#CEF79E]/25 disabled:text-white/40 disabled:hover:bg-[#CEF79E]/25">Continue</button>
             <button type="button" id="wl-role-back" class="mono mt-5 text-white/60 transition-colors hover:text-[#CEF79E]">&larr; Change email</button>
           </div>
+
+          <!-- TALENT DETAILS (step 3 of 3 for people looking for work) -->
+          <form id="wl-details" class="hidden" novalidate>
+            <p class="mono text-[#CEF79E]">Step 3 of 3</p>
+            <div class="mt-5"><label class="mono mb-3 block text-white" for="wl-does">What do you do</label><select id="wl-does" required class="field"><option value="" selected disabled>Select one</option><option>Video editing</option><option>Thumbnail design</option><option>Scriptwriting</option><option>Community management</option><option>Channel management</option><option>Shorts / clipping</option><option>Other</option></select></div>
+            <div class="mt-5"><label class="mono mb-3 block text-white" for="wl-size">Typical size of channels you've worked with</label><select id="wl-size" required class="field"><option value="" selected disabled>Select one</option><option>Under 10K subscribers</option><option>10K – 100K</option><option>100K – 1M</option><option>1M+</option><option>Haven't worked with a channel yet</option></select></div>
+            <div class="mt-5"><label class="mono mb-3 block text-white" for="wl-link">Portfolio or a video you worked on <span class="text-white/50">(optional, speeds up verification)</span></label><input id="wl-link" type="url" inputmode="url" autocomplete="off" placeholder="https://" class="field" /></div>
+            <div class="mt-5"><label class="mono mb-3 block text-white" for="wl-hear">How did you hear about Arclent</label><select id="wl-hear" required class="field"><option value="" selected disabled>Select one</option><option>LinkedIn</option><option>X / Twitter</option><option>Reddit</option><option>A referral</option><option>Other</option></select></div>
+            <p id="wl-d-err" class="mono mt-4 hidden text-[#FF8A8A]"></p>
+            <div class="mt-6 flex flex-wrap items-center justify-between gap-4"><button type="button" id="wl-d-back" class="mono text-white/60 transition-colors hover:text-[#CEF79E]">&larr; Back</button>
+              <button type="submit" id="wl-d-submit" class="mono h-14 rounded-[12px] bg-[#CEF79E] px-8 text-ink transition-colors hover:bg-white disabled:opacity-50">Join the waitlist</button></div>
+          </form>
+
+          <!-- RECRUITER DETAILS (step 3 of 3 for people hiring) -->
+          <form id="wl-hire" class="hidden" novalidate>
+            <p class="mono text-[#CEF79E]">Step 3 of 3</p>
+            <div class="mt-5"><label class="mono mb-3 block text-white" for="wh-name">Company or channel name</label><input id="wh-name" autocomplete="off" placeholder="e.g. Northwind Media" class="field" /></div>
+            <div class="mt-5"><label class="mono mb-3 block text-white" for="wh-now">Are you hiring right now</label><select id="wh-now" required class="field"><option value="" selected disabled>Select one</option><option>Hiring now</option><option>Exploring for later</option></select></div>
+            <div class="mt-5"><label class="mono mb-3 block text-white" for="wh-roles">Roles you need</label><input id="wh-roles" autocomplete="off" placeholder="e.g. 2 video editors, 1 thumbnail designer" class="field" /></div>
+            <div class="mt-5"><label class="mono mb-3 block text-white" for="wh-time">Hiring timeline</label><select id="wh-time" required class="field"><option value="" selected disabled>Select one</option><option>Immediate</option><option>1–3 months</option><option>Just exploring</option></select></div>
+            <div class="mt-5"><label class="mono mb-3 block text-white" for="wh-budget">Budget range <span class="text-white/50">(optional)</span></label><input id="wh-budget" autocomplete="off" placeholder="e.g. $500–1,500/mo" class="field" /></div>
+            <p id="wh-err" class="mono mt-4 hidden text-[#FF8A8A]"></p>
+            <div class="mt-6 flex flex-wrap items-center justify-between gap-4"><button type="button" id="wh-back" class="mono text-white/60 transition-colors hover:text-[#CEF79E]">&larr; Back</button>
+              <button type="submit" id="wh-submit" class="mono h-14 rounded-[12px] bg-[#CEF79E] px-8 text-ink transition-colors hover:bg-white disabled:opacity-50">Join the waitlist</button></div>
+          </form>
 
           <!-- SUCCESS STATE (swapped in on submit) -->
           <div id="wl-success" class="hidden flex-col items-start gap-4">
             <span class="check-pop grid h-12 w-14 place-items-center rounded-[14px] bg-[#CEF79E] text-ink">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path class="dash-in" d="M20 6 9 17l-5-5"/></svg>
             </span>
+            <p class="mono text-[#CEF79E]">You're in</p>
             <p class="text-[clamp(30px,3vw,44px)] font-normal leading-none tracking-[-0.035em]">You're on the list.</p>
             <p class="text-[17px] leading-snug text-white/70">You're <span id="wl-position" class="text-[#CEF79E]">#1,248</span> in line<span id="wl-rolet"></span>. We'll email you when it's your turn.</p>
+            <p class="mono text-white/60">Saved for <span id="wl-saved" class="text-white"></span> &middot; <button type="button" id="wl-reset" class="text-[#CEF79E] underline underline-offset-4">Use a different email</button></p>
           </div>
 
           <div class="mt-10 flex items-center gap-4 border-t border-white/15 pt-6">
@@ -432,7 +476,143 @@
       </div>
     </div>
 
-    <div class="mt-24 grid gap-4 md:grid-cols-3">
+    <!-- OPEN ROLES -->
+    <section id="wl-roles" class="mt-28" aria-labelledby="roles-title">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div><p class="mono flex items-center gap-2 text-primary"><span class="h-2 w-2 animate-pulse rounded-full bg-[#7FD34A]"></span>Live on arclent</p>
+          <h2 id="roles-title" class="mt-4 text-[clamp(44px,6vw,96px)] font-normal leading-[.94] tracking-[-0.055em] text-ink">Roles open <span class="text-primary/45">right now.</span></h2></div>
+        <span class="mono mb-2 rounded-full bg-[#CEF79E] px-4 py-2 text-ink">6 open roles</span>
+      </div>
+      <p class="mt-5 max-w-[620px] text-[18px] leading-snug text-primary">A look at what verified teams are hiring for today. When your batch opens you can apply to any of them.</p>
+      <p class="mono mt-4 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-ink"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Recruiter names and profiles unlock when your batch opens</p>
+      <div class="mt-10 grid gap-4 lg:grid-cols-[340px_1fr] lg:items-start">
+        <aside class="relative overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-8 lg:sticky lg:top-28"><svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="wrp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#wrp)"/></svg>
+          <div class="relative">
+            <p class="mono text-[#CEF79E]">Open roles</p>
+            <p class="mt-3 text-[clamp(72px,8vw,120px)] leading-[.85] tracking-[-0.07em] text-[#CEF79E]">6</p>
+            <p class="mono mt-4 text-white/55">Across 5 teams &middot; names hidden</p>
+            <dl class="mt-6"><div class="flex items-center justify-between border-t border-white/15 py-4"><dt class="mono text-white/60">Contract</dt><dd class="text-[28px] leading-none tracking-[-0.03em]">2</dd></div><div class="flex items-center justify-between border-t border-white/15 py-4"><dt class="mono text-white/60">Full time</dt><dd class="text-[28px] leading-none tracking-[-0.03em]">3</dd></div><div class="flex items-center justify-between border-t border-white/15 py-4"><dt class="mono text-white/60">Part time</dt><dd class="text-[28px] leading-none tracking-[-0.03em]">1</dd></div></dl>
+            <a href="#wl-card" class="mono mt-4 grid h-12 place-items-center rounded-[12px] bg-[#CEF79E] text-ink transition-colors hover:bg-white">Join to apply</a>
+          </div>
+        </aside>
+        <div class="flex flex-col gap-2">
+        <a href="#wl-card" class="group grid items-center gap-x-4 gap-y-3 rounded-[20px] bg-white p-5 transition-colors duration-500 hover:bg-ink hover:text-white sm:p-6 xl:grid-cols-[minmax(0,1fr)_auto]">
+          <span class="flex min-w-0 items-center gap-4"><span class="wl-blur wl-blur-av h-12 w-12 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1710777932534-2a58edf3603d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200')" aria-hidden="true"></span>
+            <span class="min-w-0"><span class="mono block text-primary group-hover:text-white/60">01 &middot; <span class="wl-blur" aria-hidden="true">Meob</span></span><span class="mt-1 line-clamp-2 block text-[clamp(20px,1.8vw,26px)] leading-tight tracking-[-0.02em]">Longform YouTube Video Editor — Pop Culture &amp; Commentary Channel</span>
+              <span class="mono mt-1.5 block truncate text-primary group-hover:text-white/60">Contract &middot; Remote, US &middot; 1 year</span></span></span>
+          <span class="flex flex-wrap items-center gap-3 xl:justify-end"><span class="tag group-hover:!border-white/30 group-hover:!text-white/70">Video Editing</span><span class="tag group-hover:!border-white/30 group-hover:!text-white/70">Youtube</span><span class="tag group-hover:!border-white/30 group-hover:!text-white/70">Premiere Pro</span><span class="mono whitespace-nowrap rounded-full bg-[#F3F3F1] px-3 py-1.5 text-ink transition-colors duration-500 group-hover:bg-[#CEF79E]">Pay not disclosed</span>
+            <span class="hidden h-10 w-10 place-items-center rounded-[10px] bg-[#CEF79E] text-ink transition-all duration-500 group-hover:rounded-[16px] xl:grid"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+        </a>
+        <a href="#wl-card" class="group grid items-center gap-x-4 gap-y-3 rounded-[20px] bg-white p-5 transition-colors duration-500 hover:bg-ink hover:text-white sm:p-6 xl:grid-cols-[minmax(0,1fr)_auto]">
+          <span class="flex min-w-0 items-center gap-4"><span class="wl-blur wl-blur-av h-12 w-12 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1585102651425-8caf7848e44b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200')" aria-hidden="true"></span>
+            <span class="min-w-0"><span class="mono block text-primary group-hover:text-white/60">02 &middot; <span class="wl-blur" aria-hidden="true">Cudnvbtgbcpp</span></span><span class="mt-1 line-clamp-2 block text-[clamp(20px,1.8vw,26px)] leading-tight tracking-[-0.02em]">Video editor</span>
+              <span class="mono mt-1.5 block truncate text-primary group-hover:text-white/60">Contract &middot; Srinagar &middot; 1 - 10 years</span></span></span>
+          <span class="flex flex-wrap items-center gap-3 xl:justify-end"><span class="tag group-hover:!border-white/30 group-hover:!text-white/70">Capcut</span><span class="tag group-hover:!border-white/30 group-hover:!text-white/70">Adobe</span><span class="tag group-hover:!border-white/30 group-hover:!text-white/70">Canva</span><span class="mono whitespace-nowrap rounded-full bg-[#F3F3F1] px-3 py-1.5 text-ink transition-colors duration-500 group-hover:bg-[#CEF79E]">5000 - 10000 / month</span>
+            <span class="hidden h-10 w-10 place-items-center rounded-[10px] bg-[#CEF79E] text-ink transition-all duration-500 group-hover:rounded-[16px] xl:grid"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+        </a>
+        <a href="#wl-card" class="group grid items-center gap-x-4 gap-y-3 rounded-[20px] bg-white p-5 transition-colors duration-500 hover:bg-ink hover:text-white sm:p-6 xl:grid-cols-[minmax(0,1fr)_auto]">
+          <span class="flex min-w-0 items-center gap-4"><span class="wl-blur wl-blur-av grid h-12 w-12 shrink-0 place-items-center rounded-full bg-ink text-[#CEF79E] transition-colors duration-500 group-hover:bg-[#CEF79E] group-hover:text-ink">?</span>
+            <span class="min-w-0"><span class="mono block text-primary group-hover:text-white/60">03 &middot; <span class="wl-blur" aria-hidden="true">Chcupbvdhv</span></span><span class="mt-1 line-clamp-2 block text-[clamp(20px,1.8vw,26px)] leading-tight tracking-[-0.02em]">Social Media Intern</span>
+              <span class="mono mt-1.5 block truncate text-primary group-hover:text-white/60">Full time &middot; Remote, India &middot; Freshers</span></span></span>
+          <span class="flex flex-wrap items-center gap-3 xl:justify-end"><span class="mono whitespace-nowrap rounded-full bg-[#F3F3F1] px-3 py-1.5 text-ink transition-colors duration-500 group-hover:bg-[#CEF79E]">Pay not disclosed</span>
+            <span class="hidden h-10 w-10 place-items-center rounded-[10px] bg-[#CEF79E] text-ink transition-all duration-500 group-hover:rounded-[16px] xl:grid"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+        </a>
+        <a href="#wl-card" class="group grid items-center gap-x-4 gap-y-3 rounded-[20px] bg-white p-5 transition-colors duration-500 hover:bg-ink hover:text-white sm:p-6 xl:grid-cols-[minmax(0,1fr)_auto]">
+          <span class="flex min-w-0 items-center gap-4"><span class="wl-blur wl-blur-av h-12 w-12 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1710974431911-81d457314c85?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200')" aria-hidden="true"></span>
+            <span class="min-w-0"><span class="mono block text-primary group-hover:text-white/60">04 &middot; <span class="wl-blur" aria-hidden="true">Bvvobhbuelpeu</span></span><span class="mt-1 line-clamp-2 block text-[clamp(20px,1.8vw,26px)] leading-tight tracking-[-0.02em]">Video Editor</span>
+              <span class="mono mt-1.5 block truncate text-primary group-hover:text-white/60">Part time &middot; Remote &middot; Freshers</span></span></span>
+          <span class="flex flex-wrap items-center gap-3 xl:justify-end"><span class="mono whitespace-nowrap rounded-full bg-[#F3F3F1] px-3 py-1.5 text-ink transition-colors duration-500 group-hover:bg-[#CEF79E]">Pay not disclosed</span>
+            <span class="hidden h-10 w-10 place-items-center rounded-[10px] bg-[#CEF79E] text-ink transition-all duration-500 group-hover:rounded-[16px] xl:grid"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+        </a>
+        <a href="#wl-card" class="group grid items-center gap-x-4 gap-y-3 rounded-[20px] bg-white p-5 transition-colors duration-500 hover:bg-ink hover:text-white sm:p-6 xl:grid-cols-[minmax(0,1fr)_auto]">
+          <span class="flex min-w-0 items-center gap-4"><span class="wl-blur wl-blur-av grid h-12 w-12 shrink-0 place-items-center rounded-full bg-ink text-[#CEF79E] transition-colors duration-500 group-hover:bg-[#CEF79E] group-hover:text-ink">?</span>
+            <span class="min-w-0"><span class="mono block text-primary group-hover:text-white/60">05 &middot; <span class="wl-blur" aria-hidden="true">Dvlufdvvgn</span></span><span class="mt-1 line-clamp-2 block text-[clamp(20px,1.8vw,26px)] leading-tight tracking-[-0.02em]">Video Editor</span>
+              <span class="mono mt-1.5 block truncate text-primary group-hover:text-white/60">Full time &middot; Remote &middot; 2.5 years</span></span></span>
+          <span class="flex flex-wrap items-center gap-3 xl:justify-end"><span class="mono whitespace-nowrap rounded-full bg-[#F3F3F1] px-3 py-1.5 text-ink transition-colors duration-500 group-hover:bg-[#CEF79E]">Pay not disclosed</span>
+            <span class="hidden h-10 w-10 place-items-center rounded-[10px] bg-[#CEF79E] text-ink transition-all duration-500 group-hover:rounded-[16px] xl:grid"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+        </a>
+        <a href="#wl-card" class="group grid items-center gap-x-4 gap-y-3 rounded-[20px] bg-white p-5 transition-colors duration-500 hover:bg-ink hover:text-white sm:p-6 xl:grid-cols-[minmax(0,1fr)_auto]">
+          <span class="flex min-w-0 items-center gap-4"><span class="wl-blur wl-blur-av h-12 w-12 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1569572702917-86ac962faac4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200')" aria-hidden="true"></span>
+            <span class="min-w-0"><span class="mono block text-primary group-hover:text-white/60">06 &middot; <span class="wl-blur" aria-hidden="true">Ducvb</span></span><span class="mt-1 line-clamp-2 block text-[clamp(20px,1.8vw,26px)] leading-tight tracking-[-0.02em]">Video Editor</span>
+              <span class="mono mt-1.5 block truncate text-primary group-hover:text-white/60">Full time &middot; Remote &middot; Freshers</span></span></span>
+          <span class="flex flex-wrap items-center gap-3 xl:justify-end"><span class="tag group-hover:!border-white/30 group-hover:!text-white/70">Basketball</span><span class="tag group-hover:!border-white/30 group-hover:!text-white/70">Sports</span><span class="tag group-hover:!border-white/30 group-hover:!text-white/70">Long Form</span><span class="mono whitespace-nowrap rounded-full bg-[#F3F3F1] px-3 py-1.5 text-ink transition-colors duration-500 group-hover:bg-[#CEF79E]">600 - 700 / month</span>
+            <span class="hidden h-10 w-10 place-items-center rounded-[10px] bg-[#CEF79E] text-ink transition-all duration-500 group-hover:rounded-[16px] xl:grid"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+        </a>
+        </div>
+      </div>
+      <p class="mono mt-6 text-primary">More roles are posted every week &middot; <a href="#wl-card" class="tl text-ink">Join the waitlist to apply</a></p>
+    </section>
+
+    <!-- TALENT BASE -->
+    <section id="wl-talent" class="mt-28" aria-labelledby="talent-title">
+      <p class="mono flex items-center gap-2 text-primary"><span class="h-2 w-2 rounded-full bg-primary"></span>The talent base</p>
+      <h2 id="talent-title" class="mt-4 text-[clamp(44px,6vw,96px)] font-normal leading-[.94] tracking-[-0.055em] text-ink">Talent already <span class="text-primary/45">verified.</span></h2>
+      <p class="mt-5 max-w-[620px] text-[18px] leading-snug text-primary">Editors, designers and creators whose work has been confirmed by the people they worked with.</p>
+      <div class="mt-10 grid gap-4 lg:grid-cols-[340px_1fr] lg:items-start">
+        <aside class="relative overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-8"><svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="wtp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#wtp)"/></svg>
+          <div class="relative">
+            <p class="mono text-[#CEF79E]">Verified talent</p>
+            <p class="mt-3 text-[clamp(72px,8vw,120px)] leading-[.85] tracking-[-0.07em] text-[#CEF79E]">9</p>
+            <dl class="mt-8"><div class="border-t border-white/15 py-4 first:border-t-0 first:pt-0"><dt class="mono text-white/60">Red Diamond</dt><dd class="mt-1 text-[28px] leading-none tracking-[-0.03em]">1</dd></div><div class="border-t border-white/15 py-4 first:border-t-0 first:pt-0"><dt class="mono text-white/60">Diamond</dt><dd class="mt-1 text-[28px] leading-none tracking-[-0.03em]">2</dd></div><div class="border-t border-white/15 py-4 first:border-t-0 first:pt-0"><dt class="mono text-white/60">Gold</dt><dd class="mt-1 text-[28px] leading-none tracking-[-0.03em]">1</dd></div><div class="border-t border-white/15 py-4 first:border-t-0 first:pt-0"><dt class="mono text-white/60">Bronze</dt><dd class="mt-1 text-[28px] leading-none tracking-[-0.03em]">5</dd></div></dl>
+            <div class="mt-6 flex flex-wrap gap-2"><span class="mono rounded-full bg-white/10 px-3 py-1.5 text-white/85">Video Editor &middot; 4</span><span class="mono rounded-full bg-white/10 px-3 py-1.5 text-white/85">Thumbnail / Graphic Designer &middot; 3</span><span class="mono rounded-full bg-white/10 px-3 py-1.5 text-white/85">Creator &middot; 2</span></div>
+          </div>
+        </aside>
+        <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+          <article class="flex items-center gap-4 rounded-[20px] bg-white p-5">
+            <span class="h-14 w-14 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1625241152315-4a698f74ceb7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200')"></span>
+            <div class="min-w-0 flex-1"><p class="truncate text-[19px] leading-tight tracking-[-0.015em] text-ink">Léo Jean</p><p class="mono mt-1 truncate text-primary">Video Editor</p><p class="mono mt-2 text-primary/70">37 works</p></div>
+            <img src="assets/badge-gold-new.gif" alt="Gold badge" width="44" height="44" class="h-11 w-11 shrink-0 object-contain" />
+          </article>
+          <article class="flex items-center gap-4 rounded-[20px] bg-white p-5">
+            <span class="h-14 w-14 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1734830268394-6c4a1f165af1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200')"></span>
+            <div class="min-w-0 flex-1"><p class="truncate text-[19px] leading-tight tracking-[-0.015em] text-ink">Freddy</p><p class="mono mt-1 truncate text-primary">Video Editor</p><p class="mono mt-2 text-primary/70">12 works</p></div>
+            <img src="assets/badge-bronze-new.png" alt="Bronze badge" width="44" height="44" class="h-11 w-11 shrink-0 object-contain" />
+          </article>
+          <article class="flex items-center gap-4 rounded-[20px] bg-white p-5">
+            <span class="h-14 w-14 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1748028313767-67d97c23a0d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200')"></span>
+            <div class="min-w-0 flex-1"><p class="truncate text-[19px] leading-tight tracking-[-0.015em] text-ink">Cauan Silva</p><p class="mono mt-1 truncate text-primary">Thumbnail / Graphic Designer</p><p class="mono mt-2 text-primary/70">12 works</p></div>
+            <img src="assets/badge-diamond-new.gif" alt="Diamond badge" width="44" height="44" class="h-11 w-11 shrink-0 object-contain" />
+          </article>
+          <article class="flex items-center gap-4 rounded-[20px] bg-white p-5">
+            <span class="h-14 w-14 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1701878133751-8279cb13aabd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200')"></span>
+            <div class="min-w-0 flex-1"><p class="truncate text-[19px] leading-tight tracking-[-0.015em] text-ink">Calibun</p><p class="mono mt-1 truncate text-primary">Video Editor</p><p class="mono mt-2 text-primary/70">10 works</p></div>
+            <img src="assets/badge-silver-new.png" alt="Bronze badge" width="44" height="44" class="h-11 w-11 shrink-0 object-contain" />
+          </article>
+          <article class="flex items-center gap-4 rounded-[20px] bg-white p-5">
+            <span class="h-14 w-14 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1713456047082-4e844b81c494?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200')"></span>
+            <div class="min-w-0 flex-1"><p class="truncate text-[19px] leading-tight tracking-[-0.015em] text-ink">Temitope Ojomo</p><p class="mono mt-1 truncate text-primary">Creator</p><p class="mono mt-2 text-primary/70">10 works</p></div>
+            <img src="assets/badge-bronze-new.png" alt="Bronze badge" width="44" height="44" class="h-11 w-11 shrink-0 object-contain" />
+          </article>
+          <article class="flex items-center gap-4 rounded-[20px] bg-white p-5">
+            <span class="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-ink text-[#CEF79E]">M</span>
+            <div class="min-w-0 flex-1"><p class="truncate text-[19px] leading-tight tracking-[-0.015em] text-ink">Mosvie Media</p><p class="mono mt-1 truncate text-primary">Thumbnail / Graphic Designer</p><p class="mono mt-2 text-primary/70">9 works</p></div>
+            <img src="assets/badge-reddiamond-new.gif" alt="Red Diamond badge" width="44" height="44" class="h-11 w-11 shrink-0 object-contain" />
+          </article>
+          <article class="flex items-center gap-4 rounded-[20px] bg-white p-5">
+            <span class="h-14 w-14 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1767175155385-a51ced9580ec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200')"></span>
+            <div class="min-w-0 flex-1"><p class="truncate text-[19px] leading-tight tracking-[-0.015em] text-ink">Miv</p><p class="mono mt-1 truncate text-primary">Thumbnail / Graphic Designer</p><p class="mono mt-2 text-primary/70">9 works</p></div>
+            <img src="assets/badge-bronze-new.png" alt="Bronze badge" width="44" height="44" class="h-11 w-11 shrink-0 object-contain" />
+          </article>
+          <article class="flex items-center gap-4 rounded-[20px] bg-white p-5">
+            <span class="h-14 w-14 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1768247695726-022586dea3a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200')"></span>
+            <div class="min-w-0 flex-1"><p class="truncate text-[19px] leading-tight tracking-[-0.015em] text-ink">Dieamond Epic</p><p class="mono mt-1 truncate text-primary">Creator</p><p class="mono mt-2 text-primary/70">8 works</p></div>
+            <img src="assets/badge-diamond-new.gif" alt="Diamond badge" width="44" height="44" class="h-11 w-11 shrink-0 object-contain" />
+          </article>
+          <article class="flex items-center gap-4 rounded-[20px] bg-white p-5">
+            <span class="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-ink text-[#CEF79E]">G</span>
+            <div class="min-w-0 flex-1"><p class="truncate text-[19px] leading-tight tracking-[-0.015em] text-ink">Gabriel</p><p class="mono mt-1 truncate text-primary">Video Editor</p><p class="mono mt-2 text-primary/70">8 works</p></div>
+            <img src="assets/badge-silver-new.png" alt="Bronze badge" width="44" height="44" class="h-11 w-11 shrink-0 object-contain" />
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- WHY JOIN EARLY -->
+    <section id="wl-perks" class="mt-28" aria-labelledby="perks-title">
+      <p class="mono flex items-center gap-2 text-primary"><span class="h-2 w-2 rounded-full bg-primary"></span>Why join early</p>
+      <h2 id="perks-title" class="mt-4 text-[clamp(44px,6vw,96px)] font-normal leading-[.94] tracking-[-0.055em] text-ink">Early members <span class="text-primary/45">get more.</span></h2>
+    <div class="mt-8 grid gap-4 md:grid-cols-3">
       <div class="fcard" data-r><span class="grid h-10 w-12 place-items-center rounded-[12px] bg-[#CEF79E] text-ink"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></svg></span>
         <h3 class="mt-6 text-[26px] font-normal leading-tight tracking-[-0.025em] text-ink">Verified work</h3>
         <p class="mt-3 text-[16px] leading-snug text-primary">Every portfolio confirmed by the people who actually worked on it. No fakes, no guessing.</p></div>
@@ -443,7 +623,32 @@
         <h3 class="mt-6 text-[26px] font-normal leading-tight tracking-[-0.025em] text-ink">Founding perks</h3>
         <p class="mt-3 text-[16px] leading-snug text-primary">Early members get a founding badge, first pick of verified talent, and 90 days with zero platform fees.</p></div>
     </div>
+    </section>
+
+    <!-- CLOSING CTA -->
+    <section id="wl-final" class="relative mt-28 overflow-hidden rounded-[28px] bg-ink p-8 text-white sm:p-14" aria-labelledby="final-title"><svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="wfp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#wfp)"/></svg>
+      <div class="relative grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-end">
+        <div>
+          <p class="mono flex items-center gap-2 text-[#CEF79E]"><span class="h-2 w-2 animate-pulse rounded-full bg-[#CEF79E]"></span><span id="fn-batch">Batch</span> closes soon</p>
+          <h2 id="final-title" class="mt-4 text-[clamp(44px,6.4vw,104px)] font-normal leading-[.94] tracking-[-0.055em]">Miss this batch, <span class="text-white/45">wait a week.</span></h2>
+          <p class="mt-5 max-w-[560px] text-[18px] leading-snug text-white/70">Only <b class="font-normal text-[#CEF79E]"><span class="fn-spots">--</span> spots</b> are left. When they're gone, you move to the next batch and the roles above may be filled.</p>
+        </div>
+        <div class="flex flex-col gap-3 lg:items-end">
+          <p class="mono text-white/60"><span id="fn-time">--</span> until it opens</p>
+          <a href="#wl-card" class="mono grid h-16 w-full place-items-center rounded-[14px] bg-[#CEF79E] px-8 text-ink transition-colors hover:bg-white lg:w-auto">Claim my spot</a>
+        </div>
+      </div>
+    </section>
+
   </main>
+
+  <!-- STICKY JOIN BAR (appears after the hero, hidden once the signup card is on screen or the user has joined) -->
+  <div id="wl-bar" class="pointer-events-none fixed inset-x-0 bottom-4 z-50 flex justify-center px-3 opacity-0 transition-opacity duration-500" aria-hidden="true">
+    <div class="pointer-events-auto flex w-full max-w-[640px] items-center justify-between gap-3 rounded-[16px] bg-ink px-4 py-3 text-white sm:px-5">
+      <p class="mono min-w-0 leading-snug text-white/70"><span class="text-[#CEF79E]" id="wb-batch">Batch</span> &middot; <span id="wb-time">--</span> left &middot; <span class="wb-spots text-white">--</span> spots</p>
+      <a href="#wl-card" class="mono shrink-0 rounded-[10px] bg-[#CEF79E] px-4 py-3 text-ink transition-colors hover:bg-white">Join now</a>
+    </div>
+  </div>
 
   <script src="assets/vendor/gsap.min.js"></script>
   <script src="assets/vendor/ScrollTrigger.min.js"></script>
@@ -530,22 +735,27 @@
       var roleEl = document.getElementById("wl-role");
       var roleTxt = document.getElementById("wl-rolet");
       var pendingEmail = "";
+      var detailsEl = document.getElementById("wl-details");
+      var hireEl = document.getElementById("wl-hire");
 
       function showSuccess(position, role) {
         form.classList.add("hidden");
         roleEl.classList.add("hidden");
+        detailsEl.classList.add("hidden");
+        hireEl.classList.add("hidden");
         errorEl.classList.add("hidden");
         positionEl.textContent = "#" + position.toLocaleString();
         roleTxt.textContent = role ? " for " + (role === "talent" ? "talent" : "recruiters") : "";
+        var sv = document.getElementById("wl-saved"); try { var rec = JSON.parse(localStorage.getItem(STORAGE_KEY)); sv.textContent = rec && rec.email ? rec.email : ""; } catch (e2) { sv.textContent = ""; }
         successEl.classList.remove("hidden");
         successEl.classList.add("flex");
       }
 
-      function postSignup(email, role) {
+      function postSignup(email, role, extra) {
         return new Promise(function (resolve) {
           setTimeout(function () {
             var position = BASE_COUNT + 1 + Math.floor(Math.random() * 6);
-            localStorage.setItem(STORAGE_KEY, JSON.stringify({ email: email, role: role, position: position }));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ email: email, role: role, details: extra || null, position: position }));
             resolve(position);
           }, 650);
         });
@@ -568,20 +778,108 @@
         input.style.outlineColor = "";
         pendingEmail = email;
         form.classList.add("hidden");
+        chosen = ""; paintRole();
         roleEl.classList.remove("hidden");
       });
 
+      var chosen = "", contBtn = document.getElementById("wl-continue");
+      function paintRole() {
+        roleEl.querySelectorAll("[data-role]").forEach(function (b) {
+          var on = b.getAttribute("data-role") === chosen;
+          b.setAttribute("aria-checked", String(on));
+          b.classList.toggle("bg-[#CEF79E]", on); b.classList.toggle("text-ink", on);
+          b.classList.toggle("bg-[#394546]", !on);
+          b.querySelector(".wl-d").classList.toggle("text-white/60", !on); b.querySelector(".wl-d").classList.toggle("text-ink/70", on);
+        });
+        contBtn.disabled = !chosen;
+      }
       roleEl.addEventListener("click", function (e) {
-        var back = e.target.closest("#wl-role-back");
-        if (back) { roleEl.classList.add("hidden"); form.classList.remove("hidden"); input.focus(); return; }
+        if (e.target.closest("#wl-role-back")) { roleEl.classList.add("hidden"); form.classList.remove("hidden"); input.focus(); return; }
         var btn = e.target.closest("[data-role]");
-        if (!btn) return;
-        var role = btn.getAttribute("data-role");
-        roleEl.querySelectorAll("[data-role]").forEach(function (b) { b.disabled = true; b.style.opacity = b === btn ? "1" : ".45"; });
-        btn.querySelector("span:nth-of-type(2)").textContent = "Joining\u2026";
-        postSignup(pendingEmail, role).then(function (pos) { showSuccess(pos, role); });
+        if (btn) { chosen = btn.getAttribute("data-role"); paintRole(); return; }
+        if (e.target.closest("#wl-continue") && chosen) {
+          if (chosen === "talent") { roleEl.classList.add("hidden"); detailsEl.classList.remove("hidden"); document.getElementById("wl-does").focus(); return; }
+          roleEl.classList.add("hidden"); hireEl.classList.remove("hidden"); document.getElementById("wh-name").focus();
+        }
       });
 
+      document.getElementById("wl-d-back").addEventListener("click", function () { detailsEl.classList.add("hidden"); roleEl.classList.remove("hidden"); });
+      detailsEl.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var g = function (id) { return document.getElementById(id); }, err = g("wl-d-err"), link = g("wl-link").value.trim();
+        var msg = !g("wl-does").value ? "Tell us what you do." : !g("wl-size").value ? "Pick the typical channel size you have worked with." : (link && !/^https?:\/\/\S+\.\S+/.test(link)) ? "Enter a full link starting with https://" : !g("wl-hear").value ? "Tell us how you heard about arclent." : "";
+        err.textContent = msg; err.classList.toggle("hidden", !msg);
+        if (msg) return;
+        var btn = g("wl-d-submit"); btn.disabled = true; btn.textContent = "Joining\u2026";
+        postSignup(pendingEmail, "talent", { does: g("wl-does").value, size: g("wl-size").value, link: link, heard: g("wl-hear").value }).then(function (pos) { showSuccess(pos, "talent"); });
+      });
+
+      document.getElementById("wh-back").addEventListener("click", function () { hireEl.classList.add("hidden"); roleEl.classList.remove("hidden"); });
+      hireEl.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var g = function (id) { return document.getElementById(id); }, err = g("wh-err");
+        var msg = !g("wh-name").value.trim() ? "Enter your company or channel name." : !g("wh-now").value ? "Tell us whether you are hiring right now." : !g("wh-roles").value.trim() ? "Tell us which roles you need." : !g("wh-time").value ? "Pick a hiring timeline." : "";
+        err.textContent = msg; err.classList.toggle("hidden", !msg);
+        if (msg) return;
+        var btn = g("wh-submit"); btn.disabled = true; btn.textContent = "Joining\u2026";
+        postSignup(pendingEmail, "recruiter", { name: g("wh-name").value.trim(), hiringNow: g("wh-now").value, roles: g("wh-roles").value.trim(), timeline: g("wh-time").value, budget: g("wh-budget").value.trim() }).then(function (pos) { showSuccess(pos, "recruiter"); });
+      });
+
+
+      // Weekly batch countdown: a new batch is let in every Monday at 10:00 (visitor's local time).
+      (function () {
+        var BATCH_DAY = 1, BATCH_HOUR = 10, ANCHOR = new Date(2026, 8, 28, BATCH_HOUR, 0, 0); // batch 1 = Mon 28 Sep 2026
+        var WEEK = 7 * 864e5;
+        function nextBatch(now) {
+          var d = new Date(now); d.setHours(BATCH_HOUR, 0, 0, 0);
+          var add = (BATCH_DAY - d.getDay() + 7) % 7; d.setDate(d.getDate() + add);
+          if (d <= now) d.setDate(d.getDate() + 7);
+          return d;
+        }
+        var el = function (id) { return document.getElementById(id); }, pad = function (n) { return (n < 10 ? "0" : "") + n; };
+        var fmt = new Intl.DateTimeFormat(undefined, { weekday: "long", day: "numeric", month: "short" });
+        function tick() {
+          var now = new Date(), next = nextBatch(now), ms = next - now, s = Math.floor(ms / 1000);
+          var d = Math.floor(s / 86400), h = Math.floor((s % 86400) / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60;
+          el("bc-d").textContent = pad(d); el("bc-h").textContent = pad(h); el("bc-m").textContent = pad(m); el("bc-s").textContent = pad(sec);
+          el("bc-headline").textContent = d >= 1 ? d + (d === 1 ? " day" : " days") + " left" : (h >= 1 ? h + (h === 1 ? " hour" : " hours") + " left" : "Opening soon");
+          el("bc-batch").textContent = "Batch " + (Math.round((next - ANCHOR) / WEEK) + 1);
+          el("bc-date").textContent = fmt.format(next);
+          el("bc-bar").style.width = Math.max(0, Math.min(100, (1 - ms / WEEK) * 100)) + "%";
+
+          // scarcity: the batch fills as the week goes on (starts ~60% full, ends almost full)
+          var pct = Math.max(0, Math.min(1, 1 - ms / WEEK)), joined = 0;
+          try { joined = localStorage.getItem("arclent_waitlist_email") ? 1 : 0; } catch (err) {}
+          var left = Math.max(3, Math.round(100 - (58 + pct * 36)) - joined);
+          document.querySelectorAll(".bc-spots, .fn-spots, .wb-spots").forEach(function (n) { n.textContent = left; });
+          el("bc-fill").style.width = (100 - left) + "%";
+          el("bc-hint").textContent = left <= 15 ? "Almost gone" : left <= 30 ? "Filling fast" : "Spots are going";
+          var short = d >= 1 ? d + "d " + h + "h" : h + "h " + m + "m";
+          el("fn-time").textContent = (d >= 1 ? d + (d === 1 ? " day " : " days ") + h + "h" : h + "h " + m + "m " + pad(sec) + "s");
+          el("fn-batch").textContent = "Batch " + (Math.round((next - ANCHOR) / WEEK) + 1);
+          el("wb-batch").textContent = "Batch " + (Math.round((next - ANCHOR) / WEEK) + 1); el("wb-time").textContent = short;
+        }
+        tick(); setInterval(tick, 1000);
+      })();
+
+      // Sticky join bar: shows once the hero is scrolled past, hides while the signup card is visible or after joining.
+      (function () {
+        var bar = document.getElementById("wl-bar"), card = document.getElementById("wl-card");
+        if (!bar || !card) return;
+        function update() {
+          var joined = false; try { joined = !!localStorage.getItem("arclent_waitlist_email"); } catch (e) {}
+          var r = card.getBoundingClientRect(), cardVisible = r.bottom > 80 && r.top < innerHeight - 80;
+          var show = !joined && !cardVisible && window.scrollY > 500;
+          bar.style.opacity = show ? "1" : "0"; bar.setAttribute("aria-hidden", show ? "false" : "true"); bar.style.pointerEvents = "none";
+          bar.firstElementChild.style.pointerEvents = show ? "auto" : "none";
+        }
+        addEventListener("scroll", update, { passive: true }); addEventListener("resize", update); setInterval(update, 1500); update();
+      })();
+      document.getElementById("wl-reset").addEventListener("click", function () {
+        try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+        successEl.classList.add("hidden"); successEl.classList.remove("flex");
+        form.classList.remove("hidden"); input.value = ""; input.focus();
+      });
       // Subtle ambient "live" tick on the waiting-count — cosmetic only, not a
       // claim of real-time data.
       setInterval(function () {
@@ -608,6 +906,12 @@
         .to("#pg-title", { yPercent: 0, duration: 1.3 }, 0.1)
         .to("#pg-sub", { autoAlpha: 1, y: 0, duration: 1 }, 0.4)
         .to("#wl-card", { autoAlpha: 1, y: 0, duration: 1.3 }, 0.3);
+      // fail-safe: if animation frames are throttled (background tab, slow device) still end in the visible state
+      setTimeout(function () {
+        gsap.killTweensOf(["#wl-card", "#pg-title", "#pg-chip", "#pg-sub", ".ib-nav"]);
+        gsap.set(["#wl-card", "#pg-chip", "#pg-sub", ".ib-nav"], { autoAlpha: 1, y: 0 });
+        gsap.set("#pg-title", { yPercent: 0 });
+      }, 2800);
       ScrollTrigger.batch("[data-r]", { start: "top 92%", once: true,
         onEnter: function (els) { gsap.from(els, { y: 40, opacity: 0, duration: 0.9, stagger: 0.1, ease: "expo.out" }); } });
     })();

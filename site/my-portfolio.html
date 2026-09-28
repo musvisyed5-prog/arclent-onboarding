@@ -202,6 +202,11 @@
     .ib-btn--light:hover .ico .shape { fill: #222F30; }
     .ib-btn:active { transform: scale(0.98); }
     @media (prefers-reduced-motion: reduce) { .ib-btn .lbl, .ib-btn .corner path, .ib-btn .ico, .ib-btn .ico path { transition: none !important; } }
+    .unv-card { outline: 2px solid #D64545; outline-offset: -2px; animation: unv-glow 1.6s ease-in-out infinite; }
+    .unv-badge { animation: unv-shake 2.4s ease-in-out infinite; }
+    @keyframes unv-glow { 0%, 100% { outline-color: rgba(214,69,69,.35); } 50% { outline-color: rgba(214,69,69,.9); } }
+    @keyframes unv-shake { 0%, 88%, 100% { transform: translateX(0); } 90% { transform: translateX(-3px); } 92% { transform: translateX(3px); } 94% { transform: translateX(-3px); } 96% { transform: translateX(2px); } 98% { transform: translateX(0); } }
+    @media (prefers-reduced-motion: reduce) { .unv-card, .unv-badge { animation: none; } }
 
 
     /* smooth scrolling (Lenis) */
@@ -462,11 +467,14 @@
             <span class="h-[84px] w-[84px] shrink-0 rounded-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1542178243-bc20204b769f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200')"></span>
             <h1 class="text-[clamp(44px,7vw,112px)] font-normal leading-[.92] tracking-[-0.055em] text-ink">Mosvie <span class="text-primary/45">Media</span></h1>
           </div>
-          <div class="flex items-center gap-3">
-            <button type="button" id="share-open" class="mono inline-flex h-12 items-center gap-3 rounded-[12px] px-5 text-ink outline outline-1 -outline-offset-1 outline-ink/30 transition-colors hover:bg-white"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4"/><path d="m15.4 6.5-6.8 4"/></svg>Share portfolio</button>
-            <button type="button" id="imp-open" class="mono inline-flex h-12 items-center gap-3 rounded-[12px] bg-white px-5 text-ink transition-colors hover:bg-[#CEF79E]"><span class="grid h-7 w-7 place-items-center rounded-[8px] bg-[#FF5A5F] text-white"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>Import portfolio</button>
-            <a href="profile.html" class="mono inline-flex h-12 items-center rounded-[12px] px-5 text-ink outline outline-1 -outline-offset-1 outline-ink/30 transition-colors hover:bg-white">Edit profile</a>
-            <button type="button" id="add-open" class="mono inline-flex h-12 items-center gap-3 rounded-[12px] bg-ink px-5 text-white transition-colors hover:bg-[#CEF79E] hover:text-ink"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>Add work</button>
+          <div class="flex items-center gap-2">
+            <div class="flex items-center gap-1 rounded-[14px] bg-white p-1">
+              <button type="button" id="share-open" title="Share portfolio" aria-label="Share portfolio" class="grid h-11 w-11 place-items-center rounded-[10px] text-ink transition-colors hover:bg-[#F0F1EA]"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4"/><path d="m15.4 6.5-6.8 4"/></svg></button>
+              <span class="h-6 w-px bg-[#E7E8E1]"></span>
+              <a href="profile.html" title="Edit profile" aria-label="Edit profile" class="grid h-11 w-11 place-items-center rounded-[10px] text-ink transition-colors hover:bg-[#F0F1EA]"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></a>
+            </div>
+            <button type="button" id="imp-open" title="Import portfolio from YTJobs" class="mono inline-flex h-[52px] items-center gap-3 rounded-[14px] bg-white px-5 text-ink outline outline-1 -outline-offset-1 outline-ink/30 transition-colors hover:bg-[#F0F1EA]"><span class="grid h-7 w-7 shrink-0 place-items-center rounded-[8px] bg-[#FF5A5F] text-white"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>Import from YTJobs</button>
+            <button type="button" id="add-open" class="mono inline-flex h-[52px] items-center gap-3 rounded-[14px] bg-ink px-6 text-white transition-colors hover:bg-[#CEF79E] hover:text-ink"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>Add work</button>
           </div>
         </div>
         <p class="mono mt-5 inline-block rounded-full border border-[#C9CBBE] px-3 py-1.5 text-primary">Thumbnail / Graphic Designer</p>
@@ -520,15 +528,58 @@
 
       <!-- IMPORT PORTFOLIO -->
       <div id="imp-modal" hidden class="fixed inset-0 z-[80] flex items-center justify-center bg-ink/70 p-3 backdrop-blur-sm sm:p-6" role="dialog" aria-modal="true" aria-labelledby="imp-title">
-        <form id="imp-form" onsubmit="return false" class="relative w-full max-w-[520px] overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-8">
-          <button type="button" id="imp-close" class="absolute right-5 top-5 grid h-10 w-10 place-items-center rounded-[10px] bg-[#394546] transition-colors hover:bg-[#CEF79E] hover:text-ink" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button>
-          <p class="mono text-[#CEF79E]">Import portfolio</p>
-          <h2 id="imp-title" class="mt-2 text-[28px] leading-none tracking-[-0.03em]">Bring your work over</h2>
-          <p class="mt-4 text-[16px] leading-snug text-white/70">Paste a link to your YouTube channel or existing portfolio and we will pull in your latest videos.</p>
-          <div class="mt-6"><label class="lbl-f" for="i-url">Channel or portfolio link</label><input id="i-url" type="url" class="field" placeholder="https://youtube.com/@yourchannel" /></div>
-          <p id="i-err" hidden class="mono mt-4 text-[#FF8A8A]">Paste a valid link starting with https://</p>
-          <button type="submit" class="mono mt-6 h-14 w-full rounded-[12px] bg-[#CEF79E] text-ink transition-colors hover:bg-white">Import videos</button>
-        </form>
+        <div class="relative grid max-h-[calc(100vh-24px)] w-full max-w-[1040px] overflow-y-auto rounded-[24px] bg-ink text-white lg:grid-cols-[0.9fr_1.1fr]">
+          <button type="button" id="imp-close" class="absolute right-4 top-4 z-10 grid h-10 w-10 place-items-center rounded-[10px] bg-[#394546] transition-colors hover:bg-[#CEF79E] hover:text-ink" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button>
+
+          <!-- tutorial -->
+          <aside class="relative flex flex-col gap-8 overflow-hidden border-b border-white/15 p-6 sm:p-8 lg:border-b-0 lg:border-r">
+            <svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="imq" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#imq)"/></svg>
+            <div class="relative"><p class="mono text-[#CEF79E]">Import portfolio</p>
+              <h2 id="imp-title" class="mt-3 text-[clamp(34px,3.4vw,52px)] font-normal leading-[.98] tracking-[-0.045em]">Import your videos <span class="text-white/45">from YTJobs.</span></h2>
+              <p class="mt-5 max-w-[380px] text-[16px] leading-snug text-white/70">Already have a portfolio on YTJobs? Bring your videos over automatically instead of adding them one by one.</p></div>
+            <div class="relative mt-auto">
+              <p class="mono mb-3 text-white/60">Quick tutorial &middot; 2 min</p>
+              <div id="imp-video" class="relative aspect-video overflow-hidden rounded-[16px] bg-black">
+                <button type="button" id="imp-play" class="group absolute inset-0 grid place-items-center" aria-label="Play tutorial">
+                  <img src="https://img.youtube.com/vi/WeHv843enXs/hqdefault.jpg" alt="" class="absolute inset-0 h-full w-full object-cover opacity-80 transition-opacity group-hover:opacity-100" />
+                  <span class="relative grid h-14 w-16 place-items-center rounded-[16px] bg-[#CEF79E] text-ink transition-all duration-500 group-hover:rounded-[22px]"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+                </button>
+              </div>
+            </div>
+          </aside>
+
+          <!-- steps -->
+          <div class="relative p-6 sm:p-8 lg:pt-16">
+            <div id="imp-steps">
+              <ol>
+                <li class="flex gap-5 border-t border-white/20 py-6"><span class="mono grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/30">1</span>
+                  <div class="flex-1"><h3 class="text-[22px] leading-tight tracking-[-0.02em]">Download the extension</h3>
+                    <p class="mt-2 text-[15px] leading-snug text-white/70">First, install the Portfolio Importer extension from the Chrome Web Store.</p>
+                    <a href="https://chromewebstore.google.com/" target="_blank" rel="noopener" id="imp-dl" class="mono mt-4 inline-flex h-11 items-center gap-3 rounded-[12px] bg-white px-4 text-ink transition-colors hover:bg-[#CEF79E]">Download extension <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a></div></li>
+                <li class="flex gap-5 border-t border-white/20 py-6"><span class="mono grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/30">2</span>
+                  <div class="min-w-0 flex-1"><h3 class="text-[22px] leading-tight tracking-[-0.02em]">Add your secure URL</h3>
+                    <p class="mt-2 text-[15px] leading-snug text-white/70">Open the extension from your Chrome toolbar and paste the secure URL below. Save the settings before continuing.</p>
+                    <div class="mt-4 flex overflow-hidden rounded-[12px] border border-white/25"><input id="imp-url" readonly class="mono min-w-0 flex-1 bg-transparent px-4 text-[12px] normal-case text-white outline-none" style="height:44px" /><button type="button" id="imp-copy" class="mono shrink-0 bg-white/10 px-4 text-white transition-colors hover:bg-[#CEF79E] hover:text-ink">Copy</button></div></div></li>
+                <li class="flex gap-5 border-y border-white/20 py-6"><span class="mono grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/30">3</span>
+                  <div class="flex-1"><h3 class="text-[22px] leading-tight tracking-[-0.02em]">Start importing</h3>
+                    <p class="mt-2 text-[15px] leading-snug text-white/70">Open your YTJobs profile and run the extension. Your videos appear here automatically.</p></div></li>
+              </ol>
+              <button type="button" id="imp-start" class="mono mt-6 h-14 w-full rounded-[12px] bg-[#CEF79E] text-ink transition-colors hover:bg-white">Start importing</button>
+              <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
+                <button type="button" id="imp-skip" class="mono text-white/60 underline underline-offset-4 hover:text-white">Skip for now, I&rsquo;ll add videos manually</button>
+                <button type="button" id="imp-cancel" class="mono text-[#FF8A8A] hover:underline">Having trouble? Cancel import</button>
+              </div>
+            </div>
+
+            <div id="imp-run" hidden class="py-10">
+              <p id="imp-run-l" class="mono text-[#CEF79E]">Importing</p>
+              <h3 id="imp-run-h" class="mt-3 text-[32px] leading-tight tracking-[-0.03em]">Waiting for the extension&hellip;</h3>
+              <div class="mt-8 h-1.5 overflow-hidden rounded-full bg-white/15"><i id="imp-bar" class="block h-full w-0 bg-[#CEF79E]" style="transition:width .5s"></i></div>
+              <ul id="imp-log" class="mono mt-6 space-y-3 text-white/70"></ul>
+              <button type="button" id="imp-done" hidden class="mono mt-8 h-14 w-full rounded-[12px] bg-[#CEF79E] text-ink transition-colors hover:bg-white">View my portfolio</button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- ADD WORK -->
@@ -588,13 +639,15 @@
     function render() {
       $("filters").innerHTML = [["all", "All"], ["ver", "Verified"]].map(([k, l]) => `<button type="button" role="tab" data-f="${k}" aria-selected="${filter === k}" class="tab ${filter === k ? "on" : ""}">${l}</button>`).join("");
       const list = WORK.filter((w) => filter === "all" || w.ver);
-      $("work").innerHTML = list.map((w, i) => `<article class="card-in group overflow-hidden rounded-[20px] bg-white" style="animation-delay:${i * 60}ms">
+      $("work").innerHTML = list.map((w, i) => `<article class="card-in group overflow-hidden rounded-[20px] bg-white ${!w.ver && !w.pending ? "unv-card" : ""}" style="animation-delay:${i * 60}ms">
         <div class="relative aspect-[4/3] w-full overflow-hidden bg-ink"><div class="h-full w-full bg-cover bg-center transition-transform duration-[1200ms] group-hover:scale-105" style="background-image:url('${w.img}')"></div>
           ${w.pending && !w.ver ? '<span class="mono absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 text-ink"><i class="h-2 w-2 rounded-full bg-[#E0A93B]"></i>Verification pending</span>' : ""}
-          ${w.ver ? '<span class="mono absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-[#CEF79E] px-3 py-1.5 text-ink"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>Verified</span>' : ""}</div>
+          ${w.ver ? `<span class="mono absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-[#CEF79E] px-3 py-1.5 text-ink"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>Verified${w.c ? ` by ${esc(w.c)}` : ""}</span>` : ""}
+          ${!w.ver && !w.pending ? '<span class="unv-badge mono absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-error px-3 py-1.5 text-white"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>Not verified</span>' : ""}</div>
         <div class="p-5"><div class="flex items-center gap-3"><span class="grid h-8 w-8 shrink-0 place-items-center rounded-full font-mono text-[12px] text-white" style="background:${COLORS[i % COLORS.length]}">${esc(w.c[0].toUpperCase())}</span><span class="min-w-0 truncate text-[18px] tracking-[-0.01em] text-ink">${esc(w.t)}</span></div>
           <div class="mono mt-4 flex items-center justify-between gap-3 border-t border-[#E7E8E1] pt-4 text-primary"><span class="inline-flex items-center gap-2">${EYE}${fmtViews(w.views == null ? (w.views = seedViews(w.t)) : w.views)} views</span>
-            <span class="inline-flex items-center gap-2 text-ink"><span class="grid h-6 w-6 place-items-center rounded-[7px] text-white" style="background:${PLAT_BG[w.plat || "YouTube"] || PLAT_BG.Other}">${PLAT_LOGO[w.plat || "YouTube"] || PLAT_LOGO.Other}</span>${esc(w.plat || "YouTube")}</span></div></div>
+            <span class="inline-flex items-center gap-2 text-ink"><span class="grid h-6 w-6 place-items-center rounded-[7px] text-white" style="background:${PLAT_BG[w.plat || "YouTube"] || PLAT_BG.Other}">${PLAT_LOGO[w.plat || "YouTube"] || PLAT_LOGO.Other}</span>${esc(w.plat || "YouTube")}</span></div>
+          ${!w.ver && !w.pending ? `<button type="button" data-getver="${esc(w.t)}" class="mono mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-[10px] bg-error text-white transition-colors hover:bg-[#B43333]"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>Get verified</button>` : ""}</div>
       </article>`).join("");
       $("empty").hidden = list.length > 0;
       $("n-videos").textContent = 6 + WORK.length; $("n-ver").textContent = 2 + WORK.filter((w) => w.ver).length;
@@ -621,6 +674,7 @@
       if (e.target.closest("#spec-more")) { more = !more; drawSpecs(); }
       if (e.target.closest("#add-open")) openAdd();
       if (e.target.closest("#add-close") || e.target === $("add-modal")) closeAdd();
+      const gv = e.target.closest("[data-getver]"); if (gv) { const w = WORK.find((x) => x.t === gv.dataset.getver); if (w) openVerify(w); }
     });
     document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeAdd(); });
     document.addEventListener("submit", (e) => {
@@ -845,18 +899,47 @@
       if (!i.value.trim() || !i.checkValidity()) { $("vf-err").hidden = false; return; }
       vfEmail = i.value.trim(); vfTab = "email"; vfSend();
     });
-    const closeImp = () => { $("imp-modal").hidden = true; };
+    const IMP_STEPS = ["Connected to extension", "Reading your YTJobs profile", "Fetching video details", "Adding videos to your portfolio"];
+    let impTimer = 0;
+    if (location.hash === "#import") setTimeout(() => document.getElementById("imp-open")?.click(), 300);
+    const closeImp = () => { clearInterval(impTimer); $("imp-modal").hidden = true; $("imp-video").querySelector("iframe")?.remove(); };
+    const impReset = () => {
+      clearInterval(impTimer);
+      $("imp-steps").hidden = false; $("imp-run").hidden = true; $("imp-done").hidden = true; $("imp-bar").style.width = "0";
+      $("imp-url").value = "https://www.arclent.co/import/" + (100000 + Math.floor(Math.random() * 900000)) + "/";
+      $("imp-copy").textContent = "Copy";
+      const v = $("imp-video"); v.querySelector("iframe")?.remove(); $("imp-play").hidden = false;
+    };
     document.addEventListener("click", (e) => {
-      if (e.target.closest("#imp-open")) { $("imp-form").reset(); $("i-err").hidden = true; $("imp-modal").hidden = false; setTimeout(() => $("i-url").focus(), 50); }
-      if (e.target.closest("#imp-close") || e.target === $("imp-modal")) closeImp();
+      const t = e.target;
+      if (t.closest("#imp-open")) { impReset(); $("imp-modal").hidden = false; }
+      else if (t.closest("#imp-close") || t === $("imp-modal") || t.closest("#imp-skip") || t.closest("#imp-cancel")) closeImp();
+      else if (t.closest("#imp-play")) {
+        $("imp-play").hidden = true;
+        $("imp-video").insertAdjacentHTML("beforeend", '<iframe class="absolute inset-0 h-full w-full" src="https://www.youtube.com/embed/WeHv843enXs?autoplay=1&rel=0" title="Portfolio import tutorial" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>');
+      }
+      else if (t.closest("#imp-copy")) {
+        const done = () => { $("imp-copy").textContent = "Copied"; say("Secure URL copied"); };
+        (navigator.clipboard ? navigator.clipboard.writeText($("imp-url").value) : Promise.reject()).then(done, done);
+      }
+      else if (t.closest("#imp-start")) {
+        $("imp-steps").hidden = true; $("imp-run").hidden = false;
+        $("imp-run-l").textContent = "Importing"; $("imp-run-h").textContent = "Importing your videos\u2026"; $("imp-log").innerHTML = "";
+        let n = 0;
+        impTimer = setInterval(() => {
+          $("imp-log").insertAdjacentHTML("beforeend", '<li class="flex items-center gap-3"><span class="grid h-5 w-5 place-items-center rounded-full bg-[#CEF79E] text-ink">' + '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>' + "</span>" + IMP_STEPS[n] + "</li>");
+          n++; $("imp-bar").style.width = (n / IMP_STEPS.length * 100) + "%";
+          if (n === IMP_STEPS.length) {
+            clearInterval(impTimer);
+            WORK.unshift({ t: "Imported video 1", c: "Imported", plat: "YouTube", img: U("photo-1492691527719-9d1e07e534b4"), ver: false }, { t: "Imported video 2", c: "Imported", plat: "YouTube", img: U("photo-1574717024653-61fd2cf4d44d"), ver: false }, { t: "Imported video 3", c: "Imported", plat: "YouTube", img: U("photo-1536440136628-849c177e76a1"), ver: false });
+            filter = "all"; render();
+            $("imp-run-l").textContent = "Done"; $("imp-run-h").textContent = "3 videos imported"; $("imp-done").hidden = false;
+          }
+        }, 900);
+      }
+      else if (t.closest("#imp-done")) closeImp();
     });
     document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeImp(); });
-    document.addEventListener("submit", (e) => {
-      if (e.target.id !== "imp-form") return;
-      if (!/^https?:\/\/\S+\.\S+/.test($("i-url").value.trim())) { $("i-err").hidden = false; return; }
-      WORK.unshift({ t: "Imported video 1", c: "Imported", plat: "YouTube", img: U("photo-1492691527719-9d1e07e534b4"), ver: false }, { t: "Imported video 2", c: "Imported", plat: "YouTube", img: U("photo-1574717024653-61fd2cf4d44d"), ver: false }, { t: "Imported video 3", c: "Imported", plat: "YouTube", img: U("photo-1536440136628-849c177e76a1"), ver: false });
-      filter = "all"; closeImp(); render(); say("3 videos imported");
-    });
     // share portfolio
     const shareUrl = () => new URL("talent-details.html", location.href).href;
     const closeShare = () => { $("share-modal").hidden = true; };

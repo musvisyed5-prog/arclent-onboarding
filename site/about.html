@@ -14,7 +14,7 @@
   <meta name="description" content="arclent is the hiring platform built on verified work: portfolios confirmed by the people who worked on them, jobs posted and filled with AI." />
   <meta property="og:title" content="arclent" />
   <meta property="og:description" content="The hiring platform built on verified work." />
-  <title>arclent — Talent Onboarding</title>
+  <title>arclent — About</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400&family=Roboto+Mono:wght@400&display=swap" rel="stylesheet" />
@@ -313,38 +313,42 @@
   </style>
 
   <style>
+    /* jobs page: force the light logo chip (page is light from the top) */
     html .nav-logo { filter: none !important; }
+    .tl { background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat; padding-bottom: 3px;
+      -webkit-box-decoration-break: clone; box-decoration-break: clone; transition: background-size .5s cubic-bezier(.22,1,.36,1); }
+    a:hover .tl { background-size: 100% 2px; }
+    .jcard { position: relative; display: flex; flex-direction: column; overflow: hidden; border-radius: 20px; padding: 24px 24px 76px; min-height: 340px;
+      transition: transform .6s cubic-bezier(.22,1,.36,1); }
+    .jcard:hover { transform: translateY(-4px); }
+    .jc-0 { background: #fff; color: #222F30; } .jc-1 { background: #EEEEEE; color: #222F30; } .jc-2 { background: #222F30; color: #fff; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border-radius: 8px; padding: 6px 10px; font: 400 11px/1 "Roboto Mono", monospace; text-transform: uppercase; }
+    .jc-0 .chip, .jc-1 .chip, .feat .chip { background: #F3F3F1; color: #222F30; } .jc-2 .chip { background: #2F3E3F; color: #fff; }
+    .chip::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: #B6F26E; }
     .mono { font: 400 11px/1.3 "Roboto Mono", monospace; text-transform: uppercase; }
-    .lbl-f { display: block; margin-bottom: 10px; font: 400 11px/1 "Roboto Mono", monospace; text-transform: uppercase; color: #fff; }
-    .field { width: 100%; min-height: 54px; border: 0; border-radius: 12px; background: #394546; padding: 0 18px; color: #fff; font-size: 16px; outline: 1px solid transparent; transition: outline-color .4s, background .4s; color-scheme: dark; }
-    textarea.field { padding: 16px 18px; resize: vertical; line-height: 1.35; }
-    .field::placeholder { color: rgba(255,255,255,.45); }
-    .field:focus { outline-color: #CEF79E; background: #3F4C4D; }
-    .pill, .tile { background: #394546; color: rgba(255,255,255,.8); border-radius: 12px; transition: background .5s cubic-bezier(.22,1,.36,1), color .5s; }
-    .pill { display: inline-flex; align-items: center; gap: 8px; padding: 13px 16px; font: 400 12px/1 "Roboto Mono", monospace; text-transform: uppercase; }
-    .tile { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 22px 12px; text-align: center; font: 400 12px/1.2 "Roboto Mono", monospace; text-transform: uppercase; }
-    .pill:hover, .tile:hover { background: #4A5859; color: #fff; }
-    .pill.on, .tile.on { background: #CEF79E; color: #222F30; }
-    .vrow { display: flex; align-items: center; gap: 14px; min-height: 54px; padding: 0 18px; border-radius: 12px; background: #394546; outline: 1px solid transparent; transition: outline-color .4s; }
-    .vrow:focus-within { outline-color: #CEF79E; }
-    .vrow input { flex: 1; background: transparent; color: #fff; font-size: 15px; outline: none; }
-    .vrow input::placeholder { color: rgba(255,255,255,.4); }
-    .switch { position: relative; display: inline-block; width: 46px; height: 26px; flex: none; border-radius: 999px; background: #4D5757; transition: background .4s; }
-    .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform .4s cubic-bezier(.22,1,.36,1), background .4s; }
-    input:checked + .switch { background: #CEF79E; } input:checked + .switch::after { transform: translateX(20px); background: #222F30; }
-    .acct { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; border-radius: 14px; background: #394546; padding: 14px; }
-    .mini { border-radius: 10px; padding: 11px 16px; font: 400 11px/1 "Roboto Mono", monospace; text-transform: uppercase; background: #fff; color: #222F30; transition: background .4s; }
-    .mini:hover { background: #CEF79E; }
-    .mini.off { background: transparent; color: #fff; outline: 1px solid rgba(255,255,255,.35); } .mini.off:hover { outline-color: #CEF79E; color: #CEF79E; }
-    .srow { display: flex; width: 100%; align-items: center; gap: 16px; padding: 18px 0; border-top: 1px solid #C9CBBE; text-align: left; transition: color .4s; }
-    .srow:disabled { cursor: not-allowed; }
-    .lk-stripe { background: repeating-linear-gradient(115deg, #222F30 0 10px, #4D5757 10px 20px); background-size: 28px 100%; animation: lk-move 1s linear infinite; }
-    @keyframes lk-move { to { background-position: 28px 0; } }
-    .lk-bar i { transition: width .8s cubic-bezier(.22,1,.36,1); }
-    @media (prefers-reduced-motion: reduce) { .lk-stripe { animation: none; } }
-    .step-in { animation: step-in .8s cubic-bezier(.22,1,.36,1) both; }
-    @keyframes step-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-    @media (prefers-reduced-motion: reduce) { .step-in { animation: none; } }
+    .notch { position: absolute; right: 0; bottom: 0; width: 68px; height: 58px; background: #F7F7F5; border-top-left-radius: 22px; }
+    .notch::before, .notch::after { content: ""; position: absolute; width: 22px; height: 22px; background: radial-gradient(circle at 0 0, transparent 21.5px, #F7F7F5 22px); }
+    .notch::before { left: -22px; bottom: 0; } .notch::after { right: 0; top: -22px; }
+    .notch i { position: absolute; right: 8px; bottom: 8px; display: grid; place-items: center; width: 52px; height: 42px; border-radius: 14px; background: #CEF79E; color: #222F30;
+      transition: transform .6s cubic-bezier(.22,1,.36,1), border-radius .6s cubic-bezier(.22,1,.36,1); }
+    a:hover .notch i { transform: translateX(-3px); border-radius: 18px; }
+    .fchip { border-radius: 8px; padding: 9px 12px; font: 400 12px/1 "Roboto Mono", monospace; text-transform: uppercase; background: #fff; color: #222F30; transition: background .4s, color .4s; }
+    .fchip.on { background: #222F30; color: #fff; }
+    .skill { border: 1px solid currentColor; border-color: rgba(127,140,140,.45); border-radius: 999px; padding: 5px 11px; font: 400 10px/1 "Roboto Mono", monospace; text-transform: uppercase; }
+
+    .fstack { display: grid; }
+    .fslide { grid-area: 1 / 1; opacity: 0; pointer-events: none; transform: translateY(14px) scale(.985); transition: opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1); }
+    .fslide.on { opacity: 1; pointer-events: auto; transform: none; }
+    .fslide .fimg { transform: scale(1.06); transition: transform 6s cubic-bezier(.22,1,.36,1); }
+    .fslide.on .fimg { transform: scale(1); }
+    .fseg { position: relative; height: 27px; flex: 1; border-radius: 3px; background: #D9DBCF; overflow: hidden; padding: 12px 0; background-clip: content-box; cursor: pointer; }
+    .fseg i { position: absolute; left: 0; right: 0; top: 50%; height: 3px; margin-top: -1.5px; border-radius: 3px; background: #222F30; transform-origin: left; transform: scaleX(0); }
+    .fseg.done i { transform: scaleX(1); }
+    .fseg.cur i { animation: fseg-fill 6s linear forwards; }
+    @keyframes fseg-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    @media (prefers-reduced-motion: reduce) { .fseg.cur i { animation: none; transform: scaleX(1); } .fslide { transition: none; } }
+    .co-row { border-top: 1px solid #C9CBBE; }
+    #pg-title-mask { overflow: clip; padding-bottom: .08em; margin-bottom: -.08em; }
   </style>
 </head>
 <body class="min-h-screen bg-surface font-sans text-ink">
@@ -368,6 +372,7 @@
           <a href="landing.html" class="u-link px-3 py-2 text-ink">Home</a>
           <a href="find-jobs.html" class="u-link px-3 py-2 text-ink">Find Jobs</a>
           <a href="talents.html" class="u-link px-3 py-2 text-ink">Talents</a>
+          <a href="about.html" class="u-link px-3 py-2 text-ink">About</a>
         </nav>
         <a href="choose-role.html" class="btn-dark cta-wipe btn-roll flex h-10 items-center rounded-[8px] px-5"><span class="roll"><span>Get Started</span><span aria-hidden="true">Get Started</span></span></a>
         <button id="menu-btn" type="button" class="menu-btn lg:hidden" aria-label="Menu" aria-expanded="false" aria-controls="menu-overlay"><i></i><i></i></button>
@@ -381,13 +386,52 @@
       <a href="landing.html" class="m-item" style="--i:0">Home</a>
       <a href="find-jobs.html" class="m-item" style="--i:1">Find Jobs</a>
       <a href="talents.html" class="m-item" style="--i:2">Talents</a>
+      <a href="about.html" class="m-item" style="--i:3">About</a>
       <a href="choose-role.html" class="m-item" style="--i:3">Get Started</a>
     </nav>
     <a href="choose-role.html" class="m-item u-link absolute inset-x-0 bottom-10 mx-auto w-max font-mono text-[15px]" style="--i:5">Join arclent</a>
   </div>
 
 
-  <main class="mx-auto max-w-[1400px] px-4 pb-24 pt-32 lg:px-10"><div id="app"></div></main>
+  <main class="mx-auto max-w-[1400px] px-4 pb-24 pt-32 lg:px-10">
+    <span id="pg-chip" class="chip">About arclent</span>
+    <div id="pg-title-mask" class="mt-8"><h1 id="pg-title" class="text-[clamp(56px,10.5vw,170px)] font-normal leading-[.94] tracking-[-0.05em] text-ink">The verified <span class="text-primary/55">creator hiring platform</span></h1></div>
+    <p id="pg-sub" class="mt-8 max-w-[640px] text-[clamp(20px,2vw,27px)] leading-[1.2] tracking-[-0.01em] text-ink">arclent connects creators, freelancers, editors, designers, streamers and digital talent with recruiters and brands, through AI-driven verification and trust-first hiring.</p>
+    <div id="pg-cta" class="mt-10 flex flex-wrap gap-3"><a class="ib-btn" href="#mission"><span class="lbl">Our mission<i class="corner"><svg viewBox="0 0 18 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h6c8 0 13.4 7.2 11.4 15L11 39a11.5 11.5 0 0 1-11 9V0Z"/></svg></i></span><i class="ico"><svg viewBox="0 0 51 48" preserveAspectRatio="none" aria-hidden="true"><path class="shape" d="M6.8 9.2A12 12 0 0 1 18.4 0H39c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H12.4C4.6 48-1.2 40.7.7 33.2L6.8 9.2Z"/><path class="arrow" d="M23 24h13m-5-5 5 5-5 5" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></a><a class="ib-btn ib-btn--light" href="#features"><span class="lbl">Platform features<i class="corner"><svg viewBox="0 0 18 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h6c8 0 13.4 7.2 11.4 15L11 39a11.5 11.5 0 0 1-11 9V0Z"/></svg></i></span><i class="ico"><svg viewBox="0 0 51 48" preserveAspectRatio="none" aria-hidden="true"><path class="shape" d="M6.8 9.2A12 12 0 0 1 18.4 0H39c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H12.4C4.6 48-1.2 40.7.7 33.2L6.8 9.2Z"/><path class="arrow" d="M23 24h13m-5-5 5 5-5 5" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></a></div>
+
+    <div class="ab-stats mt-24 grid border-y border-[#C9CBBE] sm:grid-cols-2 lg:grid-cols-4"><div class="ab-stat relative py-8 sm:px-6 "><p class="text-[clamp(44px,5vw,72px)] font-normal leading-none tracking-[-0.04em]">AI</p><p class="mono mt-5 max-w-[220px] leading-[1.5] text-primary">AI-powered creator verification and intelligent matching.</p></div><div class="ab-stat relative py-8 sm:px-6 sm:border-l border-[#C9CBBE]"><p class="text-[clamp(44px,5vw,72px)] font-normal leading-none tracking-[-0.04em]">100%</p><p class="mono mt-5 max-w-[220px] leading-[1.5] text-primary">Built for the creator economy and digital talent industry.</p></div><div class="ab-stat relative py-8 sm:px-6 sm:border-l border-[#C9CBBE]"><p class="text-[clamp(44px,5vw,72px)] font-normal leading-none tracking-[-0.04em]">Trust</p><p class="mono mt-5 max-w-[220px] leading-[1.5] text-primary">Verified badges help recruiters find authentic professionals.</p></div><div class="ab-stat relative py-8 sm:px-6 sm:border-l border-[#C9CBBE]"><p class="text-[clamp(44px,5vw,72px)] font-normal leading-none tracking-[-0.04em]">Global</p><p class="mono mt-5 max-w-[220px] leading-[1.5] text-primary">Designed for creators, agencies, startups and brands worldwide.</p></div></div>
+
+    <!-- mission -->
+    <section id="mission" class="mt-28 overflow-hidden rounded-[20px] bg-ink p-6 text-white sm:p-10 lg:p-14">
+      <div class="grid gap-14 lg:grid-cols-[1.15fr_1fr]">
+        <div>
+          <span class="chip !bg-white/10 !text-white">Our mission</span>
+          <h2 class="mt-8 text-[clamp(40px,5.4vw,84px)] font-normal leading-[1] tracking-[-0.04em]">Building trust in <span class="text-white/45">creator hiring.</span></h2>
+          <p class="mt-8 max-w-[520px] text-[18px] leading-snug text-white/75">The creator economy is growing rapidly, but hiring remains difficult. Fake portfolios, unverifiable work and inconsistent profiles make it hard for recruiters to confidently discover real talent.</p>
+          <p class="mt-5 max-w-[520px] text-[18px] leading-snug text-white/75">arclent solves this through AI-powered verification, creator authenticity scoring, portfolio validation and intelligent job matching.</p>
+        </div>
+        <ul class="self-end border-b border-white/20"><li class="ab-pil flex gap-5 border-t border-white/20 py-6"><span class="mono w-8 shrink-0 text-accent">01</span><div><h3 class="text-[24px] leading-tight tracking-[-0.02em]">Verified Talent</h3><p class="mt-2 max-w-[420px] text-[16px] leading-snug text-white/70">AI verification ensures creators are authentic and trustworthy.</p></div></li><li class="ab-pil flex gap-5 border-t border-white/20 py-6"><span class="mono w-8 shrink-0 text-accent">02</span><div><h3 class="text-[24px] leading-tight tracking-[-0.02em]">Faster Hiring</h3><p class="mt-2 max-w-[420px] text-[16px] leading-snug text-white/70">Recruiters discover relevant creators through intelligent recommendations.</p></div></li><li class="ab-pil flex gap-5 border-t border-white/20 py-6"><span class="mono w-8 shrink-0 text-accent">03</span><div><h3 class="text-[24px] leading-tight tracking-[-0.02em]">Trust First</h3><p class="mt-2 max-w-[420px] text-[16px] leading-snug text-white/70">Verification badges give confidence before collaboration begins.</p></div></li></ul>
+      </div>
+    </section>
+
+    <!-- features -->
+    <section id="features" class="mt-28 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.8fr)]">
+      <div class="lg:sticky lg:top-28 lg:self-start">
+        <span class="chip">Platform features</span>
+        <h2 class="mt-8 text-[clamp(44px,5.2vw,78px)] font-normal leading-none tracking-[-0.04em]">Built for modern <span class="text-primary/55">creator hiring</span></h2>
+        <p class="mt-6 max-w-[320px] text-[17px] leading-snug text-primary">Powerful tools for creators, recruiters and agencies.</p>
+      </div>
+      <ul class="border-b border-[#C9CBBE]"><li class="ab-row border-t border-[#C9CBBE]"><div class="group flex items-start gap-5 py-7"><span class="mono w-8 shrink-0 pt-2 text-primary">01</span><div class="flex-1"><h3 class="text-[clamp(24px,2.6vw,34px)] font-normal leading-[1.1] tracking-[-0.02em]">Creator Verification</h3><p class="mt-3 max-w-[520px] text-[16px] leading-snug text-primary">Verify portfolios and creator identity using OAuth, AI validation and platform-based checks.</p></div><span class="grid h-10 w-[52px] shrink-0 place-items-center rounded-[14px] bg-[#CEF79E] text-ink transition-all duration-500 group-hover:rounded-[18px]"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></div></li><li class="ab-row border-t border-[#C9CBBE]"><div class="group flex items-start gap-5 py-7"><span class="mono w-8 shrink-0 pt-2 text-primary">02</span><div class="flex-1"><h3 class="text-[clamp(24px,2.6vw,34px)] font-normal leading-[1.1] tracking-[-0.02em]">AI Job Matching</h3><p class="mt-3 max-w-[520px] text-[16px] leading-snug text-primary">Intelligent recommendations connect recruiters with creators based on skills, content and experience.</p></div><span class="grid h-10 w-[52px] shrink-0 place-items-center rounded-[14px] bg-[#CEF79E] text-ink transition-all duration-500 group-hover:rounded-[18px]"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></div></li><li class="ab-row border-t border-[#C9CBBE]"><div class="group flex items-start gap-5 py-7"><span class="mono w-8 shrink-0 pt-2 text-primary">03</span><div class="flex-1"><h3 class="text-[clamp(24px,2.6vw,34px)] font-normal leading-[1.1] tracking-[-0.02em]">Featured Profiles</h3><p class="mt-3 max-w-[520px] text-[16px] leading-snug text-primary">Boost visibility with featured creator listings, pinned portfolio videos and enhanced rankings.</p></div><span class="grid h-10 w-[52px] shrink-0 place-items-center rounded-[14px] bg-[#CEF79E] text-ink transition-all duration-500 group-hover:rounded-[18px]"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></div></li><li class="ab-row border-t border-[#C9CBBE]"><div class="group flex items-start gap-5 py-7"><span class="mono w-8 shrink-0 pt-2 text-primary">04</span><div class="flex-1"><h3 class="text-[clamp(24px,2.6vw,34px)] font-normal leading-[1.1] tracking-[-0.02em]">Analytics & Insights</h3><p class="mt-3 max-w-[520px] text-[16px] leading-snug text-primary">Understand profile performance, recruiter activity and engagement across your portfolio.</p></div><span class="grid h-10 w-[52px] shrink-0 place-items-center rounded-[14px] bg-[#CEF79E] text-ink transition-all duration-500 group-hover:rounded-[18px]"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></div></li><li class="ab-row border-t border-[#C9CBBE]"><div class="group flex items-start gap-5 py-7"><span class="mono w-8 shrink-0 pt-2 text-primary">05</span><div class="flex-1"><h3 class="text-[clamp(24px,2.6vw,34px)] font-normal leading-[1.1] tracking-[-0.02em]">Recruiter Tools</h3><p class="mt-3 max-w-[520px] text-[16px] leading-snug text-primary">Post jobs, manage applications, discover creators and receive direct proposals from talent.</p></div><span class="grid h-10 w-[52px] shrink-0 place-items-center rounded-[14px] bg-[#CEF79E] text-ink transition-all duration-500 group-hover:rounded-[18px]"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></div></li><li class="ab-row border-t border-[#C9CBBE]"><div class="group flex items-start gap-5 py-7"><span class="mono w-8 shrink-0 pt-2 text-primary">06</span><div class="flex-1"><h3 class="text-[clamp(24px,2.6vw,34px)] font-normal leading-[1.1] tracking-[-0.02em]">Global Opportunities</h3><p class="mt-3 max-w-[520px] text-[16px] leading-snug text-primary">Connect with creators and companies across industries and countries worldwide.</p></div><span class="grid h-10 w-[52px] shrink-0 place-items-center rounded-[14px] bg-[#CEF79E] text-ink transition-all duration-500 group-hover:rounded-[18px]"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></div></li></ul>
+    </section>
+
+    <!-- cta -->
+    <section id="join" class="mt-28 overflow-hidden rounded-[20px] bg-ink p-6 text-white sm:p-10 lg:p-16">
+      <span class="chip !bg-white/10 !text-white">Join arclent</span>
+      <h2 class="mt-8 max-w-[980px] text-[clamp(40px,6vw,96px)] font-normal leading-[1] tracking-[-0.04em]">Find verified creators <span class="text-white/45">or your next opportunity.</span></h2>
+      <p class="mt-8 max-w-[560px] text-[18px] leading-snug text-white/75">Whether you are a creator looking for opportunities or a recruiter searching for authentic talent, arclent helps you connect faster with confidence.</p>
+      <div class="mt-10 flex flex-wrap gap-3"><a class="ib-btn ib-btn--light" href="choose-role.html"><span class="lbl">Get started<i class="corner"><svg viewBox="0 0 18 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h6c8 0 13.4 7.2 11.4 15L11 39a11.5 11.5 0 0 1-11 9V0Z"/></svg></i></span><i class="ico"><svg viewBox="0 0 51 48" preserveAspectRatio="none" aria-hidden="true"><path class="shape" d="M6.8 9.2A12 12 0 0 1 18.4 0H39c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H12.4C4.6 48-1.2 40.7.7 33.2L6.8 9.2Z"/><path class="arrow" d="M23 24h13m-5-5 5 5-5 5" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></a><a class="ib-btn" href="talents.html"><span class="lbl">Explore talent<i class="corner"><svg viewBox="0 0 18 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h6c8 0 13.4 7.2 11.4 15L11 39a11.5 11.5 0 0 1-11 9V0Z"/></svg></i></span><i class="ico"><svg viewBox="0 0 51 48" preserveAspectRatio="none" aria-hidden="true"><path class="shape" d="M6.8 9.2A12 12 0 0 1 18.4 0H39c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H12.4C4.6 48-1.2 40.7.7 33.2L6.8 9.2Z"/><path class="arrow" d="M23 24h13m-5-5 5 5-5 5" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></a></div>
+    </section>
+  </main>
 
   <script src="assets/vendor/gsap.min.js"></script>
   <script src="assets/vendor/ScrollTrigger.min.js"></script>
@@ -455,6 +499,29 @@
       });
     })();
   </script>
+
+  <script>
+    /* page intro + scroll reveals */
+    (function () {
+      var root = document.documentElement;
+      root.classList.remove("hero-pending");
+      if (!window.gsap || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      gsap.set(".ib-nav", { autoAlpha: 0, y: -18 });
+      gsap.set("#pg-title", { yPercent: 105 });
+      gsap.set(["#pg-chip", "#pg-sub", "#pg-cta"], { autoAlpha: 0, y: 24 });
+      gsap.timeline({ defaults: { ease: "expo.out" } })
+        .to(".ib-nav", { autoAlpha: 1, y: 0, duration: 0.8 }, 0.05)
+        .to("#pg-chip", { autoAlpha: 1, y: 0, duration: 0.9 }, 0.05)
+        .to("#pg-title", { yPercent: 0, duration: 1.3 }, 0.1)
+        .to("#pg-sub", { autoAlpha: 1, y: 0, duration: 1 }, 0.4)
+        .to("#pg-cta", { autoAlpha: 1, y: 0, duration: 1 }, 0.55);
+      if (window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        ScrollTrigger.batch(".ab-stat, .ab-pil, .ab-row", { start: "top 92%", once: true,
+          onEnter: function (els) { gsap.from(els, { y: 36, opacity: 0, duration: 0.9, stagger: 0.08, ease: "expo.out" }); } });
+      }
+    })();
+  </script>
   <!-- FOOTER -->
   <footer id="site-footer" class="relative m-1.5 mt-3 overflow-hidden rounded-[20px] bg-ink text-white">
     <img src="assets/footer-bg.webp" alt="" class="absolute inset-0 h-full w-full object-cover" style="filter: brightness(0.82);" />
@@ -477,17 +544,17 @@
       <div class="foot-col relative pl-5"><span class="foot-rule absolute left-0 top-0 h-full w-px origin-top bg-white/25"></span>
         <p class="mb-5 font-mono text-[13px] uppercase tracking-[-0.02em] text-white/70">Company</p>
         <ul class="space-y-3">
-          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">About</a></li>
+          <li><a href="about.html" class="text-[20px] leading-[1.15] tracking-[-0.01em]">About</a></li>
           <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Careers</a></li>
           <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Blog</a></li>
-          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Contact</a></li>
+          <li><a href="contact.html" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Contact</a></li>
         </ul>
       </div>
       <div class="foot-col relative pl-5"><span class="foot-rule absolute left-0 top-0 h-full w-px origin-top bg-white/25"></span>
         <p class="mb-5 font-mono text-[13px] uppercase tracking-[-0.02em] text-white/70">Legal</p>
         <ul class="space-y-3">
-          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Privacy Policy</a></li>
-          <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Terms of Service</a></li>
+          <li><a href="privacy.html" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Privacy Policy</a></li>
+          <li><a href="terms.html" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Terms of Service</a></li>
           <li><a href="#" class="text-[20px] leading-[1.15] tracking-[-0.01em]">Security</a></li>
         </ul>
       </div>
@@ -575,6 +642,91 @@
       mark.addEventListener("pointerleave", function () { setY.forEach(function (fn) { fn(0); }); });
     })();
   </script>
-  <script src="script.js"></script>
+  <script src="motion.js"></script>
+  <script>
+    /* Button interactions (GSAP): magnetic pull toward the cursor with an elastic release,
+       a springy press, an arrow that flies out and back in on hover, and a ghost button
+       that fills with a circle growing from wherever the cursor enters (and shrinking
+       toward wherever it leaves). Fine-pointer devices only; skipped for reduced motion. */
+    (function () {
+      if (!window.gsap || matchMedia("(prefers-reduced-motion: reduce)").matches || !matchMedia("(pointer: fine)").matches) return;
+      document.documentElement.classList.add("gsap-btn");
+
+      // one shared ticker loop eases every magnetic button toward its target each frame,
+      // so following and releasing both stay continuous (no tween restarts, no wobble)
+      var mags = [], running = false;
+      function tick() {
+        var dr = gsap.ticker.deltaRatio(), busy = false;
+        mags.forEach(function (m) {
+          var f = 1 - Math.pow(1 - m.lerp, dr);
+          var dx = m.tx - m.x, dy = m.ty - m.y;
+          if (Math.abs(dx) < 0.02 && Math.abs(dy) < 0.02 && m.tx === 0 && m.ty === 0) {
+            if (m.x !== 0 || m.y !== 0) { m.x = 0; m.y = 0; gsap.set(m.el, { x: 0, y: 0 }); }
+            return;
+          }
+          m.x += dx * f; m.y += dy * f; busy = true;
+          gsap.set(m.el, { x: m.x, y: m.y });
+        });
+        if (!busy) { gsap.ticker.remove(tick); running = false; }
+      }
+      function wake() { if (!running) { running = true; gsap.ticker.add(tick); } }
+      function magnet(el, k) {
+        var m = { el: el, tx: 0, ty: 0, x: 0, y: 0, lerp: 0.14 };
+        mags.push(m);
+        el.addEventListener("pointermove", function (e) {
+          var r = el.getBoundingClientRect();
+          m.tx = (e.clientX - (r.left + r.width / 2 - m.x)) * k;
+          m.ty = (e.clientY - (r.top + r.height / 2 - m.y)) * k;
+          m.lerp = 0.14; wake();
+        });
+        el.addEventListener("pointerleave", function () { m.tx = 0; m.ty = 0; m.lerp = 0.075; wake(); });
+      }
+      function press(el, depth) {
+        var down = false;
+        el.addEventListener("pointerdown", function () { down = true; gsap.to(el, { scale: depth, duration: 0.3, ease: "power3.out", overwrite: "auto" }); });
+        function up() { if (!down) return; down = false; gsap.to(el, { scale: 1, duration: 0.9, ease: "elastic.out(1, 0.7)", overwrite: "auto" }); }
+        el.addEventListener("pointerup", up); el.addEventListener("pointercancel", up); el.addEventListener("pointerleave", up);
+      }
+
+      // two-part buttons: magnet + press + arrow fly
+      document.querySelectorAll(".ib-btn").forEach(function (b) {
+        magnet(b, 0.18); press(b, 0.96);
+        var arrow = b.querySelector(".arrow");
+        if (!arrow) return;
+        b.addEventListener("pointerenter", function () {
+          gsap.timeline({ overwrite: "auto" })
+            .to(arrow, { x: 14, opacity: 0, duration: 0.3, ease: "power2.inOut" })
+            .set(arrow, { x: -15 })
+            .to(arrow, { x: 0, opacity: 1, duration: 0.75, ease: "expo.out" });
+        });
+      });
+
+      // nav CTA, back-to-top, menu button: lighter magnet / press
+      document.querySelectorAll(".cta-wipe, .to-top").forEach(function (b) { magnet(b, 0.15); press(b, 0.95); });
+      document.querySelectorAll(".menu-btn").forEach(function (b) { press(b, 0.92); });
+
+      // ghost button: circle fill from the pointer
+      document.querySelectorAll(".btn-ghost").forEach(function (b) {
+        magnet(b, 0.16); press(b, 0.96);
+        var fill = document.createElement("span");
+        fill.className = "gfill"; fill.setAttribute("aria-hidden", "true");
+        b.appendChild(fill);
+        function place(e) {
+          var r = b.getBoundingClientRect(), d = Math.hypot(r.width, r.height) * 2;
+          gsap.set(fill, { width: d, height: d, x: e.clientX - r.left - d / 2, y: e.clientY - r.top - d / 2 });
+        }
+        b.addEventListener("pointerenter", function (e) {
+          place(e);
+          gsap.fromTo(fill, { scale: 0 }, { scale: 1, duration: 1.0, ease: "expo.out", overwrite: "auto" });
+          gsap.to(b, { color: "#222F30", duration: 0.5, ease: "power2.out", overwrite: "auto" });
+        });
+        b.addEventListener("pointerleave", function (e) {
+          place(e);
+          gsap.to(fill, { scale: 0, duration: 0.75, ease: "power3.inOut", overwrite: "auto" });
+          gsap.to(b, { color: "#FFFFFF", duration: 0.6, ease: "power2.out", overwrite: "auto" });
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
