@@ -491,7 +491,7 @@
           <section class="grid grid-cols-3 overflow-hidden rounded-[24px] bg-ink text-white">
             <div class="p-5 sm:p-7"><p class="mono text-white/60">Videos</p><p id="n-videos" class="mt-4 text-[clamp(44px,5vw,72px)] leading-none tracking-[-0.05em]">9</p></div>
             <div class="border-l border-white/15 p-5 sm:p-7"><p class="mono text-white/60">Projects</p><p class="mt-4 text-[clamp(44px,5vw,72px)] leading-none tracking-[-0.05em]">1</p></div>
-            <div class="border-l border-white/15 p-5 sm:p-7"><p class="mono text-[#CEF79E]">Verified</p><p id="n-ver" class="mt-4 text-[clamp(44px,5vw,72px)] leading-none tracking-[-0.05em] text-[#CEF79E]">3</p></div>
+            <div class="border-l border-white/15 p-5 sm:p-7"><p class="mono text-[#CEF79E]">Arclent Verified</p><p id="n-ver" class="mt-4 text-[clamp(44px,5vw,72px)] leading-none tracking-[-0.05em] text-[#CEF79E]">3</p></div>
           </section>
         </div>
 
@@ -640,17 +640,17 @@
     let filter = "all";
     const say = (m) => { const t = document.createElement("p"); t.className = "mono fixed bottom-24 right-6 z-[90] rounded-[10px] bg-ink px-4 py-3 text-[#CEF79E]"; t.textContent = m; document.body.appendChild(t); setTimeout(() => t.remove(), 2200); };
     function render() {
-      $("filters").innerHTML = [["all", "All"], ["ver", "Verified"]].map(([k, l]) => `<button type="button" role="tab" data-f="${k}" aria-selected="${filter === k}" class="tab ${filter === k ? "on" : ""}">${l}</button>`).join("");
+      $("filters").innerHTML = [["all", "All"], ["ver", "Arclent Verified"]].map(([k, l]) => `<button type="button" role="tab" data-f="${k}" aria-selected="${filter === k}" class="tab ${filter === k ? "on" : ""}">${l}</button>`).join("");
       const list = WORK.filter((w) => filter === "all" || w.ver);
       $("work").innerHTML = list.map((w, i) => `<article class="card-in group overflow-hidden rounded-[20px] bg-white ${!w.ver && !w.pending ? "unv-card" : ""}" style="animation-delay:${i * 60}ms">
         <div class="relative aspect-[4/3] w-full overflow-hidden bg-ink"><div class="h-full w-full bg-cover bg-center transition-transform duration-[1200ms] group-hover:scale-105" style="background-image:url('${w.img}')"></div>
           ${w.pending && !w.ver ? '<span class="mono absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 text-ink"><i class="h-2 w-2 rounded-full bg-[#E0A93B]"></i>Verification pending</span>' : ""}
-          ${w.ver ? `<span class="mono absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-[#CEF79E] px-3 py-1.5 text-ink"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>Verified${w.c ? ` by ${esc(w.c)}` : ""}</span>` : ""}
-          ${!w.ver && !w.pending ? '<span class="unv-badge mono absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-error px-3 py-1.5 text-white"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>Not verified</span>' : ""}</div>
+          ${w.ver ? `<span class="mono absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-[#CEF79E] px-3 py-1.5 text-ink"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>Arclent Verified${w.c ? ` by ${esc(w.c)}` : ""}</span>` : ""}
+          ${!w.ver && !w.pending ? '<span class="unv-badge mono absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-error px-3 py-1.5 text-white"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>Not Arclent Verified</span>' : ""}</div>
         <div class="p-5"><div class="flex items-center gap-3"><span class="grid h-8 w-8 shrink-0 place-items-center rounded-full font-mono text-[12px] text-white" style="background:${COLORS[i % COLORS.length]}">${esc(w.c[0].toUpperCase())}</span><span class="min-w-0 truncate text-[18px] tracking-[-0.01em] text-ink">${esc(w.t)}</span></div>
           <div class="mono mt-4 flex items-center justify-between gap-3 border-t border-[#E7E8E1] pt-4 text-primary"><span class="inline-flex items-center gap-2">${EYE}${fmtViews(w.views == null ? (w.views = seedViews(w.t)) : w.views)} views</span>
             <span class="inline-flex items-center gap-2 text-ink"><span class="grid h-6 w-6 place-items-center rounded-[7px] text-white" style="background:${PLAT_BG[w.plat || "YouTube"] || PLAT_BG.Other}">${PLAT_LOGO[w.plat || "YouTube"] || PLAT_LOGO.Other}</span>${esc(w.plat || "YouTube")}</span></div>
-          ${!w.ver && !w.pending ? `<button type="button" data-getver="${esc(w.t)}" class="mono mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-[10px] bg-error text-white transition-colors hover:bg-[#B43333]"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>Get verified</button>` : ""}</div>
+          ${!w.ver && !w.pending ? `<button type="button" data-getver="${esc(w.t)}" class="mono mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-[10px] bg-error text-white transition-colors hover:bg-[#B43333]"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>Get Arclent Verified</button>` : ""}</div>
       </article>`).join("");
       $("empty").hidden = list.length > 0;
       $("n-videos").textContent = 6 + WORK.length; $("n-ver").textContent = 2 + WORK.filter((w) => w.ver).length;
@@ -696,8 +696,8 @@
     const spinner = '<span class="mx-auto mb-5 block h-14 w-14 rounded-full border-2 border-white/15" style="border-top-color:#CEF79E;animation:vfspin 900ms linear infinite"></span>';
     function openVerify(w) { vfWork = w; vfEmail = ""; CHANNELS.ig.handle = "@novagaming"; vfSkipped = false; vfMore = false; vfChoose(); $("vf-modal").hidden = false; }
     function vfChoose() {
-      $("vf-body").innerHTML = `<p class="mono text-[#CEF79E]">Get it verified</p>
-        <h2 id="vf-title" class="mt-2 text-[clamp(30px,3.6vw,48px)] font-normal leading-[1] tracking-[-0.04em]">How do you want to verify <span class="text-white/45">this work?</span></h2>
+      $("vf-body").innerHTML = `<p class="mono text-[#CEF79E]">Get Arclent Verified</p>
+        <h2 id="vf-title" class="mt-2 text-[clamp(30px,3.6vw,48px)] font-normal leading-[1] tracking-[-0.04em]">How do you want to get <span class="text-white/45">Arclent Verified?</span></h2>
         <p class="mt-4 max-w-[520px] text-[17px] leading-snug text-white/70">${esc(vfWork.t)} is in your portfolio. Verified work is confirmed by the person you worked with, and that is what recruiters trust.</p>
         <div class="mt-8 grid gap-3 sm:grid-cols-2">
           <button type="button" data-vf="manual" class="group flex min-h-[220px] flex-col rounded-[20px] bg-[#394546] p-6 text-left transition-colors duration-500 hover:bg-[#4A5859]">
