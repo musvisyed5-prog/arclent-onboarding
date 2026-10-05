@@ -34,6 +34,15 @@
 .hf-send{width:100%;height:56px;margin-top:20px;border:0;border-radius:12px;background:#CEF79E;color:#222F30;cursor:pointer;font-family:'Roboto Mono',monospace;font-size:12px;text-transform:uppercase;transition:background-color .4s}\
 .hf-send:hover{background:#fff}\
 .hf-err{margin-top:12px;color:#FF8A8A;display:none}\
+.hf-founder-row{margin-top:26px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.15);padding-top:22px}\
+.hf-founder-who{display:flex;align-items:center;gap:12px}\
+.hf-founder-av{display:block;width:48px;height:48px;border-radius:50%;background-size:cover;background-position:center;flex-shrink:0}\
+.hf-founder-name{font-size:17px;line-height:1.2;color:#fff}\
+.hf-founder-role{margin-top:2px;color:rgba(255,255,255,.55)}\
+.hf-cta{height:52px;padding:0 22px;border:0;border-radius:12px;background:#CEF79E;color:#222F30;font-size:16px;cursor:pointer;white-space:nowrap;transition:background-color .3s}\
+.hf-cta:hover{background:#fff}\
+.hf-back{margin-top:4px;color:rgba(255,255,255,.6);background:none;border:0;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:6px;padding:0}\
+.hf-back:hover{color:#fff}\
 .hf-toast{position:fixed;right:24px;bottom:104px;z-index:95;border-radius:10px;background:#222F30;color:#CEF79E;padding:12px 16px;font-family:'Roboto Mono',monospace;font-size:12px;text-transform:uppercase}\
 @media(max-width:640px){#hf-root{right:16px;bottom:16px}.hf-card{padding:24px}}\
 @media(prefers-reduced-motion:reduce){#hf-root .hf-row,#hf-main,.hf-card{transition:none!important;animation:none!important}}";
@@ -60,12 +69,13 @@
 
   function modal(html) {
     var m = document.createElement("div"); m.className = "hf-modal on"; m.setAttribute("role", "dialog"); m.setAttribute("aria-modal", "true");
-    m.innerHTML = '<div class="hf-card"><button type="button" class="hf-x2" aria-label="Close">' + CLOSEX + "</button>" + html + "</div>";
+    m.innerHTML = '<div class="hf-card"><button type="button" class="hf-x2" aria-label="Close">' + CLOSEX + '</button><div class="hf-body">' + html + "</div></div>";
     function close() { m.remove(); document.removeEventListener("keydown", esc); }
     function esc(e) { if (e.key === "Escape") close(); }
+    function setBody(h) { m.querySelector(".hf-body").innerHTML = h; }
     m.addEventListener("click", function (e) { if (e.target === m || e.target.closest(".hf-x2")) close(); });
     document.addEventListener("keydown", esc); document.body.appendChild(m);
-    return { el: m, close: close };
+    return { el: m, close: close, setBody: setBody };
   }
   function chips(m) {
     m.el.querySelectorAll(".hf-chip").forEach(function (c) {
@@ -83,18 +93,31 @@
       m.close(); toast("Thanks for your feedback");
     });
   }
-  function founder() {
+  var FOUNDER_NAME = "Idris Navarro", FOUNDER_AVATAR = "https://images.unsplash.com/photo-1741455620227-3b1c51e01419?crop=faces&fit=crop&w=100&h=100&q=80";
+
+  function slotsHTML() {
     var days = [], d = new Date(), fmt = new Intl.DateTimeFormat(undefined, { weekday: "short", day: "numeric", month: "short" });
     while (days.length < 3) { d = new Date(d.getTime() + 864e5); if (d.getDay() % 6) days.push(fmt.format(d)); }
-    var slots = ""; days.forEach(function (dd) { ["10:00 AM", "4:00 PM"].forEach(function (t, i) { slots += '<button type="button" class="hf-chip" aria-pressed="false">' + dd + " &middot; " + t + "</button>"; }); });
-    var m = modal('<p class="mono" style="color:#CEF79E">Talk with founder</p><h2>Book a short call</h2><p style="margin:14px 0 0;color:rgba(255,255,255,.7);font-size:17px;line-height:1.3">Questions, ideas or a problem you want solved? Pick a time and we will talk for 15 minutes.</p>' +
-      '<div class="hf-chips">' + slots + '</div><textarea placeholder="Anything we should know first? (optional)" aria-label="Note" style="min-height:90px"></textarea><p class="hf-err mono">Pick a time first.</p><button type="button" class="hf-send">Request call</button>');
-    chips(m);
+    var slots = ""; days.forEach(function (dd) { ["10:00 AM", "4:00 PM"].forEach(function (t) { slots += '<button type="button" class="hf-chip" aria-pressed="false">' + dd + " &middot; " + t + "</button>"; }); });
+    return '<button type="button" class="hf-back" id="hf-back">&larr; Back</button><p class="mono" style="color:#CEF79E;margin-top:14px">Book a call with ' + FOUNDER_NAME.split(" ")[0] + '</p><h2>Pick a time</h2><p style="margin:14px 0 0;color:rgba(255,255,255,.7);font-size:17px;line-height:1.3">Questions, ideas or a problem you want solved? Pick a time and you will talk for 15 minutes.</p>' +
+      '<div class="hf-chips">' + slots + '</div><textarea placeholder="Anything we should know first? (optional)" aria-label="Note" style="min-height:90px"></textarea><p class="hf-err mono">Pick a time first.</p><button type="button" class="hf-send">Request call</button>';
+  }
+  function showSlots(m) {
+    m.setBody(slotsHTML()); chips(m);
+    m.el.querySelector("#hf-back").addEventListener("click", function () { showIntro(m); });
     m.el.querySelector(".hf-send").addEventListener("click", function () {
       if (!m.el.querySelector('.hf-chip[aria-pressed="true"]')) { m.el.querySelector(".hf-err").style.display = "block"; return; }
       m.close(); toast("Call requested. We will confirm by email");
     });
   }
+  function introHTML() {
+    return '<p class="mono" style="color:#CEF79E">Talk with the founder</p><h2>Let’s improve your results on Arclent</h2>' +
+      '<p style="margin:14px 0 0;color:rgba(255,255,255,.7);font-size:17px;line-height:1.4">If something felt confusing, didn’t go as expected, or seemed missing while using Arclent, book a call with <b style="font-weight:400;color:#fff">' + FOUNDER_NAME.split(" ")[0] + "</b>, our co-founder, and share your experience so we can help and make things better.</p>" +
+      '<div class="hf-founder-row"><div class="hf-founder-who"><span class="hf-founder-av" style="background-image:url(\'' + FOUNDER_AVATAR + '\')"></span><div><p class="hf-founder-name">' + FOUNDER_NAME + '</p><p class="mono hf-founder-role">Co-founder</p></div></div>' +
+      '<button type="button" class="hf-cta" id="hf-book-cta">Book a Call with ' + FOUNDER_NAME.split(" ")[0] + "</button></div>";
+  }
+  function showIntro(m) { m.setBody(introHTML()); m.el.querySelector("#hf-book-cta").addEventListener("click", function () { showSlots(m); }); }
+  function founder() { var m = modal(introHTML()); m.el.querySelector("#hf-book-cta").addEventListener("click", function () { showSlots(m); }); }
 
   root.addEventListener("click", function (e) {
     var b = e.target.closest("[data-hf]");
@@ -103,4 +126,7 @@
   });
   scrim.addEventListener("click", function () { setOpen(false); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") setOpen(false); });
+
+  // Nav-bar "call" button (avatar + phone) present on every dashboard page opens the same booking modal.
+  document.addEventListener("click", function (e) { if (e.target.closest("[data-hf-call]")) founder(); });
 })();

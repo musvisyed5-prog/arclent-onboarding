@@ -64,6 +64,11 @@
     [data-reveal-group] > *:nth-child(5) { transition-delay: 280ms; }
     [data-reveal-group] > *:nth-child(6) { transition-delay: 350ms; }
 
+    .msg-tip { animation: msg-tip-in .18s ease-out; }
+    .msg-tip::before { content: ""; position: absolute; left: 20px; top: -6px; width: 12px; height: 12px; background: inherit; transform: rotate(45deg); border-radius: 2px; }
+    @keyframes msg-tip-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+    .hfc-dot { animation: hfc-pulse 1.8s ease-in-out infinite; }
+    @keyframes hfc-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
     @media (prefers-reduced-motion: reduce) {
       [data-reveal], [data-reveal-group] > * { opacity: 1 !important; transform: none !important; transition: none !important; }
     }
@@ -201,7 +206,7 @@
     .ib-btn:hover .ico .arrow, .ib-btn:focus-visible .ico .arrow { stroke: #CEF79E; }
     .ib-btn--light:hover .ico .shape { fill: #222F30; }
     .ib-btn:active { transform: scale(0.98); }
-    @media (prefers-reduced-motion: reduce) { .ib-btn .lbl, .ib-btn .corner path, .ib-btn .ico, .ib-btn .ico path { transition: none !important; } }
+    @media (prefers-reduced-motion: reduce) { .hfc-dot, .ib-btn .lbl, .ib-btn .corner path, .ib-btn .ico, .ib-btn .ico path { transition: none !important; } }
 
 
     /* smooth scrolling (Lenis) */
@@ -454,6 +459,7 @@
           </div>
 
           <div class="flex items-center gap-4">
+            <button type="button" data-hf-call class="group mr-1 inline-flex h-11 shrink-0 items-center gap-2.5 rounded-full bg-ink pl-1 pr-4 text-white shadow-[0_1px_3px_rgba(34,47,48,.12)] transition-all duration-300 hover:-translate-y-px hover:bg-[#2B3838] hover:shadow-[0_8px_20px_rgba(34,47,48,.22)]" aria-label="Talk with the founder, schedule a call"><span class="relative block h-9 w-9 shrink-0 overflow-hidden rounded-full ring-2 ring-white/15 transition-[box-shadow] duration-300 group-hover:ring-[#CEF79E]/40"><span class="block h-full w-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1741455620227-3b1c51e01419?crop=faces&fit=crop&w=100&h=100&q=80')"></span><span class="absolute -bottom-0.5 -right-0.5 grid h-4 w-4 place-items-center rounded-full bg-[#CEF79E] text-ink ring-2 ring-ink"><svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17.9 17.9 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z"/></svg></span></span><span class="hidden text-left leading-tight sm:block"><span class="mono flex items-center gap-1.5 text-[10px] tracking-[0.04em] text-[#CEF79E]"><i class="hfc-dot block h-1.5 w-1.5 rounded-full bg-[#CEF79E]"></i>Available now</span><span class="mt-0.5 block text-[13px] tracking-[-0.01em] text-white">Talk to founder</span></span></button>
             <a href="creator-notifications.html" class="text-primary transition-colors hover:text-ink" aria-label="Notifications">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg>
             </a>
@@ -516,6 +522,34 @@
     const avatar = (p, n = 64) => p.a ? `<span class="shrink-0 rounded-full bg-cover bg-center" style="width:${n}px;height:${n}px;background-image:url('${p.a}')"></span>` : `<span class="grid shrink-0 place-items-center rounded-full font-mono text-[20px] text-white" style="width:${n}px;height:${n}px;background:${p.c}">${esc(p.ini)}</span>`;
     const say = (m) => { const t = document.createElement("p"); t.className = "mono fixed bottom-24 right-6 z-[90] rounded-[10px] bg-ink px-4 py-3 text-[#CEF79E]"; t.textContent = m; document.body.appendChild(t); setTimeout(() => t.remove(), 2400); };
     const idx = Math.max(0, Math.min(people.length - 1, +new URLSearchParams(location.search).get("i") || 0)), p = people[idx];
+    const fmtN = (n) => n >= 1e6 ? (n / 1e6).toFixed(n >= 1e7 ? 0 : 1).replace(/\.0$/, "") + "M" : n >= 1e3 ? (n / 1e3).toFixed(n >= 1e5 ? 0 : 1).replace(/\.0$/, "") + "K" : String(n);
+    const hash = (s) => { let h = 7; for (const c of s) h = (h * 31 + c.charCodeAt(0)) >>> 0; return h; };
+    const ROLES2 = ["Thumbnail Designer", "Video Editor", "Short-form Editor", "Channel Manager", "Scriptwriter", "Community Manager"];
+    const LOCS = ["Nottingham, United Kingdom", "Austin, United States", "Lagos, Nigeria", "Manila, Philippines", "Toronto, Canada", "Warsaw, Poland", "Mumbai, India", "Berlin, Germany"];
+    const LANGS = ["English", "English, Spanish", "English, Tagalog", "English, Hindi", "English, Polish"];
+    const REVIEWERS = [["Kevin Campos", "Voice AI", 719], ["Mara Lindqvist", "Northwind Games", 1440000], ["Theo Baptiste", "Baptiste Studio", 3100], ["Priya Varma", "Varma Vlogs", 452], ["Noah Fischer", "Fischer Media", 58200]];
+    const REVIEW_TXT = ["She\u2019s been extremely helpful when editing my videos as well as supportive. Not only has she overdelivered on every brief, she flagged issues before we even noticed them.", "Turnaround was fast and the final cuts consistently beat our previous retention. Would hire again without hesitation.", "Communicated clearly at every step and matched our channel\u2019s tone perfectly. One of the best collaborators we\u2019ve worked with."];
+    const CLIENT_NAMES = ["MrBeast Gaming", "Voice AI", "Northwind Games", "Baptiste Studio", "Varma Vlogs", "Fischer Media", "Only Brilliant Chess", "Hoops", "NotJasonVlogs", "Kashmirvista"];
+    const VIDEO_TITLES = ["Ibadan\u2019s Best Food Tour! Friendliest City In Nigeria?", "24 Hours in Tokyo\u2019s Busiest District", "I Tried Every Burger in NYC", "We Built a House in 48 Hours"];
+    const VIDEO_THUMBS = ["https://images.unsplash.com/photo-1710777932534-2a58edf3603d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=500", "https://images.unsplash.com/photo-1585102651425-8caf7848e44b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=500", "https://images.unsplash.com/photo-1569572702917-86ac962faac4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=500", "https://images.unsplash.com/photo-1710974431911-81d457314c85?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=500"];
+    function buildExtra(p) {
+      const h = hash(p.n);
+      const months = 4 + (h % 30), d = new Date(); d.setMonth(d.getMonth() - months);
+      const revN = 1 + (h % 3);
+      const reviews = Array.from({ length: revN }, (_, i) => { const r = REVIEWERS[(h + i * 7) % REVIEWERS.length]; return { name: r[0], role: r[1], subs: r[2], text: REVIEW_TXT[(h + i * 3) % REVIEW_TXT.length] }; });
+      const vcN = 2 + (h % 4);
+      const vClients = Array.from({ length: vcN }, (_, i) => ({ name: CLIENT_NAMES[(h + i * 5) % CLIENT_NAMES.length], views: 400 + ((h + i * 131) % 1500000), photo: (h + i) % 3 === 0 ? PHOTOS[(h + i) % PHOTOS.length] : "", color: COLORS[(h + i) % COLORS.length] }));
+      const ccN = 1 + ((h >>> 2) % 3);
+      const claimed = Array.from({ length: ccN }, (_, i) => CLIENT_NAMES[(h + 10 + i * 3) % CLIENT_NAMES.length]);
+      return {
+        role: ROLES2[(h >>> 5) % ROLES2.length], loc: LOCS[h % LOCS.length], lang: LANGS[(h >>> 3) % LANGS.length],
+        expSince: d.toLocaleDateString(undefined, { month: "short", year: "numeric" }), verVideos: 3 + (h % 24),
+        reviews, vClients, claimed,
+        video: { title: VIDEO_TITLES[h % VIDEO_TITLES.length], views: 50000 + (h % 900000), likes: 500 + (h % 9000), thumb: VIDEO_THUMBS[h % VIDEO_THUMBS.length] },
+        fitLink: `https://www.playbook.com/s/${p.n.toLowerCase().replace(/[^a-z0-9]+/g, "")}/${(h % 0xffffffff).toString(16)}`,
+      };
+    }
+    const ex = buildExtra(p);
     const SKEY = `ja:${key}:${idx}`;
     try { const o = sessionStorage.getItem(SKEY); if (o) p.s = o; } catch (e) {}
     $("back").href = `job-applicants?id=${key}`; document.title = `arclent \u2014 Review ${p.n}`;
@@ -531,37 +565,103 @@
         </div>
         <p class="mt-5 max-w-[760px] text-[18px] leading-snug text-primary">Review the application, evaluate the candidate's responses and update their status for the ${esc(job.title)} position.</p>
 
-        <div class="mt-10 grid gap-4 lg:grid-cols-[1fr_1.1fr] lg:items-start">
-          <div class="flex flex-col gap-4">
-            <article class="rounded-[24px] bg-white p-6 sm:p-8">
-              <div class="flex items-center gap-4">${avatar(p)}<div class="min-w-0"><p class="text-[24px] leading-tight tracking-[-0.02em] text-ink">${esc(p.n)}</p><a href="#" class="mono mt-1 inline-block text-ink underline underline-offset-4 hover:text-primary">View portfolio</a></div></div>
-              <dl class="mt-6 grid grid-cols-2 gap-4 border-t border-[#E7E8E1] pt-5"><div><dt class="mono text-primary">Applied date</dt><dd class="mt-1.5 text-[16px] text-ink">${p.when}</dd></div><div><dt class="mono text-primary">Last update</dt><dd class="mt-1.5 text-[16px] text-ink">${p.upd}</dd></div></dl>
-            </article>
-            <article class="rounded-[24px] bg-white p-6 sm:p-8">
-              <p class="mono text-primary">Application answers</p>
-              <ul class="mt-4">${ANSWERS.map(([q, a], i) => `<li class="flex gap-5 border-t border-[#E7E8E1] py-4"><span class="mono w-7 shrink-0 pt-1 text-primary">0${i + 1}</span><span><span class="mono block text-primary">${esc(q)}</span><span class="mt-1 block text-[17px] text-ink">${esc(a)}</span></span></li>`).join("")}</ul>
-            </article>
-            <article class="flex items-center gap-4 rounded-[24px] bg-white p-5 sm:p-6"><span class="h-11 w-11 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('${job.av}')"></span><div class="min-w-0"><p class="text-[18px] text-ink">${esc(job.title)}</p><p class="mono mt-0.5 text-primary">${esc(job.co)} &middot; ${esc(job.pay)}</p></div><a href="job-details?id=${key}" class="mono tl ml-auto text-ink">View job</a></article>
-          </div>
-
-          <form id="ra-form" onsubmit="return false" class="relative overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-10">
+        <div class="mt-10">
+          <article class="relative overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-8 lg:p-10">
             <svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="rap" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#rap)"/></svg>
             <div class="relative">
-              <p class="mono text-[#CEF79E]">Application status</p>
-              <div id="st" class="mt-4 flex flex-wrap gap-2"></div>
-              <label class="lbl-f mt-8" for="msg">Message to candidate</label>
-              <textarea id="msg" rows="7" class="field" placeholder="Write a message (optional)"></textarea>
-              <div class="mt-6 flex flex-wrap gap-3">
-                <button type="submit" class="mono h-14 flex-1 rounded-[12px] bg-[#CEF79E] px-6 text-ink transition-colors hover:bg-white">Save changes</button>
-                <a href="creator-messages.html" class="grid h-14 w-14 place-items-center rounded-[12px] bg-[#394546] text-white transition-colors hover:bg-[#CEF79E] hover:text-ink" aria-label="Open messages">${ic('<path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/>', 20)}</a>
+              <div class="flex flex-wrap items-start justify-between gap-5">
+                <div class="flex items-center gap-4">${avatar(p, 64)}<div class="min-w-0"><p class="text-[22px] leading-tight tracking-[-0.01em]">${esc(p.n)}</p><p class="mono mt-1 text-white/55">${esc(ex.role)}</p></div></div>
+                <div class="flex flex-wrap gap-2">
+                  <div class="relative">
+                    <button type="button" id="msg-btn" class="mono inline-flex h-11 items-center gap-2 rounded-[10px] bg-[#394546] px-4 text-white transition-colors hover:bg-[#4A5859]">${ic('<path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/>', 16)}Message</button>
+                    <div id="msg-tip" role="tooltip" hidden class="msg-tip absolute left-0 top-[calc(100%+10px)] z-20 w-64 rounded-[12px] bg-[#1c2627]/95 p-4 text-[14px] leading-snug text-white shadow-xl backdrop-blur-sm">In the Undecided step, messaging applicants is unavailable. Please select applicants to proceed and begin messaging.</div>
+                  </div>
+                  <button type="button" data-act="Rejected" class="mono h-11 rounded-[10px] px-4 outline outline-1 -outline-offset-1 outline-[#FF8A8A]/60 text-[#FF8A8A] transition-colors hover:bg-[#FF8A8A] hover:text-ink">${ic('<path d="M18 6 6 18"/><path d="m6 6 12 12"/>', 15)} Reject</button>
+                  <button type="button" data-act="Shortlisted" class="mono h-11 rounded-[10px] bg-[#CEF79E] px-4 text-ink transition-colors hover:bg-white">${ic('<path d="m5 12 5 5 9-10"/>', 15)} Shortlist</button>
+                </div>
+              </div>
+
+              <div class="mt-8 border-t border-white/15 pt-6">
+                <p class="mono text-white/50">General info</p>
+                <dl class="mt-4 flex flex-wrap gap-x-8 gap-y-3 text-[15px] text-white/80">
+                  <div class="flex items-center gap-2">${ic('<rect width="20" height="14" x="2" y="6" rx="2"/><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>')}Verified Experience: ${esc(ex.expSince)}</div>
+                  <div class="flex items-center gap-2">${ic('<path d="m10 8 5 4-5 4V8Z"/><rect width="20" height="16" x="2" y="4" rx="2.5"/>')}${ex.verVideos} Verified Videos</div>
+                  <div class="flex items-center gap-2">${ICON.loc}${esc(ex.loc)}</div>
+                  <div class="flex items-center gap-2">${ic('<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10Z"/>')}${esc(ex.lang)}</div>
+                </dl>
+              </div>
+
+              <div class="mt-8 border-t border-white/15 pt-6">
+                <p class="mono text-white/50">Client Reviews (${ex.reviews.length})</p>
+                <div class="mt-4 overflow-hidden rounded-[18px] bg-[#2F3C3D] p-5 sm:p-6">
+                  <div id="rv-body"></div>
+                  <div class="mt-5 flex items-center justify-between">
+                    <button type="button" id="rv-prev" class="grid h-9 w-9 place-items-center rounded-full bg-[#394546] text-white/70 transition-colors hover:bg-[#CEF79E] hover:text-ink" aria-label="Previous review">${ic('<path d="m15 18-6-6 6-6"/>', 16)}</button>
+                    <div id="rv-dots" class="flex items-center gap-2"></div>
+                    <button type="button" id="rv-next" class="grid h-9 w-9 place-items-center rounded-full bg-[#394546] text-white/70 transition-colors hover:bg-[#CEF79E] hover:text-ink" aria-label="Next review">${ic('<path d="m9 18 6-6-6-6"/>', 16)}</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-8 border-t border-white/15 pt-6">
+                <p class="mono text-white/50">Verified Clients (${ex.vClients.length})</p>
+                <div class="mt-4 flex flex-wrap gap-3">${ex.vClients.map((c) => `<div class="w-16 text-center"><span class="relative mx-auto block h-16 w-16 overflow-hidden rounded-full ring-2 ring-[#FF8A8A]/70">${c.photo ? `<span class="block h-full w-full bg-cover bg-center" style="background-image:url('${c.photo}')"></span>` : `<span class="grid h-full w-full place-items-center font-mono text-[18px] text-white" style="background:${c.color}">${esc(c.name[0])}</span>`}</span><span class="mono mt-1.5 block truncate text-[11px] text-white/60">${fmtN(c.views)}</span></div>`).join("")}</div>
+              </div>
+
+              <div class="mt-6">
+                <button type="button" id="claimed-toggle" class="mono inline-flex items-center gap-2 text-white/70 transition-colors hover:text-white">Claimed Clients (${ex.claimed.length})<span id="claimed-chevron" class="transition-transform">${ic('<path d="m6 9 6 6 6-6"/>', 14)}</span></button>
+                <div id="claimed-list" hidden class="mt-3 flex flex-wrap gap-2">${ex.claimed.map((n) => `<span class="mono rounded-full border border-white/25 px-3 py-1.5 text-white/75">${esc(n)}</span>`).join("")}</div>
+              </div>
+
+              <div class="mt-8 border-t border-white/15 pt-6">
+                <p class="text-[17px] leading-snug">Link a YouTube video of your own work that best fits with this job:</p>
+                <a href="#" class="mt-4 flex gap-4 rounded-[16px] bg-[#2F3C3D] p-3 transition-colors hover:bg-[#394546]">
+                  <span class="h-20 w-32 shrink-0 overflow-hidden rounded-[10px] bg-cover bg-center sm:h-24 sm:w-40" style="background-image:url('${ex.video.thumb}')"></span>
+                  <div class="min-w-0 py-0.5"><div class="flex items-center gap-2">${yt}<span class="mono text-white/60">${fmtN(ex.video.views)} views &middot; ${fmtN(ex.video.likes)} likes</span></div>
+                    <p class="mt-2 text-[15px] leading-snug">${esc(ex.video.title)}</p></div>
+                </a>
+              </div>
+
+              <div class="mt-8 border-t border-white/15 pt-6">
+                <p class="text-[17px] leading-snug">Briefly describe why you think you are a good fit for this job:</p>
+                <p class="mono mt-3 break-all text-[#9FD6FF]">&quot;${esc(ex.fitLink)}&quot;</p>
+              </div>
+
+              <div class="mt-8 border-t border-white/15 pt-6">
+                <p class="mono text-white/50">Application status</p>
+                <div id="st" class="mt-4 flex flex-wrap gap-2"></div>
+                <label class="lbl-f mt-6" for="msg">Message to candidate</label>
+                <textarea id="msg" rows="4" class="field" placeholder="Write a message (optional)"></textarea>
+                <form id="ra-form" onsubmit="return false"><button type="submit" class="mono mt-4 h-12 rounded-[12px] bg-[#CEF79E] px-6 text-ink transition-colors hover:bg-white">Save changes</button></form>
               </div>
             </div>
-          </form>
+          </article>
         </div>`;
-      drawStatus();
+      drawReviews(); drawClaimed(); drawStatus(); updateMsgBtn();
     }
     const drawStatus = () => { $("st").innerHTML = STATUSES.map((x) => `<button type="button" data-st="${x}" aria-pressed="${status === x}" class="mono h-11 rounded-[10px] px-4 transition-colors ${status === x ? "bg-[#CEF79E] text-ink" : "bg-[#394546] text-white/85 hover:bg-[#4A5859]"}">${x}</button>`).join(""); };
-    document.addEventListener("click", (e) => { const b = e.target.closest("[data-st]"); if (b) { status = b.dataset.st; drawStatus(); } });
+    const canMessage = () => status === "Rejected" || status === "Shortlisted";
+    const updateMsgBtn = () => { const b = $("msg-btn"); if (b) b.classList.toggle("opacity-40", !canMessage()); if (canMessage() && $("msg-tip")) $("msg-tip").hidden = true; };
+    const BLUE_TICK = '<svg width="14" height="14" viewBox="0 0 24 24" fill="#1D9BF0" stroke="#fff" stroke-width="1.6"><path d="M12 2 14.9 3.9 18.4 3.6 19.4 7 22.6 8.6 21.4 12 22.6 15.4 19.4 16 18.4 20.4 14.9 20.1 12 22 9.1 20.1 5.6 20.4 4.6 16 1.4 15.4 2.6 12 1.4 8.6 4.6 7 5.6 3.6 9.1 3.9Z"/><path d="m8.2 12.2 2.6 2.6 5-5.2" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    let rvi = 0;
+    function drawReviews() {
+      const r = ex.reviews[rvi], long = r.text.length > 140;
+      $("rv-body").innerHTML = `<div class="flex items-center gap-3">${avatar({ ini: r.name[0], c: COLORS[hash(r.name) % COLORS.length] }, 36)}<div class="min-w-0"><p class="flex items-center gap-1.5 text-[16px] leading-tight">${esc(r.name)}<span class="mono text-white/50">| ${esc(r.role)}</span><span class="rv-tick">${BLUE_TICK}</span></p><p class="mono mt-0.5 text-white/50">${fmtN(r.subs)} subscribers</p></div></div>
+        <p class="mt-3 text-[15px] leading-snug text-white/80">${esc(r.text.slice(0, long ? 140 : r.text.length))}${long ? `... <button type="button" id="rv-more" class="mono text-[#CEF79E] underline underline-offset-4">Show more</button>` : ""}</p>`;
+      $("rv-dots").innerHTML = ex.reviews.map((rv, i) => `<button type="button" data-rvi="${i}" aria-label="Review ${i + 1}" class="h-7 w-7 overflow-hidden rounded-full ${i === rvi ? "ring-2 ring-[#CEF79E]" : "opacity-50"}">${avatar({ ini: rv.name[0], c: COLORS[hash(rv.name) % COLORS.length] }, 28)}</button>`).join("");
+      $("rv-prev").disabled = ex.reviews.length < 2; $("rv-next").disabled = ex.reviews.length < 2;
+    }
+    function drawClaimed() { $("claimed-toggle").addEventListener("click", () => { const open = $("claimed-list").hidden; $("claimed-list").hidden = !open; $("claimed-chevron").style.transform = open ? "rotate(180deg)" : ""; }); }
+    document.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-st]"); if (b) { status = b.dataset.st; drawStatus(); updateMsgBtn(); }
+      const act = e.target.closest("[data-act]"); if (act) { status = act.dataset.act; drawStatus(); p.s = status; p.upd = "just now"; try { sessionStorage.setItem(SKEY, status); } catch (x) {} draw(); say(`Marked as ${status}`); }
+      const rvd = e.target.closest("[data-rvi]"); if (rvd) { rvi = +rvd.dataset.rvi; drawReviews(); }
+      if (e.target.closest("#rv-prev")) { rvi = (rvi - 1 + ex.reviews.length) % ex.reviews.length; drawReviews(); }
+      if (e.target.closest("#rv-next")) { rvi = (rvi + 1) % ex.reviews.length; drawReviews(); }
+      if (e.target.closest("#rv-more")) { $("rv-body").querySelector("p.mt-3").textContent = ex.reviews[rvi].text; }
+      if (e.target.closest("#msg-btn")) { if (canMessage()) location.href = "creator-messages.html"; else $("msg-tip").hidden = !$("msg-tip").hidden; }
+      else if ($("msg-tip") && !$("msg-tip").hidden && !e.target.closest("#msg-tip")) $("msg-tip").hidden = true;
+    });
     document.addEventListener("submit", (e) => {
       if (e.target.id !== "ra-form") return;
       const m = $("msg").value.trim(); p.s = status; p.upd = "just now"; try { sessionStorage.setItem(SKEY, status); } catch (x) {}

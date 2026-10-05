@@ -315,10 +315,8 @@
     .seg button { padding: 13px 18px; font: 400 12px/1 "Roboto Mono", monospace; text-transform: uppercase; color: #4D5757; transition: background-color .5s, color .5s; }
     .seg button:hover { color: #222F30; } .seg button.on { background: #222F30; color: #fff; }
     .seg.sm button { padding: 10px 12px; white-space: nowrap; }
-    .step-card { transition: background-color .7s cubic-bezier(.16,1,.3,1), color .7s cubic-bezier(.16,1,.3,1); }
-    .step-card:hover { background: #222F30; color: #fff; }
-    .step-card:hover .seg button.on { background: #CEF79E; color: #222F30; }
-    .step-card:hover .sc-num { color: #CEF79E; } .step-card:hover .sc-ico { background: #CEF79E; color: #222F30; } .step-card:hover .sc-body { color: rgba(255,255,255,.72); }
+    .step-row:hover .sc-num { color: #CEF79E; }
+    .step-row .seg button.on { background: #CEF79E; color: #222F30; }
   </style>
 </head>
 <body class="min-h-screen bg-surface font-sans text-ink">
@@ -640,7 +638,13 @@
         </div>
       </div>
 
-      <div class="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4" id="cards"></div>
+      <div class="relative mt-12 overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-10 lg:p-12">
+        <svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="hiwp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#hiwp)"/></svg>
+        <div class="relative">
+          <div class="absolute left-7 top-0 bottom-0 w-px bg-white/15" aria-hidden="true"></div>
+          <div id="cards"></div>
+        </div>
+      </div>
 
       <div class="mt-4" id="shortcut" data-reveal>
         <div class="relative overflow-hidden rounded-[20px] bg-ink p-6 text-white sm:p-8">
@@ -1727,17 +1731,15 @@
       const cardsEl = document.getElementById("cards");
       cardsEl.innerHTML = j.steps
         .map((s, i) => `
-          <article class="step-card group flex min-h-[320px] flex-col rounded-[20px] bg-white p-6 sm:p-7">
-            <div class="flex items-start justify-between">
-              <span class="sc-num mono text-primary">0${i + 1}</span>
-              <span class="sc-ico grid h-12 w-12 place-items-center rounded-[12px] bg-[#F3F3F1] text-ink transition-colors duration-700">${s.icon}</span>
-            </div>
-            <div class="mt-16">
-              <h3 class="text-[clamp(24px,2.2vw,30px)] font-normal leading-[1.08] tracking-[-0.03em]">${s.title}</h3>
+          <article class="step-row group relative flex gap-5 pb-10 last:pb-0 sm:gap-7">
+            <span class="sc-ico relative z-10 grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#2F3C3D] text-[#CEF79E] ring-4 ring-ink transition-colors duration-700 group-hover:bg-[#CEF79E] group-hover:text-ink">${s.icon}</span>
+            <div class="min-w-0 flex-1 pt-1.5">
+              <span class="sc-num mono text-white/40">Step 0${i + 1}</span>
+              <h3 class="mt-2 text-[clamp(22px,2.4vw,34px)] font-normal leading-[1.1] tracking-[-0.03em]">${s.title}</h3>
               ${s.special === "verify" ? `
                 <div class="seg sm mt-4" id="verifyToggle"><button data-v="we" class="${verifyMode === "we" ? "on" : ""}">We reach out</button><button data-v="you" class="${verifyMode === "you" ? "on" : ""}">You reach out</button></div>
-                <p class="sc-body mt-4 text-[16px] leading-snug text-primary transition-colors duration-700">${verifyCopy[verifyMode]}</p>` : `
-                <p class="sc-body mt-4 text-[16px] leading-snug text-primary transition-colors duration-700">${s.body}</p>`}
+                <p class="sc-body mt-4 max-w-[560px] text-[16px] leading-snug text-white/70 transition-colors duration-700">${verifyCopy[verifyMode]}</p>` : `
+                <p class="sc-body mt-4 max-w-[560px] text-[16px] leading-snug text-white/70 transition-colors duration-700">${s.body}</p>`}
             </div>
           </article>`)
         .join("");

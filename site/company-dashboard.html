@@ -66,6 +66,8 @@
 
     .rv-badge { display: inline-flex; vertical-align: -3px; margin-left: 6px; }
     .rv-badge svg { display: block; }
+    .hfc-dot { animation: hfc-pulse 1.8s ease-in-out infinite; }
+    @keyframes hfc-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
     @media (prefers-reduced-motion: reduce) {
       [data-reveal], [data-reveal-group] > * { opacity: 1 !important; transform: none !important; transition: none !important; }
     }
@@ -203,7 +205,7 @@
     .ib-btn:hover .ico .arrow, .ib-btn:focus-visible .ico .arrow { stroke: #CEF79E; }
     .ib-btn--light:hover .ico .shape { fill: #222F30; }
     .ib-btn:active { transform: scale(0.98); }
-    @media (prefers-reduced-motion: reduce) { .ib-btn .lbl, .ib-btn .corner path, .ib-btn .ico, .ib-btn .ico path { transition: none !important; } }
+    @media (prefers-reduced-motion: reduce) { .hfc-dot, .ib-btn .lbl, .ib-btn .corner path, .ib-btn .ico, .ib-btn .ico path { transition: none !important; } }
 
 
     /* smooth scrolling (Lenis) */
@@ -429,6 +431,7 @@
           </div>
 
           <div class="flex items-center gap-4">
+            <button type="button" data-hf-call class="group mr-1 inline-flex h-11 shrink-0 items-center gap-2.5 rounded-full bg-ink pl-1 pr-4 text-white shadow-[0_1px_3px_rgba(34,47,48,.12)] transition-all duration-300 hover:-translate-y-px hover:bg-[#2B3838] hover:shadow-[0_8px_20px_rgba(34,47,48,.22)]" aria-label="Talk with the founder, schedule a call"><span class="relative block h-9 w-9 shrink-0 overflow-hidden rounded-full ring-2 ring-white/15 transition-[box-shadow] duration-300 group-hover:ring-[#CEF79E]/40"><span class="block h-full w-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1741455620227-3b1c51e01419?crop=faces&fit=crop&w=100&h=100&q=80')"></span><span class="absolute -bottom-0.5 -right-0.5 grid h-4 w-4 place-items-center rounded-full bg-[#CEF79E] text-ink ring-2 ring-ink"><svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17.9 17.9 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z"/></svg></span></span><span class="hidden text-left leading-tight sm:block"><span class="mono flex items-center gap-1.5 text-[10px] tracking-[0.04em] text-[#CEF79E]"><i class="hfc-dot block h-1.5 w-1.5 rounded-full bg-[#CEF79E]"></i>Available now</span><span class="mt-0.5 block text-[13px] tracking-[-0.01em] text-white">Talk to founder</span></span></button>
             <a href="#" class="text-primary transition-colors hover:text-ink" aria-label="Notifications">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg>
             </a>

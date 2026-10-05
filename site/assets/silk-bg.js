@@ -86,7 +86,7 @@
     var cv = document.createElement("canvas");
     cv.style.cssText = "position:absolute;inset:0;width:100%;height:100%;display:block";
     el.appendChild(cv);
-    var gl = cv.getContext("webgl", { antialias: false, alpha: false });
+    var gl = cv.getContext("webgl", { antialias: false, alpha: false, preserveDrawingBuffer: true });
     if (!gl) return;
     function sh(type, src) {
       var s = gl.createShader(type);
@@ -149,10 +149,18 @@
       gl.drawArrays(gl.TRIANGLES, 0, 3);
       if (visible && !still) raf = requestAnimationFrame(frame);
     }
+    var ioReady = false;
     new IntersectionObserver(function (es) {
+      // the observer's first callback is just an async snapshot of initial layout, not a real
+      // "scrolled away" event; it can land mid-transform and report false-negative. Only react
+      // to intersection changes that happen after that first delivery.
+      if (!ioReady) { ioReady = true; return; }
       visible = es[0].isIntersecting;
       if (visible && !raf) raf = requestAnimationFrame(frame);
     }).observe(el);
+    document.addEventListener("visibilitychange", function () {
+      if (!document.hidden && visible && !raf) raf = requestAnimationFrame(frame);
+    });
     raf = requestAnimationFrame(frame);
   };
 })();
