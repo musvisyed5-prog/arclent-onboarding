@@ -403,6 +403,16 @@
       <div data-panel="overview" class="hidden"><p id="talent-about" class="max-w-[760px] border-t border-[#C9CBBE] pt-8 text-[clamp(18px,1.6vw,23px)] leading-[1.3] text-primary"></p></div>
       <div data-panel="videos"><div id="video-grid" class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"></div></div>
     </section>
+
+    <section class="mt-24" data-r id="clients-section"><div id="client-grid"></div></section>
+
+    <section class="mt-24" data-r id="reviews-section">
+      <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
+        <h2 class="flex items-start text-[clamp(44px,6vw,84px)] font-normal leading-none tracking-[-0.04em] text-ink">Reviews<sup id="review-count" class="ml-2 mt-1 font-mono text-[12px] tracking-normal text-primary">0</sup></h2>
+        <p class="max-w-[360px] text-[16px] leading-snug text-primary">Written only by the Arclent Verified clients above, after the collaboration was confirmed.</p>
+      </div>
+      <div id="review-grid" class="grid grid-cols-1 gap-4 md:grid-cols-2"></div>
+    </section>
   </main>
 
   <script src="assets/vendor/gsap.min.js"></script>
@@ -670,6 +680,54 @@
       $("panel-title").firstChild.textContent = btn.dataset.tab === "videos" ? "Videos" : "About";
       $("video-count").style.display = btn.dataset.tab === "videos" ? "" : "none";
     }));
+
+    // ---------- verified clients + reviews (written by the verified clients) ----------
+    (function () {
+      var hashS = function (s) { var h = 7; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; };
+      var fmtK = function (n) { return n >= 1e6 ? (n / 1e6).toFixed(n >= 1e7 ? 0 : 1).replace(/\.0$/, "") + "M" : n >= 1e3 ? (n / 1e3).toFixed(n >= 1e5 ? 0 : 1).replace(/\.0$/, "") + "K" : String(n); };
+      var POOL = [["Only Brilliant Chess", "Elena Rossi", 1240000, "YouTube", "1615751596346-9df8006e5381"], ["Northwind Games", "Mara Lindqvist", 1440000, "YouTube", "1699899657675-1003c7d28f2d"], ["Meridian Originals", "Jonas Weber", 102000000, "YouTube", "1595152772835-219674b2a8a6"], ["Skyline Studios", "Aiko Tanaka", 20000000, "YouTube", "1645107914072-6f16b732f224"], ["Fischer Media", "Noah Fischer", 58200, "YouTube", "1734830268394-6c4a1f165af1"], ["Baptiste Studio", "Theo Baptiste", 3100, "Twitch", "1748028313767-67d97c23a0d0"], ["Voice AI", "Kevin Campos", 719, "YouTube", "1701878133751-8279cb13aabd"], ["Varma Vlogs", "Priya Varma", 452, "YouTube", "1650213235809-37ceda7b8b60"]];
+      var TEXT = ["{n} has been extremely helpful and supportive. Not only did the work arrive on time, every brief was overdelivered and issues were flagged before we even noticed them.", "Turnaround was fast and the final cuts consistently beat our previous retention. Would hire {n} again without hesitation.", "{n} communicated clearly at every step and matched our channel\u2019s tone perfectly. One of the best collaborators we\u2019ve worked with.", "Reliable, creative and easy to work with. Our audience noticed the difference straight away.", "Great ideas, clean execution and zero hand-holding needed. {n} is now part of our regular team."];
+      var COL = ["#4D5757", "#c9932e", "#2E7FB5", "#24A47F", "#7c3aed", "#8B5E52"];
+      var TIERS = [["reddiamond", 1e8, "assets/badge-reddiamond-new.gif", "Red Diamond"], ["diamond", 1e7, "assets/badge-diamond-new.gif", "Diamond"], ["gold", 1e6, "assets/badge-gold-new.gif", "Gold"], ["silver", 1e5, "assets/badge-silver-new.png", "Silver"], ["bronze", 0, "assets/badge-bronze-new.png", "Bronze"]];
+      var tierOf = function (n) { for (var i = 0; i < TIERS.length; i++) if (n >= TIERS[i][1]) return TIERS[i]; return TIERS[4]; };
+      var TICK = '<svg width="15" height="15" viewBox="0 0 24 24" fill="#1D9BF0" stroke="#fff" stroke-width="1.6" aria-label="Arclent Verified" class="shrink-0"><path d="M12 2 14.9 3.9 18.4 3.6 19.4 7 22.6 8.6 21.4 12 22.6 15.4 19.4 16 18.4 20.4 14.9 20.1 12 22 9.1 20.1 5.6 20.4 4.6 16 1.4 15.4 2.6 12 1.4 8.6 4.6 7 5.6 3.6 9.1 3.9Z"/><path d="m8.2 12.2 2.6 2.6 5-5.2" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      var star = function (on) { return '<svg width="16" height="16" viewBox="0 0 24 24" fill="' + (on ? "#222F30" : "none") + '" stroke="' + (on ? "#222F30" : "#C9CBBE") + '" stroke-width="1.5" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg>'; };
+      var e = function (t) { return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;"); };
+      var PER = 4;
+      window.renderClientsReviews = function (talentName, clientsEl, reviewsEl, reviewCountEl) {
+        var h = hashS(talentName), first = talentName.split(" ")[0], n = 5 + (h % 4);
+        var list = []; for (var i = 0; i < n; i++) { var p = POOL[(h + i) % POOL.length]; list.push({ client: p[0], owner: p[1], subs: p[2], plat: p[3], img: "https://images.unsplash.com/photo-" + p[4] + "?crop=faces&fit=crop&w=200&h=200&q=80", tier: tierOf(p[2]), color: COL[(h + i) % COL.length], text: TEXT[(h + i) % TEXT.length].replace(/\{n\}/g, first), rating: 4 + ((h + i) % 2) }); }
+
+        // ---- verified clients panel (paged carousel) ----
+        var pages = Math.ceil(list.length / PER), page = 0;
+        var counts = {}; list.forEach(function (c) { counts[c.tier[0]] = (counts[c.tier[0]] || 0) + 1; });
+        var chips = TIERS.filter(function (t) { return counts[t[0]]; }).map(function (t) { return '<span class="inline-flex items-center gap-1.5" title="' + t[3] + '"><img src="' + t[2] + '" alt="' + t[3] + ' tier" class="h-5 w-5 object-contain" /><span class="mono text-white/80">' + counts[t[0]] + '</span></span>'; }).join("");
+        clientsEl.innerHTML = '<div class="relative overflow-hidden rounded-[20px] bg-ink p-5 text-white sm:p-6">' +
+          '<div class="flex flex-wrap items-center justify-between gap-3"><p class="flex items-center gap-2 text-[17px] tracking-[-0.01em]">' + list.length + ' Verified Clients' + TICK + '</p><div class="flex flex-wrap items-center gap-4">' + chips + '</div></div>' +
+          '<div id="cl-page" class="mt-6"></div><div id="cl-dots" class="mt-5 flex justify-center gap-2"></div></div>';
+        var pageEl = clientsEl.querySelector("#cl-page"), dotsEl = clientsEl.querySelector("#cl-dots");
+        var drawPage = function () {
+          pageEl.innerHTML = '<div class="grid grid-cols-2 gap-y-8 sm:grid-cols-4 sm:divide-x sm:divide-white/10">' + list.slice(page * PER, page * PER + PER).map(function (c) {
+            return '<div class="flex flex-col items-center px-3 text-center"><span class="block h-20 w-20 rounded-full bg-cover bg-center ring-2 ring-white/20" style="background-color:' + c.color + ';background-image:url(&quot;' + c.img + '&quot;)" role="img" aria-label="' + e(c.owner) + '"></span>' +
+              '<p class="mt-4 flex max-w-full items-center justify-center gap-1.5 text-[16px] leading-tight"><span class="truncate">' + e(c.client) + '</span>' + TICK + '</p><p class="mt-1 text-[14px] text-white/70">' + fmtK(c.subs) + ' subscribers</p></div>';
+          }).join("") + '</div>';
+          dotsEl.innerHTML = pages > 1 ? Array.apply(null, Array(pages)).map(function (_, i) { return '<button type="button" data-p="' + i + '" aria-label="Page ' + (i + 1) + '" class="h-1.5 w-1.5 rounded-full ' + (i === page ? "bg-white" : "bg-white/30") + '"></button>'; }).join("") : "";
+        };
+        dotsEl.addEventListener("click", function (ev) { var b = ev.target.closest("[data-p]"); if (b) { page = +b.dataset.p; drawPage(); } });
+        drawPage();
+
+        // ---- reviews: written by the first four verified clients ----
+        var rv = list.slice(0, 4);
+        reviewsEl.innerHTML = rv.map(function (c) {
+          return '<article class="flex flex-col rounded-[20px] bg-white p-6"><div class="flex gap-1" aria-label="' + c.rating + ' out of 5">' + [1, 2, 3, 4, 5].map(function (k) { return star(k <= c.rating); }).join("") + '</div>' +
+            '<p class="mt-4 flex-1 text-[17px] leading-snug text-ink">\u201c' + e(c.text) + '\u201d</p>' +
+            '<div class="mt-6 flex items-center gap-3 border-t border-[#E7E8E1] pt-4"><span class="block h-10 w-10 shrink-0 rounded-full bg-cover bg-center" style="background-color:' + c.color + ';background-image:url(&quot;' + c.img + '&quot;)" role="img" aria-label="' + e(c.owner) + '"></span>' +
+            '<div class="min-w-0"><p class="flex items-center gap-1.5 text-[16px] leading-tight text-ink">' + e(c.owner) + TICK + '</p><p class="mono mt-0.5 text-primary">' + e(c.client) + ' &middot; Arclent Verified client</p></div></div></article>';
+        }).join("");
+        if (reviewCountEl) reviewCountEl.textContent = rv.length;
+      };
+    })();
+    renderClientsReviews(talent.name, $("client-grid"), $("review-grid"), $("review-count"));
   </script>
   <script>
     (function () {

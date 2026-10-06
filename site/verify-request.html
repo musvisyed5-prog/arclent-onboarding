@@ -203,6 +203,9 @@
     .ib-btn:hover .ico .arrow, .ib-btn:focus-visible .ico .arrow { stroke: #CEF79E; }
     .ib-btn--light:hover .ico .shape { fill: #222F30; }
     .ib-btn:active { transform: scale(0.98); }
+    .field { width: 100%; min-height: 54px; border: 0; border-radius: 12px; background: #394546; padding: 14px 18px; color: #fff; font-size: 16px; font-family: inherit; resize: vertical; outline: 1px solid transparent; transition: outline-color .4s; color-scheme: dark; }
+    .field::placeholder { color: rgba(255,255,255,.4); }
+    .field:focus { outline: 1px solid #CEF79E; }
     @media (prefers-reduced-motion: reduce) { .hfc-dot, .ib-btn .lbl, .ib-btn .corner path, .ib-btn .ico, .ib-btn .ico path { transition: none !important; } }
 
 
@@ -490,6 +493,11 @@
             </section>
             <section class="relative overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-8">
               <p class="mono text-[#CEF79E]">Action</p>
+              <div class="mt-5 border-t border-white/15 pt-5">
+                <p class="mono text-white/60">Leave a review <span class="text-white/35">(optional)</span></p>
+                <div id="vr-stars" class="mt-3 flex gap-1.5"></div>
+                <textarea id="vr-review" rows="4" placeholder="What was it like to work with this talent? It appears on their profile." class="field mt-3"></textarea>
+              </div>
               <div id="act" class="mt-5 flex flex-wrap gap-3">
                 <button id="ok" type="button" class="mono h-14 flex-1 rounded-[12px] bg-[#CEF79E] px-6 text-ink transition-colors hover:bg-white">Confirm verification</button>
                 <button id="no" type="button" class="mono h-14 rounded-[12px] px-6 text-[#FF8A8A] outline outline-1 -outline-offset-1 outline-[#FF8A8A]/50 transition-colors hover:bg-[#FF8A8A] hover:text-ink">Deny</button>
@@ -505,8 +513,13 @@
     const $ = (i) => document.getElementById(i);
     const say = (m) => { const t = document.createElement("p"); t.className = "mono fixed bottom-24 right-6 z-40 rounded-[10px] bg-ink px-4 py-3 text-[#CEF79E]"; t.textContent = m; document.body.appendChild(t); setTimeout(() => t.remove(), 2200); };
     const id = new URLSearchParams(location.search).get("id") || "p1";
-    const done = (k, m) => { try { sessionStorage.setItem("vc-result", k + ":" + id); } catch (e) {} say(m); setTimeout(() => { location.href = "verification-center"; }, 700); };
-    $("ok").addEventListener("click", () => done("verified", "Submission verified"));
+    let rating = 0;
+    const STAR = (on) => `<svg width="26" height="26" viewBox="0 0 24 24" fill="${on ? "#CEF79E" : "none"}" stroke="${on ? "#CEF79E" : "rgba(255,255,255,.35)"}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg>`;
+    const drawStars = () => { $("vr-stars").innerHTML = [1, 2, 3, 4, 5].map((n) => `<button type="button" data-star="${n}" aria-label="${n} star${n > 1 ? "s" : ""}" aria-pressed="${n <= rating}" class="transition-transform hover:scale-110">${STAR(n <= rating)}</button>`).join(""); };
+    drawStars();
+    $("vr-stars").addEventListener("click", (e) => { const b = e.target.closest("[data-star]"); if (b) { rating = +b.dataset.star; drawStars(); } });
+    const done = (k, m) => { try { sessionStorage.setItem("vc-result", k + ":" + id); const t = $("vr-review").value.trim(); if (k === "verified" && (t || rating)) sessionStorage.setItem("vc-review:" + id, JSON.stringify({ rating, text: t })); } catch (e) {} say(m); setTimeout(() => { location.href = "verification-center"; }, 700); };
+    $("ok").addEventListener("click", () => done("verified", ($("vr-review").value.trim() || rating) ? "Submission verified, review posted" : "Submission verified"));
     $("no").addEventListener("click", () => done("denied", "Request denied"));
   </script>
   <script>
