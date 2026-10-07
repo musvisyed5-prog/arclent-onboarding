@@ -491,7 +491,7 @@
       RVerify.set("creator", n > 0);
       $("rv-banner").className = "mono mt-6 inline-flex max-w-[720px] items-center gap-3 rounded-[14px] px-4 py-3 " + (n > 0 ? "bg-[#EAF6FF] text-ink" : "bg-white text-primary outline outline-1 -outline-offset-1 outline-ink/15");
       $("rv-banner").innerHTML = n > 0
-        ? RVerify.badge() + " Recruiters see your blue checkmark on this profile and every job you post."
+        ? RVerify.badge() + " Recruiters see your verified badge on this profile and every job you post."
         : "No platform connected yet \u2014 job posts and your profile go out without a checkmark until you connect one.";
       $("tiles").innerHTML = PLATFORMS.map((p, i) => `<article class="fadein relative flex min-h-[320px] flex-col overflow-hidden rounded-[24px] p-6 sm:p-8 ${p.on ? "bg-ink text-white" : "bg-white text-ink"}" style="animation-delay:${i * 70}ms">${p.on ? PATTERN : ""}
         <div class="relative flex items-start justify-between gap-3"><span class="grid h-14 w-14 place-items-center rounded-[16px] text-white" style="background:${p.color}">${LOGO[p.key]}</span>

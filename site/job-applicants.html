@@ -593,11 +593,12 @@
     const avatar = (p, n = 48) => p.a ? `<span class="h-[${n}px] w-[${n}px] shrink-0 rounded-full bg-cover bg-center" style="width:${n}px;height:${n}px;background-image:url('${p.a}')"></span>` : `<span class="grid shrink-0 place-items-center rounded-full font-mono text-[15px] text-white" style="width:${n}px;height:${n}px;background:${p.c}">${esc(p.ini)}</span>`;
     const filtered = () => { const q = state.q.trim().toLowerCase(); return people.map((p, i) => ({ ...p, i })).filter((p) => (!state.status || p.s === state.status) && (!q || p.n.toLowerCase().includes(q))); };
 
+    const PORT = ["leo-jean", "freddy", "cauan-silva", "calibun", "temitope-ojomo", "mosvie-media", "miv", "dieamond-epic", "gabriel"], portfolio = (i) => "talent-details?id=" + PORT[Math.abs(+i || 0) % PORT.length];
     function renderList() {
       const list = filtered(), pages = Math.max(1, Math.ceil(list.length / PER)); state.page = Math.min(state.page, pages);
       const slice = list.slice((state.page - 1) * PER, state.page * PER);
       $("ja-list").innerHTML = slice.length ? slice.map((p, k) => `<li class="row-in grid gap-4 border-t border-[#DADCD0] px-1 py-6 sm:grid-cols-[1fr_auto] sm:items-center sm:px-3" style="animation-delay:${k * 30}ms">
-          <div class="flex items-start gap-4">${avatar(p)}<div class="min-w-0"><a href="review-applicant?id=${key}&i=${p.i}" class="block text-[19px] leading-tight tracking-[-0.01em] text-ink underline-offset-4 hover:underline">${esc(p.n)}</a><a href="#" class="mono mt-1 inline-block text-ink underline underline-offset-4 transition-colors hover:text-primary">View portfolio</a>
+          <div class="flex items-start gap-4">${avatar(p)}<div class="min-w-0"><a href="review-applicant?id=${key}&i=${p.i}" class="block text-[19px] leading-tight tracking-[-0.01em] text-ink underline-offset-4 hover:underline">${esc(p.n)}</a><a href="${portfolio(p.i)}" class="mono mt-1 inline-block text-ink underline underline-offset-4 transition-colors hover:text-primary">View portfolio</a>
             <p class="mt-3 text-[15px] leading-relaxed text-primary"><span class="text-ink">Applied date:</span> ${p.when}<br><span class="text-ink">Last update:</span> ${p.upd}</p></div></div>
           <div class="flex flex-col gap-3 sm:items-end"><p class="mono flex items-center gap-3 text-primary">Status <span class="rounded-[8px] px-3 py-1.5 ${PILL[p.s]}">${p.s}</span></p>
             <div class="flex items-center gap-2"><a href="review-applicant?id=${key}&i=${p.i}" class="mono grid h-12 place-items-center rounded-[12px] bg-ink px-6 text-white transition-colors hover:bg-[#CEF79E] hover:text-ink">Review</a><a href="creator-messages.html" class="grid h-12 w-12 place-items-center rounded-[12px] bg-[#CEF79E] text-ink transition-colors hover:bg-ink hover:text-[#CEF79E]" aria-label="Message ${esc(p.n)}">${ICON.msg}</a></div></div></li>`).join("")
@@ -615,7 +616,7 @@
       $("rv-body").innerHTML = `<p class="mono text-primary">Application for ${esc(job.title)}</p>
         <dl class="mt-4 divide-y divide-[#E7E8E1] rounded-[16px] bg-[#F7F7F5] px-5">${Object.entries(ANSWERS).slice(1, 4).map(([q, a]) => `<div class="py-4"><dt class="mono text-primary">${esc(q)}</dt><dd class="mt-1.5 text-[17px] text-ink">${esc(a)}</dd></div>`).join("")}</dl>
         <p class="mt-6 text-[16px] leading-snug text-primary">Every arclent profile is confirmed by the people they worked with. Open the portfolio to see verified projects.</p>
-        <a href="#" class="mono mt-4 inline-block text-ink underline underline-offset-4">View portfolio</a>`;
+        <a href="${portfolio(p.i)}" class="mono mt-4 inline-block text-ink underline underline-offset-4">View portfolio</a>`;
       drawActions(); $("rv-modal").hidden = false; document.body.style.overflow = "hidden";
     }
     const drawActions = () => { const p = people[reviewing]; $("rv-actions").innerHTML = STATUSES.map((s) => `<button type="button" data-set="${s}" class="mono h-11 rounded-[10px] px-4 transition-colors ${p.s === s ? "bg-ink text-white" : "bg-[#F3F3F1] text-ink hover:bg-[#CEF79E]"}">${s}</button>`).join(""); };

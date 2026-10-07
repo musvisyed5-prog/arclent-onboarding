@@ -348,6 +348,7 @@
     @keyframes fseg-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
     @media (prefers-reduced-motion: reduce) { .fseg.cur i { animation: none; transform: scaleX(1); } .fslide { transition: none; } }
     .co-row { border-top: 1px solid #C9CBBE; }
+    .rv-tip{position:relative;display:inline-flex;vertical-align:middle;cursor:help}.rv-tip::after{content:attr(data-tip);position:absolute;left:-8px;bottom:calc(100% + 8px);transform:translate(0,4px);white-space:nowrap;padding:8px 12px;border-radius:8px;background:#222F30;color:#fff;font:400 12px/1.2 'Roboto Mono',monospace;text-transform:none;letter-spacing:0;pointer-events:none;opacity:0;transition:opacity .2s,transform .2s;z-index:80}.rv-tip:hover::after,.rv-tip:focus-visible::after{opacity:1;transform:translate(0,0)}
     #pg-title-mask { overflow: clip; padding-bottom: .08em; margin-bottom: -.08em; }
   </style>
 </head>
@@ -500,15 +501,16 @@
 
   <script>
     var JOBS = [
-      { id: "jess-longform-video-editor", av: "https://images.unsplash.com/photo-1710777932534-2a58edf3603d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200", title: "Longform YouTube Video Editor \u2014 Pop Culture & Commentary Channel", co: "Jess", img: "https://images.unsplash.com/photo-1710777932534-2a58edf3603d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800", desc: "Looking for a fast-paced, highly communicative Video Editor for a growing YouTube pop culture and commentary channel (650k+ views this past year).", exp: "1 year", pay: "Not disclosed", type: "Contract", loc: "Remote, US", tags: ["Video Editing", "Youtube", "Premiere Pro"], feat: true },
+      { id: "jess-longform-video-editor", ver: true, av: "https://images.unsplash.com/photo-1710777932534-2a58edf3603d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200", title: "Longform YouTube Video Editor \u2014 Pop Culture & Commentary Channel", co: "Jess", img: "https://images.unsplash.com/photo-1710777932534-2a58edf3603d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800", desc: "Looking for a fast-paced, highly communicative Video Editor for a growing YouTube pop culture and commentary channel (650k+ views this past year).", exp: "1 year", pay: "Not disclosed", type: "Contract", loc: "Remote, US", tags: ["Video Editing", "Youtube", "Premiere Pro"], feat: true },
       { id: "kashmirvista-video-editor", feat: true, img: "https://images.unsplash.com/photo-1585102651425-8caf7848e44b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900", av: "https://images.unsplash.com/photo-1585102651425-8caf7848e44b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200", title: "Video editor", co: "Kashmirvista", desc: "Have to edit videos for my podcast youtube channel", exp: "1 - 10 years", pay: "5000 - 10000 / month", type: "Contract", loc: "Srinagar", tags: ["Capcut", "Adobe", "Canva"], days: 44 },
-      { id: "social-media-intern", title: "Social Media Intern", co: "Arclent AI", desc: "We are seeking a highly motivated Social Media Intern who possesses a strong passion for social media.", exp: "Freshers", pay: "Not disclosed", type: "Full time", loc: "Remote, India", tags: [], days: 9 },
+      { id: "social-media-intern", ver: true, title: "Social Media Intern", co: "Arclent AI", desc: "We are seeking a highly motivated Social Media Intern who possesses a strong passion for social media.", exp: "Freshers", pay: "Not disclosed", type: "Full time", loc: "Remote, India", tags: [], days: 9 },
       { id: "notjasonvlogs-video-editor", feat: true, img: "https://images.unsplash.com/photo-1710974431911-81d457314c85?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900", av: "https://images.unsplash.com/photo-1710974431911-81d457314c85?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200", title: "Video Editor", co: "NotJasonVlogs", desc: "We are seeking a skilled and creative Vertical Video Editor to assist in producing engaging YouTube Shorts and TikToks.", exp: "Freshers", pay: "Not disclosed", type: "Part time", loc: "Remote", tags: [] },
-      { id: "arclent-ai-video-editor", title: "Video Editor", co: "Arclent AI", desc: "We are seeking a skilled editor who can effortlessly align with our existing dynamic and entertaining editing style, while elevating it to new heights.", exp: "2.5 years", pay: "Not disclosed", type: "Full time", loc: "Remote", tags: [] },
-      { id: "hoops-video-editor", feat: true, img: "https://images.unsplash.com/photo-1569572702917-86ac962faac4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900", av: "https://images.unsplash.com/photo-1569572702917-86ac962faac4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200", title: "Video Editor", co: "Hoops", desc: "We are seeking a highly skilled and passionate individual with a deep understanding of basketball culture to join our team.", exp: "Freshers", pay: "600 - 700 / month", type: "Full time", loc: "Remote", tags: ["Basketball", "Sports", "Long Form"] }
+      { id: "arclent-ai-video-editor", ver: true, title: "Video Editor", co: "Arclent AI", desc: "We are seeking a skilled editor who can effortlessly align with our existing dynamic and entertaining editing style, while elevating it to new heights.", exp: "2.5 years", pay: "Not disclosed", type: "Full time", loc: "Remote", tags: [] },
+      { id: "hoops-video-editor", ver: true, feat: true, img: "https://images.unsplash.com/photo-1569572702917-86ac962faac4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900", av: "https://images.unsplash.com/photo-1569572702917-86ac962faac4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200", title: "Video Editor", co: "Hoops", desc: "We are seeking a highly skilled and passionate individual with a deep understanding of basketball culture to join our team.", exp: "Freshers", pay: "600 - 700 / month", type: "Full time", loc: "Remote", tags: ["Basketball", "Sports", "Long Form"] }
     ];
     var ARROW = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>';
     function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+    function vbadge(on, n) { n = n || 18; return on ? '<span class="rv-tip" tabindex="0" data-tip="This recruiter is Arclent Verified"><img src="assets/recruiter-verified.png" alt="This recruiter is Arclent Verified" class="shrink-0" style="width:' + n + 'px;height:' + n + 'px;object-fit:contain" /></span>' : ""; }
     function avatar(j, n) {
       var st = 'width:' + n + 'px;height:' + n + 'px';
       return j.av ? '<span class="shrink-0 rounded-full bg-cover bg-center" style="' + st + ';background-image:url(&quot;' + j.av + '&quot;)"></span>'
@@ -518,7 +520,7 @@
     function skills(j) { return j.tags.map(function (t) { return '<span class="skill">' + esc(t) + "</span>"; }).join(""); }
     function card(j, i) {
       return '<a href="job-details?id=' + j.id + '" class="jcard jc-0"><div class="flex items-start justify-between gap-4"><span class="chip">' + esc(j.type) + '</span><span class="mono opacity-60">' + (j.days ? j.days + " days left" : esc(j.co)) + '</span></div>' +
-        '<div class="mt-7 flex items-center gap-3">' + avatar(j, 40) + '<span class="mono">' + esc(j.co) + "</span></div>" +
+        '<div class="mt-7 flex items-center gap-3">' + avatar(j, 40) + '<span class="mono inline-flex items-center gap-1.5">' + esc(j.co) + vbadge(j.ver) + "</span></div>" +
         '<h3 class="mt-5 text-[clamp(22px,2.2vw,30px)] font-normal leading-[1.1] tracking-[-0.02em]"><span class="tl">' + esc(j.title) + '</span></h3>' +
         '<p class="mt-4 line-clamp-3 max-w-[520px] text-[15px] leading-snug opacity-70">' + esc(j.desc) + '</p>' +
         '<div class="mt-5 flex flex-wrap gap-x-2 gap-y-1">' + meta(j) + '</div>' +
@@ -530,7 +532,7 @@
       return '<a href="job-details?id=' + j.id + '" class="fslide feat relative grid gap-8 overflow-hidden rounded-[24px] bg-white p-4 pb-20 sm:p-6 sm:pb-20 lg:grid-cols-[5fr_6fr] lg:pb-6" data-i="' + n + '"' + (n ? ' tabindex="-1" aria-hidden="true"' : "") + '>' +
         '<div class="fimg aspect-[4/3] w-full rounded-[16px] bg-cover bg-center lg:aspect-auto lg:min-h-[420px]" style="background-image:url(&quot;' + j.img + '&quot;)"></div>' +
         '<div class="flex flex-col p-1 lg:p-4"><div class="flex items-start justify-between gap-4"><span class="chip">Featured role</span><span class="mono text-primary">' + esc(j.type) + '</span></div>' +
-        '<div class="mt-8 flex items-center gap-3">' + avatar(j, 40) + '<span class="mono text-ink">' + esc(j.co) + '</span></div>' +
+        '<div class="mt-8 flex items-center gap-3">' + avatar(j, 40) + '<span class="mono inline-flex items-center gap-1.5 text-ink">' + esc(j.co) + vbadge(j.ver, 20) + '</span></div>' +
         '<h2 class="mt-6 text-[clamp(28px,3.2vw,46px)] font-normal leading-[1.08] tracking-[-0.025em] text-ink"><span class="tl">' + esc(j.title) + '</span></h2>' +
         '<p class="mt-5 max-w-[520px] text-[17px] leading-snug text-primary">' + esc(j.desc) + '</p>' +
         '<div class="mt-5 flex flex-wrap gap-x-2 gap-y-1 text-ink">' + meta(j) + '</div>' + (j.tags.length ? '<div class="mt-4 flex flex-wrap gap-2 text-ink">' + skills(j) + '</div>' : "") +
@@ -582,7 +584,7 @@
     JOBS.forEach(function (j) { cos[j.co] = (cos[j.co] || 0) + 1; if (!COJ[j.co] || (j.av && !COJ[j.co].av)) COJ[j.co] = j; });
     document.getElementById("co-count").textContent = Object.keys(cos).length;
     document.getElementById("co-list").innerHTML = Object.keys(cos).map(function (c) {
-      return '<li class="co-row"><button type="button" data-co="' + esc(c) + '" class="group flex w-full items-center gap-4 py-5 text-left">' + avatar(COJ[c], 44) + '<span class="flex-1 text-[clamp(20px,2vw,26px)] leading-tight tracking-[-0.01em]">' + esc(c) + '</span><span class="mono text-primary">' + cos[c] + (cos[c] > 1 ? " open roles" : " open role") + '</span><span class="grid h-10 w-[52px] place-items-center rounded-[14px] bg-[#CEF79E] text-ink transition-all duration-500 group-hover:rounded-[18px]">' + ARROW + "</span></button></li>";
+      return '<li class="co-row"><button type="button" data-co="' + esc(c) + '" class="group flex w-full items-center gap-4 py-5 text-left">' + avatar(COJ[c], 44) + '<span class="flex flex-1 items-center gap-2 text-[clamp(20px,2vw,26px)] leading-tight tracking-[-0.01em]">' + esc(c) + vbadge(JOBS.some(function (x) { return x.co === c && x.ver; }), 22) + '</span><span class="mono text-primary">' + cos[c] + (cos[c] > 1 ? " open roles" : " open role") + '</span><span class="grid h-10 w-[52px] place-items-center rounded-[14px] bg-[#CEF79E] text-ink transition-all duration-500 group-hover:rounded-[18px]">' + ARROW + "</span></button></li>";
     }).join("");
     document.getElementById("co-list").addEventListener("click", function (e) {
       var b = e.target.closest("[data-co]"); if (!b) return;
@@ -818,5 +820,6 @@
       });
     })();
   </script>
+  <script src="assets/promo-banner.js" defer></script>
 </body>
 </html>

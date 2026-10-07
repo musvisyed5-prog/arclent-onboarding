@@ -487,6 +487,7 @@
     const MSG = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg>';
     const PATTERN = '<svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="apx" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#apx)"/></svg>';
     let cur = 0;
+    const PORT = ["leo-jean", "freddy", "cauan-silva", "calibun", "temitope-ojomo", "mosvie-media", "miv", "dieamond-epic", "gabriel"], portfolio = (i) => "talent-details?id=" + PORT[Math.abs(+i || 0) % PORT.length];
     function render() {
       $("jobs").innerHTML = JOBS.map((j, i) => `<button type="button" data-j="${i}" aria-pressed="${cur === i}" class="flex items-center gap-4 rounded-[20px] p-4 text-left transition-colors duration-500 ${cur === i ? "bg-ink text-white" : "bg-white text-ink hover:bg-[#EEF3E6]"}">
         <span class="h-12 w-12 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('${HOOPS}')"></span>
@@ -495,7 +496,7 @@
       const j = JOBS[cur], base = "job-applicants?id=" + j.id;
       const people = j.people.length ? j.people.map(([n, st, idx]) => `<li class="group flex items-center gap-4 border-t border-[#E7E8E1] py-4 first:border-t-0">
           <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-ink font-mono text-[13px] uppercase text-[#CEF79E]">${esc(n[0])}</span>
-          <span class="min-w-0 flex-1"><span class="block truncate text-[18px] tracking-[-0.01em] text-ink">${esc(n)}</span><span class="mt-1.5 block"><span class="mono rounded-[8px] px-2.5 py-1 ${PILL[st]}">${st}</span></span></span>
+          <span class="min-w-0 flex-1"><span class="block truncate text-[18px] tracking-[-0.01em] text-ink">${esc(n)}</span><span class="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1"><span class="mono rounded-[8px] px-2.5 py-1 ${PILL[st]}">${st}</span><a href="${portfolio(idx)}" class="mono text-ink underline underline-offset-4 transition-colors hover:text-primary">View portfolio</a></span></span>
           <a href="review-applicant?id=${j.id}&i=${idx}" class="mono inline-flex h-10 items-center rounded-[10px] bg-ink px-4 text-white transition-colors hover:bg-[#CEF79E] hover:text-ink">Review</a>
           <a href="creator-messages.html" class="grid h-10 w-10 place-items-center rounded-[10px] bg-[#CEF79E] text-ink transition-colors hover:bg-ink hover:text-[#CEF79E]" aria-label="Message ${esc(n)}">${MSG}</a></li>`).join("")
         : `<li class="mono rounded-[14px] border border-dashed border-[#C9CBBE] px-4 py-14 text-center text-primary/70">No applicants yet. Candidates who apply will show up here.</li>`;
