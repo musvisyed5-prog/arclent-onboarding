@@ -11,4 +11,5 @@
   function badge(title) { var t = title || "This recruiter is Arclent Verified"; return '<span class="rv-badge rv-tip" tabindex="0" data-tip="' + t + '"><img src="assets/recruiter-verified.png" alt="' + t + '" /></span>'; }
   function mount(el, role) { if (el && get(role)) el.insertAdjacentHTML("beforeend", badge()); }
   w.RVerify = { get: get, set: set, badge: badge, mount: mount };
+  if (!w.__tierTip) { var sc = document.createElement("script"); sc.src = "assets/tier-tip.js"; document.head.appendChild(sc); }   // shared hover tooltip
 })(window);

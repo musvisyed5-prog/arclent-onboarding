@@ -358,6 +358,7 @@
     @media (prefers-reduced-motion: reduce) { .step-in, .row-in { animation: none; } }
     [hidden] { display: none !important; }  /* the hidden attribute must win over utility display classes (flex) */
   </style>
+  <script src="assets/applicant-meta.js"></script>
 </head>
 <body class="min-h-screen bg-surface font-sans text-ink">
   <div id="sidebar-backdrop" class="fixed inset-0 z-30 hidden bg-black/30"></div>
@@ -559,10 +560,11 @@
       return out;
     }
     const people = job.people ? buildPeople() : [];
+    people.forEach((p, i) => { p.a = AM.photo(i); });
     people.forEach((p, i) => { try { const o = sessionStorage.getItem(`ja:${key}:${i}`); if (o) { p.s = o; p.upd = "just now"; } } catch (e) {} });
     const STATUSES = ["Applied", "Under Review", "Shortlisted", "Rejected"];
     const PILL = { "Under Review": "bg-[#E6F4D3] text-[#3C6B1E]", Rejected: "bg-[#F9DDDD] text-[#B93A3A]", Applied: "bg-[#EEEEEE] text-ink", Shortlisted: "bg-[#CEF79E] text-ink" };
-    const state = { q: "", status: "", page: 1 }, PER = 10;
+    const state = { q: "", status: "", loc: "", tier: "", ver: "", page: 1 }, PER = 10;
 
     // ---------- page ----------
     const meta = () => [["exp", job.exp], ["pay", job.pay], ["type", job.type], ["loc", job.loc]].map(([k, v]) => `<span class="mono flex items-center gap-2 text-primary">${ICON[k]}${esc(v)}</span>`).join("");
@@ -585,23 +587,32 @@
           <select id="ja-status" class="h-11 shrink-0 cursor-pointer rounded-[10px] bg-[#F3F3F1] px-3 font-mono text-[12px] uppercase text-ink focus:outline-none" aria-label="Filter by status"><option value="">Status</option>${STATUSES.map((x) => `<option>${x}</option>`).join("")}</select>
           <button type="submit" class="grid h-11 w-12 shrink-0 place-items-center rounded-[10px] bg-ink text-white transition-colors hover:bg-[#CEF79E] hover:text-ink" aria-label="Search">${ICON.search}</button>
         </form>
+        <div id="ja-filters" class="mx-auto mt-3 flex max-w-[980px] flex-wrap items-center gap-2">
+          <select id="ja-loc" class="ja-f h-10 cursor-pointer rounded-[10px] bg-white px-3 font-mono text-[12px] uppercase text-ink focus:outline-none" aria-label="Filter by location"><option value="">Location</option>${AM.locs.map((x) => `<option>${x}</option>`).join("")}</select>
+          <select id="ja-tier" class="ja-f h-10 cursor-pointer rounded-[10px] bg-white px-3 font-mono text-[12px] uppercase text-ink focus:outline-none" aria-label="Filter by badge tier"><option value="">Badge tier</option>${AM.tiers.map((x) => `<option value="${x}">${AM.names[x]}</option>`).join("")}</select>
+          <select id="ja-ver" class="ja-f h-10 cursor-pointer rounded-[10px] bg-white px-3 font-mono text-[12px] uppercase text-ink focus:outline-none" aria-label="Filter by verification"><option value="">Verification</option><option value="1">Arclent Verified</option><option value="0">Not verified</option></select>
+          <button type="button" id="ja-clear" class="mono h-10 rounded-[10px] px-3 text-primary underline underline-offset-4 hover:text-ink" hidden>Clear filters</button>
+          <span id="ja-count" class="mono ml-auto text-primary"></span>
+        </div>
         <ol id="ja-list" class="mt-8 border-b border-[#DADCD0]"></ol>
         <nav id="ja-pager" class="mt-10 flex justify-center" aria-label="Pagination"></nav>`;
       const box = $("ja-status"); if (state.status) box.value = state.status;
     }
 
     const avatar = (p, n = 48) => p.a ? `<span class="h-[${n}px] w-[${n}px] shrink-0 rounded-full bg-cover bg-center" style="width:${n}px;height:${n}px;background-image:url('${p.a}')"></span>` : `<span class="grid shrink-0 place-items-center rounded-full font-mono text-[15px] text-white" style="width:${n}px;height:${n}px;background:${p.c}">${esc(p.ini)}</span>`;
-    const filtered = () => { const q = state.q.trim().toLowerCase(); return people.map((p, i) => ({ ...p, i })).filter((p) => (!state.status || p.s === state.status) && (!q || p.n.toLowerCase().includes(q))); };
+    const filtered = () => { const q = state.q.trim().toLowerCase(); return people.map((p, i) => ({ ...p, i })).filter((p) => (!state.status || p.s === state.status) && (!state.loc || AM.loc(p.i) === state.loc) && (!state.tier || AM.tier(p.i) === state.tier) && (!state.ver || String(+AM.verified(p.i)) === state.ver) && (!q || p.n.toLowerCase().includes(q))); };
 
-    const PORT = ["leo-jean", "freddy", "cauan-silva", "calibun", "temitope-ojomo", "mosvie-media", "miv", "dieamond-epic", "gabriel"], portfolio = (i) => "talent-details?id=" + PORT[Math.abs(+i || 0) % PORT.length];
+    const PORT = ["leo-jean", "freddy", "cauan-silva", "calibun", "temitope-ojomo", "mosvie-media", "miv", "dieamond-epic", "gabriel"], portfolio = (i) => "talent-details?id=" + PORT[Math.abs(+i || 0) % PORT.length], TB = (i) => AM.badge(i);
     function renderList() {
       const list = filtered(), pages = Math.max(1, Math.ceil(list.length / PER)); state.page = Math.min(state.page, pages);
+      $("ja-count").textContent = list.length + " of " + people.length + " applicants"; $("ja-clear").hidden = !(state.loc || state.tier || state.ver || state.status);
       const slice = list.slice((state.page - 1) * PER, state.page * PER);
       $("ja-list").innerHTML = slice.length ? slice.map((p, k) => `<li class="row-in grid gap-4 border-t border-[#DADCD0] px-1 py-6 sm:grid-cols-[1fr_auto] sm:items-center sm:px-3" style="animation-delay:${k * 30}ms">
-          <div class="flex items-start gap-4">${avatar(p)}<div class="min-w-0"><a href="review-applicant?id=${key}&i=${p.i}" class="block text-[19px] leading-tight tracking-[-0.01em] text-ink underline-offset-4 hover:underline">${esc(p.n)}</a><a href="${portfolio(p.i)}" class="mono mt-1 inline-block text-ink underline underline-offset-4 transition-colors hover:text-primary">View portfolio</a>
+          <div class="flex items-start gap-4">${avatar(p)}<div class="min-w-0"><a href="review-applicant?id=${key}&i=${p.i}" class="block text-[19px] leading-tight tracking-[-0.01em] text-ink underline-offset-4 hover:underline">${esc(p.n)}${TB(p.i)}</a><a href="${portfolio(p.i)}" class="mono mt-1 inline-block text-ink underline underline-offset-4 transition-colors hover:text-primary">View portfolio</a>
+            <p class="mono mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-primary"><span>${AM.loc(p.i)}</span></p>
             <p class="mt-3 text-[15px] leading-relaxed text-primary"><span class="text-ink">Applied date:</span> ${p.when}<br><span class="text-ink">Last update:</span> ${p.upd}</p></div></div>
           <div class="flex flex-col gap-3 sm:items-end"><p class="mono flex items-center gap-3 text-primary">Status <span class="rounded-[8px] px-3 py-1.5 ${PILL[p.s]}">${p.s}</span></p>
-            <div class="flex items-center gap-2"><a href="review-applicant?id=${key}&i=${p.i}" class="mono grid h-12 place-items-center rounded-[12px] bg-ink px-6 text-white transition-colors hover:bg-[#CEF79E] hover:text-ink">Review</a><a href="creator-messages.html" class="grid h-12 w-12 place-items-center rounded-[12px] bg-[#CEF79E] text-ink transition-colors hover:bg-ink hover:text-[#CEF79E]" aria-label="Message ${esc(p.n)}">${ICON.msg}</a></div></div></li>`).join("")
+            <div class="flex items-center gap-2"><button type="button" data-sl="${p.i}" aria-pressed="${p.s === "Shortlisted"}" class="mono inline-flex h-12 items-center gap-2 rounded-[12px] px-4 transition-colors ${p.s === "Shortlisted" ? "bg-[#CEF79E] text-ink" : "bg-[#F3F3F1] text-ink hover:bg-[#CEF79E]"}"><svg width="15" height="15" viewBox="0 0 24 24" fill="${p.s === "Shortlisted" ? "currentColor" : "none"}" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>${p.s === "Shortlisted" ? "Shortlisted" : "Shortlist"}</button><a href="review-applicant?id=${key}&i=${p.i}" class="mono grid h-12 place-items-center rounded-[12px] bg-ink px-6 text-white transition-colors hover:bg-[#CEF79E] hover:text-ink">Review</a><a href="creator-messages.html" class="grid h-12 w-12 place-items-center rounded-[12px] bg-[#CEF79E] text-ink transition-colors hover:bg-ink hover:text-[#CEF79E]" aria-label="Message ${esc(p.n)}">${ICON.msg}</a></div></div></li>`).join("")
         : `<li class="mono px-4 py-16 text-center text-primary/70">${people.length ? "No applicants match that search." : "No applicants yet. Candidates who apply to this job will show up here."}</li>`;
       const btn = (label, page, dis, aria) => `<button type="button" data-page="${page}" ${dis ? "disabled" : ""} aria-label="${aria}" class="mono grid h-12 min-w-12 place-items-center px-4 text-ink transition-colors hover:bg-[#CEF79E] disabled:opacity-30 disabled:hover:bg-transparent">${label}</button>`;
       $("ja-pager").innerHTML = people.length ? `<div class="inline-flex overflow-hidden rounded-[12px] bg-white">${btn("&laquo;", 1, state.page === 1, "First page")}${btn("&lsaquo;", state.page - 1, state.page === 1, "Previous page")}<span class="mono grid h-12 place-items-center border-x border-[#E7E8E1] px-5 text-ink">Page ${state.page} of ${pages}</span>${btn("&rsaquo;", state.page + 1, state.page === pages, "Next page")}${btn("&raquo;", pages, state.page === pages, "Last page")}</div>` : "";
@@ -650,6 +661,7 @@
     document.addEventListener("click", (e) => {
       const pg = e.target.closest("[data-page]"); if (pg && !pg.disabled) { state.page = +pg.dataset.page; renderList(); return; }
       const rev = e.target.closest("[data-review]"); if (rev) return openReview(+rev.dataset.review);
+      const sl = e.target.closest("[data-sl]"); if (sl) { const i = +sl.dataset.sl, p = people[i], on = p.s === "Shortlisted"; p.s = on ? "Applied" : "Shortlisted"; p.upd = "just now"; try { sessionStorage.setItem(`ja:${key}:${i}`, p.s); } catch (x) {} renderList(); say(on ? `${p.n} removed from shortlist` : `${p.n} shortlisted`); return; }
       const set = e.target.closest("[data-set]"); if (set) { people[reviewing].s = set.dataset.set; people[reviewing].upd = "just now"; drawActions(); renderList(); say(`Marked as ${set.dataset.set}`); return; }
       if (e.target.closest("#ro-open")) return people.length ? openReach() : say("No applicants to message yet");
       if (e.target.closest("#ro-close, #ro-cancel") || e.target === $("ro-modal")) closeModal("ro-modal");
@@ -663,6 +675,8 @@
     });
     document.addEventListener("keydown", (e) => { if (e.key === "Escape") { closeModal("ro-modal"); closeModal("rv-modal"); } });
     document.addEventListener("change", (e) => { if (e.target.id === "ja-status") { state.status = e.target.value; state.page = 1; renderList(); } });
+    document.addEventListener("change", (e) => { const k = { "ja-loc": "loc", "ja-tier": "tier", "ja-ver": "ver" }[e.target.id]; if (k) { state[k] = e.target.value; state.page = 1; renderList(); } });
+    document.addEventListener("click", (e) => { if (e.target.id === "ja-clear") { Object.assign(state, { loc: "", tier: "", ver: "", status: "", page: 1 }); ["ja-loc", "ja-tier", "ja-ver", "ja-status"].forEach((id) => { $(id).value = ""; }); renderList(); } });
     document.addEventListener("input", (e) => { if (e.target.id === "ja-q") { state.q = e.target.value; state.page = 1; renderList(); } });
     document.addEventListener("submit", (e) => {
       if (e.target.id === "ro-form") {
@@ -709,5 +723,6 @@
   </script>
   <script src="motion.js"></script>
   <script src="assets/help-fab.js" defer></script>
+  <script src="assets/tier-tip.js"></script>
 </body>
 </html>
