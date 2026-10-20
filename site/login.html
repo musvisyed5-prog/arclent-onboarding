@@ -500,6 +500,15 @@
       subtypeToggle.classList.toggle("hidden", btn.dataset.type !== "recruiter");
       updateGoogleVisibility();
     }));
+    // Prototype sign-in: remember the role so recruiter-only actions (e.g. inviting talent) unlock, then open the right dashboard.
+    function signIn() {
+      const type = document.querySelector(".type-btn.on")?.dataset.type, sub = document.querySelector(".subtype-btn.on")?.dataset.subtype;
+      try { localStorage.setItem("arclent_session", JSON.stringify({ role: type === "recruiter" ? "recruiter" : "talent", kind: sub, name: sub === "company" ? "Hoops" : "Mike" })); } catch (e) {}
+      const next = new URLSearchParams(location.search).get("next");
+      location.href = next || (type === "recruiter" ? (sub === "company" ? "company-dashboard.html" : "creator-dashboard.html") : "talent-dashboard.html");
+    }
+    document.getElementById("login-panel").addEventListener("submit", signIn);
+    googleBtn.addEventListener("click", signIn);
     subtypeButtons.forEach((btn) => btn.addEventListener("click", () => {
       subtypeButtons.forEach((b) => b.classList.toggle("on", b === btn));
       updateGoogleVisibility();
