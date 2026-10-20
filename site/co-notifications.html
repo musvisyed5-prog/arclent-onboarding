@@ -344,6 +344,8 @@
     .ntab:hover { color:#222F30; } .ntab.on { background:#222F30; color:#fff; }
     .fadein { animation: fadeIn .6s cubic-bezier(.22,1,.36,1) both; } @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } }
   </style>
+  <script src="assets/sent-invites.js"></script>
+  <script src="assets/applicant-meta.js"></script>
 </head>
 <body class="min-h-screen bg-surface font-sans text-ink">
   <div id="sidebar-backdrop" class="fixed inset-0 z-30 hidden bg-black/30"></div>
@@ -489,15 +491,25 @@
       user: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
       clock: '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
       shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
+      mail: '<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
       building: '<rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/>',
     };
     const svg = (k, n = 18) => `<svg width="${n}" height="${n}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${IC[k]}</svg>`;
     const ARROW = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>';
     const PATTERN = '<svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="ntp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#ntp)"/></svg>';
     if (window.RVerify && !RVerify.get("company")) ITEMS.unshift({ "id": 0, "k": "shield", "t": "Get your verified badge", "b": "Connect a platform account to earn the verified checkmark on your profile and every job you post. It only takes a minute.", "w": "Just now", "unread": true, "cta": "Connect a platform", "href": "co-connected-account.html" });
+    // seen state for derived invitation notifications
+    const SEEN_KEY = "arclent_notif_seen", seenSet = () => { try { return JSON.parse(localStorage.getItem(SEEN_KEY)) || []; } catch (e) { return []; } };
+    const saveSeen = () => { const s = new Set(seenSet()); ITEMS.forEach((i) => { if (i.key && !i.unread) s.add(i.key); }); try { localStorage.setItem(SEEN_KEY, JSON.stringify([...s])); } catch (e) {} };
+    if (window.SentInvites) {
+      const seen = seenSet();
+      SentInvites.list().filter((v) => v.status !== "Pending").reverse().forEach((v, k) => { const ok = v.status === "Accepted", key = "sent:" + v.id;
+        ITEMS.unshift({ id: 200 + k, key, k: "mail", t: v.name + (ok ? " accepted your invitation" : " declined your invitation"), b: ok ? v.name + " accepted your invitation to apply for the " + v.job + " role. Send a message to take the next step." : v.name + " declined your invitation to the " + v.job + " role. You can keep looking for talent.", w: v.when, unread: !seen.includes(key), cta: ok ? "Message " + v.name.split(" ")[0] : "Find talent", href: ok ? "co-messages.html" : "talents.html" }); });
+    }
     let filter = "all", sel = (ITEMS.find((i) => i.unread) || ITEMS[0] || {}).id;
     const say = (m) => { const t = document.createElement("p"); t.className = "mono fixed bottom-24 right-6 z-40 rounded-[10px] bg-ink px-4 py-3 text-[#CEF79E]"; t.textContent = m; document.body.appendChild(t); setTimeout(() => t.remove(), 2200); };
     function render() {
+      saveSeen();
       const n = ITEMS.filter((i) => i.unread).length;
       $("tabs").innerHTML = [["all", "All"], ["unread", "Unread"]].map(([k, l]) => `<button type="button" role="tab" data-f="${k}" aria-selected="${filter === k}" class="ntab ${filter === k ? "on" : ""}">${l}${k === "unread" && n ? `<span class="rounded-full bg-[#CEF79E] px-2 py-0.5 text-ink">${n}</span>` : ""}</button>`).join("");
       $("read-all").disabled = !n; $("read-all").classList.toggle("opacity-40", !n);
@@ -525,7 +537,7 @@
       else if (e.target.closest("#read-all")) { ITEMS.forEach((i) => { i.unread = false; }); render(); say("All notifications marked as read"); }
     });
     if (ITEMS.find((i) => i.id === sel)) ITEMS.find((i) => i.id === sel).unread = false;
-    render();
+    render(); saveSeen();
   </script>
 
   <script>

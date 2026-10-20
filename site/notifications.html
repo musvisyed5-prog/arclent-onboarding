@@ -345,6 +345,7 @@
     input:checked + .switch { background: #CEF79E; } input:checked + .switch::after { transform: translateX(20px); background: #222F30; }
     input:focus-visible + .switch { outline: 2px solid #CEF79E; outline-offset: 3px; }
   </style>
+  <script src="assets/invites.js"></script>
 </head>
 <body class="min-h-screen bg-surface font-sans text-ink">
   <div id="sidebar-backdrop" class="fixed inset-0 z-30 hidden bg-black/30"></div>
@@ -490,6 +491,7 @@
       app: '<rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/>',
       msg: '<path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/>',
       eye: '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>',
+      inv: '<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
       ver: '<path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76z"/><path d="m9 12 2 2 4-4"/>',
     };
     let ITEMS = [
@@ -499,6 +501,14 @@
       { id: 4, k: "ver", t: "Your work <b>Only Brilliant Chess</b> was verified.", w: "3 days ago", g: "Earlier", unread: false, href: "my-portfolio.html" },
       { id: 5, k: "app", t: "You applied to <b>Social Media Intern</b> at Arclent AI.", w: "3 weeks ago", g: "Earlier", unread: false, href: "my-applications.html" },
     ];
+    // seen state for derived invitation notifications
+    const SEEN_KEY = "arclent_notif_seen", seenSet = () => { try { return JSON.parse(localStorage.getItem(SEEN_KEY)) || []; } catch (e) { return []; } };
+    const saveSeen = () => { const s = new Set(seenSet()); ITEMS.forEach((i) => { if (i.key && !i.unread) s.add(i.key); }); try { localStorage.setItem(SEEN_KEY, JSON.stringify([...s])); } catch (e) {} };
+    if (window.Invites) {
+      const seen = seenSet(), grp = (w) => (/Just now|hour/.test(w) ? "Today" : w === "Yesterday" ? "Yesterday" : "Earlier");
+      Invites.all.slice().reverse().forEach((v, k) => { const key = "inv:" + v.id; ITEMS.unshift({ id: 100 + k, key, k: "inv", t: `<b>${esc(v.who)}</b> invited you to apply for <b>${esc(v.job)}</b>.`, w: v.when, g: grp(v.when), unread: Invites.status(v.id) === "Pending" && !seen.includes(key), href: "talent-invitations.html" }); });
+      ITEMS.sort((a, b) => ["Today", "Yesterday", "Earlier"].indexOf(a.g) - ["Today", "Yesterday", "Earlier"].indexOf(b.g));
+    }
     let filter = "all";
     const say = (m) => { const t = document.createElement("p"); t.className = "mono fixed bottom-24 right-6 z-40 rounded-[10px] bg-ink px-4 py-3 text-[#CEF79E]"; t.textContent = m; document.body.appendChild(t); setTimeout(() => t.remove(), 2200); };
     function render() {
@@ -517,7 +527,7 @@
           ${i.unread ? '<i class="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i>' : ""}
           <button type="button" data-rm="${i.id}" class="relative z-[2] grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-[#F3F3F1] text-primary transition-colors hover:bg-ink hover:text-[#CEF79E]" aria-label="Dismiss"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button></article>`;
       });
-      $("list").innerHTML = out;
+      $("list").innerHTML = out; saveSeen();
     }
     document.addEventListener("click", (e) => {
       const f = e.target.closest("[data-f]"), r = e.target.closest("[data-rm]"), rd = e.target.closest("[data-read]");
