@@ -350,6 +350,8 @@
     .tile-in::placeholder { color: rgba(77,87,87,.55); }
     .check-on { background: #222F30; color: #CEF79E; }
   </style>
+  <link rel="stylesheet" href="assets/help-fab.css" />
+  <link rel="stylesheet" href="assets/badges.css" />
 </head>
 <body class="min-h-screen bg-surface font-sans text-ink">
   <div id="sidebar-backdrop" class="fixed inset-0 z-30 hidden bg-black/30"></div>
@@ -472,7 +474,7 @@
           <div class="relative flex flex-col-reverse items-start justify-between gap-8 md:flex-row md:items-center">
             <div class="min-w-0">
               <p class="mono text-[#CEF79E]">Creator profile</p>
-              <h1 id="h-name" class="mt-5 text-[clamp(52px,8vw,132px)] font-normal leading-[.92] tracking-[-0.06em]"></h1>
+              <h1 id="h-name" class="mt-5 text-[clamp(52px,8vw,132px)] font-normal leading-[.92] tracking-[-0.06em]"><span data-first></span><span data-last-wrap hidden> <span class="text-white/45" data-last></span></span><span class="rv-badge rv-tip" tabindex="0" data-tip="This recruiter is Arclent Verified" data-rv-badge="creator" hidden><img src="assets/recruiter-verified.png" alt="This recruiter is Arclent Verified" /></span></h1>
               <div class="mt-6 flex flex-wrap items-center gap-2"><span class="mono rounded-full bg-[#CEF79E] px-3 py-1.5 text-ink">Creator</span><span id="h-mail" class="mono rounded-full border border-white/25 px-3 py-1.5 text-white/75"></span></div>
               <dl class="mono mt-8 flex flex-wrap gap-x-10 gap-y-3 text-white/60"><div><dt class="inline">Joined</dt> <dd id="date-joined" class="ml-2 inline text-white"></dd></div><div><dt class="inline">Last login</dt> <dd id="last-login" class="ml-2 inline text-white"></dd></div></dl>
             </div>
@@ -496,7 +498,7 @@
             <p class="mono text-ink/70">Profile strength</p>
             <p class="mt-4 text-[clamp(56px,6vw,96px)] leading-none tracking-[-0.06em]"><span id="pct">0</span><span class="text-ink/45">%</span></p>
             <span class="mt-4 block h-1.5 overflow-hidden rounded-full bg-ink/15"><i id="bar" class="block h-full rounded-full bg-ink transition-[width] duration-700"></i></span>
-            <ul id="checks" class="mt-6 flex flex-col gap-3"></ul>
+            <ul id="checks" class="mt-6 flex flex-col gap-3"><li class="flex items-center gap-3 text-[17px] leading-tight" data-check="0"><span class="ck grid h-6 w-6 shrink-0 place-items-center rounded-full border border-ink/40 text-transparent"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span><span class="lb text-ink/60">Email added</span></li><li class="flex items-center gap-3 text-[17px] leading-tight" data-check="1"><span class="ck grid h-6 w-6 shrink-0 place-items-center rounded-full border border-ink/40 text-transparent"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span><span class="lb text-ink/60">First name added</span></li><li class="flex items-center gap-3 text-[17px] leading-tight" data-check="2"><span class="ck grid h-6 w-6 shrink-0 place-items-center rounded-full border border-ink/40 text-transparent"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span><span class="lb text-ink/60">Last name added</span></li><li class="flex items-center gap-3 text-[17px] leading-tight" data-check="3"><span class="ck grid h-6 w-6 shrink-0 place-items-center rounded-full border border-ink/40 text-transparent"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span><span class="lb text-ink/60">Profile photo added</span></li></ul>
           </aside>
         </div>
       </div>
@@ -513,15 +515,18 @@
     $("last-login").textContent = fmt(new Date());
     const editable = ["p-email", "p-first", "p-last"].map($);
     let snapshot = null;
-    const CHECK = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>';
     function paint() {
       const f = $("p-first").value.trim() || "Creator", l = $("p-last").value.trim();
-      $("h-name").innerHTML = f + (l ? ` <span class="text-white/45">${l.replace(/[&<>]/g, "")}</span>` : "") + (RVerify.get("creator") ? RVerify.badge() : "");
+      $("h-name").querySelector("[data-first]").textContent = f; $("h-name").querySelector("[data-last]").textContent = l; $("h-name").querySelector("[data-last-wrap]").hidden = !l;
       $("h-mail").textContent = $("p-email").value.trim(); $("av").setAttribute("aria-label", f);
       const items = [["Email added", !!$("p-email").value.trim()], ["First name added", !!$("p-first").value.trim()], ["Last name added", !!l], ["Profile photo added", true]];
       const done = items.filter((i) => i[1]).length, pct = Math.round(done / items.length * 100);
       $("pct").textContent = pct; $("bar").style.width = pct + "%";
-      $("checks").innerHTML = items.map(([t, ok]) => `<li class="flex items-center gap-3 text-[17px] leading-tight"><span class="grid h-6 w-6 shrink-0 place-items-center rounded-full ${ok ? "check-on" : "border border-ink/40 text-transparent"}">${CHECK}</span><span class="${ok ? "" : "text-ink/60"}">${t}</span></li>`).join("");
+      document.querySelectorAll("#checks [data-check]").forEach((li, i) => {
+        const ok = items[i][1], ck = li.querySelector(".ck");
+        ck.classList.toggle("check-on", ok); ["border", "border-ink/40", "text-transparent"].forEach((c) => ck.classList.toggle(c, !ok));
+        li.querySelector(".lb").classList.toggle("text-ink/60", !ok);
+      });
     }
     function setEdit(on) {
       editable.forEach((el) => { el.readOnly = !on; });
@@ -571,6 +576,17 @@
     applySidebarState();
   </script>
   <script src="motion.js"></script>
+    <!-- help button, feedback popup and founder-call popup (behaviour: assets/help-fab.js) -->
+  <div id="hf-scrim"></div>
+  <div id="hf-root"><div class="hf-row"><span class="hf-label">Feedback</span><button type="button" class="hf-tile" data-hf="feedback" aria-label="Send feedback"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="M15 5l4 4"/><path d="M12 22h10"/></svg></button></div><div class="hf-row"><span class="hf-label">Talk with founder</span><button type="button" class="hf-tile" data-hf="founder" aria-label="Talk with the founder"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="9" cy="13" r="2"/><circle cx="15" cy="13" r="2"/><path d="M11 13h2"/><path d="M8 17h8"/></svg></button></div><div class="hf-close-row"><span class="hf-label">Close</span><button type="button" id="hf-main" aria-label="Help" aria-expanded="false" aria-haspopup="true"><svg class="hf-hand" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0v5"/><path d="M14 10V4a2 2 0 0 0-4 0v6"/><path d="M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg><svg class="hf-x" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button></div></div>
+  <div class="hf-modal" id="hf-feedback" role="dialog" aria-modal="true"><div class="hf-card"><button type="button" class="hf-x2" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button><div class="hf-body"><p class="mono" style="color:#CEF79E">Feedback</p><h2>Tell us what you think</h2><div class="hf-chips"><button type="button" class="hf-chip" aria-pressed="true">Idea</button><button type="button" class="hf-chip" aria-pressed="false">Something is broken</button><button type="button" class="hf-chip" aria-pressed="false">Praise</button></div><textarea placeholder="Write your feedback" aria-label="Your feedback"></textarea><p class="hf-err mono">Please write a few words first.</p><button type="button" class="hf-send">Send feedback</button></div></div></div>
+  <div class="hf-modal" id="hf-founder" role="dialog" aria-modal="true"><div class="hf-card"><button type="button" class="hf-x2" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button><div class="hf-body">
+    <div data-hf-view="intro"><p class="mono" style="color:#CEF79E">Talk with the founder</p><h2>Let’s improve your results on Arclent</h2><p style="margin:14px 0 0;color:rgba(255,255,255,.7);font-size:17px;line-height:1.4">If something felt confusing, didn’t go as expected, or seemed missing while using Arclent, book a call with <b style="font-weight:400;color:#fff">Idris</b>, our co-founder, and share your experience so we can help and make things better.</p><div class="hf-founder-row"><div class="hf-founder-who"><span class="hf-founder-av" style="background-image:url('https://images.unsplash.com/photo-1741455620227-3b1c51e01419?crop=faces&fit=crop&w=100&h=100&q=80')"></span><div><p class="hf-founder-name">Idris Navarro</p><p class="mono hf-founder-role">Co-founder</p></div></div><button type="button" class="hf-cta" id="hf-book-cta">Book a Call with Idris</button></div></div>
+    <div data-hf-view="slots" hidden><button type="button" class="hf-back" id="hf-back">&larr; Back</button><p class="mono" style="color:#CEF79E;margin-top:14px">Book a call with Idris</p><h2>Pick a time</h2><p style="margin:14px 0 0;color:rgba(255,255,255,.7);font-size:17px;line-height:1.3">Questions, ideas or a problem you want solved? Pick a time and you will talk for 15 minutes.</p><div class="hf-chips"><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button></div><textarea placeholder="Anything we should know first? (optional)" aria-label="Note" style="min-height:90px"></textarea><p class="hf-err mono">Pick a time first.</p><button type="button" class="hf-send">Request call</button></div>
+  </div></div></div>
+  <p class="hf-toast" id="hf-toast" hidden></p>
   <script src="assets/help-fab.js" defer></script>
+  <div id="tt-global" role="tooltip"></div>
+  <script src="assets/tier-tip.js"></script>
 </body>
 </html>

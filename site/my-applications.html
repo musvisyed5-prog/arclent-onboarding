@@ -341,6 +341,8 @@
     .tab { display:inline-flex; align-items:center; gap:8px; padding:12px 18px; font-family:"Roboto Mono",monospace; font-size:12px; text-transform:uppercase; color:#4D5757; transition:background-color .4s,color .4s; }
     .tab:hover { color:#222F30; } .tab.on { background:#222F30; color:#fff; }
   </style>
+  <link rel="stylesheet" href="assets/help-fab.css" />
+  <style>#list article[hidden] { display: none !important; }</style>
 </head>
 <body class="min-h-screen bg-surface font-sans text-ink">
   <div id="sidebar-backdrop" class="fixed inset-0 z-30 hidden bg-black/30"></div>
@@ -407,6 +409,7 @@
         <a href="talent-invitations.html" class="flex items-center gap-3 rounded-[10px] px-3 py-3 text-primary transition-colors hover:bg-white hover:text-ink">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
           Invitations
+          <span class="inv-count mono ml-auto grid h-5 min-w-5 place-items-center rounded-full bg-[#CEF79E] px-1.5 text-ink hidden"></span>
         </a>
       </nav>
 
@@ -462,65 +465,102 @@
         <h1 class="mt-4 text-[clamp(52px,8vw,128px)] font-normal leading-[.92] tracking-[-0.055em] text-ink">My <span class="text-primary/45">applications.</span></h1>
         <p class="mt-5 max-w-[720px] text-[18px] leading-snug text-primary">Track the status of every job you have applied to, from first submission to final decision.</p>
 
-        <div id="stats" class="mt-10 grid grid-cols-3 overflow-hidden rounded-[24px] bg-ink text-white"></div>
+        <div id="stats" class="mt-10 grid grid-cols-3 overflow-hidden rounded-[24px] bg-ink text-white"><div class="p-5 sm:p-8"><p class="mono text-white/60">Applied</p><p data-stat class="mt-4 text-[clamp(44px,5.5vw,84px)] leading-none tracking-[-0.05em] text-[#CEF79E]">3</p></div><div class="border-l border-white/15 p-5 sm:p-8"><p class="mono text-white/60">Shortlisted</p><p data-stat class="mt-4 text-[clamp(44px,5.5vw,84px)] leading-none tracking-[-0.05em] ">0</p></div><div class="border-l border-white/15 p-5 sm:p-8"><p class="mono text-white/60">Rejected</p><p data-stat class="mt-4 text-[clamp(44px,5.5vw,84px)] leading-none tracking-[-0.05em] ">0</p></div></div>
 
         <div class="mt-4 flex flex-wrap items-center gap-3">
           <form class="flex min-w-[260px] flex-1 items-center gap-2 rounded-[14px] bg-white p-1.5" role="search" onsubmit="return false">
             <svg class="ml-3 shrink-0 text-primary" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
             <input id="q" type="search" placeholder="Search by job name" class="h-11 min-w-0 flex-1 border-0 bg-transparent font-mono text-[13px] uppercase text-ink placeholder:text-primary/60 focus:outline-none" aria-label="Search applications" />
           </form>
-          <div id="tabs" class="inline-flex overflow-hidden rounded-[12px] bg-white" role="tablist"></div>
+          <div id="tabs" class="inline-flex overflow-hidden rounded-[12px] bg-white" role="tablist"><button type="button" role="tab" data-f="" aria-selected="true" class="tab on">All</button><button type="button" role="tab" data-f="Applied" aria-selected="false" class="tab ">Applied</button><button type="button" role="tab" data-f="Shortlisted" aria-selected="false" class="tab ">Shortlisted</button><button type="button" role="tab" data-f="Rejected" aria-selected="false" class="tab ">Rejected</button></div>
         </div>
 
-        <div id="list" class="mt-6 flex flex-col gap-3"></div>
+        <div id="list" class="mt-6 flex flex-col gap-3">
+          <article data-id="notjasonvlogs-video-editor" data-status="Applied" data-search="video editor notjasonvlogs " class="row-in rounded-[20px] bg-white" style="animation-delay:0ms">
+          <button type="button" data-open="notjasonvlogs-video-editor" aria-expanded="false" class="grid w-full gap-4 p-5 text-left sm:grid-cols-[auto_1fr_auto] sm:items-center sm:p-6">
+            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-ink text-[#CEF79E]">N</span>
+            <span class="min-w-0"><span class="block text-[clamp(20px,2vw,26px)] leading-tight tracking-[-0.02em] text-ink">Video Editor</span><span class="mono mt-1.5 block text-primary">NotJasonVlogs &middot; Applied 2 weeks, 5 days ago</span></span>
+            <span class="flex items-center gap-3"><span class="mono rounded-[8px] px-3 py-1.5 bg-[#CEF79E] text-ink">Applied</span><svg class="transition-transform duration-500 " width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </button>
+          <div class="px-5 pb-5 sm:px-6 sm:pb-6">
+            <ol class="grid grid-cols-4 gap-2"><li><span class="block h-1.5 rounded-full bg-ink"></span><span class="mono mt-2 block text-ink">Applied</span></li><li><span class="block h-1.5 rounded-full bg-[#E7E8E1]"></span><span class="mono mt-2 block text-primary/50">Under review</span></li><li><span class="block h-1.5 rounded-full bg-[#E7E8E1]"></span><span class="mono mt-2 block text-primary/50">Shortlisted</span></li><li><span class="block h-1.5 rounded-full bg-[#E7E8E1]"></span><span class="mono mt-2 block text-primary/50">Decision</span></li></ol>
+            
+          <div data-detail hidden class="mt-6 border-t border-[#E7E8E1] pt-5"><p class="mono text-primary">Your answers</p>
+              <ul class="mt-3"><li class="flex gap-5 border-t border-[#E7E8E1] py-3 first:border-t-0"><span class="mono w-7 shrink-0 pt-0.5 text-primary">01</span><span class="text-[16px] leading-snug text-ink">Portfolio link</span></li><li class="flex gap-5 border-t border-[#E7E8E1] py-3 first:border-t-0"><span class="mono w-7 shrink-0 pt-0.5 text-primary">02</span><span class="text-[16px] leading-snug text-ink">Years of editing experience</span></li><li class="flex gap-5 border-t border-[#E7E8E1] py-3 first:border-t-0"><span class="mono w-7 shrink-0 pt-0.5 text-primary">03</span><span class="text-[16px] leading-snug text-ink">Which editing software do you use?</span></li><li class="flex gap-5 border-t border-[#E7E8E1] py-3 first:border-t-0"><span class="mono w-7 shrink-0 pt-0.5 text-primary">04</span><span class="text-[16px] leading-snug text-ink">Availability (hours per week)</span></li><li class="flex gap-5 border-t border-[#E7E8E1] py-3 first:border-t-0"><span class="mono w-7 shrink-0 pt-0.5 text-primary">05</span><span class="text-[16px] leading-snug text-ink">When can you start?</span></li></ul>
+              <p class="mono mt-4 text-primary">Last update: 2 weeks, 5 days ago</p>
+              <div class="mt-5 flex flex-wrap items-center gap-3"><a href="job-details?id=notjasonvlogs-video-editor" class="mono inline-flex h-11 items-center rounded-[10px] bg-ink px-5 text-white transition-colors hover:bg-[#CEF79E] hover:text-ink">View job</a>
+                <button type="button" data-wd="notjasonvlogs-video-editor" class="mono h-11 rounded-[10px] px-5 text-[#B23B3B] outline outline-1 -outline-offset-1 outline-[#B23B3B]/40 transition-colors hover:bg-[#B23B3B] hover:text-white">Withdraw</button><span data-c hidden class="mono text-primary">Withdraw this application?</span><button data-c hidden type="button" data-yes="notjasonvlogs-video-editor" class="mono h-11 rounded-[10px] bg-[#B23B3B] px-5 text-white">Yes, withdraw</button><button data-c hidden type="button" data-no class="mono h-11 px-3 text-primary hover:text-ink">Cancel</button></div></div>
+          </div></article>
+          <article data-id="social-media-intern" data-status="Applied" data-search="social media intern arclent ai " class="row-in rounded-[20px] bg-white" style="animation-delay:50ms">
+          <button type="button" data-open="social-media-intern" aria-expanded="false" class="grid w-full gap-4 p-5 text-left sm:grid-cols-[auto_1fr_auto] sm:items-center sm:p-6">
+            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-ink text-[#CEF79E]">A</span>
+            <span class="min-w-0"><span class="block text-[clamp(20px,2vw,26px)] leading-tight tracking-[-0.02em] text-ink">Social Media Intern</span><span class="mono mt-1.5 block text-primary">Arclent AI &middot; Applied 3 weeks, 3 days ago</span></span>
+            <span class="flex items-center gap-3"><span class="mono rounded-[8px] px-3 py-1.5 bg-[#CEF79E] text-ink">Applied</span><svg class="transition-transform duration-500 " width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </button>
+          <div class="px-5 pb-5 sm:px-6 sm:pb-6">
+            <ol class="grid grid-cols-4 gap-2"><li><span class="block h-1.5 rounded-full bg-ink"></span><span class="mono mt-2 block text-ink">Applied</span></li><li><span class="block h-1.5 rounded-full bg-[#E7E8E1]"></span><span class="mono mt-2 block text-primary/50">Under review</span></li><li><span class="block h-1.5 rounded-full bg-[#E7E8E1]"></span><span class="mono mt-2 block text-primary/50">Shortlisted</span></li><li><span class="block h-1.5 rounded-full bg-[#E7E8E1]"></span><span class="mono mt-2 block text-primary/50">Decision</span></li></ol>
+            
+          <div data-detail hidden class="mt-6 border-t border-[#E7E8E1] pt-5"><p class="mono text-primary">Your answers</p>
+              <ul class="mt-3"><li class="flex gap-5 border-t border-[#E7E8E1] py-3 first:border-t-0"><span class="mono w-7 shrink-0 pt-0.5 text-primary">01</span><span class="text-[16px] leading-snug text-ink">Phone / WhatsApp</span></li><li class="flex gap-5 border-t border-[#E7E8E1] py-3 first:border-t-0"><span class="mono w-7 shrink-0 pt-0.5 text-primary">02</span><span class="text-[16px] leading-snug text-ink">City</span></li><li class="flex gap-5 border-t border-[#E7E8E1] py-3 first:border-t-0"><span class="mono w-7 shrink-0 pt-0.5 text-primary">03</span><span class="text-[16px] leading-snug text-ink">Links (X, LinkedIn, Instagram — personal or any you've managed)</span></li><li class="flex gap-5 border-t border-[#E7E8E1] py-3 first:border-t-0"><span class="mono w-7 shrink-0 pt-0.5 text-primary">04</span><span class="text-[16px] leading-snug text-ink">Share 1–2 examples of content you've created</span></li><li class="flex gap-5 border-t border-[#E7E8E1] py-3 first:border-t-0"><span class="mono w-7 shrink-0 pt-0.5 text-primary">05</span><span class="text-[16px] leading-snug text-ink">Which tools are you comfortable with?</span></li><li class="flex gap-5 border-t border-[#E7E8E1] py-3 first:border-t-0"><span class="mono w-7 shrink-0 pt-0.5 text-primary">06</span><span class="text-[16px] leading-snug text-ink">When can you start?</span></li></ul>
+              <p class="mono mt-4 text-primary">Last update: 3 weeks, 3 days ago</p>
+              <div class="mt-5 flex flex-wrap items-center gap-3"><a href="job-details?id=social-media-intern" class="mono inline-flex h-11 items-center rounded-[10px] bg-ink px-5 text-white transition-colors hover:bg-[#CEF79E] hover:text-ink">View job</a>
+                <button type="button" data-wd="social-media-intern" class="mono h-11 rounded-[10px] px-5 text-[#B23B3B] outline outline-1 -outline-offset-1 outline-[#B23B3B]/40 transition-colors hover:bg-[#B23B3B] hover:text-white">Withdraw</button><span data-c hidden class="mono text-primary">Withdraw this application?</span><button data-c hidden type="button" data-yes="social-media-intern" class="mono h-11 rounded-[10px] bg-[#B23B3B] px-5 text-white">Yes, withdraw</button><button data-c hidden type="button" data-no class="mono h-11 px-3 text-primary hover:text-ink">Cancel</button></div></div>
+          </div></article>
+          <article data-id="jess-longform-video-editor" data-status="Applied" data-search="video editor jess " class="row-in rounded-[20px] bg-white" style="animation-delay:100ms">
+          <button type="button" data-open="jess-longform-video-editor" aria-expanded="false" class="grid w-full gap-4 p-5 text-left sm:grid-cols-[auto_1fr_auto] sm:items-center sm:p-6">
+            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-ink text-[#CEF79E]">J</span>
+            <span class="min-w-0"><span class="block text-[clamp(20px,2vw,26px)] leading-tight tracking-[-0.02em] text-ink">Video Editor</span><span class="mono mt-1.5 block text-primary">Jess &middot; Applied 1 month ago</span></span>
+            <span class="flex items-center gap-3"><span class="mono rounded-[8px] px-3 py-1.5 bg-[#CEF79E] text-ink">Applied</span><svg class="transition-transform duration-500 " width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </button>
+          <div class="px-5 pb-5 sm:px-6 sm:pb-6">
+            <ol class="grid grid-cols-4 gap-2"><li><span class="block h-1.5 rounded-full bg-ink"></span><span class="mono mt-2 block text-ink">Applied</span></li><li><span class="block h-1.5 rounded-full bg-[#E7E8E1]"></span><span class="mono mt-2 block text-primary/50">Under review</span></li><li><span class="block h-1.5 rounded-full bg-[#E7E8E1]"></span><span class="mono mt-2 block text-primary/50">Shortlisted</span></li><li><span class="block h-1.5 rounded-full bg-[#E7E8E1]"></span><span class="mono mt-2 block text-primary/50">Decision</span></li></ol>
+            
+          <div data-detail hidden class="mt-6 border-t border-[#E7E8E1] pt-5"><p class="mono text-primary">Your answers</p>
+              <ul class="mt-3"><li class="flex gap-5 border-t border-[#E7E8E1] py-3 first:border-t-0"><span class="mono w-7 shrink-0 pt-0.5 text-primary">01</span><span class="text-[16px] leading-snug text-ink">Link to a longform edit you're proud of</span></li><li class="flex gap-5 border-t border-[#E7E8E1] py-3 first:border-t-0"><span class="mono w-7 shrink-0 pt-0.5 text-primary">02</span><span class="text-[16px] leading-snug text-ink">Familiarity with pop culture &amp; commentary content</span></li><li class="flex gap-5 border-t border-[#E7E8E1] py-3 first:border-t-0"><span class="mono w-7 shrink-0 pt-0.5 text-primary">03</span><span class="text-[16px] leading-snug text-ink">Typical turnaround time for a 20-minute video</span></li><li class="flex gap-5 border-t border-[#E7E8E1] py-3 first:border-t-0"><span class="mono w-7 shrink-0 pt-0.5 text-primary">04</span><span class="text-[16px] leading-snug text-ink">When can you start?</span></li></ul>
+              <p class="mono mt-4 text-primary">Last update: 1 month ago</p>
+              <div class="mt-5 flex flex-wrap items-center gap-3"><a href="job-details?id=jess-longform-video-editor" class="mono inline-flex h-11 items-center rounded-[10px] bg-ink px-5 text-white transition-colors hover:bg-[#CEF79E] hover:text-ink">View job</a>
+                <button type="button" data-wd="jess-longform-video-editor" class="mono h-11 rounded-[10px] px-5 text-[#B23B3B] outline outline-1 -outline-offset-1 outline-[#B23B3B]/40 transition-colors hover:bg-[#B23B3B] hover:text-white">Withdraw</button><span data-c hidden class="mono text-primary">Withdraw this application?</span><button data-c hidden type="button" data-yes="jess-longform-video-editor" class="mono h-11 rounded-[10px] bg-[#B23B3B] px-5 text-white">Yes, withdraw</button><button data-c hidden type="button" data-no class="mono h-11 px-3 text-primary hover:text-ink">Cancel</button></div></div>
+          </div></article>
+          <p id="empty-none" class="mono rounded-[20px] bg-white px-4 py-16 text-center text-primary" hidden>No applications yet. Jobs you apply to will show up here.</p>
+          <p id="empty-match" class="mono rounded-[20px] bg-white px-4 py-16 text-center text-primary" hidden>No applications match.</p>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    const $ = (i) => document.getElementById(i), esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-    let APPS = [
-      { id: "notjasonvlogs-video-editor", t: "Video Editor", co: "NotJasonVlogs", s: "Applied", applied: "2 weeks, 5 days ago", upd: "2 weeks, 5 days ago", q: ["Portfolio link", "Years of editing experience", "Which editing software do you use?", "Availability (hours per week)", "When can you start?"] },
-      { id: "social-media-intern", t: "Social Media Intern", co: "Arclent AI", s: "Applied", applied: "3 weeks, 3 days ago", upd: "3 weeks, 3 days ago", q: ["Phone / WhatsApp", "City", "Links (X, LinkedIn, Instagram \u2014 personal or any you've managed)", "Share 1\u20132 examples of content you've created", "Which tools are you comfortable with?", "When can you start?"] },
-      { id: "jess-longform-video-editor", t: "Video Editor", co: "Jess", s: "Applied", applied: "1 month ago", upd: "1 month ago", q: ["Link to a longform edit you're proud of", "Familiarity with pop culture & commentary content", "Typical turnaround time for a 20-minute video", "When can you start?"] },
-    ];
-    const STEPS = ["Applied", "Under review", "Shortlisted", "Decision"], STEP_OF = { Applied: 0, Shortlisted: 2, Rejected: 3 };
-    const PILL = { Applied: "bg-[#CEF79E] text-ink", Shortlisted: "bg-ink text-[#CEF79E]", Rejected: "bg-[#F9DDDD] text-[#B93A3A]" };
+    const $ = (i) => document.getElementById(i);
+    const arts = [...document.querySelectorAll("#list article")];
     let filter = "", q = "", open = "", asking = "";
-    const say = (m) => { const t = document.createElement("p"); t.className = "mono fixed bottom-24 right-6 z-40 rounded-[10px] bg-ink px-4 py-3 text-[#CEF79E]"; t.textContent = m; document.body.appendChild(t); setTimeout(() => t.remove(), 2200); };
-    const count = (st) => APPS.filter((a) => a.s === st).length;
+    const say = (m) => { const t = document.getElementById("toast"); t.textContent = m; t.hidden = false; clearTimeout(say.t); say.t = setTimeout(() => { t.hidden = true; }, 2200); };
     function render() {
-      $("stats").innerHTML = [["Applied", count("Applied"), "text-[#CEF79E]"], ["Shortlisted", count("Shortlisted"), ""], ["Rejected", count("Rejected"), ""]].map(([l, n, c], i) => `<div class="${i ? "border-l border-white/15 " : ""}p-5 sm:p-8"><p class="mono text-white/60">${l}</p><p class="mt-4 text-[clamp(44px,5.5vw,84px)] leading-none tracking-[-0.05em] ${c}">${n}</p></div>`).join("");
-      $("tabs").innerHTML = [["", "All"], ["Applied", "Applied"], ["Shortlisted", "Shortlisted"], ["Rejected", "Rejected"]].map(([k, l]) => `<button type="button" role="tab" data-f="${k}" aria-selected="${filter === k}" class="tab ${filter === k ? "on" : ""}">${l}</button>`).join("");
-      const list = APPS.filter((a) => (!filter || a.s === filter) && (!q || a.t.toLowerCase().includes(q) || a.co.toLowerCase().includes(q)));
-      $("list").innerHTML = list.length ? list.map((a, k) => {
-        const on = open === a.id, step = STEP_OF[a.s];
-        return `<article class="row-in rounded-[20px] bg-white" style="animation-delay:${k * 50}ms">
-          <button type="button" data-open="${a.id}" aria-expanded="${on}" class="grid w-full gap-4 p-5 text-left sm:grid-cols-[auto_1fr_auto] sm:items-center sm:p-6">
-            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-ink text-[#CEF79E]">${esc(a.co[0])}</span>
-            <span class="min-w-0"><span class="block text-[clamp(20px,2vw,26px)] leading-tight tracking-[-0.02em] text-ink">${esc(a.t)}</span><span class="mono mt-1.5 block text-primary">${esc(a.co)} &middot; Applied ${esc(a.applied)}</span></span>
-            <span class="flex items-center gap-3"><span class="mono rounded-[8px] px-3 py-1.5 ${PILL[a.s]}">${a.s}</span><svg class="transition-transform duration-500 ${on ? "rotate-180" : ""}" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
-          </button>
-          <div class="px-5 pb-5 sm:px-6 sm:pb-6">
-            <ol class="grid grid-cols-4 gap-2">${STEPS.map((x, i) => `<li><span class="block h-1.5 rounded-full ${i <= step ? (a.s === "Rejected" && i === 3 ? "bg-[#B93A3A]" : "bg-ink") : "bg-[#E7E8E1]"}"></span><span class="mono mt-2 block ${i <= step ? "text-ink" : "text-primary/50"}">${a.s === "Rejected" && i === 3 ? "Rejected" : x}</span></li>`).join("")}</ol>
-            ${on ? `<div class="mt-6 border-t border-[#E7E8E1] pt-5"><p class="mono text-primary">Your answers</p>
-              <ul class="mt-3">${a.q.map((x, i) => `<li class="flex gap-5 border-t border-[#E7E8E1] py-3 first:border-t-0"><span class="mono w-7 shrink-0 pt-0.5 text-primary">0${i + 1}</span><span class="text-[16px] leading-snug text-ink">${esc(x)}</span></li>`).join("")}</ul>
-              <p class="mono mt-4 text-primary">Last update: ${esc(a.upd)}</p>
-              <div class="mt-5 flex flex-wrap items-center gap-3"><a href="job-details?id=${a.id}" class="mono inline-flex h-11 items-center rounded-[10px] bg-ink px-5 text-white transition-colors hover:bg-[#CEF79E] hover:text-ink">View job</a>
-                ${asking === a.id ? `<span class="mono text-primary">Withdraw this application?</span><button type="button" data-yes="${a.id}" class="mono h-11 rounded-[10px] bg-[#B23B3B] px-5 text-white">Yes, withdraw</button><button type="button" data-no class="mono h-11 px-3 text-primary hover:text-ink">Cancel</button>` : `<button type="button" data-wd="${a.id}" class="mono h-11 rounded-[10px] px-5 text-[#B23B3B] outline outline-1 -outline-offset-1 outline-[#B23B3B]/40 transition-colors hover:bg-[#B23B3B] hover:text-white">Withdraw</button>`}</div></div>` : ""}
-          </div></article>`;
-      }).join("") : `<p class="mono rounded-[20px] bg-white px-4 py-16 text-center text-primary">${APPS.length ? "No applications match." : "No applications yet. Jobs you apply to will show up here."}</p>`;
+      const alive = arts.filter((a) => !a.dataset.gone);
+      const count = (st) => alive.filter((a) => a.dataset.status === st).length;
+      document.querySelectorAll("#stats [data-stat]").forEach((e, i) => { e.textContent = count(["Applied", "Shortlisted", "Rejected"][i]); });
+      document.querySelectorAll("#tabs [data-f]").forEach((b) => { const on = b.dataset.f === filter; b.setAttribute("aria-selected", on); b.classList.toggle("on", on); });
+      const shown = alive.filter((a) => (!filter || a.dataset.status === filter) && (!q || a.dataset.search.includes(q)));
+      arts.forEach((a) => {
+        a.hidden = !shown.includes(a);
+        const on = open === a.dataset.id;
+        a.querySelector("[data-detail]").hidden = !on;
+        a.querySelector("[data-open]").setAttribute("aria-expanded", on);
+        const chev = a.querySelector("button svg"); chev.style.transition = "none"; chev.classList.toggle("rotate-180", on); void chev.getBoundingClientRect(); chev.style.transition = "";   // rebuilt rows never animated the turn
+        const ask = asking === a.dataset.id;
+        a.querySelector("[data-wd]").hidden = ask;
+        a.querySelectorAll("[data-c]").forEach((c) => { c.hidden = !ask; });
+      });
+      shown.forEach((a, k) => { a.style.animation = "none"; void a.offsetWidth; a.style.animation = ""; a.style.animationDelay = k * 50 + "ms"; });
+      $("empty-none").hidden = alive.length > 0; $("empty-match").hidden = !(alive.length && !shown.length);
     }
     document.addEventListener("click", (e) => {
       const f = e.target.closest("[data-f]"), o = e.target.closest("[data-open]"), w = e.target.closest("[data-wd]"), y = e.target.closest("[data-yes]");
       if (f) { filter = f.dataset.f; render(); }
-      else if (o) { open = open === o.dataset.open ? "" : o.dataset.open; asking = ""; render(); }
-      else if (w) { asking = w.dataset.wd; render(); }
+      else if (o) { const id = o.closest("article").dataset.id; open = open === id ? "" : id; asking = ""; render(); }
+      else if (w) { asking = w.closest("article").dataset.id; render(); }
       else if (e.target.closest("[data-no]")) { asking = ""; render(); }
-      else if (y) { APPS = APPS.filter((a) => a.id !== y.dataset.yes); asking = ""; open = ""; render(); say("Application withdrawn"); }
+      else if (y) { y.closest("article").dataset.gone = "1"; asking = ""; open = ""; render(); say("Application withdrawn"); }
     });
     $("q").addEventListener("input", (e) => { q = e.target.value.trim().toLowerCase(); render(); });
-    render();
   </script>
 
   <script>
@@ -556,6 +596,16 @@
     applySidebarState();
   </script>
   <script src="assets/invites.js"></script>
+    <!-- help button, feedback popup and founder-call popup (behaviour: assets/help-fab.js) -->
+  <div id="hf-scrim"></div>
+  <div id="hf-root"><div class="hf-row"><span class="hf-label">Feedback</span><button type="button" class="hf-tile" data-hf="feedback" aria-label="Send feedback"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="M15 5l4 4"/><path d="M12 22h10"/></svg></button></div><div class="hf-row"><span class="hf-label">Talk with founder</span><button type="button" class="hf-tile" data-hf="founder" aria-label="Talk with the founder"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="9" cy="13" r="2"/><circle cx="15" cy="13" r="2"/><path d="M11 13h2"/><path d="M8 17h8"/></svg></button></div><div class="hf-close-row"><span class="hf-label">Close</span><button type="button" id="hf-main" aria-label="Help" aria-expanded="false" aria-haspopup="true"><svg class="hf-hand" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0v5"/><path d="M14 10V4a2 2 0 0 0-4 0v6"/><path d="M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg><svg class="hf-x" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button></div></div>
+  <div class="hf-modal" id="hf-feedback" role="dialog" aria-modal="true"><div class="hf-card"><button type="button" class="hf-x2" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button><div class="hf-body"><p class="mono" style="color:#CEF79E">Feedback</p><h2>Tell us what you think</h2><div class="hf-chips"><button type="button" class="hf-chip" aria-pressed="true">Idea</button><button type="button" class="hf-chip" aria-pressed="false">Something is broken</button><button type="button" class="hf-chip" aria-pressed="false">Praise</button></div><textarea placeholder="Write your feedback" aria-label="Your feedback"></textarea><p class="hf-err mono">Please write a few words first.</p><button type="button" class="hf-send">Send feedback</button></div></div></div>
+  <div class="hf-modal" id="hf-founder" role="dialog" aria-modal="true"><div class="hf-card"><button type="button" class="hf-x2" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button><div class="hf-body">
+    <div data-hf-view="intro"><p class="mono" style="color:#CEF79E">Talk with the founder</p><h2>Let’s improve your results on Arclent</h2><p style="margin:14px 0 0;color:rgba(255,255,255,.7);font-size:17px;line-height:1.4">If something felt confusing, didn’t go as expected, or seemed missing while using Arclent, book a call with <b style="font-weight:400;color:#fff">Idris</b>, our co-founder, and share your experience so we can help and make things better.</p><div class="hf-founder-row"><div class="hf-founder-who"><span class="hf-founder-av" style="background-image:url('https://images.unsplash.com/photo-1741455620227-3b1c51e01419?crop=faces&fit=crop&w=100&h=100&q=80')"></span><div><p class="hf-founder-name">Idris Navarro</p><p class="mono hf-founder-role">Co-founder</p></div></div><button type="button" class="hf-cta" id="hf-book-cta">Book a Call with Idris</button></div></div>
+    <div data-hf-view="slots" hidden><button type="button" class="hf-back" id="hf-back">&larr; Back</button><p class="mono" style="color:#CEF79E;margin-top:14px">Book a call with Idris</p><h2>Pick a time</h2><p style="margin:14px 0 0;color:rgba(255,255,255,.7);font-size:17px;line-height:1.3">Questions, ideas or a problem you want solved? Pick a time and you will talk for 15 minutes.</p><div class="hf-chips"><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button></div><textarea placeholder="Anything we should know first? (optional)" aria-label="Note" style="min-height:90px"></textarea><p class="hf-err mono">Pick a time first.</p><button type="button" class="hf-send">Request call</button></div>
+  </div></div></div>
+  <p class="hf-toast" id="hf-toast" hidden></p>
   <script src="assets/help-fab.js" defer></script>
+  <p id="toast" class="mono fixed bottom-24 right-6 z-40 rounded-[10px] bg-ink px-4 py-3 text-[#CEF79E]" hidden></p>
 </body>
 </html>

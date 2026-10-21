@@ -346,6 +346,13 @@
     input:focus-visible + .switch { outline: 2px solid #CEF79E; outline-offset: 3px; }
   </style>
   <script src="assets/invites.js"></script>
+  <link rel="stylesheet" href="assets/help-fab.css" />
+  <style>
+    /* unread state drives the icon colour and the dot */
+    #list article[data-unread="1"] .ic { background: #222F30; color: #CEF79E; }
+    #list article[data-unread="0"] .ic { background: #F3F3F1; color: #4D5757; }
+    #list article[data-unread="0"] .dot { display: none; }
+  </style>
 </head>
 <body class="min-h-screen bg-surface font-sans text-ink">
   <div id="sidebar-backdrop" class="fixed inset-0 z-30 hidden bg-black/30"></div>
@@ -412,6 +419,7 @@
         <a href="talent-invitations.html" class="flex items-center gap-3 rounded-[10px] px-3 py-3 text-primary transition-colors hover:bg-white hover:text-ink">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
           Invitations
+          <span class="inv-count mono ml-auto grid h-5 min-w-5 place-items-center rounded-full bg-[#CEF79E] px-1.5 text-ink hidden"></span>
         </a>
       </nav>
 
@@ -472,8 +480,82 @@
 
         <div class="mt-10 grid gap-4 lg:grid-cols-[1.5fr_1fr] lg:items-start">
           <section>
-            <div id="tabs" class="inline-flex overflow-hidden rounded-[12px] bg-white" role="tablist"></div>
-            <div id="list" class="mt-4 flex flex-col gap-2"></div>
+            <div id="tabs" class="inline-flex overflow-hidden rounded-[12px] bg-white" role="tablist"><button type="button" role="tab" data-f="all" aria-selected="true" class="tab on">All</button><button type="button" role="tab" data-f="unread" aria-selected="false" class="tab">Unread<span class="cnt rounded-full bg-[#CEF79E] px-2 py-0.5 text-ink hidden" id="unread-n"></span></button></div>
+            <div id="list" class="mt-4 flex flex-col gap-2">
+              <div data-group="Today"><p class="mono mb-1 text-primary">Today</p><div class="flex flex-col gap-2">
+                <article class="row-in group relative flex items-start gap-4 rounded-[20px] bg-white p-5 transition-colors hover:bg-[#FBFBF9]" data-nid="inv-sent:mosvie-media:hoops-video-editor" data-unread="0" data-invite="sent:mosvie-media:hoops-video-editor">
+                  <a href="talent-invitations.html" data-read class="absolute inset-0 z-[1] rounded-[20px]" aria-label="Open notification"></a>
+                  <span class="ic grid h-11 w-11 shrink-0 place-items-center rounded-full"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+                  <div class="min-w-0 flex-1"><p class="text-[17px] leading-snug text-ink [&_b]:font-normal [&_b]:underline [&_b]:underline-offset-4"><b>Hoops</b> invited you to apply for <b>Video Editor</b>.</p><p class="mono mt-2 text-primary" data-when>Just now</p></div>
+                  <i class="dot mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i>
+                  <button type="button" data-rm class="relative z-[2] grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-[#F3F3F1] text-primary transition-colors hover:bg-ink hover:text-[#CEF79E]" aria-label="Dismiss"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button></article>
+                <article class="row-in group relative flex items-start gap-4 rounded-[20px] bg-white p-5 transition-colors hover:bg-[#FBFBF9]" data-nid="inv-sent:mosvie-media:hoops-short-form-editor" data-unread="0" data-invite="sent:mosvie-media:hoops-short-form-editor">
+                  <a href="talent-invitations.html" data-read class="absolute inset-0 z-[1] rounded-[20px]" aria-label="Open notification"></a>
+                  <span class="ic grid h-11 w-11 shrink-0 place-items-center rounded-full"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+                  <div class="min-w-0 flex-1"><p class="text-[17px] leading-snug text-ink [&_b]:font-normal [&_b]:underline [&_b]:underline-offset-4"><b>Hoops</b> invited you to apply for <b>Short-form Editor</b>.</p><p class="mono mt-2 text-primary" data-when>Just now</p></div>
+                  <i class="dot mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i>
+                  <button type="button" data-rm class="relative z-[2] grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-[#F3F3F1] text-primary transition-colors hover:bg-ink hover:text-[#CEF79E]" aria-label="Dismiss"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button></article>
+                <article class="row-in group relative flex items-start gap-4 rounded-[20px] bg-white p-5 transition-colors hover:bg-[#FBFBF9]" data-nid="inv-inv-1" data-unread="0" data-invite="inv-1">
+                  <a href="talent-invitations.html" data-read class="absolute inset-0 z-[1] rounded-[20px]" aria-label="Open notification"></a>
+                  <span class="ic grid h-11 w-11 shrink-0 place-items-center rounded-full"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+                  <div class="min-w-0 flex-1"><p class="text-[17px] leading-snug text-ink [&_b]:font-normal [&_b]:underline [&_b]:underline-offset-4"><b>Jess Carter</b> invited you to apply for <b>Longform Video Editor</b>.</p><p class="mono mt-2 text-primary" data-when>2 hours ago</p></div>
+                  <i class="dot mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i>
+                  <button type="button" data-rm class="relative z-[2] grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-[#F3F3F1] text-primary transition-colors hover:bg-ink hover:text-[#CEF79E]" aria-label="Dismiss"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button></article>
+                <article class="row-in group relative flex items-start gap-4 rounded-[20px] bg-white p-5 transition-colors hover:bg-[#FBFBF9]" data-nid="base-1" data-unread="1">
+                  <a href="my-applications.html" data-read class="absolute inset-0 z-[1] rounded-[20px]" aria-label="Open notification"></a>
+                  <span class="ic grid h-11 w-11 shrink-0 place-items-center rounded-full"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg></span>
+                  <div class="min-w-0 flex-1"><p class="text-[17px] leading-snug text-ink [&_b]:font-normal [&_b]:underline [&_b]:underline-offset-4">Your application for <b>Video Editor</b> at Hoops is under review.</p><p class="mono mt-2 text-primary" data-when>12 minutes ago</p></div>
+                  <i class="dot mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i>
+                  <button type="button" data-rm class="relative z-[2] grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-[#F3F3F1] text-primary transition-colors hover:bg-ink hover:text-[#CEF79E]" aria-label="Dismiss"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button></article>
+                <article class="row-in group relative flex items-start gap-4 rounded-[20px] bg-white p-5 transition-colors hover:bg-[#FBFBF9]" data-nid="base-2" data-unread="1">
+                  <a href="messages.html" data-read class="absolute inset-0 z-[1] rounded-[20px]" aria-label="Open notification"></a>
+                  <span class="ic grid h-11 w-11 shrink-0 place-items-center rounded-full"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg></span>
+                  <div class="min-w-0 flex-1"><p class="text-[17px] leading-snug text-ink [&_b]:font-normal [&_b]:underline [&_b]:underline-offset-4"><b>Mike</b> sent you a message about the Video Editor role.</p><p class="mono mt-2 text-primary" data-when>1 hour ago</p></div>
+                  <i class="dot mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i>
+                  <button type="button" data-rm class="relative z-[2] grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-[#F3F3F1] text-primary transition-colors hover:bg-ink hover:text-[#CEF79E]" aria-label="Dismiss"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button></article>
+              </div></div>
+              <div data-group="Yesterday"><p class="mono mb-1 text-primary">Yesterday</p><div class="flex flex-col gap-2">
+                <article class="row-in group relative flex items-start gap-4 rounded-[20px] bg-white p-5 transition-colors hover:bg-[#FBFBF9]" data-nid="inv-inv-2" data-unread="0" data-invite="inv-2">
+                  <a href="talent-invitations.html" data-read class="absolute inset-0 z-[1] rounded-[20px]" aria-label="Open notification"></a>
+                  <span class="ic grid h-11 w-11 shrink-0 place-items-center rounded-full"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+                  <div class="min-w-0 flex-1"><p class="text-[17px] leading-snug text-ink [&_b]:font-normal [&_b]:underline [&_b]:underline-offset-4"><b>Hoops</b> invited you to apply for <b>Video Editor</b>.</p><p class="mono mt-2 text-primary" data-when>Yesterday</p></div>
+                  <i class="dot mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i>
+                  <button type="button" data-rm class="relative z-[2] grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-[#F3F3F1] text-primary transition-colors hover:bg-ink hover:text-[#CEF79E]" aria-label="Dismiss"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button></article>
+                <article class="row-in group relative flex items-start gap-4 rounded-[20px] bg-white p-5 transition-colors hover:bg-[#FBFBF9]" data-nid="base-3" data-unread="1">
+                  <a href="my-portfolio.html" data-read class="absolute inset-0 z-[1] rounded-[20px]" aria-label="Open notification"></a>
+                  <span class="ic grid h-11 w-11 shrink-0 place-items-center rounded-full"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span>
+                  <div class="min-w-0 flex-1"><p class="text-[17px] leading-snug text-ink [&_b]:font-normal [&_b]:underline [&_b]:underline-offset-4">Your portfolio was viewed by <b>2 recruiters</b> this week.</p><p class="mono mt-2 text-primary" data-when>Yesterday, 4:12 PM</p></div>
+                  <i class="dot mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i>
+                  <button type="button" data-rm class="relative z-[2] grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-[#F3F3F1] text-primary transition-colors hover:bg-ink hover:text-[#CEF79E]" aria-label="Dismiss"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button></article>
+              </div></div>
+              <div data-group="Earlier"><p class="mono mb-1 text-primary">Earlier</p><div class="flex flex-col gap-2">
+                <article class="row-in group relative flex items-start gap-4 rounded-[20px] bg-white p-5 transition-colors hover:bg-[#FBFBF9]" data-nid="inv-inv-3" data-unread="0" data-invite="inv-3">
+                  <a href="talent-invitations.html" data-read class="absolute inset-0 z-[1] rounded-[20px]" aria-label="Open notification"></a>
+                  <span class="ic grid h-11 w-11 shrink-0 place-items-center rounded-full"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+                  <div class="min-w-0 flex-1"><p class="text-[17px] leading-snug text-ink [&_b]:font-normal [&_b]:underline [&_b]:underline-offset-4"><b>Arclent AI</b> invited you to apply for <b>AI Video Editor</b>.</p><p class="mono mt-2 text-primary" data-when>3 days ago</p></div>
+                  <i class="dot mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i>
+                  <button type="button" data-rm class="relative z-[2] grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-[#F3F3F1] text-primary transition-colors hover:bg-ink hover:text-[#CEF79E]" aria-label="Dismiss"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button></article>
+                <article class="row-in group relative flex items-start gap-4 rounded-[20px] bg-white p-5 transition-colors hover:bg-[#FBFBF9]" data-nid="inv-inv-4" data-unread="0" data-invite="inv-4">
+                  <a href="talent-invitations.html" data-read class="absolute inset-0 z-[1] rounded-[20px]" aria-label="Open notification"></a>
+                  <span class="ic grid h-11 w-11 shrink-0 place-items-center rounded-full"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+                  <div class="min-w-0 flex-1"><p class="text-[17px] leading-snug text-ink [&_b]:font-normal [&_b]:underline [&_b]:underline-offset-4"><b>Mara Online</b> invited you to apply for <b>Social Media Intern</b>.</p><p class="mono mt-2 text-primary" data-when>1 week ago</p></div>
+                  <i class="dot mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i>
+                  <button type="button" data-rm class="relative z-[2] grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-[#F3F3F1] text-primary transition-colors hover:bg-ink hover:text-[#CEF79E]" aria-label="Dismiss"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button></article>
+                <article class="row-in group relative flex items-start gap-4 rounded-[20px] bg-white p-5 transition-colors hover:bg-[#FBFBF9]" data-nid="base-4" data-unread="0">
+                  <a href="my-portfolio.html" data-read class="absolute inset-0 z-[1] rounded-[20px]" aria-label="Open notification"></a>
+                  <span class="ic grid h-11 w-11 shrink-0 place-items-center rounded-full"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76z"/><path d="m9 12 2 2 4-4"/></svg></span>
+                  <div class="min-w-0 flex-1"><p class="text-[17px] leading-snug text-ink [&_b]:font-normal [&_b]:underline [&_b]:underline-offset-4">Your work <b>Only Brilliant Chess</b> was verified.</p><p class="mono mt-2 text-primary" data-when>3 days ago</p></div>
+                  <i class="dot mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i>
+                  <button type="button" data-rm class="relative z-[2] grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-[#F3F3F1] text-primary transition-colors hover:bg-ink hover:text-[#CEF79E]" aria-label="Dismiss"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button></article>
+                <article class="row-in group relative flex items-start gap-4 rounded-[20px] bg-white p-5 transition-colors hover:bg-[#FBFBF9]" data-nid="base-5" data-unread="0">
+                  <a href="my-applications.html" data-read class="absolute inset-0 z-[1] rounded-[20px]" aria-label="Open notification"></a>
+                  <span class="ic grid h-11 w-11 shrink-0 place-items-center rounded-full"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg></span>
+                  <div class="min-w-0 flex-1"><p class="text-[17px] leading-snug text-ink [&_b]:font-normal [&_b]:underline [&_b]:underline-offset-4">You applied to <b>Social Media Intern</b> at Arclent AI.</p><p class="mono mt-2 text-primary" data-when>3 weeks ago</p></div>
+                  <i class="dot mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i>
+                  <button type="button" data-rm class="relative z-[2] grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-[#F3F3F1] text-primary transition-colors hover:bg-ink hover:text-[#CEF79E]" aria-label="Dismiss"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button></article>
+              </div></div>
+              <div id="empty" class="flex flex-col items-center gap-4 rounded-[20px] bg-white px-4 py-20 text-center" hidden><span class="grid h-16 w-16 place-items-center rounded-full bg-ink text-[#CEF79E]"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></span><p class="mono text-primary"><span data-e="unread" hidden>You are all caught up</span><span data-e="all" hidden>No notifications to show</span></p></div>
+            </div>
           </section>
           <aside class="relative overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-8 lg:sticky lg:top-24">
             <svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="ntp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#ntp)"/></svg>
@@ -485,58 +567,59 @@
     </div>
   </div>
 
+  <p id="toast" class="mono fixed bottom-24 right-6 z-40 rounded-[10px] bg-ink px-4 py-3 text-[#CEF79E]" hidden></p>
+  <script src="assets/invites.js"></script>
   <script>
-    const $ = (i) => document.getElementById(i), esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-    const ICON = {
-      app: '<rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/>',
-      msg: '<path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/>',
-      eye: '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>',
-      inv: '<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
-      ver: '<path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76z"/><path d="m9 12 2 2 4-4"/>',
+    const $ = (i) => document.getElementById(i);
+    const json = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) || d; } catch (e) { return d; } };
+    const items = [...document.querySelectorAll("#list article")];
+    const groups = [...document.querySelectorAll("#list [data-group]")];
+    const tabs = [...document.querySelectorAll("#tabs [data-f]")];
+    let filter = "all", timer;
+    const say = (m) => { const t = $("toast"); t.textContent = m; t.hidden = false; clearTimeout(timer); timer = setTimeout(() => { t.hidden = true; }, 2200); };
+
+    // invitation notifications are unread while the invitation is pending and not opened yet
+    const seen = json("arclent_notif_seen", []);
+    const live = new Set(Invites.ids());
+    items.forEach((it) => {
+      const inv = it.dataset.invite; if (!inv) return;
+      it.dataset.live = live.has(inv) ? "1" : "";
+      it.dataset.unread = Invites.status(inv) === "Pending" && !seen.includes("inv:" + inv) ? "1" : "0";
+    });
+    const saveSeen = () => {
+      const s = new Set(json("arclent_notif_seen", []));
+      items.forEach((it) => { if (it.dataset.invite && it.dataset.unread === "0") s.add("inv:" + it.dataset.invite); });
+      try { localStorage.setItem("arclent_notif_seen", JSON.stringify([...s])); } catch (e) {}
     };
-    let ITEMS = [
-      { id: 1, k: "app", t: "Your application for <b>Video Editor</b> at Hoops is under review.", w: "12 minutes ago", g: "Today", unread: true, href: "my-applications.html" },
-      { id: 2, k: "msg", t: "<b>Mike</b> sent you a message about the Video Editor role.", w: "1 hour ago", g: "Today", unread: true, href: "messages.html" },
-      { id: 3, k: "eye", t: "Your portfolio was viewed by <b>2 recruiters</b> this week.", w: "Yesterday, 4:12 PM", g: "Yesterday", unread: true, href: "my-portfolio.html" },
-      { id: 4, k: "ver", t: "Your work <b>Only Brilliant Chess</b> was verified.", w: "3 days ago", g: "Earlier", unread: false, href: "my-portfolio.html" },
-      { id: 5, k: "app", t: "You applied to <b>Social Media Intern</b> at Arclent AI.", w: "3 weeks ago", g: "Earlier", unread: false, href: "my-applications.html" },
-    ];
-    // seen state for derived invitation notifications
-    const SEEN_KEY = "arclent_notif_seen", seenSet = () => { try { return JSON.parse(localStorage.getItem(SEEN_KEY)) || []; } catch (e) { return []; } };
-    const saveSeen = () => { const s = new Set(seenSet()); ITEMS.forEach((i) => { if (i.key && !i.unread) s.add(i.key); }); try { localStorage.setItem(SEEN_KEY, JSON.stringify([...s])); } catch (e) {} };
-    if (window.Invites) {
-      const seen = seenSet(), grp = (w) => (/Just now|hour/.test(w) ? "Today" : w === "Yesterday" ? "Yesterday" : "Earlier");
-      Invites.all.slice().reverse().forEach((v, k) => { const key = "inv:" + v.id; ITEMS.unshift({ id: 100 + k, key, k: "inv", t: `<b>${esc(v.who)}</b> invited you to apply for <b>${esc(v.job)}</b>.`, w: v.when, g: grp(v.when), unread: Invites.status(v.id) === "Pending" && !seen.includes(key), href: "talent-invitations.html" }); });
-      ITEMS.sort((a, b) => ["Today", "Yesterday", "Earlier"].indexOf(a.g) - ["Today", "Yesterday", "Earlier"].indexOf(b.g));
-    }
-    let filter = "all";
-    const say = (m) => { const t = document.createElement("p"); t.className = "mono fixed bottom-24 right-6 z-40 rounded-[10px] bg-ink px-4 py-3 text-[#CEF79E]"; t.textContent = m; document.body.appendChild(t); setTimeout(() => t.remove(), 2200); };
-    function render() {
-      const n = ITEMS.filter((i) => i.unread).length;
-      $("tabs").innerHTML = [["all", "All"], ["unread", "Unread"]].map(([k, l]) => `<button type="button" role="tab" data-f="${k}" aria-selected="${filter === k}" class="tab ${filter === k ? "on" : ""}">${l}${k === "unread" && n ? `<span class="rounded-full bg-[#CEF79E] px-2 py-0.5 text-ink">${n}</span>` : ""}</button>`).join("");
+
+    const replay = (els) => els.forEach((el) => { el.style.animation = "none"; void el.offsetWidth; el.style.animation = ""; });
+    function refresh() {
+      const here = items.filter((i) => !i.dataset.invite || i.dataset.live).filter((i) => !i.dataset.gone);
+      const n = here.filter((i) => i.dataset.unread === "1").length;
+      const cnt = $("unread-n"); cnt.textContent = n; cnt.classList.toggle("hidden", !n);
       $("read-all").disabled = !n; $("read-all").classList.toggle("opacity-40", !n);
-      const list = ITEMS.filter((i) => filter === "all" || i.unread);
-      if (!list.length) { $("list").innerHTML = `<div class="flex flex-col items-center gap-4 rounded-[20px] bg-white px-4 py-20 text-center"><span class="grid h-16 w-16 place-items-center rounded-full bg-ink text-[#CEF79E]">${`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>`}</span><p class="mono text-primary">${filter === "unread" ? "You are all caught up" : "No notifications to show"}</p></div>`; return; }
-      let out = "", last = "";
-      list.forEach((i, k) => {
-        if (i.g !== last) { last = i.g; out += `<p class="mono ${out ? "mt-6" : ""} mb-1 text-primary">${i.g}</p>`; }
-        out += `<article class="row-in group relative flex items-start gap-4 rounded-[20px] bg-white p-5 transition-colors hover:bg-[#FBFBF9]" style="animation-delay:${k * 40}ms">
-          <a href="${i.href}" data-read="${i.id}" class="absolute inset-0 z-[1] rounded-[20px]" aria-label="Open notification"></a>
-          <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full ${i.unread ? "bg-ink text-[#CEF79E]" : "bg-[#F3F3F1] text-primary"}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${ICON[i.k]}</svg></span>
-          <div class="min-w-0 flex-1"><p class="text-[17px] leading-snug text-ink [&_b]:font-normal [&_b]:underline [&_b]:underline-offset-4">${i.t}</p><p class="mono mt-2 text-primary">${esc(i.w)}</p></div>
-          ${i.unread ? '<i class="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i>' : ""}
-          <button type="button" data-rm="${i.id}" class="relative z-[2] grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-[#F3F3F1] text-primary transition-colors hover:bg-ink hover:text-[#CEF79E]" aria-label="Dismiss"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button></article>`;
+      tabs.forEach((t) => { const on = t.dataset.f === filter; t.classList.toggle("on", on); t.setAttribute("aria-selected", on); });
+      let shown = 0;
+      items.forEach((i) => { const ok = here.includes(i) && (filter === "all" || i.dataset.unread === "1"); i.hidden = !ok; if (ok) shown++; });
+      replay(items.filter((i) => !i.hidden));
+      items.filter((i) => !i.hidden).forEach((i, k) => { i.style.animationDelay = k * 40 + "ms"; });
+      let first = true;
+      groups.forEach((g) => {
+        const any = [...g.querySelectorAll("article")].some((a) => !a.hidden);
+        g.hidden = !any; g.classList.toggle("mt-6", any && !first); if (any) first = false;
       });
-      $("list").innerHTML = out; saveSeen();
+      $("empty").hidden = shown > 0;
+      document.querySelectorAll("[data-e]").forEach((e) => { e.hidden = e.dataset.e !== filter; });
+      saveSeen();
     }
     document.addEventListener("click", (e) => {
       const f = e.target.closest("[data-f]"), r = e.target.closest("[data-rm]"), rd = e.target.closest("[data-read]");
-      if (f) { filter = f.dataset.f; render(); }
-      else if (r) { ITEMS = ITEMS.filter((i) => i.id !== +r.dataset.rm); render(); }
-      else if (rd) { const it = ITEMS.find((i) => i.id === +rd.dataset.read); if (it) it.unread = false; }
-      else if (e.target.closest("#read-all")) { ITEMS.forEach((i) => { i.unread = false; }); render(); say("All notifications marked as read"); }
+      if (f) { filter = f.dataset.f; refresh(); }
+      else if (r) { r.closest("article").dataset.gone = "1"; refresh(); }
+      else if (rd) { rd.closest("article").dataset.unread = "0"; saveSeen(); }
+      else if (e.target.closest("#read-all")) { items.forEach((i) => { i.dataset.unread = "0"; }); refresh(); say("All notifications marked as read"); }
     });
-    render();
+    refresh();
   </script>
 
   <script>
@@ -572,6 +655,15 @@
     applySidebarState();
   </script>
   <script src="assets/invites.js"></script>
+    <!-- help button, feedback popup and founder-call popup (behaviour: assets/help-fab.js) -->
+  <div id="hf-scrim"></div>
+  <div id="hf-root"><div class="hf-row"><span class="hf-label">Feedback</span><button type="button" class="hf-tile" data-hf="feedback" aria-label="Send feedback"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="M15 5l4 4"/><path d="M12 22h10"/></svg></button></div><div class="hf-row"><span class="hf-label">Talk with founder</span><button type="button" class="hf-tile" data-hf="founder" aria-label="Talk with the founder"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="9" cy="13" r="2"/><circle cx="15" cy="13" r="2"/><path d="M11 13h2"/><path d="M8 17h8"/></svg></button></div><div class="hf-close-row"><span class="hf-label">Close</span><button type="button" id="hf-main" aria-label="Help" aria-expanded="false" aria-haspopup="true"><svg class="hf-hand" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0v5"/><path d="M14 10V4a2 2 0 0 0-4 0v6"/><path d="M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg><svg class="hf-x" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button></div></div>
+  <div class="hf-modal" id="hf-feedback" role="dialog" aria-modal="true"><div class="hf-card"><button type="button" class="hf-x2" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button><div class="hf-body"><p class="mono" style="color:#CEF79E">Feedback</p><h2>Tell us what you think</h2><div class="hf-chips"><button type="button" class="hf-chip" aria-pressed="true">Idea</button><button type="button" class="hf-chip" aria-pressed="false">Something is broken</button><button type="button" class="hf-chip" aria-pressed="false">Praise</button></div><textarea placeholder="Write your feedback" aria-label="Your feedback"></textarea><p class="hf-err mono">Please write a few words first.</p><button type="button" class="hf-send">Send feedback</button></div></div></div>
+  <div class="hf-modal" id="hf-founder" role="dialog" aria-modal="true"><div class="hf-card"><button type="button" class="hf-x2" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button><div class="hf-body">
+    <div data-hf-view="intro"><p class="mono" style="color:#CEF79E">Talk with the founder</p><h2>Let’s improve your results on Arclent</h2><p style="margin:14px 0 0;color:rgba(255,255,255,.7);font-size:17px;line-height:1.4">If something felt confusing, didn’t go as expected, or seemed missing while using Arclent, book a call with <b style="font-weight:400;color:#fff">Idris</b>, our co-founder, and share your experience so we can help and make things better.</p><div class="hf-founder-row"><div class="hf-founder-who"><span class="hf-founder-av" style="background-image:url('https://images.unsplash.com/photo-1741455620227-3b1c51e01419?crop=faces&fit=crop&w=100&h=100&q=80')"></span><div><p class="hf-founder-name">Idris Navarro</p><p class="mono hf-founder-role">Co-founder</p></div></div><button type="button" class="hf-cta" id="hf-book-cta">Book a Call with Idris</button></div></div>
+    <div data-hf-view="slots" hidden><button type="button" class="hf-back" id="hf-back">&larr; Back</button><p class="mono" style="color:#CEF79E;margin-top:14px">Book a call with Idris</p><h2>Pick a time</h2><p style="margin:14px 0 0;color:rgba(255,255,255,.7);font-size:17px;line-height:1.3">Questions, ideas or a problem you want solved? Pick a time and you will talk for 15 minutes.</p><div class="hf-chips"><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button></div><textarea placeholder="Anything we should know first? (optional)" aria-label="Note" style="min-height:90px"></textarea><p class="hf-err mono">Pick a time first.</p><button type="button" class="hf-send">Request call</button></div>
+  </div></div></div>
+  <p class="hf-toast" id="hf-toast" hidden></p>
   <script src="assets/help-fab.js" defer></script>
 </body>
 </html>

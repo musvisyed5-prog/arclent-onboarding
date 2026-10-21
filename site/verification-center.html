@@ -353,6 +353,8 @@
     .tab:hover { color:#222F30; } .tab.on { background:#222F30; color:#fff; }
     [hidden] { display: none !important; }
   </style>
+  <link rel="stylesheet" href="assets/help-fab.css" />
+  <style>#pending article[hidden], #verified article[hidden] { display: none !important; }</style>
 </head>
 <body class="min-h-screen bg-surface font-sans text-ink">
   <div id="sidebar-backdrop" class="fixed inset-0 z-30 hidden bg-black/30"></div>
@@ -473,47 +475,50 @@
         <h1 class="mt-4 text-[clamp(48px,7.4vw,120px)] font-normal leading-[.92] tracking-[-0.055em] text-ink">Verification <span class="text-primary/45">center.</span></h1>
         <p class="mt-5 max-w-[760px] text-[18px] leading-snug text-primary">Review verification requests submitted by users, confirm completed work, and manage all pending and verified submissions from a single dashboard.</p>
 
-        <div id="sum" class="relative mt-10 grid grid-cols-3 overflow-hidden rounded-[24px] bg-ink text-white"></div>
+        <div id="sum" class="relative mt-10 grid grid-cols-3 overflow-hidden rounded-[24px] bg-ink text-white"><svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="vcp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#vcp)"/></svg><div class="relative p-6 sm:p-8"><p class="mono text-[#CEF79E]">Pending</p><p data-sum="pending" class="mt-4 text-[clamp(48px,6vw,96px)] leading-none tracking-[-0.055em] text-[#CEF79E]">1</p></div><div class="relative border-l border-white/15 p-6 sm:p-8"><p class="mono text-white/60">Verified</p><p data-sum="verified" class="mt-4 text-[clamp(48px,6vw,96px)] leading-none tracking-[-0.055em] ">1</p></div><div class="relative border-l border-white/15 p-6 sm:p-8"><p class="mono text-white/60">Denied</p><p data-sum="denied" class="mt-4 text-[clamp(48px,6vw,96px)] leading-none tracking-[-0.055em] ">0</p></div></div>
 
         <div class="mt-12 flex items-center justify-between gap-4"><h2 class="text-[clamp(28px,3vw,44px)] font-normal leading-none tracking-[-0.04em] text-ink">Needs your review</h2><p id="pend-n" class="mono text-primary"></p></div>
-        <div id="pending" class="mt-5 grid gap-4 md:grid-cols-2"></div>
+        <div id="pending" class="mt-5 grid gap-4 md:grid-cols-2"><article data-id="p1" class="overflow-hidden rounded-[24px] bg-white">
+          <div class="relative grid aspect-[16/8] place-items-center overflow-hidden bg-ink text-[#CEF79E]"><svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="vcp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#vcp)"/></svg><span class="relative grid h-14 w-14 place-items-center rounded-full bg-[#CEF79E] text-ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="mono absolute left-5 top-5 rounded-full bg-white/10 px-3 py-1.5 text-white">YouTube</span></div>
+          <div class="p-6 sm:p-7">
+            <h3 class="text-[clamp(22px,2vw,28px)] leading-tight tracking-[-0.02em] text-ink">The TRAGIC Story of Andrew Luck !!</h3>
+            <p class="mt-4 flex items-center gap-3"><span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-ink text-[#CEF79E]">M</span><span class="min-w-0"><span class="block truncate text-[17px] text-ink">Mosvie Media</span><span class="mono block truncate text-primary">Thumbnail / Graphic Designer</span></span></p>
+            <div class="mt-6 flex gap-2"><a href="verify-request?id=p1" class="mono grid h-12 flex-1 place-items-center rounded-[12px] bg-ink text-white transition-colors hover:bg-[#CEF79E] hover:text-ink">Review and verify</a><button type="button" data-deny="0" class="mono h-12 rounded-[12px] px-5 text-[#B23B3B] outline outline-1 -outline-offset-1 outline-[#B23B3B]/40 transition-colors hover:bg-[#B23B3B] hover:text-white">Deny</button></div>
+          </div></article>
+          <p id="pend-empty" class="mono rounded-[24px] bg-white px-4 py-16 text-center text-primary md:col-span-2" hidden>Nothing is waiting for review</p></div>
 
         <h2 class="mt-14 text-[clamp(28px,3vw,44px)] font-normal leading-none tracking-[-0.04em] text-ink">Verified work</h2>
-        <div id="verified" class="mt-5 flex flex-col gap-2"></div>
+        <div id="verified" class="mt-5 flex flex-col gap-2"><article data-v="p1" hidden class="flex flex-wrap items-center gap-4 rounded-[20px] bg-white p-5 sm:p-6">
+          <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#CEF79E] text-ink"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span>
+          <span class="min-w-0 flex-1"><span class="block truncate text-[19px] tracking-[-0.01em] text-ink">The TRAGIC Story of Andrew Luck !!</span><span class="mono mt-1 block truncate text-primary">Mosvie Media &middot; Thumbnail / Graphic Designer &middot; YouTube</span></span>
+          <span class="mono text-primary">Just now</span></article>
+          <article data-v="z" class="flex flex-wrap items-center gap-4 rounded-[20px] bg-white p-5 sm:p-6">
+          <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#CEF79E] text-ink"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span>
+          <span class="min-w-0 flex-1"><span class="block truncate text-[19px] tracking-[-0.01em] text-ink">The TRAGIC Story of Wilfried Zaha</span><span class="mono mt-1 block truncate text-primary">Mosvie Media &middot; Thumbnail / Graphic Designer &middot; YouTube</span></span>
+          <span class="mono text-primary">2 months, 1 week ago</span></article>
+          <p id="ver-empty" class="mono rounded-[20px] bg-white px-4 py-14 text-center text-primary" hidden>No verified work yet</p></div>
       </div>
     </div>
   </div>
 
   <script>
-    const $ = (i) => document.getElementById(i), esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-    const DATA = {
-      verified: [{ p: "YouTube", v: "The TRAGIC Story of Wilfried Zaha", t: "Mosvie Media", r: "Thumbnail / Graphic Designer", d: "2 months, 1 week ago" }],
-      pending: [{ id: "p1", p: "YouTube", v: "The TRAGIC Story of Andrew Luck !!", t: "Mosvie Media", r: "Thumbnail / Graphic Designer" }],
-    };
+    const $ = (i) => document.getElementById(i);
+    const say = (m) => { const t = document.getElementById("toast"); t.textContent = m; t.hidden = false; clearTimeout(say.t); say.t = setTimeout(() => { t.hidden = true; }, 2200); };
+    const pendingRows = [...document.querySelectorAll("#pending article")];
+    const verifiedRows = [...document.querySelectorAll("#verified article")];
     let denied = 0;
-    const say = (m) => { const t = document.createElement("p"); t.className = "mono fixed bottom-24 right-6 z-40 rounded-[10px] bg-ink px-4 py-3 text-[#CEF79E]"; t.textContent = m; document.body.appendChild(t); setTimeout(() => t.remove(), 2200); };
-    try { const r = sessionStorage.getItem("vc-result"); if (r) { sessionStorage.removeItem("vc-result"); const [k, id] = r.split(":"), i = DATA.pending.findIndex((x) => x.id === id); if (i > -1) { const x = DATA.pending.splice(i, 1)[0]; if (k === "verified") { x.d = "Just now"; DATA.verified.unshift(x); } else denied++; setTimeout(() => say(k === "verified" ? "Submission verified" : "Request denied"), 300); } } } catch (e) {}
-    const PATTERN = '<svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="vcp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#vcp)"/></svg>';
-    const PLAY = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
-    const CHECK = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>';
+    // the review page leaves its verdict in sessionStorage: a verified request moves into the Verified list
+    try { const r = sessionStorage.getItem("vc-result"); if (r) { sessionStorage.removeItem("vc-result"); const [k, id] = r.split(":"), row = pendingRows.find((x) => x.dataset.id === id); if (row) { row.dataset.gone = "1"; if (k === "verified") verifiedRows.find((v) => v.dataset.v === id).dataset.on = "1"; else denied++; setTimeout(() => say(k === "verified" ? "Submission verified" : "Request denied"), 300); } } } catch (e) {}
     function render() {
-      const n = DATA.pending.length;
-      $("sum").innerHTML = PATTERN + [["Pending", n, true], ["Verified", DATA.verified.length, false], ["Denied", denied, false]].map(([l, c, hi], i) => `<div class="relative ${i ? "border-l border-white/15 " : ""}p-6 sm:p-8"><p class="mono ${hi ? "text-[#CEF79E]" : "text-white/60"}">${l}</p><p class="mt-4 text-[clamp(48px,6vw,96px)] leading-none tracking-[-0.055em] ${hi ? "text-[#CEF79E]" : ""}">${c}</p></div>`).join("");
+      const left = pendingRows.filter((x) => !x.dataset.gone), n = left.length, ver = verifiedRows.filter((v) => v.dataset.v === "z" || v.dataset.on);
+      pendingRows.forEach((x) => { x.hidden = !!x.dataset.gone; });
+      verifiedRows.forEach((v) => { v.hidden = !ver.includes(v); });
+      document.querySelector('[data-sum="pending"]').textContent = n; document.querySelector('[data-sum="verified"]').textContent = ver.length; document.querySelector('[data-sum="denied"]').textContent = denied;
       const sb = $("sb-badge"); if (sb) { sb.textContent = n; sb.hidden = !n; }
       $("pend-n").textContent = n ? n + " waiting" : "All clear";
-      $("pending").innerHTML = n ? DATA.pending.map((x, i) => `<article class="overflow-hidden rounded-[24px] bg-white">
-          <div class="relative grid aspect-[16/8] place-items-center overflow-hidden bg-ink text-[#CEF79E]">${PATTERN}<span class="relative grid h-14 w-14 place-items-center rounded-full bg-[#CEF79E] text-ink">${PLAY}</span><span class="mono absolute left-5 top-5 rounded-full bg-white/10 px-3 py-1.5 text-white">${esc(x.p)}</span></div>
-          <div class="p-6 sm:p-7">
-            <h3 class="text-[clamp(22px,2vw,28px)] leading-tight tracking-[-0.02em] text-ink">${esc(x.v)}</h3>
-            <p class="mt-4 flex items-center gap-3"><span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-ink text-[#CEF79E]">${esc(x.t[0])}</span><span class="min-w-0"><span class="block truncate text-[17px] text-ink">${esc(x.t)}</span><span class="mono block truncate text-primary">${esc(x.r)}</span></span></p>
-            <div class="mt-6 flex gap-2"><a href="verify-request?id=${x.id}" class="mono grid h-12 flex-1 place-items-center rounded-[12px] bg-ink text-white transition-colors hover:bg-[#CEF79E] hover:text-ink">Review and verify</a><button type="button" data-deny="${i}" class="mono h-12 rounded-[12px] px-5 text-[#B23B3B] outline outline-1 -outline-offset-1 outline-[#B23B3B]/40 transition-colors hover:bg-[#B23B3B] hover:text-white">Deny</button></div>
-          </div></article>`).join("") : `<p class="mono rounded-[24px] bg-white px-4 py-16 text-center text-primary md:col-span-2">Nothing is waiting for review</p>`;
-      $("verified").innerHTML = DATA.verified.length ? DATA.verified.map((x) => `<article class="flex flex-wrap items-center gap-4 rounded-[20px] bg-white p-5 sm:p-6">
-          <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#CEF79E] text-ink">${CHECK}</span>
-          <span class="min-w-0 flex-1"><span class="block truncate text-[19px] tracking-[-0.01em] text-ink">${esc(x.v)}</span><span class="mono mt-1 block truncate text-primary">${esc(x.t)} &middot; ${esc(x.r)} &middot; ${esc(x.p)}</span></span>
-          <span class="mono text-primary">${esc(x.d)}</span></article>`).join("") : `<p class="mono rounded-[20px] bg-white px-4 py-14 text-center text-primary">No verified work yet</p>`;
+      $("pend-empty").hidden = n > 0; $("ver-empty").hidden = ver.length > 0;
     }
-    document.addEventListener("click", (e) => { const d = e.target.closest("[data-deny]"); if (d) { DATA.pending.splice(+d.dataset.deny, 1); denied++; render(); say("Request denied"); } });
+    document.addEventListener("click", (e) => { const dn = e.target.closest("[data-deny]"); if (dn) { dn.closest("article").dataset.gone = "1"; denied++; render(); say("Request denied"); } });
     render();
   </script>
   <script>
@@ -549,6 +554,16 @@
     applySidebarState();
   </script>
   <script src="motion.js"></script>
+    <!-- help button, feedback popup and founder-call popup (behaviour: assets/help-fab.js) -->
+  <div id="hf-scrim"></div>
+  <div id="hf-root"><div class="hf-row"><span class="hf-label">Feedback</span><button type="button" class="hf-tile" data-hf="feedback" aria-label="Send feedback"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="M15 5l4 4"/><path d="M12 22h10"/></svg></button></div><div class="hf-row"><span class="hf-label">Talk with founder</span><button type="button" class="hf-tile" data-hf="founder" aria-label="Talk with the founder"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="9" cy="13" r="2"/><circle cx="15" cy="13" r="2"/><path d="M11 13h2"/><path d="M8 17h8"/></svg></button></div><div class="hf-close-row"><span class="hf-label">Close</span><button type="button" id="hf-main" aria-label="Help" aria-expanded="false" aria-haspopup="true"><svg class="hf-hand" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0v5"/><path d="M14 10V4a2 2 0 0 0-4 0v6"/><path d="M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg><svg class="hf-x" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button></div></div>
+  <div class="hf-modal" id="hf-feedback" role="dialog" aria-modal="true"><div class="hf-card"><button type="button" class="hf-x2" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button><div class="hf-body"><p class="mono" style="color:#CEF79E">Feedback</p><h2>Tell us what you think</h2><div class="hf-chips"><button type="button" class="hf-chip" aria-pressed="true">Idea</button><button type="button" class="hf-chip" aria-pressed="false">Something is broken</button><button type="button" class="hf-chip" aria-pressed="false">Praise</button></div><textarea placeholder="Write your feedback" aria-label="Your feedback"></textarea><p class="hf-err mono">Please write a few words first.</p><button type="button" class="hf-send">Send feedback</button></div></div></div>
+  <div class="hf-modal" id="hf-founder" role="dialog" aria-modal="true"><div class="hf-card"><button type="button" class="hf-x2" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button><div class="hf-body">
+    <div data-hf-view="intro"><p class="mono" style="color:#CEF79E">Talk with the founder</p><h2>Let’s improve your results on Arclent</h2><p style="margin:14px 0 0;color:rgba(255,255,255,.7);font-size:17px;line-height:1.4">If something felt confusing, didn’t go as expected, or seemed missing while using Arclent, book a call with <b style="font-weight:400;color:#fff">Idris</b>, our co-founder, and share your experience so we can help and make things better.</p><div class="hf-founder-row"><div class="hf-founder-who"><span class="hf-founder-av" style="background-image:url('https://images.unsplash.com/photo-1741455620227-3b1c51e01419?crop=faces&fit=crop&w=100&h=100&q=80')"></span><div><p class="hf-founder-name">Idris Navarro</p><p class="mono hf-founder-role">Co-founder</p></div></div><button type="button" class="hf-cta" id="hf-book-cta">Book a Call with Idris</button></div></div>
+    <div data-hf-view="slots" hidden><button type="button" class="hf-back" id="hf-back">&larr; Back</button><p class="mono" style="color:#CEF79E;margin-top:14px">Book a call with Idris</p><h2>Pick a time</h2><p style="margin:14px 0 0;color:rgba(255,255,255,.7);font-size:17px;line-height:1.3">Questions, ideas or a problem you want solved? Pick a time and you will talk for 15 minutes.</p><div class="hf-chips"><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button></div><textarea placeholder="Anything we should know first? (optional)" aria-label="Note" style="min-height:90px"></textarea><p class="hf-err mono">Pick a time first.</p><button type="button" class="hf-send">Request call</button></div>
+  </div></div></div>
+  <p class="hf-toast" id="hf-toast" hidden></p>
   <script src="assets/help-fab.js" defer></script>
+  <p id="toast" class="mono fixed bottom-24 right-6 z-40 rounded-[10px] bg-ink px-4 py-3 text-[#CEF79E]" hidden></p>
 </body>
 </html>

@@ -333,6 +333,8 @@
     .vlink { background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat; padding-bottom: 2px; }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.1/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="assets/help-fab.css" />
+  <link rel="stylesheet" href="assets/badges.css" />
 </head>
 <body class="min-h-screen bg-surface font-sans text-ink">
   <div id="sidebar-backdrop" class="fixed inset-0 z-30 hidden bg-black/30"></div>
@@ -452,7 +454,7 @@
         <div class="flex flex-wrap items-end justify-between gap-6">
           <div>
             <p id="today-date" class="mono text-primary"></p>
-            <h1 class="mt-4 text-[clamp(48px,7vw,112px)] font-normal leading-[.94] tracking-[-0.055em] text-ink">Welcome back, <span class="text-primary/45">Mike.</span><span id="rv-mount"></span></h1>
+            <h1 class="mt-4 text-[clamp(48px,7vw,112px)] font-normal leading-[.94] tracking-[-0.055em] text-ink">Welcome back, <span class="text-primary/45">Mike.</span><span id="rv-mount"><span class="rv-badge rv-tip" tabindex="0" data-tip="This recruiter is Arclent Verified" data-rv-badge="creator" hidden><img src="assets/recruiter-verified.png" alt="This recruiter is Arclent Verified" /></span></span></h1>
             <p class="mt-4 text-[18px] text-primary">Here's what's happening with your applications.</p>
           </div>
           <a href="post-job.html" class="mono mb-2 inline-flex h-12 items-center gap-3 rounded-[12px] bg-ink px-5 text-white transition-colors hover:bg-[#CEF79E] hover:text-ink"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>Post a job</a>
@@ -510,32 +512,32 @@
             <div class="flex items-center justify-between gap-4"><p class="mono text-primary">Recent applications</p><a href="applicants.html" class="mono tl text-ink">View all</a></div>
             <ul class="mt-3">
             <li class="group flex items-center gap-4 border-t border-[#E7E8E1] py-4 first:border-t-0">
-              <span data-am="0" class="h-11 w-11 shrink-0 rounded-full bg-cover bg-center"></span>
-              <span class="min-w-0 flex-1"><span class="block truncate text-[17px] tracking-[-0.01em] text-ink">c.g.goncalves2000@gmail.com</span><span class="mono mt-1 block text-primary" data-amsub>Video Editor &middot; Full time</span></span>
+              <span class="h-11 w-11 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1625241152315-4a698f74ceb7?crop=faces&fit=crop&w=120&h=120&q=80')"></span>
+              <span class="min-w-0 flex-1"><span class="block truncate text-[17px] tracking-[-0.01em] text-ink">c.g.goncalves2000@gmail.com</span><span class="mono mt-1 block text-primary"><span class="rv-tip" tabindex="0" data-tip="Arclent Verified Gold · 1M+ subscribers"><img src="assets/badge-gold.png" alt="" class="ml-1.5 inline-block h-5 w-5 align-[-3px]" /></span> Video Editor &middot; United States</span></span>
               <span class="mono hidden rounded-[8px] px-3 py-1.5 sm:inline-block bg-[#EEEEEE] text-ink">UNDER_REVIEW</span>
               <a href="job-applicants?id=hoops-video-editor" class="mono inline-flex shrink-0 items-center gap-2 text-ink transition-colors hover:text-primary">View <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
             </li>
             <li class="group flex items-center gap-4 border-t border-[#E7E8E1] py-4 first:border-t-0">
-              <span data-am="1" class="h-11 w-11 shrink-0 rounded-full bg-cover bg-center"></span>
-              <span class="min-w-0 flex-1"><span class="block truncate text-[17px] tracking-[-0.01em] text-ink">kapiltechnical77@gmail.com</span><span class="mono mt-1 block text-primary" data-amsub>Video Editor &middot; Full time</span></span>
+              <span class="h-11 w-11 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1734830268394-6c4a1f165af1?crop=faces&fit=crop&w=120&h=120&q=80')"></span>
+              <span class="min-w-0 flex-1"><span class="block truncate text-[17px] tracking-[-0.01em] text-ink">kapiltechnical77@gmail.com</span><span class="mono mt-1 block text-primary"> Video Editor &middot; Brazil</span></span>
               <span class="mono hidden rounded-[8px] px-3 py-1.5 sm:inline-block bg-[#F9DDDD] text-[#B93A3A]">REJECTED</span>
               <a href="job-applicants?id=hoops-video-editor" class="mono inline-flex shrink-0 items-center gap-2 text-ink transition-colors hover:text-primary">View <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
             </li>
             <li class="group flex items-center gap-4 border-t border-[#E7E8E1] py-4 first:border-t-0">
-              <span data-am="2" class="h-11 w-11 shrink-0 rounded-full bg-cover bg-center"></span>
-              <span class="min-w-0 flex-1"><span class="block truncate text-[17px] tracking-[-0.01em] text-ink">rounakjangir80@gmail.com</span><span class="mono mt-1 block text-primary" data-amsub>Video Editor &middot; Full time</span></span>
+              <span class="h-11 w-11 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1748028313767-67d97c23a0d0?crop=faces&fit=crop&w=120&h=120&q=80')"></span>
+              <span class="min-w-0 flex-1"><span class="block truncate text-[17px] tracking-[-0.01em] text-ink">rounakjangir80@gmail.com</span><span class="mono mt-1 block text-primary"><span class="rv-tip" tabindex="0" data-tip="Arclent Verified Diamond · 10M+ subscribers"><img src="assets/badge-diamond.png" alt="" class="ml-1.5 inline-block h-5 w-5 align-[-3px]" /></span> Video Editor &middot; India</span></span>
               <span class="mono hidden rounded-[8px] px-3 py-1.5 sm:inline-block bg-[#F9DDDD] text-[#B93A3A]">REJECTED</span>
               <a href="job-applicants?id=hoops-video-editor" class="mono inline-flex shrink-0 items-center gap-2 text-ink transition-colors hover:text-primary">View <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
             </li>
             <li class="group flex items-center gap-4 border-t border-[#E7E8E1] py-4 first:border-t-0">
-              <span data-am="3" class="h-11 w-11 shrink-0 rounded-full bg-cover bg-center"></span>
-              <span class="min-w-0 flex-1"><span class="block truncate text-[17px] tracking-[-0.01em] text-ink">zen.motion.studios@gmail.com</span><span class="mono mt-1 block text-primary" data-amsub>Video Editor &middot; Full time</span></span>
+              <span class="h-11 w-11 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1701878133751-8279cb13aabd?crop=faces&fit=crop&w=120&h=120&q=80')"></span>
+              <span class="min-w-0 flex-1"><span class="block truncate text-[17px] tracking-[-0.01em] text-ink">zen.motion.studios@gmail.com</span><span class="mono mt-1 block text-primary"><span class="rv-tip" tabindex="0" data-tip="Arclent Verified Silver · 100K+ subscribers"><img src="assets/badge-silver.png" alt="" class="ml-1.5 inline-block h-5 w-5 align-[-3px]" /></span> Video Editor &middot; Nigeria</span></span>
               <span class="mono hidden rounded-[8px] px-3 py-1.5 sm:inline-block bg-[#F9DDDD] text-[#B93A3A]">REJECTED</span>
               <a href="job-applicants?id=hoops-video-editor" class="mono inline-flex shrink-0 items-center gap-2 text-ink transition-colors hover:text-primary">View <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
             </li>
             <li class="group flex items-center gap-4 border-t border-[#E7E8E1] py-4 first:border-t-0">
-              <span data-am="4" class="h-11 w-11 shrink-0 rounded-full bg-cover bg-center"></span>
-              <span class="min-w-0 flex-1"><span class="block truncate text-[17px] tracking-[-0.01em] text-ink">wings11101@gmail.com</span><span class="mono mt-1 block text-primary" data-amsub>Video Editor &middot; Full time</span></span>
+              <span class="h-11 w-11 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1713456047082-4e844b81c494?crop=faces&fit=crop&w=120&h=120&q=80')"></span>
+              <span class="min-w-0 flex-1"><span class="block truncate text-[17px] tracking-[-0.01em] text-ink">wings11101@gmail.com</span><span class="mono mt-1 block text-primary"> Video Editor &middot; United Kingdom</span></span>
               <span class="mono hidden rounded-[8px] px-3 py-1.5 sm:inline-block bg-[#F9DDDD] text-[#B93A3A]">REJECTED</span>
               <a href="job-applicants?id=hoops-video-editor" class="mono inline-flex shrink-0 items-center gap-2 text-ink transition-colors hover:text-primary">View <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
             </li>
@@ -601,17 +603,18 @@
     applySidebarState();
   </script>
   <script src="motion.js"></script>
-  <script src="assets/applicant-meta.js"></script>
-  <script>
-    document.querySelectorAll("[data-am]").forEach((el) => {
-      const i = +el.dataset.am, li = el.closest("li");
-      el.style.backgroundImage = `url('${AM.photo(i, 120)}')`;
-      li.querySelector("[data-amsub]").innerHTML = `${AM.badge(i)} Video Editor &middot; ${AM.loc(i)}`;
-    });
-  </script>
+    <!-- help button, feedback popup and founder-call popup (behaviour: assets/help-fab.js) -->
+  <div id="hf-scrim"></div>
+  <div id="hf-root"><div class="hf-row"><span class="hf-label">Feedback</span><button type="button" class="hf-tile" data-hf="feedback" aria-label="Send feedback"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="M15 5l4 4"/><path d="M12 22h10"/></svg></button></div><div class="hf-row"><span class="hf-label">Talk with founder</span><button type="button" class="hf-tile" data-hf="founder" aria-label="Talk with the founder"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="9" cy="13" r="2"/><circle cx="15" cy="13" r="2"/><path d="M11 13h2"/><path d="M8 17h8"/></svg></button></div><div class="hf-close-row"><span class="hf-label">Close</span><button type="button" id="hf-main" aria-label="Help" aria-expanded="false" aria-haspopup="true"><svg class="hf-hand" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0v5"/><path d="M14 10V4a2 2 0 0 0-4 0v6"/><path d="M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg><svg class="hf-x" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button></div></div>
+  <div class="hf-modal" id="hf-feedback" role="dialog" aria-modal="true"><div class="hf-card"><button type="button" class="hf-x2" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button><div class="hf-body"><p class="mono" style="color:#CEF79E">Feedback</p><h2>Tell us what you think</h2><div class="hf-chips"><button type="button" class="hf-chip" aria-pressed="true">Idea</button><button type="button" class="hf-chip" aria-pressed="false">Something is broken</button><button type="button" class="hf-chip" aria-pressed="false">Praise</button></div><textarea placeholder="Write your feedback" aria-label="Your feedback"></textarea><p class="hf-err mono">Please write a few words first.</p><button type="button" class="hf-send">Send feedback</button></div></div></div>
+  <div class="hf-modal" id="hf-founder" role="dialog" aria-modal="true"><div class="hf-card"><button type="button" class="hf-x2" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button><div class="hf-body">
+    <div data-hf-view="intro"><p class="mono" style="color:#CEF79E">Talk with the founder</p><h2>Let’s improve your results on Arclent</h2><p style="margin:14px 0 0;color:rgba(255,255,255,.7);font-size:17px;line-height:1.4">If something felt confusing, didn’t go as expected, or seemed missing while using Arclent, book a call with <b style="font-weight:400;color:#fff">Idris</b>, our co-founder, and share your experience so we can help and make things better.</p><div class="hf-founder-row"><div class="hf-founder-who"><span class="hf-founder-av" style="background-image:url('https://images.unsplash.com/photo-1741455620227-3b1c51e01419?crop=faces&fit=crop&w=100&h=100&q=80')"></span><div><p class="hf-founder-name">Idris Navarro</p><p class="mono hf-founder-role">Co-founder</p></div></div><button type="button" class="hf-cta" id="hf-book-cta">Book a Call with Idris</button></div></div>
+    <div data-hf-view="slots" hidden><button type="button" class="hf-back" id="hf-back">&larr; Back</button><p class="mono" style="color:#CEF79E;margin-top:14px">Book a call with Idris</p><h2>Pick a time</h2><p style="margin:14px 0 0;color:rgba(255,255,255,.7);font-size:17px;line-height:1.3">Questions, ideas or a problem you want solved? Pick a time and you will talk for 15 minutes.</p><div class="hf-chips"><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button></div><textarea placeholder="Anything we should know first? (optional)" aria-label="Note" style="min-height:90px"></textarea><p class="hf-err mono">Pick a time first.</p><button type="button" class="hf-send">Request call</button></div>
+  </div></div></div>
+  <p class="hf-toast" id="hf-toast" hidden></p>
   <script src="assets/help-fab.js" defer></script>
-  <script src="assets/tier-tip.js"></script>
   <script src="assets/verify-badge.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () { if (window.RVerify) RVerify.mount(document.getElementById("rv-mount"), "creator"); });</script>
+  <div id="tt-global" role="tooltip"></div>
+  <script src="assets/tier-tip.js"></script>
 </body>
 </html>

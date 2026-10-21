@@ -351,6 +351,8 @@
     .mtab:hover { color:#222F30; } .mtab.on { background:#222F30; color:#fff; }
     .jrow { animation: jrowIn .6s cubic-bezier(.22,1,.36,1) both; } @keyframes jrowIn { from { opacity: 0; transform: translateY(14px); } }
   </style>
+  <link rel="stylesheet" href="assets/help-fab.css" />
+  <style>#list [hidden] { display: none !important; }</style>
 </head>
 <body class="min-h-screen bg-surface font-sans text-ink">
   <div id="sidebar-backdrop" class="fixed inset-0 z-30 hidden bg-black/30"></div>
@@ -474,19 +476,36 @@
         </div>
         <p class="mt-5 max-w-[760px] text-[18px] leading-snug text-primary">Update job details, review applicants, track application progress, and manage the visibility of your postings from one place.</p>
 
-        <div id="sum" class="relative mt-10 grid grid-cols-2 overflow-hidden rounded-[24px] bg-ink text-white lg:grid-cols-4"></div>
+        <div id="sum" class="relative mt-10 grid grid-cols-2 overflow-hidden rounded-[24px] bg-ink text-white lg:grid-cols-4"><svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="mjp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#mjp)"/></svg><div class="relative p-6 sm:p-8"><p class="mono text-white/60">Total jobs</p><p class="mt-4 text-[clamp(44px,5vw,80px)] leading-none tracking-[-0.055em] ">2</p></div><div class="relative border-l border-white/15 p-6 sm:p-8"><p class="mono text-white/60">Expiring</p><p class="mt-4 text-[clamp(44px,5vw,80px)] leading-none tracking-[-0.055em] ">1</p></div><div class="relative border-l border-white/15 border-t border-white/15 lg:border-t-0 lg:border-l p-6 sm:p-8"><p class="mono text-white/60">Open-ended</p><p class="mt-4 text-[clamp(44px,5vw,80px)] leading-none tracking-[-0.055em] ">1</p></div><div class="relative border-l border-white/15 border-t border-white/15 lg:border-t-0 p-6 sm:p-8"><p class="mono text-[#CEF79E]">Applicants</p><p class="mt-4 text-[clamp(44px,5vw,80px)] leading-none tracking-[-0.055em] text-[#CEF79E]">57</p></div></div>
 
         <div class="mt-4 flex flex-wrap items-center gap-3">
           <form class="flex min-w-[260px] flex-1 items-center gap-2 rounded-[14px] bg-white p-1.5" role="search" onsubmit="return false">
             <svg class="ml-3 shrink-0 text-primary" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
             <input id="q" type="search" placeholder="Search for roles, companies, or platforms" class="h-11 min-w-0 flex-1 border-0 bg-transparent font-mono text-[13px] uppercase text-ink placeholder:text-primary/60 focus:outline-none" aria-label="Search jobs" />
           </form>
-          <div id="tabs" class="inline-flex overflow-hidden rounded-[12px] bg-white" role="tablist"></div>
+          <div id="tabs" class="inline-flex overflow-hidden rounded-[12px] bg-white" role="tablist"><button type="button" role="tab" data-s="" aria-selected="true" class="mtab on">All</button><button type="button" role="tab" data-s="Expiring" aria-selected="false" class="mtab ">Expiring</button><button type="button" role="tab" data-s="Open-ended" aria-selected="false" class="mtab ">Open-ended</button></div>
           <select id="type" class="h-[52px] cursor-pointer rounded-[12px] border-0 bg-white px-4 font-mono text-[12px] uppercase text-ink focus:outline-none" aria-label="Job type"><option value="">All types</option><option>Full time</option><option>Part time</option><option>Contract</option></select>
         </div>
 
         <div class="mono mt-8 hidden grid-cols-[minmax(0,2.2fr)_1fr_1.2fr_1fr_1fr_40px] gap-4 px-6 text-primary lg:grid"><span>Job</span><span>Type</span><span>Pay</span><span>Applicants</span><span>Status</span><span></span></div>
-        <div id="list" class="mt-3 flex flex-col gap-2"></div>
+        <div id="list" class="mt-3 flex flex-col gap-2">
+          <a data-type="Full time" data-exp="1" data-search="short-form editor hoops youtube shorts vertical video video editing" href="manage-job?id=hoops-short-form-editor" class="jrow group grid items-center gap-x-4 gap-y-3 rounded-[20px] bg-white p-5 transition-colors duration-500 hover:bg-ink hover:text-white sm:p-6 lg:grid-cols-[minmax(0,2.2fr)_1fr_1.2fr_1fr_1fr_40px]" style="animation-delay:0ms">
+        <span class="flex min-w-0 items-center gap-4"><span class="h-12 w-12 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1569572702917-86ac962faac4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200')"></span><span class="min-w-0"><span class="block truncate text-[clamp(20px,1.8vw,26px)] leading-tight tracking-[-0.02em]">Short-form Editor</span><span class="mono mt-1 block truncate text-primary group-hover:text-white/60">Hoops &middot; Remote</span></span></span>
+        <span class="mono text-primary group-hover:text-white/70"><b class="mr-2 font-normal text-primary/60 group-hover:text-white/40 lg:hidden">Type</b>Full time</span>
+        <span class="mono text-primary group-hover:text-white/70"><b class="mr-2 font-normal text-primary/60 group-hover:text-white/40 lg:hidden">Pay</b>Not disclosed</span>
+        <span class="text-[22px] tracking-[-0.02em]"><b class="mono mr-2 font-normal text-primary/60 group-hover:text-white/40 lg:hidden">Applicants</b>0</span>
+        <span><span class="mono whitespace-nowrap rounded-full bg-[#CEF79E] px-3 py-1.5 text-ink">29 days left</span></span>
+        <span class="hidden h-10 w-10 place-items-center justify-self-end rounded-[10px] bg-[#CEF79E] text-ink transition-all duration-500 group-hover:rounded-[16px] lg:grid"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+      </a>
+          <a data-type="Full time" data-exp="0" data-search="video editor hoops basketball sports long form" href="manage-job?id=hoops-video-editor" class="jrow group grid items-center gap-x-4 gap-y-3 rounded-[20px] bg-white p-5 transition-colors duration-500 hover:bg-ink hover:text-white sm:p-6 lg:grid-cols-[minmax(0,2.2fr)_1fr_1.2fr_1fr_1fr_40px]" style="animation-delay:60ms">
+        <span class="flex min-w-0 items-center gap-4"><span class="h-12 w-12 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1569572702917-86ac962faac4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200')"></span><span class="min-w-0"><span class="block truncate text-[clamp(20px,1.8vw,26px)] leading-tight tracking-[-0.02em]">Video Editor</span><span class="mono mt-1 block truncate text-primary group-hover:text-white/60">Hoops &middot; remote</span></span></span>
+        <span class="mono text-primary group-hover:text-white/70"><b class="mr-2 font-normal text-primary/60 group-hover:text-white/40 lg:hidden">Type</b>Full time</span>
+        <span class="mono text-primary group-hover:text-white/70"><b class="mr-2 font-normal text-primary/60 group-hover:text-white/40 lg:hidden">Pay</b>600 -700 / month</span>
+        <span class="text-[22px] tracking-[-0.02em]"><b class="mono mr-2 font-normal text-primary/60 group-hover:text-white/40 lg:hidden">Applicants</b>57</span>
+        <span><span class="mono whitespace-nowrap rounded-full border border-[#C9CBBE] px-3 py-1.5 text-primary group-hover:border-white/30 group-hover:text-white/70">Open-ended</span></span>
+        <span class="hidden h-10 w-10 place-items-center justify-self-end rounded-[10px] bg-[#CEF79E] text-ink transition-all duration-500 group-hover:rounded-[16px] lg:grid"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+      </a>
+        </div>
         <p id="empty" hidden class="mono rounded-[20px] bg-white px-4 py-16 text-center text-primary">No jobs match that search.</p>
       </div>
     </div>
@@ -495,36 +514,20 @@
   
 
   <script>
-    const $ = (i) => document.getElementById(i), esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-    const HOOPS = "https://images.unsplash.com/photo-1569572702917-86ac962faac4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200";
-    const JOBS = [
-      { id: "hoops-short-form-editor", title: "Short-form Editor", co: "Hoops", days: 29, pay: "Not disclosed", type: "Full time", loc: "Remote", apps: 0, tags: ["Youtube Shorts", "Vertical Video", "Video Editing"] },
-      { id: "hoops-video-editor", title: "Video Editor", co: "Hoops", days: 0, pay: "600 -700 / month", type: "Full time", loc: "remote", apps: 57, tags: ["Basketball", "Sports", "Long Form"] },
-    ];
-    const ARROW = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>';
+    const $ = (i) => document.getElementById(i);
     const state = { q: "", type: "", status: "" };
-    const TABS = [["", "All"], ["Expiring", "Expiring"], ["Open-ended", "Open-ended"]];
-    const PATTERN = '<svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="mjp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#mjp)"/></svg>';
+    const rows = [...document.querySelectorAll("#list [data-search]")];
     function render() {
       const q = state.q.trim().toLowerCase();
-      const list = JOBS.filter((j) => (!state.type || j.type === state.type) && (!state.status || (state.status === "Expiring" ? !!j.days : !j.days)) && (!q || [j.title, j.co, j.tags.join(" ")].join(" ").toLowerCase().includes(q)));
-      const S = [["Total jobs", JOBS.length], ["Expiring", JOBS.filter((j) => j.days).length], ["Open-ended", JOBS.filter((j) => !j.days).length], ["Applicants", JOBS.reduce((a, j) => a + j.apps, 0)]];
-      $("sum").innerHTML = PATTERN + S.map(([l, n], i) => `<div class="relative ${i ? "border-l border-white/15 " : ""}${i === 2 ? "border-t border-white/15 lg:border-t-0 lg:border-l " : ""}${i === 3 ? "border-t border-white/15 lg:border-t-0 " : ""}p-6 sm:p-8"><p class="mono ${i === 3 ? "text-[#CEF79E]" : "text-white/60"}">${l}</p><p class="mt-4 text-[clamp(44px,5vw,80px)] leading-none tracking-[-0.055em] ${i === 3 ? "text-[#CEF79E]" : ""}">${n}</p></div>`).join("");
-      $("tabs").innerHTML = TABS.map(([k, l]) => `<button type="button" role="tab" data-s="${k}" aria-selected="${state.status === k}" class="mtab ${state.status === k ? "on" : ""}">${l}</button>`).join("");
-      $("list").innerHTML = list.map((j, k) => `<a href="manage-job?id=${j.id}" class="jrow group grid items-center gap-x-4 gap-y-3 rounded-[20px] bg-white p-5 transition-colors duration-500 hover:bg-ink hover:text-white sm:p-6 lg:grid-cols-[minmax(0,2.2fr)_1fr_1.2fr_1fr_1fr_40px]" style="animation-delay:${k * 60}ms">
-        <span class="flex min-w-0 items-center gap-4"><span class="h-12 w-12 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('${HOOPS}')"></span><span class="min-w-0"><span class="block truncate text-[clamp(20px,1.8vw,26px)] leading-tight tracking-[-0.02em]">${esc(j.title)}</span><span class="mono mt-1 block truncate text-primary group-hover:text-white/60">${esc(j.co)} &middot; ${esc(j.loc)}</span></span></span>
-        <span class="mono text-primary group-hover:text-white/70"><b class="mr-2 font-normal text-primary/60 group-hover:text-white/40 lg:hidden">Type</b>${esc(j.type)}</span>
-        <span class="mono text-primary group-hover:text-white/70"><b class="mr-2 font-normal text-primary/60 group-hover:text-white/40 lg:hidden">Pay</b>${esc(j.pay)}</span>
-        <span class="text-[22px] tracking-[-0.02em]"><b class="mono mr-2 font-normal text-primary/60 group-hover:text-white/40 lg:hidden">Applicants</b>${j.apps}</span>
-        <span>${j.days ? `<span class="mono whitespace-nowrap rounded-full bg-[#CEF79E] px-3 py-1.5 text-ink">${j.days} days left</span>` : `<span class="mono whitespace-nowrap rounded-full border border-[#C9CBBE] px-3 py-1.5 text-primary group-hover:border-white/30 group-hover:text-white/70">Open-ended</span>`}</span>
-        <span class="hidden h-10 w-10 place-items-center justify-self-end rounded-[10px] bg-[#CEF79E] text-ink transition-all duration-500 group-hover:rounded-[16px] lg:grid">${ARROW}</span>
-      </a>`).join("");
-      $("empty").hidden = list.length > 0;
+      document.querySelectorAll("#tabs [data-s]").forEach((b) => { const on = b.dataset.s === state.status; b.setAttribute("aria-selected", on); b.classList.toggle("on", on); });
+      const shown = rows.filter((r) => (!state.type || r.dataset.type === state.type) && (!state.status || (state.status === "Expiring" ? r.dataset.exp === "1" : r.dataset.exp === "0")) && (!q || r.dataset.search.includes(q)));
+      rows.forEach((r) => { r.hidden = !shown.includes(r); });
+      shown.forEach((r, k) => { r.style.animation = "none"; void r.offsetWidth; r.style.animation = ""; r.style.animationDelay = k * 60 + "ms"; });
+      $("empty").hidden = shown.length > 0;
     }
     document.addEventListener("click", (e) => { const b = e.target.closest("[data-s]"); if (b) { state.status = b.dataset.s; render(); } });
     $("type").addEventListener("change", (e) => { state.type = e.target.value; render(); });
     $("q").addEventListener("input", (e) => { state.q = e.target.value; render(); });
-    render();
   </script>
 
   <script>
@@ -560,6 +563,15 @@
     applySidebarState();
   </script>
   <script src="motion.js"></script>
+    <!-- help button, feedback popup and founder-call popup (behaviour: assets/help-fab.js) -->
+  <div id="hf-scrim"></div>
+  <div id="hf-root"><div class="hf-row"><span class="hf-label">Feedback</span><button type="button" class="hf-tile" data-hf="feedback" aria-label="Send feedback"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="M15 5l4 4"/><path d="M12 22h10"/></svg></button></div><div class="hf-row"><span class="hf-label">Talk with founder</span><button type="button" class="hf-tile" data-hf="founder" aria-label="Talk with the founder"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="9" cy="13" r="2"/><circle cx="15" cy="13" r="2"/><path d="M11 13h2"/><path d="M8 17h8"/></svg></button></div><div class="hf-close-row"><span class="hf-label">Close</span><button type="button" id="hf-main" aria-label="Help" aria-expanded="false" aria-haspopup="true"><svg class="hf-hand" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0v5"/><path d="M14 10V4a2 2 0 0 0-4 0v6"/><path d="M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg><svg class="hf-x" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button></div></div>
+  <div class="hf-modal" id="hf-feedback" role="dialog" aria-modal="true"><div class="hf-card"><button type="button" class="hf-x2" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button><div class="hf-body"><p class="mono" style="color:#CEF79E">Feedback</p><h2>Tell us what you think</h2><div class="hf-chips"><button type="button" class="hf-chip" aria-pressed="true">Idea</button><button type="button" class="hf-chip" aria-pressed="false">Something is broken</button><button type="button" class="hf-chip" aria-pressed="false">Praise</button></div><textarea placeholder="Write your feedback" aria-label="Your feedback"></textarea><p class="hf-err mono">Please write a few words first.</p><button type="button" class="hf-send">Send feedback</button></div></div></div>
+  <div class="hf-modal" id="hf-founder" role="dialog" aria-modal="true"><div class="hf-card"><button type="button" class="hf-x2" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button><div class="hf-body">
+    <div data-hf-view="intro"><p class="mono" style="color:#CEF79E">Talk with the founder</p><h2>Let’s improve your results on Arclent</h2><p style="margin:14px 0 0;color:rgba(255,255,255,.7);font-size:17px;line-height:1.4">If something felt confusing, didn’t go as expected, or seemed missing while using Arclent, book a call with <b style="font-weight:400;color:#fff">Idris</b>, our co-founder, and share your experience so we can help and make things better.</p><div class="hf-founder-row"><div class="hf-founder-who"><span class="hf-founder-av" style="background-image:url('https://images.unsplash.com/photo-1741455620227-3b1c51e01419?crop=faces&fit=crop&w=100&h=100&q=80')"></span><div><p class="hf-founder-name">Idris Navarro</p><p class="mono hf-founder-role">Co-founder</p></div></div><button type="button" class="hf-cta" id="hf-book-cta">Book a Call with Idris</button></div></div>
+    <div data-hf-view="slots" hidden><button type="button" class="hf-back" id="hf-back">&larr; Back</button><p class="mono" style="color:#CEF79E;margin-top:14px">Book a call with Idris</p><h2>Pick a time</h2><p style="margin:14px 0 0;color:rgba(255,255,255,.7);font-size:17px;line-height:1.3">Questions, ideas or a problem you want solved? Pick a time and you will talk for 15 minutes.</p><div class="hf-chips"><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button></div><textarea placeholder="Anything we should know first? (optional)" aria-label="Note" style="min-height:90px"></textarea><p class="hf-err mono">Pick a time first.</p><button type="button" class="hf-send">Request call</button></div>
+  </div></div></div>
+  <p class="hf-toast" id="hf-toast" hidden></p>
   <script src="assets/help-fab.js" defer></script>
 </body>
 </html>

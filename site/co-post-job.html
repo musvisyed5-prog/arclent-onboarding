@@ -359,6 +359,8 @@
     input:checked + .switch { background: #CEF79E; } input:checked + .switch::after { transform: translateX(20px); background: #222F30; }
     #copilot[hidden], #rv-gate[hidden] { display: none; }
   </style>
+  <link rel="stylesheet" href="assets/help-fab.css" />
+  <link rel="stylesheet" href="assets/badges.css" />
 </head>
 <body class="min-h-screen bg-surface font-sans text-ink">
   <div id="sidebar-backdrop" class="fixed inset-0 z-30 hidden bg-black/30"></div>
@@ -535,7 +537,7 @@
         <section id="done" class="step-in hidden max-w-[760px] py-6 lg:py-12">
           <span class="grid h-12 w-14 place-items-center rounded-[14px] bg-[#CEF79E] text-ink"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
           <h2 class="mt-8 text-[clamp(40px,5.6vw,88px)] font-normal leading-[.98] tracking-[-0.05em] text-ink">Your job is<br><span style="color:#C9CBBE">live.</span></h2>
-          <p id="done-msg" class="mt-6 max-w-[520px] text-[18px] leading-snug text-primary"></p>
+          <p id="done-msg" class="mt-6 max-w-[520px] text-[18px] leading-snug text-primary">&quot;<span id="done-title"></span>&quot;<span id="done-loc" hidden> (<span id="done-loc-t"></span>)</span> is published on <span id="done-platform"></span><span data-done="with" hidden> with your <span class="mono inline-flex items-center gap-1.5">verified checkmark<span class="rv-badge rv-tip" tabindex="0" data-tip="This recruiter is Arclent Verified"><img src="assets/recruiter-verified.png" alt="This recruiter is Arclent Verified" /></span></span></span><span data-done="without"> without a verified checkmark</span>. Verified talent can now find it and apply.</p>
           <div class="mt-9 flex flex-wrap items-center gap-3">
             <a class="ib-btn" href="company-dashboard.html"><span class="lbl">View dashboard<i class="corner"><svg viewBox="0 0 18 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h6c8 0 13.4 7.2 11.4 15L11 39a11.5 11.5 0 0 1-11 9V0Z"/></svg></i></span><i class="ico"><svg viewBox="0 0 51 48" preserveAspectRatio="none" aria-hidden="true"><path class="shape" d="M6.8 9.2A12 12 0 0 1 18.4 0H39c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H12.4C4.6 48-1.2 40.7.7 33.2L6.8 9.2Z"/><path class="arrow" d="M23 24h13m-5-5 5 5-5 5" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></a>
             <button type="button" id="post-another" class="ghost-d">Post another</button>
@@ -549,7 +551,7 @@
         <div class="step-in relative w-full max-w-[520px] overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-8">
           <button type="button" id="rv-gate-close" class="absolute right-5 top-5 grid h-10 w-10 place-items-center rounded-[10px] bg-[#394546] transition-colors hover:bg-[#CEF79E] hover:text-ink" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button>
           <p class="mono text-[#CEF79E]">Before you publish</p>
-          <h2 id="rv-gate-title" class="mt-2 flex items-center gap-2 text-[28px] leading-none tracking-[-0.03em]">Get the verified badge<span id="rv-gate-badge"></span></h2>
+          <h2 id="rv-gate-title" class="mt-2 flex items-center gap-2 text-[28px] leading-none tracking-[-0.03em]">Get the verified badge<span id="rv-gate-badge"><span class="rv-badge rv-tip" tabindex="0" data-tip="This recruiter is Arclent Verified"><img src="assets/recruiter-verified.png" alt="This recruiter is Arclent Verified" /></span></span></h2>
           <p class="mt-4 text-[16px] leading-snug text-white/70">Connect a platform account and this job goes out with a verified checkmark next to your name, so talent knows it is really you. Without one, it still posts — just without the checkmark.</p>
           <div class="mt-6 flex flex-wrap items-center gap-3">
             <a href="co-connected-account.html" class="mono inline-flex h-12 items-center gap-2 rounded-[12px] bg-[#CEF79E] px-5 text-ink transition-colors hover:bg-white">Connect a platform</a>
@@ -657,7 +659,8 @@
     function __doPublish(j) {
       if (!j.title || !j.desc) return false;
       const verified = window.RVerify && RVerify.get("company");
-      $("done-msg").innerHTML = `&quot;${j.title}&quot;${j.loc ? " (" + j.loc + ")" : ""} is published on ${j.platform}` + (verified ? ` with your <span class="mono inline-flex items-center gap-1.5">verified checkmark${RVerify.badge()}</span>` : " without a verified checkmark") + `. Verified talent can now find it and apply.`;
+      $("done-title").textContent = j.title; $("done-loc-t").textContent = j.loc || ""; $("done-loc").hidden = !j.loc; $("done-platform").textContent = j.platform;
+      document.querySelector('#done-msg [data-done="with"]').hidden = !verified; document.querySelector('#done-msg [data-done="without"]').hidden = !!verified;
       show("done"); return true;
     }
 
@@ -908,11 +911,19 @@
     applySidebarState();
   </script>
   <script src="motion.js"></script>
+    <!-- help button, feedback popup and founder-call popup (behaviour: assets/help-fab.js) -->
+  <div id="hf-scrim"></div>
+  <div id="hf-root"><div class="hf-row"><span class="hf-label">Feedback</span><button type="button" class="hf-tile" data-hf="feedback" aria-label="Send feedback"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="M15 5l4 4"/><path d="M12 22h10"/></svg></button></div><div class="hf-row"><span class="hf-label">Talk with founder</span><button type="button" class="hf-tile" data-hf="founder" aria-label="Talk with the founder"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="9" cy="13" r="2"/><circle cx="15" cy="13" r="2"/><path d="M11 13h2"/><path d="M8 17h8"/></svg></button></div><div class="hf-close-row"><span class="hf-label">Close</span><button type="button" id="hf-main" aria-label="Help" aria-expanded="false" aria-haspopup="true"><svg class="hf-hand" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0v5"/><path d="M14 10V4a2 2 0 0 0-4 0v6"/><path d="M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg><svg class="hf-x" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button></div></div>
+  <div class="hf-modal" id="hf-feedback" role="dialog" aria-modal="true"><div class="hf-card"><button type="button" class="hf-x2" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button><div class="hf-body"><p class="mono" style="color:#CEF79E">Feedback</p><h2>Tell us what you think</h2><div class="hf-chips"><button type="button" class="hf-chip" aria-pressed="true">Idea</button><button type="button" class="hf-chip" aria-pressed="false">Something is broken</button><button type="button" class="hf-chip" aria-pressed="false">Praise</button></div><textarea placeholder="Write your feedback" aria-label="Your feedback"></textarea><p class="hf-err mono">Please write a few words first.</p><button type="button" class="hf-send">Send feedback</button></div></div></div>
+  <div class="hf-modal" id="hf-founder" role="dialog" aria-modal="true"><div class="hf-card"><button type="button" class="hf-x2" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button><div class="hf-body">
+    <div data-hf-view="intro"><p class="mono" style="color:#CEF79E">Talk with the founder</p><h2>Let’s improve your results on Arclent</h2><p style="margin:14px 0 0;color:rgba(255,255,255,.7);font-size:17px;line-height:1.4">If something felt confusing, didn’t go as expected, or seemed missing while using Arclent, book a call with <b style="font-weight:400;color:#fff">Idris</b>, our co-founder, and share your experience so we can help and make things better.</p><div class="hf-founder-row"><div class="hf-founder-who"><span class="hf-founder-av" style="background-image:url('https://images.unsplash.com/photo-1741455620227-3b1c51e01419?crop=faces&fit=crop&w=100&h=100&q=80')"></span><div><p class="hf-founder-name">Idris Navarro</p><p class="mono hf-founder-role">Co-founder</p></div></div><button type="button" class="hf-cta" id="hf-book-cta">Book a Call with Idris</button></div></div>
+    <div data-hf-view="slots" hidden><button type="button" class="hf-back" id="hf-back">&larr; Back</button><p class="mono" style="color:#CEF79E;margin-top:14px">Book a call with Idris</p><h2>Pick a time</h2><p style="margin:14px 0 0;color:rgba(255,255,255,.7);font-size:17px;line-height:1.3">Questions, ideas or a problem you want solved? Pick a time and you will talk for 15 minutes.</p><div class="hf-chips"><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button></div><textarea placeholder="Anything we should know first? (optional)" aria-label="Note" style="min-height:90px"></textarea><p class="hf-err mono">Pick a time first.</p><button type="button" class="hf-send">Request call</button></div>
+  </div></div></div>
+  <p class="hf-toast" id="hf-toast" hidden></p>
   <script src="assets/help-fab.js" defer></script>
   <script>
     (function () {
       var $ = function (id) { return document.getElementById(id); };
-      if (window.RVerify) $("rv-gate-badge").innerHTML = RVerify.badge();
       var pendingJob = null;
       window.__gatedPublish = function (j) {
         if (!j || !j.title || !j.desc) return false;
@@ -923,5 +934,7 @@
       $("rv-gate-skip").addEventListener("click", function () { $("rv-gate").hidden = true; if (pendingJob) __doPublish(pendingJob); pendingJob = null; });
     })();
   </script>
+  <div id="tt-global" role="tooltip"></div>
+  <script src="assets/tier-tip.js"></script>
 </body>
 </html>

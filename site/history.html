@@ -339,6 +339,8 @@
     [hidden] { display: none !important; }
     .row-in { animation: rowIn .6s cubic-bezier(.22,1,.36,1) both; } @keyframes rowIn { from { opacity: 0; transform: translateY(14px); } }
   </style>
+  <link rel="stylesheet" href="assets/help-fab.css" />
+  <style>#list article[hidden], #list [data-group][hidden] { display: none !important; }</style>
 </head>
 <body class="min-h-screen bg-surface font-sans text-ink">
   <div id="sidebar-backdrop" class="fixed inset-0 z-30 hidden bg-black/30"></div>
@@ -405,6 +407,7 @@
         <a href="talent-invitations.html" class="flex items-center gap-3 rounded-[10px] px-3 py-3 text-primary transition-colors hover:bg-white hover:text-ink">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
           Invitations
+          <span class="inv-count mono ml-auto grid h-5 min-w-5 place-items-center rounded-full bg-[#CEF79E] px-1.5 text-ink hidden"></span>
         </a>
       </nav>
 
@@ -468,52 +471,86 @@
           <input id="q" type="search" placeholder="Search your history" class="h-11 min-w-0 flex-1 border-0 bg-transparent font-mono text-[13px] uppercase text-ink placeholder:text-primary/60 focus:outline-none" aria-label="Search history" />
         </form>
 
-        <div id="list" class="mt-10 max-w-[1100px]"></div>
+        <div id="list" class="mt-10 max-w-[1100px]">
+          <div data-group="Today"><p class="mono mb-3 text-primary">Today</p>
+          <article data-search="video editor hoops" class="row-in group relative mb-2 grid gap-4 rounded-[20px] bg-white p-5 transition-colors hover:bg-[#FBFBF9] sm:grid-cols-[auto_1fr_auto] sm:items-center sm:p-6" style="animation-delay:0ms">
+          <a href="job-details?id=hoops-video-editor" class="absolute inset-0 z-[1] rounded-[20px]" aria-label="Open Video Editor"></a>
+          <span class="h-12 w-12 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1569572702917-86ac962faac4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200')"></span>
+          <div class="min-w-0"><h2 class="text-[20px] leading-tight tracking-[-0.015em] text-ink">Video Editor</h2>
+            <p class="mono mt-1.5 text-primary">Hoops &middot; 12 minutes ago</p>
+            <p class="mono mt-3 flex flex-wrap gap-x-5 gap-y-1 text-primary"><span>Freshers</span><span>600 -700 / month</span><span>Full time</span><span>remote</span></p>
+            <p class="mt-3 flex flex-wrap gap-2"><span class="mono rounded-full border border-[#C9CBBE] px-3 py-1.5 text-primary">Basketball</span><span class="mono rounded-full border border-[#C9CBBE] px-3 py-1.5 text-primary">Sports</span><span class="mono rounded-full border border-[#C9CBBE] px-3 py-1.5 text-primary">Long Form</span></p></div>
+          <div class="relative z-[2] flex items-center gap-2">
+            <span class="mono hidden items-center gap-3 text-ink sm:inline-flex">Open<span class="grid h-8 w-10 place-items-center rounded-[10px] bg-[#CEF79E] transition-all duration-500 group-hover:rounded-[14px]"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+            <button type="button" data-rm="0" class="grid h-10 w-10 place-items-center rounded-[10px] bg-[#F3F3F1] text-primary transition-colors hover:bg-ink hover:text-[#CEF79E]" aria-label="Remove from history"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button>
+          </div></article>
+          <article data-search="video editor arclent ai" class="row-in group relative mb-2 grid gap-4 rounded-[20px] bg-white p-5 transition-colors hover:bg-[#FBFBF9] sm:grid-cols-[auto_1fr_auto] sm:items-center sm:p-6" style="animation-delay:50ms">
+          <a href="job-details?id=arclent-ai-video-editor" class="absolute inset-0 z-[1] rounded-[20px]" aria-label="Open Video Editor"></a>
+          <span class="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-ink text-[#CEF79E]">A</span>
+          <div class="min-w-0"><h2 class="text-[20px] leading-tight tracking-[-0.015em] text-ink">Video Editor</h2>
+            <p class="mono mt-1.5 text-primary">Arclent AI &middot; 2 hours ago</p>
+            <p class="mono mt-3 flex flex-wrap gap-x-5 gap-y-1 text-primary"><span>2.50 yrs</span><span>Not disclosed</span><span>Full time</span><span>remote</span></p>
+            </div>
+          <div class="relative z-[2] flex items-center gap-2">
+            <span class="mono hidden items-center gap-3 text-ink sm:inline-flex">Open<span class="grid h-8 w-10 place-items-center rounded-[10px] bg-[#CEF79E] transition-all duration-500 group-hover:rounded-[14px]"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+            <button type="button" data-rm="1" class="grid h-10 w-10 place-items-center rounded-[10px] bg-[#F3F3F1] text-primary transition-colors hover:bg-ink hover:text-[#CEF79E]" aria-label="Remove from history"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button>
+          </div></article>
+          </div>
+          <div data-group="Yesterday" class="mt-10"><p class="mono mb-3 text-primary">Yesterday</p>
+          <article data-search="social media manager arclent ai" class="row-in group relative mb-2 grid gap-4 rounded-[20px] bg-white p-5 transition-colors hover:bg-[#FBFBF9] sm:grid-cols-[auto_1fr_auto] sm:items-center sm:p-6" style="animation-delay:100ms">
+          
+          <span class="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-ink text-[#CEF79E]">A</span>
+          <div class="min-w-0"><h2 class="text-[20px] leading-tight tracking-[-0.015em] text-ink">Social Media Manager</h2>
+            <p class="mono mt-1.5 text-primary">Arclent AI &middot; Yesterday, 6:40 PM</p>
+            <p class="mono mt-3 flex flex-wrap gap-x-5 gap-y-1 text-primary"><span>2 yrs</span><span>Not disclosed</span><span>Full time</span><span>remote</span></p>
+            </div>
+          <div class="relative z-[2] flex items-center gap-2">
+            
+            <button type="button" data-rm="2" class="grid h-10 w-10 place-items-center rounded-[10px] bg-[#F3F3F1] text-primary transition-colors hover:bg-ink hover:text-[#CEF79E]" aria-label="Remove from history"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button>
+          </div></article>
+          </div>
+          <div data-group="Earlier" class="mt-10"><p class="mono mb-3 text-primary">Earlier</p>
+          <article data-search="longform youtube video editor — pop culture &amp; commentary channel jess" class="row-in group relative mb-2 grid gap-4 rounded-[20px] bg-white p-5 transition-colors hover:bg-[#FBFBF9] sm:grid-cols-[auto_1fr_auto] sm:items-center sm:p-6" style="animation-delay:150ms">
+          <a href="job-details?id=jess-longform-video-editor" class="absolute inset-0 z-[1] rounded-[20px]" aria-label="Open Longform YouTube Video Editor — Pop Culture &amp; Commentary Channel"></a>
+          <span class="h-12 w-12 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1710777932534-2a58edf3603d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200')"></span>
+          <div class="min-w-0"><h2 class="text-[20px] leading-tight tracking-[-0.015em] text-ink">Longform YouTube Video Editor — Pop Culture &amp; Commentary Channel</h2>
+            <p class="mono mt-1.5 text-primary">Jess &middot; 3 days ago</p>
+            <p class="mono mt-3 flex flex-wrap gap-x-5 gap-y-1 text-primary"><span>1 yr</span><span>Not disclosed</span><span>Contract</span><span>Remote, US</span></p>
+            <p class="mt-3 flex flex-wrap gap-2"><span class="mono rounded-full border border-[#C9CBBE] px-3 py-1.5 text-primary">Video Editing</span><span class="mono rounded-full border border-[#C9CBBE] px-3 py-1.5 text-primary">Youtube</span><span class="mono rounded-full border border-[#C9CBBE] px-3 py-1.5 text-primary">Commentary</span><span class="mono rounded-full border border-[#C9CBBE] px-3 py-1.5 text-primary">Premiere Pro</span><span class="mono rounded-full bg-[#CEF79E] px-3 py-1.5 text-ink">115 days left</span></p></div>
+          <div class="relative z-[2] flex items-center gap-2">
+            <span class="mono hidden items-center gap-3 text-ink sm:inline-flex">Open<span class="grid h-8 w-10 place-items-center rounded-[10px] bg-[#CEF79E] transition-all duration-500 group-hover:rounded-[14px]"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>
+            <button type="button" data-rm="3" class="grid h-10 w-10 place-items-center rounded-[10px] bg-[#F3F3F1] text-primary transition-colors hover:bg-ink hover:text-[#CEF79E]" aria-label="Remove from history"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button>
+          </div></article>
+          </div>
+          <p id="empty-match" class="mono rounded-[20px] bg-white px-4 py-16 text-center text-primary" hidden>Nothing matches that search.</p>
+          <p id="empty-none" class="mono rounded-[20px] bg-white px-4 py-16 text-center text-primary" hidden>No history yet. Jobs you view will show up here.</p>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    const $ = (i) => document.getElementById(i), esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-    const HOOPS = "https://images.unsplash.com/photo-1569572702917-86ac962faac4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200";
-    const JESS = "https://images.unsplash.com/photo-1710777932534-2a58edf3603d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200";
-    let JOBS = [
-      { id: "hoops-video-editor", t: "Video Editor", co: "Hoops", av: HOOPS, group: "Today", when: "12 minutes ago", meta: ["Freshers", "600 -700 / month", "Full time", "remote"], tags: ["Basketball", "Sports", "Long Form"] },
-      { id: "arclent-ai-video-editor", t: "Video Editor", co: "Arclent AI", av: "", group: "Today", when: "2 hours ago", meta: ["2.50 yrs", "Not disclosed", "Full time", "remote"], tags: [] },
-      { id: "", t: "Social Media Manager", co: "Arclent AI", av: "", group: "Yesterday", when: "Yesterday, 6:40 PM", meta: ["2 yrs", "Not disclosed", "Full time", "remote"], tags: [] },
-      { id: "jess-longform-video-editor", t: "Longform YouTube Video Editor \u2014 Pop Culture & Commentary Channel", co: "Jess", av: JESS, group: "Earlier", when: "3 days ago", meta: ["1 yr", "Not disclosed", "Contract", "Remote, US"], tags: ["Video Editing", "Youtube", "Commentary", "Premiere Pro"], days: 115 },
-    ];
-    const say = (m) => { const t = document.createElement("p"); t.className = "mono fixed bottom-24 right-6 z-40 rounded-[10px] bg-ink px-4 py-3 text-[#CEF79E]"; t.textContent = m; document.body.appendChild(t); setTimeout(() => t.remove(), 2200); };
+    const $ = (i) => document.getElementById(i);
+    const say = (m) => { const t = document.getElementById("toast"); t.textContent = m; t.hidden = false; clearTimeout(say.t); say.t = setTimeout(() => { t.hidden = true; }, 2200); };
+    const arts = [...document.querySelectorAll("#list article")];
+    const groups = [...document.querySelectorAll("#list [data-group]")];
     let q = "", asking = false;
     function render() {
       $("clear").textContent = asking ? "Click again to confirm" : "Clear history";
-      const list = JOBS.filter((j) => !q || (j.t + " " + j.co).toLowerCase().includes(q));
-      if (!list.length) { $("list").innerHTML = `<p class="mono rounded-[20px] bg-white px-4 py-16 text-center text-primary">${JOBS.length ? "Nothing matches that search." : "No history yet. Jobs you view will show up here."}</p>`; return; }
-      let out = "", last = "";
-      list.forEach((j, k) => {
-        if (j.group !== last) { last = j.group; out += `<p class="mono ${out ? "mt-10" : ""} mb-3 text-primary">${j.group}</p>`; }
-        const av = j.av ? `<span class="h-12 w-12 shrink-0 rounded-full bg-cover bg-center" style="background-image:url('${j.av}')"></span>` : `<span class="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-ink text-[#CEF79E]">${esc(j.co[0])}</span>`;
-        const idx = JOBS.indexOf(j);
-        out += `<article class="row-in group relative mb-2 grid gap-4 rounded-[20px] bg-white p-5 transition-colors hover:bg-[#FBFBF9] sm:grid-cols-[auto_1fr_auto] sm:items-center sm:p-6" style="animation-delay:${k * 50}ms">
-          ${j.id ? `<a href="job-details?id=${j.id}" class="absolute inset-0 z-[1] rounded-[20px]" aria-label="Open ${esc(j.t)}"></a>` : ""}
-          ${av}
-          <div class="min-w-0"><h2 class="text-[20px] leading-tight tracking-[-0.015em] text-ink">${esc(j.t)}</h2>
-            <p class="mono mt-1.5 text-primary">${esc(j.co)} &middot; ${esc(j.when)}</p>
-            <p class="mono mt-3 flex flex-wrap gap-x-5 gap-y-1 text-primary">${j.meta.map((m) => `<span>${esc(m)}</span>`).join("")}</p>
-            ${j.tags.length ? `<p class="mt-3 flex flex-wrap gap-2">${j.tags.slice(0, 4).map((t) => `<span class="mono rounded-full border border-[#C9CBBE] px-3 py-1.5 text-primary">${esc(t)}</span>`).join("")}${j.days ? `<span class="mono rounded-full bg-[#CEF79E] px-3 py-1.5 text-ink">${j.days} days left</span>` : ""}</p>` : ""}</div>
-          <div class="relative z-[2] flex items-center gap-2">
-            ${j.id ? `<span class="mono hidden items-center gap-3 text-ink sm:inline-flex">Open<span class="grid h-8 w-10 place-items-center rounded-[10px] bg-[#CEF79E] transition-all duration-500 group-hover:rounded-[14px]"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></span>` : ""}
-            <button type="button" data-rm="${idx}" class="grid h-10 w-10 place-items-center rounded-[10px] bg-[#F3F3F1] text-primary transition-colors hover:bg-ink hover:text-[#CEF79E]" aria-label="Remove from history"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button>
-          </div></article>`;
-      });
-      $("list").innerHTML = out;
+      const alive = arts.filter((a) => !a.dataset.gone);
+      const shown = alive.filter((a) => !q || a.dataset.search.includes(q));
+      arts.forEach((a) => { a.hidden = !shown.includes(a); });
+      shown.forEach((a, k) => { a.style.animation = "none"; void a.offsetWidth; a.style.animation = ""; a.style.animationDelay = k * 50 + "ms"; });
+      let first = true;
+      groups.forEach((g) => { const any = [...g.querySelectorAll("article")].some((a) => !a.hidden); g.hidden = !any; g.classList.toggle("mt-10", any && !first); if (any) first = false; });
+      $("empty-match").hidden = !(alive.length && !shown.length);
+      $("empty-none").hidden = alive.length > 0;
     }
     document.addEventListener("click", (e) => {
-      const r = e.target.closest("[data-rm]"); if (r) { JOBS.splice(+r.dataset.rm, 1); render(); say("Removed from history"); return; }
-      if (e.target.closest("#clear")) { if (!JOBS.length) return; if (!asking) { asking = true; render(); setTimeout(() => { asking = false; render(); }, 3000); } else { asking = false; JOBS = []; render(); say("History cleared"); } }
+      const r = e.target.closest("[data-rm]"); if (r) { r.closest("article").dataset.gone = "1"; render(); say("Removed from history"); return; }
+      if (e.target.closest("#clear")) { if (!arts.some((a) => !a.dataset.gone)) return; if (!asking) { asking = true; render(); setTimeout(() => { asking = false; render(); }, 3000); } else { asking = false; arts.forEach((a) => { a.dataset.gone = "1"; }); render(); say("History cleared"); } }
     });
     $("q").addEventListener("input", (e) => { q = e.target.value.trim().toLowerCase(); render(); });
-    render();
   </script>
 
   <script>
@@ -549,6 +586,16 @@
     applySidebarState();
   </script>
   <script src="assets/invites.js"></script>
+    <!-- help button, feedback popup and founder-call popup (behaviour: assets/help-fab.js) -->
+  <div id="hf-scrim"></div>
+  <div id="hf-root"><div class="hf-row"><span class="hf-label">Feedback</span><button type="button" class="hf-tile" data-hf="feedback" aria-label="Send feedback"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="M15 5l4 4"/><path d="M12 22h10"/></svg></button></div><div class="hf-row"><span class="hf-label">Talk with founder</span><button type="button" class="hf-tile" data-hf="founder" aria-label="Talk with the founder"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="9" cy="13" r="2"/><circle cx="15" cy="13" r="2"/><path d="M11 13h2"/><path d="M8 17h8"/></svg></button></div><div class="hf-close-row"><span class="hf-label">Close</span><button type="button" id="hf-main" aria-label="Help" aria-expanded="false" aria-haspopup="true"><svg class="hf-hand" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0v5"/><path d="M14 10V4a2 2 0 0 0-4 0v6"/><path d="M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg><svg class="hf-x" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button></div></div>
+  <div class="hf-modal" id="hf-feedback" role="dialog" aria-modal="true"><div class="hf-card"><button type="button" class="hf-x2" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button><div class="hf-body"><p class="mono" style="color:#CEF79E">Feedback</p><h2>Tell us what you think</h2><div class="hf-chips"><button type="button" class="hf-chip" aria-pressed="true">Idea</button><button type="button" class="hf-chip" aria-pressed="false">Something is broken</button><button type="button" class="hf-chip" aria-pressed="false">Praise</button></div><textarea placeholder="Write your feedback" aria-label="Your feedback"></textarea><p class="hf-err mono">Please write a few words first.</p><button type="button" class="hf-send">Send feedback</button></div></div></div>
+  <div class="hf-modal" id="hf-founder" role="dialog" aria-modal="true"><div class="hf-card"><button type="button" class="hf-x2" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button><div class="hf-body">
+    <div data-hf-view="intro"><p class="mono" style="color:#CEF79E">Talk with the founder</p><h2>Let’s improve your results on Arclent</h2><p style="margin:14px 0 0;color:rgba(255,255,255,.7);font-size:17px;line-height:1.4">If something felt confusing, didn’t go as expected, or seemed missing while using Arclent, book a call with <b style="font-weight:400;color:#fff">Idris</b>, our co-founder, and share your experience so we can help and make things better.</p><div class="hf-founder-row"><div class="hf-founder-who"><span class="hf-founder-av" style="background-image:url('https://images.unsplash.com/photo-1741455620227-3b1c51e01419?crop=faces&fit=crop&w=100&h=100&q=80')"></span><div><p class="hf-founder-name">Idris Navarro</p><p class="mono hf-founder-role">Co-founder</p></div></div><button type="button" class="hf-cta" id="hf-book-cta">Book a Call with Idris</button></div></div>
+    <div data-hf-view="slots" hidden><button type="button" class="hf-back" id="hf-back">&larr; Back</button><p class="mono" style="color:#CEF79E;margin-top:14px">Book a call with Idris</p><h2>Pick a time</h2><p style="margin:14px 0 0;color:rgba(255,255,255,.7);font-size:17px;line-height:1.3">Questions, ideas or a problem you want solved? Pick a time and you will talk for 15 minutes.</p><div class="hf-chips"><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button></div><textarea placeholder="Anything we should know first? (optional)" aria-label="Note" style="min-height:90px"></textarea><p class="hf-err mono">Pick a time first.</p><button type="button" class="hf-send">Request call</button></div>
+  </div></div></div>
+  <p class="hf-toast" id="hf-toast" hidden></p>
   <script src="assets/help-fab.js" defer></script>
+  <p id="toast" class="mono fixed bottom-24 right-6 z-40 rounded-[10px] bg-ink px-4 py-3 text-[#CEF79E]" hidden></p>
 </body>
 </html>

@@ -339,6 +339,15 @@
     [hidden] { display: none !important; }
     .fadein { animation: fadeIn .6s cubic-bezier(.22,1,.36,1) both; } @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } }
   </style>
+  <link rel="stylesheet" href="assets/help-fab.css" />
+  <style>
+    /* a tile carries both states; data-on picks which one shows */
+    #tiles .plat { background: #fff; color: #222F30; }
+    #tiles .plat[data-on="1"] { background: #222F30; color: #fff; }
+    #tiles .plat .tx { color: #4D5757; }
+    #tiles .plat[data-on="1"] .tx { color: rgba(255,255,255,.7); }
+    #tiles .plat[data-on="1"] .off-only, #tiles .plat[data-on="0"] .on-only { display: none !important; }
+  </style>
 </head>
 <body class="min-h-screen bg-surface font-sans text-ink">
   <div id="sidebar-backdrop" class="fixed inset-0 z-30 hidden bg-black/30"></div>
@@ -405,6 +414,7 @@
         <a href="talent-invitations.html" class="flex items-center gap-3 rounded-[10px] px-3 py-3 text-primary transition-colors hover:bg-white hover:text-ink">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
           Invitations
+          <span class="inv-count mono ml-auto grid h-5 min-w-5 place-items-center rounded-full bg-[#CEF79E] px-1.5 text-ink hidden"></span>
         </a>
       </nav>
 
@@ -462,37 +472,53 @@
 
         <div class="mt-8 flex max-w-[520px] items-center gap-4"><span id="count" class="mono shrink-0 text-ink"></span><span class="block h-1.5 flex-1 overflow-hidden rounded-full bg-[#DADCD0]"><i id="bar" class="block h-full rounded-full bg-ink transition-[width] duration-700"></i></span></div>
 
-        <div id="tiles" class="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3"></div>
+        <div id="tiles" class="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <article class="plat fadein relative flex min-h-[320px] flex-col overflow-hidden rounded-[24px] p-6 sm:p-8" data-p="0" data-key="Discord" data-on="0" style="animation-delay:0ms">
+            <span class="on-only"><svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="cap0" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#cap0)"/></svg></span>
+            <div class="relative flex items-start justify-between gap-3"><span class="grid h-14 w-14 place-items-center rounded-[16px] text-white" style="background:#5865F2"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg></span>
+              <span class="on-only mono rounded-full px-3 py-1.5 bg-[#CEF79E] text-ink">Connected</span><span class="off-only mono rounded-full px-3 py-1.5 border border-[#C9CBBE] text-primary">Not connected</span></div>
+            <div class="relative mt-auto pt-10"><h2 class="text-[clamp(32px,3.2vw,48px)] leading-none tracking-[-0.04em]">Discord</h2>
+              <p class="tx mt-3 text-[16px] leading-snug"><span class="on-only">Connected as <b class="font-normal text-white" data-acct>info@mosviemedia.com</b></span><span class="off-only">Verify community roles and moderator work.</span></p>
+              <p class="on-only mono mt-2 text-white/50">Since <span data-date></span></p>
+              <button type="button" data-toggle class="on-only mono mt-6 h-12 w-full rounded-[12px] transition-colors duration-500 text-[#FF8A8A] outline outline-1 -outline-offset-1 outline-[#FF8A8A]/50 hover:bg-[#FF8A8A] hover:text-ink">Disconnect</button>
+              <button type="button" data-toggle class="off-only mono mt-6 h-12 w-full rounded-[12px] transition-colors duration-500 bg-ink text-white hover:bg-[#CEF79E] hover:text-ink">Connect</button></div></article>
+          <article class="plat fadein relative flex min-h-[320px] flex-col overflow-hidden rounded-[24px] p-6 sm:p-8" data-p="1" data-key="YouTube" data-on="1" style="animation-delay:70ms">
+            <span class="on-only"><svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="cap1" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#cap1)"/></svg></span>
+            <div class="relative flex items-start justify-between gap-3"><span class="grid h-14 w-14 place-items-center rounded-[16px] text-white" style="background:#FF0000"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span>
+              <span class="on-only mono rounded-full px-3 py-1.5 bg-[#CEF79E] text-ink">Connected</span><span class="off-only mono rounded-full px-3 py-1.5 border border-[#C9CBBE] text-primary">Not connected</span></div>
+            <div class="relative mt-auto pt-10"><h2 class="text-[clamp(32px,3.2vw,48px)] leading-none tracking-[-0.04em]">YouTube</h2>
+              <p class="tx mt-3 text-[16px] leading-snug"><span class="on-only">Connected as <b class="font-normal text-white" data-acct>info@mosviemedia.com</b></span><span class="off-only">Publish jobs and verify channel collaborations.</span></p>
+              <p class="on-only mono mt-2 text-white/50">Since <span data-date>Jul 10, 2026</span></p>
+              <button type="button" data-toggle class="on-only mono mt-6 h-12 w-full rounded-[12px] transition-colors duration-500 text-[#FF8A8A] outline outline-1 -outline-offset-1 outline-[#FF8A8A]/50 hover:bg-[#FF8A8A] hover:text-ink">Disconnect</button>
+              <button type="button" data-toggle class="off-only mono mt-6 h-12 w-full rounded-[12px] transition-colors duration-500 bg-ink text-white hover:bg-[#CEF79E] hover:text-ink">Connect</button></div></article>
+          <article class="plat fadein relative flex min-h-[320px] flex-col overflow-hidden rounded-[24px] p-6 sm:p-8" data-p="2" data-key="Twitch" data-on="0" style="animation-delay:140ms">
+            <span class="on-only"><svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="cap2" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#cap2)"/></svg></span>
+            <div class="relative flex items-start justify-between gap-3"><span class="grid h-14 w-14 place-items-center rounded-[16px] text-white" style="background:#9146FF"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/></svg></span>
+              <span class="on-only mono rounded-full px-3 py-1.5 bg-[#CEF79E] text-ink">Connected</span><span class="off-only mono rounded-full px-3 py-1.5 border border-[#C9CBBE] text-primary">Not connected</span></div>
+            <div class="relative mt-auto pt-10"><h2 class="text-[clamp(32px,3.2vw,48px)] leading-none tracking-[-0.04em]">Twitch</h2>
+              <p class="tx mt-3 text-[16px] leading-snug"><span class="on-only">Connected as <b class="font-normal text-white" data-acct>info@mosviemedia.com</b></span><span class="off-only">Verify stream and live-event work.</span></p>
+              <p class="on-only mono mt-2 text-white/50">Since <span data-date></span></p>
+              <button type="button" data-toggle class="on-only mono mt-6 h-12 w-full rounded-[12px] transition-colors duration-500 text-[#FF8A8A] outline outline-1 -outline-offset-1 outline-[#FF8A8A]/50 hover:bg-[#FF8A8A] hover:text-ink">Disconnect</button>
+              <button type="button" data-toggle class="off-only mono mt-6 h-12 w-full rounded-[12px] transition-colors duration-500 bg-ink text-white hover:bg-[#CEF79E] hover:text-ink">Connect</button></div></article>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    const $ = (i) => document.getElementById(i), esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-    const LOGO = {"Discord": "<svg width=\"26\" height=\"26\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z\"/></svg>", "YouTube": "<svg width=\"26\" height=\"26\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z\"/></svg>", "Twitch": "<svg width=\"26\" height=\"26\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z\"/></svg>"};
-    const PLATFORMS = [
-      { key: "Discord", color: "#5865F2", blurb: "Verify community roles and moderator work.", on: false },
-      { key: "YouTube", color: "#FF0000", blurb: "Publish jobs and verify channel collaborations.", on: true, acct: "info@mosviemedia.com", date: "Jul 10, 2026" },
-      { key: "Twitch", color: "#9146FF", blurb: "Verify stream and live-event work.", on: false },
-    ];
-    const PATTERN = '<svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="cap" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#cap)"/></svg>';
-    const say = (m) => { const t = document.createElement("p"); t.className = "mono fixed bottom-24 right-6 z-40 rounded-[10px] bg-ink px-4 py-3 text-[#CEF79E]"; t.textContent = m; document.body.appendChild(t); setTimeout(() => t.remove(), 2200); };
+    const $ = (i) => document.getElementById(i);
+    const tiles = [...document.querySelectorAll("#tiles .plat")];
+    const say = (m) => { const t = $("toast"); t.textContent = m; t.hidden = false; clearTimeout(say.t); say.t = setTimeout(() => { t.hidden = true; }, 2200); };
     function render() {
-      const n = PLATFORMS.filter((p) => p.on).length;
-      $("count").textContent = n + " of " + PLATFORMS.length + " connected"; $("bar").style.width = (n / PLATFORMS.length * 100) + "%";
-      $("tiles").innerHTML = PLATFORMS.map((p, i) => `<article class="fadein relative flex min-h-[320px] flex-col overflow-hidden rounded-[24px] p-6 sm:p-8 ${p.on ? "bg-ink text-white" : "bg-white text-ink"}" style="animation-delay:${i * 70}ms">${p.on ? PATTERN : ""}
-        <div class="relative flex items-start justify-between gap-3"><span class="grid h-14 w-14 place-items-center rounded-[16px] text-white" style="background:${p.color}">${LOGO[p.key]}</span>
-          <span class="mono rounded-full px-3 py-1.5 ${p.on ? "bg-[#CEF79E] text-ink" : "border border-[#C9CBBE] text-primary"}">${p.on ? "Connected" : "Not connected"}</span></div>
-        <div class="relative mt-auto pt-10"><h2 class="text-[clamp(32px,3.2vw,48px)] leading-none tracking-[-0.04em]">${p.key}</h2>
-          <p class="mt-3 text-[16px] leading-snug ${p.on ? "text-white/70" : "text-primary"}">${p.on ? "Connected as <b class='font-normal text-white'>" + esc(p.acct) + "</b>" : esc(p.blurb)}</p>
-          ${p.on ? `<p class="mono mt-2 text-white/50">Since ${esc(p.date)}</p>` : ""}
-          <button type="button" data-p="${i}" class="mono mt-6 h-12 w-full rounded-[12px] transition-colors duration-500 ${p.on ? "text-[#FF8A8A] outline outline-1 -outline-offset-1 outline-[#FF8A8A]/50 hover:bg-[#FF8A8A] hover:text-ink" : "bg-ink text-white hover:bg-[#CEF79E] hover:text-ink"}">${p.on ? "Disconnect" : "Connect"}</button></div></article>`).join("");
+      const n = tiles.filter((t) => t.dataset.on === "1").length;
+      $("count").textContent = n + " of " + tiles.length + " connected"; $("bar").style.width = (n / tiles.length * 100) + "%";
     }
     document.addEventListener("click", (e) => {
-      const b = e.target.closest("[data-p]"); if (!b) return;
-      const p = PLATFORMS[+b.dataset.p]; p.on = !p.on;
-      if (p.on) { p.acct = p.acct || "info@mosviemedia.com"; p.date = new Date().toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }); }
-      render(); say(p.on ? p.key + " connected" : p.key + " disconnected");
+      const b = e.target.closest("[data-toggle]"); if (!b) return;
+      const t = b.closest(".plat"), on = t.dataset.on !== "1";
+      t.dataset.on = on ? "1" : "0";
+      if (on) t.querySelector("[data-date]").textContent = new Date().toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+      render(); tiles.forEach((x) => { x.style.animation = "none"; void x.offsetWidth; x.style.animation = ""; }); say(t.dataset.key + (on ? " connected" : " disconnected"));
     });
     render();
   </script>
@@ -530,6 +556,16 @@
     applySidebarState();
   </script>
   <script src="assets/invites.js"></script>
+    <!-- help button, feedback popup and founder-call popup (behaviour: assets/help-fab.js) -->
+  <div id="hf-scrim"></div>
+  <div id="hf-root"><div class="hf-row"><span class="hf-label">Feedback</span><button type="button" class="hf-tile" data-hf="feedback" aria-label="Send feedback"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="M15 5l4 4"/><path d="M12 22h10"/></svg></button></div><div class="hf-row"><span class="hf-label">Talk with founder</span><button type="button" class="hf-tile" data-hf="founder" aria-label="Talk with the founder"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="9" cy="13" r="2"/><circle cx="15" cy="13" r="2"/><path d="M11 13h2"/><path d="M8 17h8"/></svg></button></div><div class="hf-close-row"><span class="hf-label">Close</span><button type="button" id="hf-main" aria-label="Help" aria-expanded="false" aria-haspopup="true"><svg class="hf-hand" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0v5"/><path d="M14 10V4a2 2 0 0 0-4 0v6"/><path d="M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg><svg class="hf-x" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button></div></div>
+  <div class="hf-modal" id="hf-feedback" role="dialog" aria-modal="true"><div class="hf-card"><button type="button" class="hf-x2" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button><div class="hf-body"><p class="mono" style="color:#CEF79E">Feedback</p><h2>Tell us what you think</h2><div class="hf-chips"><button type="button" class="hf-chip" aria-pressed="true">Idea</button><button type="button" class="hf-chip" aria-pressed="false">Something is broken</button><button type="button" class="hf-chip" aria-pressed="false">Praise</button></div><textarea placeholder="Write your feedback" aria-label="Your feedback"></textarea><p class="hf-err mono">Please write a few words first.</p><button type="button" class="hf-send">Send feedback</button></div></div></div>
+  <div class="hf-modal" id="hf-founder" role="dialog" aria-modal="true"><div class="hf-card"><button type="button" class="hf-x2" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button><div class="hf-body">
+    <div data-hf-view="intro"><p class="mono" style="color:#CEF79E">Talk with the founder</p><h2>Let’s improve your results on Arclent</h2><p style="margin:14px 0 0;color:rgba(255,255,255,.7);font-size:17px;line-height:1.4">If something felt confusing, didn’t go as expected, or seemed missing while using Arclent, book a call with <b style="font-weight:400;color:#fff">Idris</b>, our co-founder, and share your experience so we can help and make things better.</p><div class="hf-founder-row"><div class="hf-founder-who"><span class="hf-founder-av" style="background-image:url('https://images.unsplash.com/photo-1741455620227-3b1c51e01419?crop=faces&fit=crop&w=100&h=100&q=80')"></span><div><p class="hf-founder-name">Idris Navarro</p><p class="mono hf-founder-role">Co-founder</p></div></div><button type="button" class="hf-cta" id="hf-book-cta">Book a Call with Idris</button></div></div>
+    <div data-hf-view="slots" hidden><button type="button" class="hf-back" id="hf-back">&larr; Back</button><p class="mono" style="color:#CEF79E;margin-top:14px">Book a call with Idris</p><h2>Pick a time</h2><p style="margin:14px 0 0;color:rgba(255,255,255,.7);font-size:17px;line-height:1.3">Questions, ideas or a problem you want solved? Pick a time and you will talk for 15 minutes.</p><div class="hf-chips"><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button></div><textarea placeholder="Anything we should know first? (optional)" aria-label="Note" style="min-height:90px"></textarea><p class="hf-err mono">Pick a time first.</p><button type="button" class="hf-send">Request call</button></div>
+  </div></div></div>
+  <p class="hf-toast" id="hf-toast" hidden></p>
   <script src="assets/help-fab.js" defer></script>
+  <p id="toast" class="mono fixed bottom-24 right-6 z-40 rounded-[10px] bg-ink px-4 py-3 text-[#CEF79E]" hidden></p>
 </body>
 </html>

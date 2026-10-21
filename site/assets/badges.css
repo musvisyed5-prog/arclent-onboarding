@@ -1,0 +1,8 @@
+/* Verified badges + their hover tooltip (markup is in the pages; behaviour: assets/tier-tip.js, assets/verify-badge.js). */
+.rv-badge{display:inline-flex;vertical-align:-4px;margin-left:6px}
+.rv-badge[hidden]{display:none}
+.rv-badge img{display:block;width:22px;height:22px;object-fit:contain}
+h1 .rv-badge img{width:.42em;height:.42em;min-width:34px;min-height:34px}
+h1 .rv-badge{vertical-align:.12em;margin-left:.1em}
+.rv-tip{position:relative;display:inline-flex;vertical-align:middle;cursor:help;flex-shrink:0}
+#tt-global{position:fixed;left:0;top:0;z-index:2147483000;display:none;pointer-events:none;white-space:nowrap;max-width:calc(100vw - 16px);padding:8px 12px;border-radius:8px;background:#222F30;color:#fff;font:400 12px/1.2 'Roboto Mono',monospace;text-transform:none;letter-spacing:0;box-shadow:0 8px 24px rgba(34,47,48,.25);opacity:0;transition:opacity .15s}

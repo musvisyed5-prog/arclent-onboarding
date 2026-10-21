@@ -255,6 +255,7 @@
     .hero-pending #hero-h1, .hero-pending #hero-p, .hero-pending #hero-cta, .hero-pending .ib-nav { visibility: hidden; }
     .line-mask { display: block; overflow: clip; padding-bottom: 0.14em; margin-bottom: -0.14em; }
     .line-mask > .line { display: block; will-change: transform; }
+    [data-screen][hidden] { display: none !important; }
 
 
     /* GSAP owns these interactions once it loads (html.gsap-btn); plain CSS hovers remain as fallback */
@@ -318,8 +319,10 @@
     .step-row:hover .sc-num { color: #CEF79E; }
     .step-row .seg button.on { background: #CEF79E; color: #222F30; }
   </style>
+  <link rel="stylesheet" href="assets/promo-banner.css" />
 </head>
-<body class="min-h-screen bg-surface font-sans text-ink">
+<body class="min-h-screen bg-surface font-sans text-ink has-promo">
+  <div id="promo-bar" role="region" aria-label="Promotion"><span>Job posting is <b>100% free</b> &mdash; for a limited time. Post now, pay nothing.</span><a href="choose-role.html">Post a job free <span aria-hidden="true">&rarr;</span></a></div>
   <div class="bg-noise" aria-hidden="true"></div>
 
   <!-- Liquid-glass displacement filter used by .glass-card's backdrop-filter (feTurbulence-based) -->
@@ -359,7 +362,7 @@
   </div>
 
   <div id="hero" class="relative m-1.5 overflow-hidden rounded-[20px] bg-ink text-white">
-    <div id="hero-tilt" class="absolute inset-0" aria-hidden="true"><div id="silk-hero" data-name="hero" class="absolute inset-0"></div></div>
+    <div id="hero-tilt" class="absolute inset-0" aria-hidden="true"><div id="silk-hero" data-name="hero" class="absolute inset-0"><canvas style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas></div></div>
     <div class="relative z-10 mx-auto flex min-h-[calc(100vh-12px)] max-w-[1400px] flex-col justify-between px-4 pb-14 pt-32 lg:px-10">
       <div>
         <h1 id="hero-h1" class="max-w-[1000px] text-[clamp(48px,7vw,104px)] font-normal leading-[1] tracking-[-0.03em] text-white">The hiring platform built on verified work.</h1>
@@ -370,7 +373,7 @@
         </p>
         <div id="hero-cta" class="mt-8 flex flex-wrap items-center gap-3">
           <a class="ib-btn" href="choose-role.html"><span class="lbl">Hire Now<i class="corner"><svg viewBox="0 0 18 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h6c8 0 13.4 7.2 11.4 15L11 39a11.5 11.5 0 0 1-11 9V0Z"/></svg></i></span><i class="ico"><svg viewBox="0 0 51 48" preserveAspectRatio="none" aria-hidden="true"><path class="shape" d="M6.8 9.2A12 12 0 0 1 18.4 0H39c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H12.4C4.6 48-1.2 40.7.7 33.2L6.8 9.2Z"/><path class="arrow" d="M23 24h13m-5-5 5 5-5 5" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></a>
-          <a href="choose-role.html" class="btn-ghost ml-2 flex h-12 items-center px-5">Apply Now</a>
+          <a href="choose-role.html" class="btn-ghost ml-2 flex h-12 items-center px-5">Apply Now<span class="gfill" aria-hidden="true"></span></a>
         </div>
       </div>
     </div>
@@ -379,16 +382,16 @@
   <!-- SCROLL SCENE: pinned panel, statements reveal character by character as you scroll -->
   <section id="scroller" class="relative mx-1.5 overflow-hidden rounded-[20px] bg-ink text-white">
     <div id="scroller-pin" class="relative z-10 flex h-screen flex-col">
-      <div id="silk-scene" data-name="scene" class="absolute inset-0" style="z-index: -1; opacity: 0.75;" aria-hidden="true"></div>
+      <div id="silk-scene" data-name="scene" class="absolute inset-0" style="z-index: -1; opacity: 0.75;" aria-hidden="true"><canvas style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas></div>
       <div class="mx-auto flex w-full max-w-[1400px] items-center justify-between px-4 pt-28 lg:px-10">
         <span class="inline-flex items-center gap-2 rounded-[8px] border border-white/20 bg-black/25 px-3 py-1.5 font-mono text-[13px] uppercase"><span class="h-2 w-2 bg-accent"></span>What we do</span>
         <span id="scroller-count" class="inline-flex items-center gap-1.5 rounded-full border border-white/30 px-4 py-1.5 font-mono text-[13px]"><span id="scroller-cur">01</span><span class="text-white/40">/</span><span class="text-white/40">03</span></span>
       </div>
       <div class="mx-auto mt-6 h-px w-full max-w-[1400px] bg-white/25"><div id="scroller-bar" class="h-px origin-left bg-white" style="transform: scaleX(0);"></div></div>
       <div class="relative mx-auto w-full max-w-[1400px] flex-1 px-4 lg:px-10">
-        <p class="scroller-item absolute inset-x-4 top-1/2 max-w-[1100px] -translate-y-1/2 text-[clamp(30px,4.4vw,64px)] leading-[1.12] tracking-[-0.02em] lg:inset-x-10" data-split>We are a hiring company building verified portfolios, so creators can prove the work they did and never be doubted for it.</p>
-        <p class="scroller-item absolute inset-x-4 top-1/2 max-w-[1100px] -translate-y-1/2 text-[clamp(30px,4.4vw,64px)] leading-[1.12] tracking-[-0.02em] lg:inset-x-10" data-split>Every collaboration is confirmed by the people who were actually there. No fakes, no guesswork, no cold emails.</p>
-        <p class="scroller-item absolute inset-x-4 top-1/2 max-w-[1100px] -translate-y-1/2 text-[clamp(30px,4.4vw,64px)] leading-[1.12] tracking-[-0.02em] lg:inset-x-10" data-split>Recruiters post a job in minutes, reach verified talent directly, and hire on evidence instead of claims.</p>
+        <p class="scroller-item absolute inset-x-4 top-1/2 max-w-[1100px] -translate-y-1/2 text-[clamp(30px,4.4vw,64px)] leading-[1.12] tracking-[-0.02em] lg:inset-x-10" data-split aria-label="We are a hiring company building verified portfolios, so creators can prove the work they did and never be doubted for it."><span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">W</span><span class="sc-char" style="display:inline-block;">e</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">a</span><span class="sc-char" style="display:inline-block;">r</span><span class="sc-char" style="display:inline-block;">e</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">a</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">h</span><span class="sc-char" style="display:inline-block;">i</span><span class="sc-char" style="display:inline-block;">r</span><span class="sc-char" style="display:inline-block;">i</span><span class="sc-char" style="display:inline-block;">n</span><span class="sc-char" style="display:inline-block;">g</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">c</span><span class="sc-char" style="display:inline-block;">o</span><span class="sc-char" style="display:inline-block;">m</span><span class="sc-char" style="display:inline-block;">p</span><span class="sc-char" style="display:inline-block;">a</span><span class="sc-char" style="display:inline-block;">n</span><span class="sc-char" style="display:inline-block;">y</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">b</span><span class="sc-char" style="display:inline-block;">u</span><span class="sc-char" style="display:inline-block;">i</span><span class="sc-char" style="display:inline-block;">l</span><span class="sc-char" style="display:inline-block;">d</span><span class="sc-char" style="display:inline-block;">i</span><span class="sc-char" style="display:inline-block;">n</span><span class="sc-char" style="display:inline-block;">g</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">v</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">r</span><span class="sc-char" style="display:inline-block;">i</span><span class="sc-char" style="display:inline-block;">f</span><span class="sc-char" style="display:inline-block;">i</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">d</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">p</span><span class="sc-char" style="display:inline-block;">o</span><span class="sc-char" style="display:inline-block;">r</span><span class="sc-char" style="display:inline-block;">t</span><span class="sc-char" style="display:inline-block;">f</span><span class="sc-char" style="display:inline-block;">o</span><span class="sc-char" style="display:inline-block;">l</span><span class="sc-char" style="display:inline-block;">i</span><span class="sc-char" style="display:inline-block;">o</span><span class="sc-char" style="display:inline-block;">s</span><span class="sc-char" style="display:inline-block;">,</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">s</span><span class="sc-char" style="display:inline-block;">o</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">c</span><span class="sc-char" style="display:inline-block;">r</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">a</span><span class="sc-char" style="display:inline-block;">t</span><span class="sc-char" style="display:inline-block;">o</span><span class="sc-char" style="display:inline-block;">r</span><span class="sc-char" style="display:inline-block;">s</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">c</span><span class="sc-char" style="display:inline-block;">a</span><span class="sc-char" style="display:inline-block;">n</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">p</span><span class="sc-char" style="display:inline-block;">r</span><span class="sc-char" style="display:inline-block;">o</span><span class="sc-char" style="display:inline-block;">v</span><span class="sc-char" style="display:inline-block;">e</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">t</span><span class="sc-char" style="display:inline-block;">h</span><span class="sc-char" style="display:inline-block;">e</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">w</span><span class="sc-char" style="display:inline-block;">o</span><span class="sc-char" style="display:inline-block;">r</span><span class="sc-char" style="display:inline-block;">k</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">t</span><span class="sc-char" style="display:inline-block;">h</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">y</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">d</span><span class="sc-char" style="display:inline-block;">i</span><span class="sc-char" style="display:inline-block;">d</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">a</span><span class="sc-char" style="display:inline-block;">n</span><span class="sc-char" style="display:inline-block;">d</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">n</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">v</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">r</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">b</span><span class="sc-char" style="display:inline-block;">e</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">d</span><span class="sc-char" style="display:inline-block;">o</span><span class="sc-char" style="display:inline-block;">u</span><span class="sc-char" style="display:inline-block;">b</span><span class="sc-char" style="display:inline-block;">t</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">d</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">f</span><span class="sc-char" style="display:inline-block;">o</span><span class="sc-char" style="display:inline-block;">r</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">i</span><span class="sc-char" style="display:inline-block;">t</span><span class="sc-char" style="display:inline-block;">.</span></span></p>
+        <p class="scroller-item absolute inset-x-4 top-1/2 max-w-[1100px] -translate-y-1/2 text-[clamp(30px,4.4vw,64px)] leading-[1.12] tracking-[-0.02em] lg:inset-x-10" data-split aria-label="Every collaboration is confirmed by the people who were actually there. No fakes, no guesswork, no cold emails."><span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">E</span><span class="sc-char" style="display:inline-block;">v</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">r</span><span class="sc-char" style="display:inline-block;">y</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">c</span><span class="sc-char" style="display:inline-block;">o</span><span class="sc-char" style="display:inline-block;">l</span><span class="sc-char" style="display:inline-block;">l</span><span class="sc-char" style="display:inline-block;">a</span><span class="sc-char" style="display:inline-block;">b</span><span class="sc-char" style="display:inline-block;">o</span><span class="sc-char" style="display:inline-block;">r</span><span class="sc-char" style="display:inline-block;">a</span><span class="sc-char" style="display:inline-block;">t</span><span class="sc-char" style="display:inline-block;">i</span><span class="sc-char" style="display:inline-block;">o</span><span class="sc-char" style="display:inline-block;">n</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">i</span><span class="sc-char" style="display:inline-block;">s</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">c</span><span class="sc-char" style="display:inline-block;">o</span><span class="sc-char" style="display:inline-block;">n</span><span class="sc-char" style="display:inline-block;">f</span><span class="sc-char" style="display:inline-block;">i</span><span class="sc-char" style="display:inline-block;">r</span><span class="sc-char" style="display:inline-block;">m</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">d</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">b</span><span class="sc-char" style="display:inline-block;">y</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">t</span><span class="sc-char" style="display:inline-block;">h</span><span class="sc-char" style="display:inline-block;">e</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">p</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">o</span><span class="sc-char" style="display:inline-block;">p</span><span class="sc-char" style="display:inline-block;">l</span><span class="sc-char" style="display:inline-block;">e</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">w</span><span class="sc-char" style="display:inline-block;">h</span><span class="sc-char" style="display:inline-block;">o</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">w</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">r</span><span class="sc-char" style="display:inline-block;">e</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">a</span><span class="sc-char" style="display:inline-block;">c</span><span class="sc-char" style="display:inline-block;">t</span><span class="sc-char" style="display:inline-block;">u</span><span class="sc-char" style="display:inline-block;">a</span><span class="sc-char" style="display:inline-block;">l</span><span class="sc-char" style="display:inline-block;">l</span><span class="sc-char" style="display:inline-block;">y</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">t</span><span class="sc-char" style="display:inline-block;">h</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">r</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">.</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">N</span><span class="sc-char" style="display:inline-block;">o</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">f</span><span class="sc-char" style="display:inline-block;">a</span><span class="sc-char" style="display:inline-block;">k</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">s</span><span class="sc-char" style="display:inline-block;">,</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">n</span><span class="sc-char" style="display:inline-block;">o</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">g</span><span class="sc-char" style="display:inline-block;">u</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">s</span><span class="sc-char" style="display:inline-block;">s</span><span class="sc-char" style="display:inline-block;">w</span><span class="sc-char" style="display:inline-block;">o</span><span class="sc-char" style="display:inline-block;">r</span><span class="sc-char" style="display:inline-block;">k</span><span class="sc-char" style="display:inline-block;">,</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">n</span><span class="sc-char" style="display:inline-block;">o</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">c</span><span class="sc-char" style="display:inline-block;">o</span><span class="sc-char" style="display:inline-block;">l</span><span class="sc-char" style="display:inline-block;">d</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">m</span><span class="sc-char" style="display:inline-block;">a</span><span class="sc-char" style="display:inline-block;">i</span><span class="sc-char" style="display:inline-block;">l</span><span class="sc-char" style="display:inline-block;">s</span><span class="sc-char" style="display:inline-block;">.</span></span></p>
+        <p class="scroller-item absolute inset-x-4 top-1/2 max-w-[1100px] -translate-y-1/2 text-[clamp(30px,4.4vw,64px)] leading-[1.12] tracking-[-0.02em] lg:inset-x-10" data-split aria-label="Recruiters post a job in minutes, reach verified talent directly, and hire on evidence instead of claims."><span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">R</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">c</span><span class="sc-char" style="display:inline-block;">r</span><span class="sc-char" style="display:inline-block;">u</span><span class="sc-char" style="display:inline-block;">i</span><span class="sc-char" style="display:inline-block;">t</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">r</span><span class="sc-char" style="display:inline-block;">s</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">p</span><span class="sc-char" style="display:inline-block;">o</span><span class="sc-char" style="display:inline-block;">s</span><span class="sc-char" style="display:inline-block;">t</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">a</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">j</span><span class="sc-char" style="display:inline-block;">o</span><span class="sc-char" style="display:inline-block;">b</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">i</span><span class="sc-char" style="display:inline-block;">n</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">m</span><span class="sc-char" style="display:inline-block;">i</span><span class="sc-char" style="display:inline-block;">n</span><span class="sc-char" style="display:inline-block;">u</span><span class="sc-char" style="display:inline-block;">t</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">s</span><span class="sc-char" style="display:inline-block;">,</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">r</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">a</span><span class="sc-char" style="display:inline-block;">c</span><span class="sc-char" style="display:inline-block;">h</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">v</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">r</span><span class="sc-char" style="display:inline-block;">i</span><span class="sc-char" style="display:inline-block;">f</span><span class="sc-char" style="display:inline-block;">i</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">d</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">t</span><span class="sc-char" style="display:inline-block;">a</span><span class="sc-char" style="display:inline-block;">l</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">n</span><span class="sc-char" style="display:inline-block;">t</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">d</span><span class="sc-char" style="display:inline-block;">i</span><span class="sc-char" style="display:inline-block;">r</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">c</span><span class="sc-char" style="display:inline-block;">t</span><span class="sc-char" style="display:inline-block;">l</span><span class="sc-char" style="display:inline-block;">y</span><span class="sc-char" style="display:inline-block;">,</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">a</span><span class="sc-char" style="display:inline-block;">n</span><span class="sc-char" style="display:inline-block;">d</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">h</span><span class="sc-char" style="display:inline-block;">i</span><span class="sc-char" style="display:inline-block;">r</span><span class="sc-char" style="display:inline-block;">e</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">o</span><span class="sc-char" style="display:inline-block;">n</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">v</span><span class="sc-char" style="display:inline-block;">i</span><span class="sc-char" style="display:inline-block;">d</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">n</span><span class="sc-char" style="display:inline-block;">c</span><span class="sc-char" style="display:inline-block;">e</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">i</span><span class="sc-char" style="display:inline-block;">n</span><span class="sc-char" style="display:inline-block;">s</span><span class="sc-char" style="display:inline-block;">t</span><span class="sc-char" style="display:inline-block;">e</span><span class="sc-char" style="display:inline-block;">a</span><span class="sc-char" style="display:inline-block;">d</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">o</span><span class="sc-char" style="display:inline-block;">f</span></span> <span aria-hidden="true" style="display:inline-block;white-space:nowrap;"><span class="sc-char" style="display:inline-block;">c</span><span class="sc-char" style="display:inline-block;">l</span><span class="sc-char" style="display:inline-block;">a</span><span class="sc-char" style="display:inline-block;">i</span><span class="sc-char" style="display:inline-block;">m</span><span class="sc-char" style="display:inline-block;">s</span><span class="sc-char" style="display:inline-block;">.</span></span></p>
       </div>
     </div>
   </section>
@@ -398,16 +401,6 @@
     (function () {
       var items = Array.prototype.slice.call(document.querySelectorAll(".scroller-item"));
       var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-      // split into words (inline-block so they never break mid-word) and chars
-      items.forEach(function (p) {
-        var words = p.textContent.trim().split(/\s+/);
-        p.setAttribute("aria-label", p.textContent.trim());
-        p.innerHTML = words.map(function (w) {
-          return '<span aria-hidden="true" style="display:inline-block;white-space:nowrap;">' +
-            w.split("").map(function (c) { return '<span class="sc-char" style="display:inline-block;">' + c + "</span>"; }).join("") +
-            "</span>";
-        }).join(" ");
-      });
       if (reduce || !window.gsap || !window.ScrollTrigger) {
         // no motion: show statements stacked and readable
         var wrap = items[0].parentElement;
@@ -634,7 +627,7 @@
         <div class="mt-8 flex flex-wrap items-center gap-3">
           <div class="seg" id="toggle1"><button data-mode="talent" class="on">I'm Talent</button><button data-mode="recruiter">I'm a Recruiter</button></div>
           <div class="seg" id="toggle2" hidden><button data-sub="creator" class="on">As a Creator</button><button data-sub="company">As a Company</button></div>
-          <span class="mono rounded-full bg-[#CEF79E] px-4 py-3 text-ink" id="journeyPill">&#9733; TALENT JOURNEY</span>
+          <span class="mono rounded-full bg-[#CEF79E] px-4 py-3 text-ink" id="journeyPill"><span data-pill="talent">&#9733; TALENT JOURNEY</span><span data-pill="recruiter-creator" hidden>&#9733; CREATOR HIRING JOURNEY</span><span data-pill="recruiter-company" hidden>&#9733; COMPANY HIRING JOURNEY</span></span>
         </div>
       </div>
 
@@ -642,7 +635,112 @@
         <svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="hiwp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#hiwp)"/></svg>
         <div class="relative">
           <div class="absolute left-7 top-0 bottom-0 w-px bg-white/15" aria-hidden="true"></div>
-          <div id="cards"></div>
+          <div id="cards">
+        <div data-journey="talent">
+          <article class="step-row group relative flex gap-5 pb-10 last:pb-0 sm:gap-7">
+            <span class="sc-ico relative z-10 grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#2F3C3D] text-[#CEF79E] ring-4 ring-ink transition-colors duration-700 group-hover:bg-[#CEF79E] group-hover:text-ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span>
+            <div class="min-w-0 flex-1 pt-1.5">
+              <span class="sc-num mono text-white/40">Step 01</span>
+              <h3 class="mt-2 text-[clamp(22px,2.4vw,34px)] font-normal leading-[1.1] tracking-[-0.03em]">Add Your Work</h3>
+              <p class="sc-body mt-4 max-w-[560px] text-[16px] leading-snug text-white/70 transition-colors duration-700">Paste the link to something you made — a video, a post, a stream — and tell us what you did on it.</p>
+            </div>
+          </article>
+          <article class="step-row group relative flex gap-5 pb-10 last:pb-0 sm:gap-7">
+            <span class="sc-ico relative z-10 grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#2F3C3D] text-[#CEF79E] ring-4 ring-ink transition-colors duration-700 group-hover:bg-[#CEF79E] group-hover:text-ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <div class="min-w-0 flex-1 pt-1.5">
+              <span class="sc-num mono text-white/40">Step 02</span>
+              <h3 class="mt-2 text-[clamp(22px,2.4vw,34px)] font-normal leading-[1.1] tracking-[-0.03em]">Get Confirmed</h3>
+              <div class="seg sm mt-4" id="verifyToggle"><button data-v="we" class="on">We reach out</button><button data-v="you">You reach out</button></div>
+                <p data-verify-copy="we" class="sc-body mt-4 max-w-[560px] text-[16px] leading-snug text-white/70 transition-colors duration-700">We find the email of the person you worked with. You confirm it's the right one, and we send them a one-click link to verify.</p>
+                <p data-verify-copy="you" hidden class="sc-body mt-4 max-w-[560px] text-[16px] leading-snug text-white/70 transition-colors duration-700">Can't find an email? We find their Instagram instead. You confirm it's them, then we hand you a ready-made message with the link — you just hit send.</p>
+            </div>
+          </article>
+          <article class="step-row group relative flex gap-5 pb-10 last:pb-0 sm:gap-7">
+            <span class="sc-ico relative z-10 grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#2F3C3D] text-[#CEF79E] ring-4 ring-ink transition-colors duration-700 group-hover:bg-[#CEF79E] group-hover:text-ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg></span>
+            <div class="min-w-0 flex-1 pt-1.5">
+              <span class="sc-num mono text-white/40">Step 03</span>
+              <h3 class="mt-2 text-[clamp(22px,2.4vw,34px)] font-normal leading-[1.1] tracking-[-0.03em]">Apply or Sit Back</h3>
+              <p class="sc-body mt-4 max-w-[560px] text-[16px] leading-snug text-white/70 transition-colors duration-700">Apply to jobs yourself, or let your verified profile bring the jobs to you.</p>
+            </div>
+          </article>
+          <article class="step-row group relative flex gap-5 pb-10 last:pb-0 sm:gap-7">
+            <span class="sc-ico relative z-10 grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#2F3C3D] text-[#CEF79E] ring-4 ring-ink transition-colors duration-700 group-hover:bg-[#CEF79E] group-hover:text-ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <div class="min-w-0 flex-1 pt-1.5">
+              <span class="sc-num mono text-white/40">Step 04</span>
+              <h3 class="mt-2 text-[clamp(22px,2.4vw,34px)] font-normal leading-[1.1] tracking-[-0.03em]">Land the Job</h3>
+              <p class="sc-body mt-4 max-w-[560px] text-[16px] leading-snug text-white/70 transition-colors duration-700">Recruiters see verified work instead of just claims — so you get hired for what you're actually good at.</p>
+            </div>
+          </article>
+        </div>
+        <div data-journey="recruiter-creator" hidden>
+          <article class="step-row group relative flex gap-5 pb-10 last:pb-0 sm:gap-7">
+            <span class="sc-ico relative z-10 grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#2F3C3D] text-[#CEF79E] ring-4 ring-ink transition-colors duration-700 group-hover:bg-[#CEF79E] group-hover:text-ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 21h8"/><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/></svg></span>
+            <div class="min-w-0 flex-1 pt-1.5">
+              <span class="sc-num mono text-white/40">Step 01</span>
+              <h3 class="mt-2 text-[clamp(22px,2.4vw,34px)] font-normal leading-[1.1] tracking-[-0.03em]">Post a Role in Seconds</h3>
+              <p class="sc-body mt-4 max-w-[560px] text-[16px] leading-snug text-white/70 transition-colors duration-700">Describe what you need in a few prompts — AI drafts the full job post. No HR jargon required.</p>
+            </div>
+          </article>
+          <article class="step-row group relative flex gap-5 pb-10 last:pb-0 sm:gap-7">
+            <span class="sc-ico relative z-10 grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#2F3C3D] text-[#CEF79E] ring-4 ring-ink transition-colors duration-700 group-hover:bg-[#CEF79E] group-hover:text-ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+            <div class="min-w-0 flex-1 pt-1.5">
+              <span class="sc-num mono text-white/40">Step 02</span>
+              <h3 class="mt-2 text-[clamp(22px,2.4vw,34px)] font-normal leading-[1.1] tracking-[-0.03em]">Get Matched Talent</h3>
+              <p class="sc-body mt-4 max-w-[560px] text-[16px] leading-snug text-white/70 transition-colors duration-700">Verified editors, designers, and creators who fit your channel apply — or get recommended to you directly.</p>
+            </div>
+          </article>
+          <article class="step-row group relative flex gap-5 pb-10 last:pb-0 sm:gap-7">
+            <span class="sc-ico relative z-10 grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#2F3C3D] text-[#CEF79E] ring-4 ring-ink transition-colors duration-700 group-hover:bg-[#CEF79E] group-hover:text-ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <div class="min-w-0 flex-1 pt-1.5">
+              <span class="sc-num mono text-white/40">Step 03</span>
+              <h3 class="mt-2 text-[clamp(22px,2.4vw,34px)] font-normal leading-[1.1] tracking-[-0.03em]">Review Verified Profiles</h3>
+              <p class="sc-body mt-4 max-w-[560px] text-[16px] leading-snug text-white/70 transition-colors duration-700">Every applicant's portfolio is peer-confirmed, so you're never guessing if the work claimed is real.</p>
+            </div>
+          </article>
+          <article class="step-row group relative flex gap-5 pb-10 last:pb-0 sm:gap-7">
+            <span class="sc-ico relative z-10 grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#2F3C3D] text-[#CEF79E] ring-4 ring-ink transition-colors duration-700 group-hover:bg-[#CEF79E] group-hover:text-ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg></span>
+            <div class="min-w-0 flex-1 pt-1.5">
+              <span class="sc-num mono text-white/40">Step 04</span>
+              <h3 class="mt-2 text-[clamp(22px,2.4vw,34px)] font-normal leading-[1.1] tracking-[-0.03em]">Hire With Confidence</h3>
+              <p class="sc-body mt-4 max-w-[560px] text-[16px] leading-snug text-white/70 transition-colors duration-700">Message and hire directly, all in one place — no spreadsheets, no back-and-forth.</p>
+            </div>
+          </article>
+        </div>
+        <div data-journey="recruiter-company" hidden>
+          <article class="step-row group relative flex gap-5 pb-10 last:pb-0 sm:gap-7">
+            <span class="sc-ico relative z-10 grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#2F3C3D] text-[#CEF79E] ring-4 ring-ink transition-colors duration-700 group-hover:bg-[#CEF79E] group-hover:text-ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12h4"/><path d="M10 8h4"/><path d="M14 21v-3a2 2 0 0 0-4 0v3"/><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"/><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/></svg></span>
+            <div class="min-w-0 flex-1 pt-1.5">
+              <span class="sc-num mono text-white/40">Step 01</span>
+              <h3 class="mt-2 text-[clamp(22px,2.4vw,34px)] font-normal leading-[1.1] tracking-[-0.03em]">Set Up Your Company Profile</h3>
+              <p class="sc-body mt-4 max-w-[560px] text-[16px] leading-snug text-white/70 transition-colors duration-700">Paste your company URL — AI autofills your profile through a quick 3-step wizard.</p>
+            </div>
+          </article>
+          <article class="step-row group relative flex gap-5 pb-10 last:pb-0 sm:gap-7">
+            <span class="sc-ico relative z-10 grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#2F3C3D] text-[#CEF79E] ring-4 ring-ink transition-colors duration-700 group-hover:bg-[#CEF79E] group-hover:text-ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg></span>
+            <div class="min-w-0 flex-1 pt-1.5">
+              <span class="sc-num mono text-white/40">Step 02</span>
+              <h3 class="mt-2 text-[clamp(22px,2.4vw,34px)] font-normal leading-[1.1] tracking-[-0.03em]">Post Jobs & Review Applicants</h3>
+              <p class="sc-body mt-4 max-w-[560px] text-[16px] leading-snug text-white/70 transition-colors duration-700">Post roles and manage every applicant with shortlist toggles built for fast decisions.</p>
+            </div>
+          </article>
+          <article class="step-row group relative flex gap-5 pb-10 last:pb-0 sm:gap-7">
+            <span class="sc-ico relative z-10 grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#2F3C3D] text-[#CEF79E] ring-4 ring-ink transition-colors duration-700 group-hover:bg-[#CEF79E] group-hover:text-ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg></span>
+            <div class="min-w-0 flex-1 pt-1.5">
+              <span class="sc-num mono text-white/40">Step 03</span>
+              <h3 class="mt-2 text-[clamp(22px,2.4vw,34px)] font-normal leading-[1.1] tracking-[-0.03em]">Bulk AI Outreach</h3>
+              <p class="sc-body mt-4 max-w-[560px] text-[16px] leading-snug text-white/70 transition-colors duration-700">Message applicants in bulk, filtered by status, with AI-drafted outreach ready to send.</p>
+            </div>
+          </article>
+          <article class="step-row group relative flex gap-5 pb-10 last:pb-0 sm:gap-7">
+            <span class="sc-ico relative z-10 grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#2F3C3D] text-[#CEF79E] ring-4 ring-ink transition-colors duration-700 group-hover:bg-[#CEF79E] group-hover:text-ink"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span>
+            <div class="min-w-0 flex-1 pt-1.5">
+              <span class="sc-num mono text-white/40">Step 04</span>
+              <h3 class="mt-2 text-[clamp(22px,2.4vw,34px)] font-normal leading-[1.1] tracking-[-0.03em]">Hire at Scale</h3>
+              <p class="sc-body mt-4 max-w-[560px] text-[16px] leading-snug text-white/70 transition-colors duration-700">Build your team on verified, trustworthy talent — across as many roles as you need.</p>
+            </div>
+          </article>
+        </div>
+      </div>
         </div>
       </div>
 
@@ -812,29 +910,36 @@
         <p class="mt-5 max-w-[520px] text-[18px] leading-snug text-white/70">Paste a link to something you made. Our AI finds the creator, reaches out on your behalf, and confirms the collaboration &mdash; no cold emails, no chasing replies.</p>
         <div class="mt-10 flex items-start">
           <div class="flex min-w-0 flex-col items-start gap-3" data-verify-dot="0">
-            <span class="verify-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent font-mono text-[12px] text-ink transition-colors duration-500">1</span>
+            <span class="verify-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent font-mono text-[12px] text-ink transition-colors duration-500"><b class="dn font-normal">1</b><svg class="dc" hidden width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
             <p class="verify-label mono text-white transition-colors duration-500">Paste link</p>
           </div>
           <div class="verify-line mt-[18px] h-px min-w-3 flex-1 bg-white/15"><div class="verify-fill h-full w-0 bg-accent transition-[width] duration-500 ease-out"></div></div>
           <div class="flex min-w-0 flex-col items-start gap-3" data-verify-dot="1">
-            <span class="verify-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500">2</span>
+            <span class="verify-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500"><b class="dn font-normal">2</b><svg class="dc" hidden width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
             <p class="verify-label mono text-white/40 transition-colors duration-500">AI finds creator</p>
           </div>
           <div class="verify-line mt-[18px] h-px min-w-3 flex-1 bg-white/15"><div class="verify-fill h-full w-0 bg-accent transition-[width] duration-500 ease-out"></div></div>
           <div class="flex min-w-0 flex-col items-start gap-3" data-verify-dot="2">
-            <span class="verify-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500">3</span>
+            <span class="verify-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500"><b class="dn font-normal">3</b><svg class="dc" hidden width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
             <p class="verify-label mono text-white/40 transition-colors duration-500">AI reaches out</p>
           </div>
           <div class="verify-line mt-[18px] h-px min-w-3 flex-1 bg-white/15"><div class="verify-fill h-full w-0 bg-accent transition-[width] duration-500 ease-out"></div></div>
           <div class="flex min-w-0 flex-col items-start gap-3" data-verify-dot="3">
-            <span class="verify-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500">4</span>
+            <span class="verify-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500"><b class="dn font-normal">4</b><svg class="dc" hidden width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
             <p class="verify-label mono text-white/40 transition-colors duration-500">Confirmed</p>
           </div>
         </div>
         <div class="mt-10"><button class="ib-btn ib-btn--light" type="button"><span class="lbl">Verify Your Work<i class="corner"><svg viewBox="0 0 18 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h6c8 0 13.4 7.2 11.4 15L11 39a11.5 11.5 0 0 1-11 9V0Z"/></svg></i></span><i class="ico"><svg viewBox="0 0 51 48" preserveAspectRatio="none" aria-hidden="true"><path class="shape" d="M6.8 9.2A12 12 0 0 1 18.4 0H39c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H12.4C4.6 48-1.2 40.7.7 33.2L6.8 9.2Z"/><path class="arrow" d="M23 24h13m-5-5 5 5-5 5" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></button></div>
       </div>
       <div data-reveal class="relative">
-        <div id="verify-stage" class="relative flex min-h-[440px] flex-col items-center justify-center overflow-hidden rounded-[24px] bg-[#2F3C3D] p-8 text-center"></div>
+        <div id="verify-stage" class="relative flex min-h-[440px] flex-col items-center justify-center overflow-hidden rounded-[24px] bg-[#2F3C3D] p-8 text-center">
+        <div data-screen="linkStep" hidden class="flex w-full flex-col items-center"><span class="mono mb-5 inline-block rounded-full bg-white/10 px-3 py-1.5 text-[#CEF79E]">STEP 1 · LINK YOUR WORK</span><div class="w-full max-w-[260px] rounded-xl border border-white/15 bg-white/5 p-3.5 text-left"><p class="font-sans text-[10px] uppercase tracking-wide text-white/40">Work link</p><p class="mt-1 truncate font-sans text-[13px] text-white">youtube.com/watch?v=nova-ep12</p></div><div class="mt-2.5 w-full max-w-[260px] rounded-xl border border-white/15 bg-white/5 p-3.5 text-left"><p class="font-sans text-[10px] uppercase tracking-wide text-white/40">Your role</p><p class="mt-1 font-sans text-[13px] text-white">Thumbnail Designer</p></div><div class="mt-4 flex h-10 w-full max-w-[260px] items-center justify-center rounded-full bg-accent font-sans text-[13px] font-medium text-ink">Find the Creator →</div></div>
+        <div data-screen="searchingStep" hidden class="flex w-full flex-col items-center"><span class="mono mb-5 inline-block rounded-full bg-white/10 px-3 py-1.5 text-[#CEF79E]">STEP 2 · AI FINDS THE CREATOR</span><span class="mb-4 flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/15" style="border-top-color: rgb(206 247 158); animation: spin 900ms linear infinite;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/60"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span><p class="font-sans text-[13px] text-white/70">Searching YouTube for a match…</p></div>
+        <div data-screen="creatorFound" hidden class="flex w-full flex-col items-center"><span class="mono mb-5 inline-block rounded-full bg-white/10 px-3 py-1.5 text-[#CEF79E]">STEP 2 · AI FINDS THE CREATOR</span><img src="https://images.unsplash.com/photo-1713039973246-abeb431c6c42?crop=faces&fit=crop&w=96&h=96&q=80" alt="Nova Gaming" class="h-20 w-20 rounded-full object-cover ring-4 ring-white/15" /><p class="mt-3 font-serif text-xl font-medium text-white">Nova Gaming</p><p class="mt-0.5 font-sans text-xs text-white/50">2.4M subscribers · YouTube</p><span class="mt-2.5 rounded-full bg-primary/25 px-3 py-1 font-sans text-[11px] font-medium text-white">Match found ✓</span></div>
+        <div data-screen="reachingOut" hidden class="flex w-full flex-col items-center"><span class="mono mb-5 inline-block rounded-full bg-white/10 px-3 py-1.5 text-[#CEF79E]">STEP 3 · AI REACHES OUT</span><div class="w-full max-w-[260px] rounded-xl border border-white/15 bg-white/5 p-3.5 text-left"><p class="font-sans text-[10px] uppercase tracking-wide text-white/40">To</p><p class="mt-0.5 font-sans text-[13px] text-white">contact@novagaming.biz</p><p class="mt-2.5 font-sans text-[10px] uppercase tracking-wide text-white/40">Message</p><p class="mt-0.5 font-sans text-[12px] leading-relaxed text-white/70">"Hi! Just confirming — did this person design your latest thumbnail? Reply Yes or No."</p></div><p class="mt-3 font-sans text-[12px] text-white/50">Sending…</p></div>
+        <div data-screen="outreachSent" hidden class="flex w-full flex-col items-center"><span class="mono mb-5 inline-block rounded-full bg-white/10 px-3 py-1.5 text-[#CEF79E]">STEP 3 · AI REACHES OUT</span><span class="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><p class="mt-3 font-serif text-base font-medium text-white">Outreach sent</p><p class="mt-1 font-sans text-[12px] text-white/50">Waiting for Nova Gaming to confirm…</p></div>
+        <div data-screen="verified" hidden class="flex w-full flex-col items-center"><span class="mono mb-5 inline-block rounded-full bg-white/10 px-3 py-1.5 text-[#CEF79E]">STEP 4 · CONFIRMED</span><div class="relative"><img src="https://images.unsplash.com/photo-1713039973246-abeb431c6c42?crop=faces&fit=crop&w=96&h=96&q=80" alt="Nova Gaming" class="h-20 w-20 rounded-full object-cover ring-4 ring-primary" /><span class="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-primary text-white ring-4 ring-ink"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></div><p class="mt-3 font-serif text-2xl font-medium text-white">Arclent Verified!</p><span class="mt-2 rounded-full bg-accent/25 px-3 py-1.5 font-sans text-[11px] font-medium tracking-wide text-white">GOLD TIER</span><p class="mt-3 max-w-[240px] font-sans text-[12px] leading-relaxed text-white/50">Nova Gaming confirmed the collaboration. Your profile is now verified and visible to recruiters.</p></div>
+      </div>
       </div>
     </div>
   </section>
@@ -846,7 +951,6 @@
       if (!stage) return;
       var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
       var EASE = "cubic-bezier(0.16,1,0.3,1)";
-      var CREATOR_AVATAR = "https://images.unsplash.com/photo-1713039973246-abeb431c6c42?crop=faces&fit=crop&w=96&h=96&q=80";
       var dots = Array.prototype.slice.call(document.querySelectorAll("[data-verify-dot] .verify-dot"));
       var labels = Array.prototype.slice.call(document.querySelectorAll("[data-verify-dot] .verify-label"));
       var fills = Array.prototype.slice.call(document.querySelectorAll(".verify-fill"));
@@ -855,27 +959,27 @@
         for (var i = 0; i < dots.length; i++) {
           if (i < n) {
             dots[i].className = "verify-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#CEF79E]/25 font-mono text-[12px] text-[#CEF79E] transition-colors duration-500";
-            dots[i].innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+            dots[i].querySelector(".dn").hidden = true; dots[i].querySelector(".dc").hidden = false;
             labels[i].className = "verify-label mono text-white/70 transition-colors duration-500";
           } else if (i === n) {
             dots[i].className = "verify-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent font-mono text-[12px] text-ink transition-colors duration-500";
-            dots[i].textContent = String(i + 1);
+            dots[i].querySelector(".dn").hidden = false; dots[i].querySelector(".dc").hidden = true;
             labels[i].className = "verify-label mono text-white transition-colors duration-500";
           } else {
             dots[i].className = "verify-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500";
-            dots[i].textContent = String(i + 1);
+            dots[i].querySelector(".dn").hidden = false; dots[i].querySelector(".dc").hidden = true;
             labels[i].className = "verify-label mono text-white/40 transition-colors duration-500";
           }
         }
         fills.forEach(function (fill, i) { fill.style.width = i < n ? "100%" : "0%"; });
       }
 
-      function swapStage(html) {
+      function swapStage(name) {
         return new Promise(function (resolve) {
-          var old = stage.firstElementChild;
+          var old = stage.querySelector("[data-screen]:not([hidden])");
+          var el = stage.querySelector('[data-screen="' + name + '"]');
           function place() {
-            stage.insertAdjacentHTML("beforeend", html);
-            var el = stage.lastElementChild;
+            el.hidden = false;
             el.style.opacity = "0";
             el.style.transform = "translateY(8px) scale(0.97)";
             el.style.transition = "opacity 450ms " + EASE + ", transform 450ms " + EASE;
@@ -887,83 +991,15 @@
             });
             setTimeout(resolve, 460);
           }
-          if (old) {
+          if (old && old !== el) {
             old.style.transition = "opacity 250ms ease, transform 250ms ease";
             old.style.opacity = "0";
             old.style.transform = "translateY(-8px) scale(0.97)";
-            setTimeout(function () { old.remove(); place(); }, 250);
+            setTimeout(function () { old.hidden = true; place(); }, 250);
           } else {
             place();
           }
         });
-      }
-
-      function tag(text) {
-        return '<span class="mono mb-5 inline-block rounded-full bg-white/10 px-3 py-1.5 text-[#CEF79E]">' + text + '</span>';
-      }
-
-      function linkStepHtml() {
-        return '<div class="flex w-full flex-col items-center">' + tag("STEP 1 · LINK YOUR WORK") +
-          '<div class="w-full max-w-[260px] rounded-xl border border-white/15 bg-white/5 p-3.5 text-left">' +
-          '<p class="font-sans text-[10px] uppercase tracking-wide text-white/40">Work link</p>' +
-          '<p class="mt-1 truncate font-sans text-[13px] text-white">youtube.com/watch?v=nova-ep12</p>' +
-          '</div>' +
-          '<div class="mt-2.5 w-full max-w-[260px] rounded-xl border border-white/15 bg-white/5 p-3.5 text-left">' +
-          '<p class="font-sans text-[10px] uppercase tracking-wide text-white/40">Your role</p>' +
-          '<p class="mt-1 font-sans text-[13px] text-white">Thumbnail Designer</p>' +
-          '</div>' +
-          '<div class="mt-4 flex h-10 w-full max-w-[260px] items-center justify-center rounded-full bg-accent font-sans text-[13px] font-medium text-ink">Find the Creator →</div>' +
-          '</div>';
-      }
-
-      function searchingStepHtml() {
-        return '<div class="flex w-full flex-col items-center">' + tag("STEP 2 · AI FINDS THE CREATOR") +
-          '<span class="mb-4 flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/15" style="border-top-color: rgb(206 247 158); animation: spin 900ms linear infinite;">' +
-          '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/60"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>' +
-          '<p class="font-sans text-[13px] text-white/70">Searching YouTube for a match…</p>' +
-          '</div>';
-      }
-
-      function creatorFoundHtml() {
-        return '<div class="flex w-full flex-col items-center">' + tag("STEP 2 · AI FINDS THE CREATOR") +
-          '<img src="' + CREATOR_AVATAR + '" alt="Nova Gaming" class="h-20 w-20 rounded-full object-cover ring-4 ring-white/15" />' +
-          '<p class="mt-3 font-serif text-xl font-medium text-white">Nova Gaming</p>' +
-          '<p class="mt-0.5 font-sans text-xs text-white/50">2.4M subscribers · YouTube</p>' +
-          '<span class="mt-2.5 rounded-full bg-primary/25 px-3 py-1 font-sans text-[11px] font-medium text-white">Match found ✓</span>' +
-          '</div>';
-      }
-
-      function reachingOutHtml() {
-        return '<div class="flex w-full flex-col items-center">' + tag("STEP 3 · AI REACHES OUT") +
-          '<div class="w-full max-w-[260px] rounded-xl border border-white/15 bg-white/5 p-3.5 text-left">' +
-          '<p class="font-sans text-[10px] uppercase tracking-wide text-white/40">To</p>' +
-          '<p class="mt-0.5 font-sans text-[13px] text-white">contact@novagaming.biz</p>' +
-          '<p class="mt-2.5 font-sans text-[10px] uppercase tracking-wide text-white/40">Message</p>' +
-          '<p class="mt-0.5 font-sans text-[12px] leading-relaxed text-white/70">"Hi! Just confirming — did this person design your latest thumbnail? Reply Yes or No."</p>' +
-          '</div>' +
-          '<p class="mt-3 font-sans text-[12px] text-white/50">Sending…</p>' +
-          '</div>';
-      }
-
-      function outreachSentHtml() {
-        return '<div class="flex w-full flex-col items-center">' + tag("STEP 3 · AI REACHES OUT") +
-          '<span class="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>' +
-          '<p class="mt-3 font-serif text-base font-medium text-white">Outreach sent</p>' +
-          '<p class="mt-1 font-sans text-[12px] text-white/50">Waiting for Nova Gaming to confirm…</p>' +
-          '</div>';
-      }
-
-      function verifiedHtml() {
-        return '<div class="flex w-full flex-col items-center">' + tag("STEP 4 · CONFIRMED") +
-          '<div class="relative">' +
-          '<img src="' + CREATOR_AVATAR + '" alt="Nova Gaming" class="h-20 w-20 rounded-full object-cover ring-4 ring-primary" />' +
-          '<span class="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-primary text-white ring-4 ring-ink">' +
-          '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>' +
-          '</div>' +
-          '<p class="mt-3 font-serif text-2xl font-medium text-white">Arclent Verified!</p>' +
-          '<span class="mt-2 rounded-full bg-accent/25 px-3 py-1.5 font-sans text-[11px] font-medium tracking-wide text-white">GOLD TIER</span>' +
-          '<p class="mt-3 max-w-[240px] font-sans text-[12px] leading-relaxed text-white/50">Nova Gaming confirmed the collaboration. Your profile is now verified and visible to recruiters.</p>' +
-          '</div>';
       }
 
       var active = false;
@@ -981,30 +1017,30 @@
       async function cycle() {
         while (true) {
           setActiveStep(0);
-          await swapStage(linkStepHtml());
+          await swapStage("linkStep");
           await sleep(1600);
 
           setActiveStep(1);
-          await swapStage(searchingStepHtml());
+          await swapStage("searchingStep");
           await sleep(1300);
-          await swapStage(creatorFoundHtml());
+          await swapStage("creatorFound");
           await sleep(1500);
 
           setActiveStep(2);
-          await swapStage(reachingOutHtml());
+          await swapStage("reachingOut");
           await sleep(1400);
-          await swapStage(outreachSentHtml());
+          await swapStage("outreachSent");
           await sleep(1600);
 
           setActiveStep(3);
-          await swapStage(verifiedHtml());
+          await swapStage("verified");
           await sleep(3600);
         }
       }
 
       if (reduced) {
         setActiveStep(3);
-        swapStage(verifiedHtml());
+        swapStage("verified");
         return;
       }
 
@@ -1080,7 +1116,12 @@
     <svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="jpp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#jpp)"/></svg>
     <div class="relative mx-auto grid max-w-[1200px] grid-cols-1 items-center gap-14 px-4 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:px-8">
       <div data-reveal class="relative">
-        <div id="demo-stage" class="relative flex min-h-[440px] flex-col items-center justify-center overflow-hidden rounded-[24px] bg-[#2F3C3D] p-8 text-center"></div>
+        <div id="demo-stage" class="relative flex min-h-[440px] flex-col items-center justify-center overflow-hidden rounded-[24px] bg-[#2F3C3D] p-8 text-center">
+        <div data-screen="ask" hidden class="flex w-full flex-col items-center"><span class="mono mb-5 inline-block rounded-full bg-white/10 px-3 py-1.5 text-[#CEF79E]">STEP 1 · TELL COPILOT</span><div class="flex w-full max-w-[320px] items-end gap-1.5"><span class="flex h-6 w-6 shrink-0 items-center justify-center self-end rounded-full bg-primary font-sans text-[9px] font-bold text-white shadow-[0_2px_6px_rgba(0,0,0,0.35)]">AI</span><div class="max-w-[78%] rounded-lg bg-white/10 px-3 py-2 text-left font-sans text-[12px] leading-snug text-white">What are you hiring for today?</div></div><div id="demo-reply" hidden class="flex w-full flex-row-reverse items-end gap-1.5"><img src="https://images.unsplash.com/photo-1741455620227-3b1c51e01419?crop=faces&fit=crop&w=64&h=64&q=80" alt="Syed" class="h-6 w-6 shrink-0 self-end rounded-full object-cover shadow-[0_2px_6px_rgba(0,0,0,0.35)] ring-1 ring-white/25" /><div class="max-w-[78%] rounded-lg bg-accent px-3 py-2 text-right font-sans text-[12px] leading-snug text-ink">Video Editor</div></div><div id="demo-input-row" class="mt-4 flex w-full max-w-[320px] items-center gap-2"><div class="flex h-10 flex-1 items-center rounded-full border border-white/15 bg-white/5 px-3"><span id="demo-typed" class="font-sans text-[13px] text-white/85"></span><span id="demo-caret" class="ml-px inline-block h-[14px] w-px bg-white/70 align-middle"></span></div><span id="demo-send" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent text-ink transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></div></div>
+        <div data-screen="drafting" hidden class="flex w-full flex-col items-center"><span class="mono mb-5 inline-block rounded-full bg-white/10 px-3 py-1.5 text-[#CEF79E]">STEP 2 · AI DRAFTS IT</span><span class="mb-4 flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/15" style="border-top-color: rgb(206 247 158); animation: spin 900ms linear infinite;"></span><p class="font-sans text-[13px] text-white/70">Writing a complete job post…</p></div>
+        <div data-screen="draftReady" hidden class="flex w-full flex-col items-center"><span class="mono mb-5 inline-block rounded-full bg-white/10 px-3 py-1.5 text-[#CEF79E]">STEP 2 · AI DRAFTS IT</span><div class="w-full max-w-[320px] text-left"><span class="mb-2 inline-block rounded-full bg-accent/25 px-2 py-0.5 font-sans text-[10px] font-medium tracking-wide text-white">AI GENERATED</span><p class="font-serif text-[15px] font-medium leading-snug text-white">Video Editor for YouTube Channel</p><div class="mt-2 flex flex-wrap gap-1.5"><span class="rounded-full border border-white/20 px-2 py-0.5 font-sans text-[10px] text-white/70">$800–1200/mo</span><span class="rounded-full border border-white/20 px-2 py-0.5 font-sans text-[10px] text-white/70">Remote</span><span class="rounded-full border border-white/20 px-2 py-0.5 font-sans text-[10px] text-white/70">Freelance</span></div><p class="mt-2 font-sans text-[11px] leading-relaxed text-white/50" style="display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">Looking for a skilled editor to cut long-form and Shorts content. Fast turnaround, strong pacing.</p><div class="mt-2.5 flex h-7 items-center justify-center rounded-full bg-white font-sans text-[11px] font-medium text-ink">Publish Job</div></div></div>
+        <div data-screen="published" hidden class="flex w-full flex-col items-center"><span class="mono mb-5 inline-block rounded-full bg-white/10 px-3 py-1.5 text-[#CEF79E]">STEP 3 · PUBLISHED</span><span class="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><p class="mt-3 font-serif text-base font-medium text-white">Job Published!</p><p class="mt-1 max-w-[240px] font-sans text-[12px] leading-relaxed text-white/50">Live and visible to 12k+ verified creators.</p></div>
+      </div>
       </div>
       <div data-reveal-group>
         <p class="mono flex items-center gap-2 text-white/60"><span class="h-1.5 w-1.5 rounded-full bg-accent"></span>AI-powered hiring</p>
@@ -1088,17 +1129,17 @@
         <p class="mt-5 max-w-[520px] text-[18px] leading-snug text-white/70">No forms. Tell our Copilot what you're hiring for, answer two quick questions, and it drafts a complete, high-converting job post — ready to publish instantly.</p>
         <div class="mt-10 flex items-start">
           <div class="flex min-w-0 flex-col items-start gap-3" data-demo-dot="0">
-            <span class="demo-dot-el grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent font-mono text-[12px] text-ink transition-colors duration-500">1</span>
+            <span class="demo-dot-el grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent font-mono text-[12px] text-ink transition-colors duration-500"><b class="dn font-normal">1</b><svg class="dc" hidden width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
             <p class="demo-label mono text-white transition-colors duration-500">Tell Copilot</p>
           </div>
           <div class="demo-line mt-[18px] h-px min-w-3 flex-1 bg-white/15"><div class="demo-fill h-full w-0 bg-accent transition-[width] duration-500 ease-out"></div></div>
           <div class="flex min-w-0 flex-col items-start gap-3" data-demo-dot="1">
-            <span class="demo-dot-el grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500">2</span>
+            <span class="demo-dot-el grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500"><b class="dn font-normal">2</b><svg class="dc" hidden width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
             <p class="demo-label mono text-white/40 transition-colors duration-500">AI drafts it</p>
           </div>
           <div class="demo-line mt-[18px] h-px min-w-3 flex-1 bg-white/15"><div class="demo-fill h-full w-0 bg-accent transition-[width] duration-500 ease-out"></div></div>
           <div class="flex min-w-0 flex-col items-start gap-3" data-demo-dot="2">
-            <span class="demo-dot-el grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500">3</span>
+            <span class="demo-dot-el grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500"><b class="dn font-normal">3</b><svg class="dc" hidden width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
             <p class="demo-label mono text-white/40 transition-colors duration-500">Published</p>
           </div>
         </div>
@@ -1114,7 +1155,6 @@
       if (!stage) return;
       var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
       var EASE = "cubic-bezier(0.16,1,0.3,1)";
-      var YOU_AVATAR = "https://images.unsplash.com/photo-1741455620227-3b1c51e01419?crop=faces&fit=crop&w=64&h=64&q=80";
 
       var dots = Array.prototype.slice.call(document.querySelectorAll("[data-demo-dot] .demo-dot-el"));
       var labels = Array.prototype.slice.call(document.querySelectorAll("[data-demo-dot] .demo-label"));
@@ -1124,27 +1164,27 @@
         for (var i = 0; i < dots.length; i++) {
           if (i < n) {
             dots[i].className = "demo-dot-el grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#CEF79E]/25 font-mono text-[12px] text-[#CEF79E] transition-colors duration-500";
-            dots[i].innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+            dots[i].querySelector(".dn").hidden = true; dots[i].querySelector(".dc").hidden = false;
             labels[i].className = "demo-label mono text-white/70 transition-colors duration-500";
           } else if (i === n) {
             dots[i].className = "demo-dot-el grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent font-mono text-[12px] text-ink transition-colors duration-500";
-            dots[i].textContent = String(i + 1);
+            dots[i].querySelector(".dn").hidden = false; dots[i].querySelector(".dc").hidden = true;
             labels[i].className = "demo-label mono text-white transition-colors duration-500";
           } else {
             dots[i].className = "demo-dot-el grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500";
-            dots[i].textContent = String(i + 1);
+            dots[i].querySelector(".dn").hidden = false; dots[i].querySelector(".dc").hidden = true;
             labels[i].className = "demo-label mono text-white/40 transition-colors duration-500";
           }
         }
         fills.forEach(function (fill, i) { fill.style.width = i < n ? "100%" : "0%"; });
       }
 
-      function swapStage(html) {
+      function swapStage(name) {
         return new Promise(function (resolve) {
-          var old = stage.firstElementChild;
+          var old = stage.querySelector("[data-screen]:not([hidden])");
+          var el = stage.querySelector('[data-screen="' + name + '"]');
           function place() {
-            stage.insertAdjacentHTML("beforeend", html);
-            var el = stage.lastElementChild;
+            el.hidden = false;
             el.style.opacity = "0";
             el.style.transform = "translateY(8px) scale(0.97)";
             el.style.transition = "opacity 450ms " + EASE + ", transform 450ms " + EASE;
@@ -1156,74 +1196,15 @@
             });
             setTimeout(resolve, 460);
           }
-          if (old) {
+          if (old && old !== el) {
             old.style.transition = "opacity 250ms ease, transform 250ms ease";
             old.style.opacity = "0";
             old.style.transform = "translateY(-8px) scale(0.97)";
-            setTimeout(function () { old.remove(); place(); }, 250);
+            setTimeout(function () { old.hidden = true; place(); }, 250);
           } else {
             place();
           }
         });
-      }
-
-      function tag(text) {
-        return '<span class="mono mb-5 inline-block rounded-full bg-white/10 px-3 py-1.5 text-[#CEF79E]">' + text + '</span>';
-      }
-
-      function askHtml() {
-        return '<div class="flex w-full flex-col items-center">' + tag("STEP 1 · TELL COPILOT") +
-          '<div class="flex w-full max-w-[320px] items-end gap-1.5">' +
-          '<span class="flex h-6 w-6 shrink-0 items-center justify-center self-end rounded-full bg-primary font-sans text-[9px] font-bold text-white shadow-[0_2px_6px_rgba(0,0,0,0.35)]">AI</span>' +
-          '<div class="max-w-[78%] rounded-lg bg-white/10 px-3 py-2 text-left font-sans text-[12px] leading-snug text-white">What are you hiring for today?</div>' +
-          '</div>' +
-          '<div id="demo-input-row" class="mt-4 flex w-full max-w-[320px] items-center gap-2">' +
-          '<div class="flex h-10 flex-1 items-center rounded-full border border-white/15 bg-white/5 px-3">' +
-          '<span id="demo-typed" class="font-sans text-[13px] text-white/85"></span><span id="demo-caret" class="ml-px inline-block h-[14px] w-px bg-white/70 align-middle"></span>' +
-          '</div>' +
-          '<span id="demo-send" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent text-ink transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]">' +
-          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>' +
-          '</span>' +
-          '</div>' +
-          '</div>';
-      }
-
-      function replyHtml() {
-        return '<div class="flex w-full flex-row-reverse items-end gap-1.5">' +
-          '<img src="' + YOU_AVATAR + '" alt="Syed" class="h-6 w-6 shrink-0 self-end rounded-full object-cover shadow-[0_2px_6px_rgba(0,0,0,0.35)] ring-1 ring-white/25" />' +
-          '<div class="max-w-[78%] rounded-lg bg-accent px-3 py-2 text-right font-sans text-[12px] leading-snug text-ink">Video Editor</div>' +
-          '</div>';
-      }
-
-      function draftingHtml() {
-        return '<div class="flex w-full flex-col items-center">' + tag("STEP 2 · AI DRAFTS IT") +
-          '<span class="mb-4 flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/15" style="border-top-color: rgb(206 247 158); animation: spin 900ms linear infinite;"></span>' +
-          '<p class="font-sans text-[13px] text-white/70">Writing a complete job post…</p>' +
-          '</div>';
-      }
-
-      function draftReadyHtml() {
-        return '<div class="flex w-full flex-col items-center">' + tag("STEP 2 · AI DRAFTS IT") +
-          '<div class="w-full max-w-[320px] text-left">' +
-          '<span class="mb-2 inline-block rounded-full bg-accent/25 px-2 py-0.5 font-sans text-[10px] font-medium tracking-wide text-white">AI GENERATED</span>' +
-          '<p class="font-serif text-[15px] font-medium leading-snug text-white">Video Editor for YouTube Channel</p>' +
-          '<div class="mt-2 flex flex-wrap gap-1.5">' +
-          '<span class="rounded-full border border-white/20 px-2 py-0.5 font-sans text-[10px] text-white/70">$800–1200/mo</span>' +
-          '<span class="rounded-full border border-white/20 px-2 py-0.5 font-sans text-[10px] text-white/70">Remote</span>' +
-          '<span class="rounded-full border border-white/20 px-2 py-0.5 font-sans text-[10px] text-white/70">Freelance</span>' +
-          '</div>' +
-          '<p class="mt-2 font-sans text-[11px] leading-relaxed text-white/50" style="display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">Looking for a skilled editor to cut long-form and Shorts content. Fast turnaround, strong pacing.</p>' +
-          '<div class="mt-2.5 flex h-7 items-center justify-center rounded-full bg-white font-sans text-[11px] font-medium text-ink">Publish Job</div>' +
-          '</div>' +
-          '</div>';
-      }
-
-      function publishedHtml() {
-        return '<div class="flex w-full flex-col items-center">' + tag("STEP 3 · PUBLISHED") +
-          '<span class="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>' +
-          '<p class="mt-3 font-serif text-base font-medium text-white">Job Published!</p>' +
-          '<p class="mt-1 max-w-[240px] font-sans text-[12px] leading-relaxed text-white/50">Live and visible to 12k+ verified creators.</p>' +
-          '</div>';
       }
 
       var active = false;
@@ -1256,27 +1237,28 @@
       async function cycle() {
         while (true) {
           setActiveStep(0);
-          await swapStage(askHtml());
+          document.getElementById("demo-reply").hidden = true;
+          await swapStage("ask");
           await sleep(500);
           await typeInto("Video Editor");
-          document.getElementById("demo-input-row").insertAdjacentHTML("beforebegin", replyHtml());
+          document.getElementById("demo-reply").hidden = false;
           await sleep(900);
 
           setActiveStep(1);
-          await swapStage(draftingHtml());
+          await swapStage("drafting");
           await sleep(1200);
-          await swapStage(draftReadyHtml());
+          await swapStage("draftReady");
           await sleep(3200);
 
           setActiveStep(2);
-          await swapStage(publishedHtml());
+          await swapStage("published");
           await sleep(2800);
         }
       }
 
       if (reduced) {
         setActiveStep(1);
-        swapStage(draftReadyHtml());
+        swapStage("draftReady");
         return;
       }
 
@@ -1320,29 +1302,35 @@
         <p class="mt-5 max-w-[520px] text-[18px] leading-snug text-white/70">Pick who you want to message, tell the AI what to say, and it drafts a personalized message for every candidate — sent right from your built-in inbox.</p>
         <div class="mt-10 flex items-start">
           <div class="flex min-w-0 flex-col items-start gap-3" data-outreach-dot="0">
-            <span class="outreach-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent font-mono text-[12px] text-ink transition-colors duration-500">1</span>
+            <span class="outreach-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent font-mono text-[12px] text-ink transition-colors duration-500"><b class="dn font-normal">1</b><svg class="dc" hidden width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
             <p class="outreach-label mono text-white transition-colors duration-500">Pick candidates</p>
           </div>
           <div class="outreach-line mt-[18px] h-px min-w-3 flex-1 bg-white/15"><div class="outreach-fill h-full w-0 bg-accent transition-[width] duration-500 ease-out"></div></div>
           <div class="flex min-w-0 flex-col items-start gap-3" data-outreach-dot="1">
-            <span class="outreach-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500">2</span>
+            <span class="outreach-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500"><b class="dn font-normal">2</b><svg class="dc" hidden width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
             <p class="outreach-label mono text-white/40 transition-colors duration-500">Tell the AI</p>
           </div>
           <div class="outreach-line mt-[18px] h-px min-w-3 flex-1 bg-white/15"><div class="outreach-fill h-full w-0 bg-accent transition-[width] duration-500 ease-out"></div></div>
           <div class="flex min-w-0 flex-col items-start gap-3" data-outreach-dot="2">
-            <span class="outreach-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500">3</span>
+            <span class="outreach-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500"><b class="dn font-normal">3</b><svg class="dc" hidden width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
             <p class="outreach-label mono text-white/40 transition-colors duration-500">AI drafts it</p>
           </div>
           <div class="outreach-line mt-[18px] h-px min-w-3 flex-1 bg-white/15"><div class="outreach-fill h-full w-0 bg-accent transition-[width] duration-500 ease-out"></div></div>
           <div class="flex min-w-0 flex-col items-start gap-3" data-outreach-dot="3">
-            <span class="outreach-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500">4</span>
+            <span class="outreach-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500"><b class="dn font-normal">4</b><svg class="dc" hidden width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
             <p class="outreach-label mono text-white/40 transition-colors duration-500">Sent</p>
           </div>
         </div>
         <div class="mt-10"><button class="ib-btn ib-btn--light" type="button"><span class="lbl">Post Your First Job<i class="corner"><svg viewBox="0 0 18 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h6c8 0 13.4 7.2 11.4 15L11 39a11.5 11.5 0 0 1-11 9V0Z"/></svg></i></span><i class="ico"><svg viewBox="0 0 51 48" preserveAspectRatio="none" aria-hidden="true"><path class="shape" d="M6.8 9.2A12 12 0 0 1 18.4 0H39c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H12.4C4.6 48-1.2 40.7.7 33.2L6.8 9.2Z"/><path class="arrow" d="M23 24h13m-5-5 5 5-5 5" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></button></div>
       </div>
       <div data-reveal class="relative">
-        <div id="outreach-stage" class="relative flex min-h-[440px] flex-col items-center justify-center overflow-hidden rounded-[24px] bg-[#2F3C3D] p-8 text-center"></div>
+        <div id="outreach-stage" class="relative flex min-h-[440px] flex-col items-center justify-center overflow-hidden rounded-[24px] bg-[#2F3C3D] p-8 text-center">
+        <div data-screen="pickStep" hidden class="flex w-full flex-col items-center"><span class="mono mb-5 inline-block rounded-full bg-white/10 px-3 py-1.5 text-[#CEF79E]">STEP 1 · PICK CANDIDATES</span><div class="flex w-full max-w-[280px] gap-1.5 rounded-full border border-white/15 bg-white/5 p-1"><span class="flex-1 rounded-full px-2 py-1.5 font-sans text-[10px] text-white/40">All 5</span><span class="flex-1 rounded-full bg-accent px-2 py-1.5 font-sans text-[10px] font-medium text-ink">Shortlisted 2</span><span class="flex-1 rounded-full px-2 py-1.5 font-sans text-[10px] text-white/40">Rejected 3</span></div><div class="mt-4 flex w-full max-w-[280px] flex-col gap-2"><div class="flex items-center gap-2.5 rounded-xl border border-white/15 bg-white/5 p-2.5 text-left"><img src="https://images.unsplash.com/photo-1699899657675-1003c7d28f2d?crop=faces&fit=crop&w=96&h=96&q=80" alt="Priya Nair" class="h-9 w-9 rounded-full object-cover" /><div><p class="font-sans text-[12px] font-medium text-white">Priya Nair</p><p class="font-sans text-[10px] text-white/50">Product Designer</p></div><svg class="ml-auto text-primary" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div><div class="flex items-center gap-2.5 rounded-xl border border-white/15 bg-white/5 p-2.5 text-left opacity-60"><span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10 font-sans text-[11px] font-bold text-white/70">L</span><div><p class="font-sans text-[12px] font-medium text-white">Lucas Bennett</p><p class="font-sans text-[10px] text-white/50">Product Designer</p></div><svg class="ml-auto text-primary" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div></div></div>
+        <div data-screen="instruct" hidden class="flex w-full flex-col items-center"><span class="mono mb-5 inline-block rounded-full bg-white/10 px-3 py-1.5 text-[#CEF79E]">STEP 2 · TELL THE AI</span><div class="w-full max-w-[280px] rounded-xl border border-white/15 bg-white/5 p-3.5 text-left"><p class="font-sans text-[10px] uppercase tracking-wide text-white/40">Instruction to the AI</p><p class="mt-1.5 font-sans text-[13px] leading-relaxed text-white" id="outreach-typed"></p></div></div>
+        <div data-screen="drafting" hidden class="flex w-full flex-col items-center"><span class="mono mb-5 inline-block rounded-full bg-white/10 px-3 py-1.5 text-[#CEF79E]">STEP 3 · AI DRAFTS IT</span><span class="mb-4 flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/15" style="border-top-color: rgb(206 247 158); animation: spin 900ms linear infinite;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/60"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg></span><p class="font-sans text-[13px] text-white/70">Writing a personalized message…</p></div>
+        <div data-screen="draft" hidden class="flex w-full flex-col items-center"><span class="mono mb-5 inline-block rounded-full bg-white/10 px-3 py-1.5 text-[#CEF79E]">STEP 3 · AI DRAFTS IT</span><div class="flex w-full max-w-[280px] items-center gap-2 text-left"><img src="https://images.unsplash.com/photo-1699899657675-1003c7d28f2d?crop=faces&fit=crop&w=96&h=96&q=80" alt="Priya Nair" class="h-7 w-7 rounded-full object-cover" /><p class="font-sans text-[11px] font-medium text-white/70">To Priya Nair</p></div><div class="mt-2 w-full max-w-[280px] rounded-xl border border-white/15 bg-white/5 p-3.5 text-left"><p class="font-sans text-[12px] leading-relaxed text-white/85">Hi Priya, I'm Jordan from Nimbus Robotics. We'd love to invite you to a first-round interview for the Product Designer role — could you share your availability this week?</p></div><div class="mt-3 flex h-9 w-full max-w-[280px] items-center justify-center rounded-full bg-accent font-sans text-[12px] font-medium text-ink">Send to 2 candidates</div></div>
+        <div data-screen="sent" hidden class="flex w-full flex-col items-center"><span class="mono mb-5 inline-block rounded-full bg-white/10 px-3 py-1.5 text-[#CEF79E]">STEP 4 · SENT</span><span class="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><p class="mt-3 font-serif text-2xl font-medium text-white">Message sent!</p><p class="mt-2 max-w-[240px] font-sans text-[12px] leading-relaxed text-white/50">2 candidates messaged. Replies land right in your built-in inbox.</p></div>
+      </div>
       </div>
     </div>
   </section>
@@ -1354,7 +1342,6 @@
       if (!stage) return;
       var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
       var EASE = "cubic-bezier(0.16,1,0.3,1)";
-      var CANDIDATE_AVATAR = "https://images.unsplash.com/photo-1699899657675-1003c7d28f2d?crop=faces&fit=crop&w=96&h=96&q=80";
       var dots = Array.prototype.slice.call(document.querySelectorAll("[data-outreach-dot] .outreach-dot"));
       var labels = Array.prototype.slice.call(document.querySelectorAll("[data-outreach-dot] .outreach-label"));
       var fills = Array.prototype.slice.call(document.querySelectorAll(".outreach-fill"));
@@ -1363,27 +1350,27 @@
         for (var i = 0; i < dots.length; i++) {
           if (i < n) {
             dots[i].className = "outreach-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#CEF79E]/25 font-mono text-[12px] text-[#CEF79E] transition-colors duration-500";
-            dots[i].innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+            dots[i].querySelector(".dn").hidden = true; dots[i].querySelector(".dc").hidden = false;
             labels[i].className = "outreach-label mono text-white/70 transition-colors duration-500";
           } else if (i === n) {
             dots[i].className = "outreach-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent font-mono text-[12px] text-ink transition-colors duration-500";
-            dots[i].textContent = String(i + 1);
+            dots[i].querySelector(".dn").hidden = false; dots[i].querySelector(".dc").hidden = true;
             labels[i].className = "outreach-label mono text-white transition-colors duration-500";
           } else {
             dots[i].className = "outreach-dot grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 font-mono text-[12px] text-white/40 transition-colors duration-500";
-            dots[i].textContent = String(i + 1);
+            dots[i].querySelector(".dn").hidden = false; dots[i].querySelector(".dc").hidden = true;
             labels[i].className = "outreach-label mono text-white/40 transition-colors duration-500";
           }
         }
         fills.forEach(function (fill, i) { fill.style.width = i < n ? "100%" : "0%"; });
       }
 
-      function swapStage(html) {
+      function swapStage(name) {
         return new Promise(function (resolve) {
-          var old = stage.firstElementChild;
+          var old = stage.querySelector("[data-screen]:not([hidden])");
+          var el = stage.querySelector('[data-screen="' + name + '"]');
           function place() {
-            stage.insertAdjacentHTML("beforeend", html);
-            var el = stage.lastElementChild;
+            el.hidden = false;
             el.style.opacity = "0";
             el.style.transform = "translateY(8px) scale(0.97)";
             el.style.transition = "opacity 450ms " + EASE + ", transform 450ms " + EASE;
@@ -1395,79 +1382,15 @@
             });
             setTimeout(resolve, 460);
           }
-          if (old) {
+          if (old && old !== el) {
             old.style.transition = "opacity 250ms ease, transform 250ms ease";
             old.style.opacity = "0";
             old.style.transform = "translateY(-8px) scale(0.97)";
-            setTimeout(function () { old.remove(); place(); }, 250);
+            setTimeout(function () { old.hidden = true; place(); }, 250);
           } else {
             place();
           }
         });
-      }
-
-      function tag(text) {
-        return '<span class="mono mb-5 inline-block rounded-full bg-white/10 px-3 py-1.5 text-[#CEF79E]">' + text + '</span>';
-      }
-
-      function pickStepHtml() {
-        return '<div class="flex w-full flex-col items-center">' + tag("STEP 1 · PICK CANDIDATES") +
-          '<div class="flex w-full max-w-[280px] gap-1.5 rounded-full border border-white/15 bg-white/5 p-1">' +
-          '<span class="flex-1 rounded-full px-2 py-1.5 font-sans text-[10px] text-white/40">All 5</span>' +
-          '<span class="flex-1 rounded-full bg-accent px-2 py-1.5 font-sans text-[10px] font-medium text-ink">Shortlisted 2</span>' +
-          '<span class="flex-1 rounded-full px-2 py-1.5 font-sans text-[10px] text-white/40">Rejected 3</span>' +
-          '</div>' +
-          '<div class="mt-4 flex w-full max-w-[280px] flex-col gap-2">' +
-          '<div class="flex items-center gap-2.5 rounded-xl border border-white/15 bg-white/5 p-2.5 text-left">' +
-          '<img src="' + CANDIDATE_AVATAR + '" alt="Priya Nair" class="h-9 w-9 rounded-full object-cover" />' +
-          '<div><p class="font-sans text-[12px] font-medium text-white">Priya Nair</p><p class="font-sans text-[10px] text-white/50">Product Designer</p></div>' +
-          '<svg class="ml-auto text-primary" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>' +
-          '</div>' +
-          '<div class="flex items-center gap-2.5 rounded-xl border border-white/15 bg-white/5 p-2.5 text-left opacity-60">' +
-          '<span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10 font-sans text-[11px] font-bold text-white/70">L</span>' +
-          '<div><p class="font-sans text-[12px] font-medium text-white">Lucas Bennett</p><p class="font-sans text-[10px] text-white/50">Product Designer</p></div>' +
-          '<svg class="ml-auto text-primary" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>' +
-          '</div>' +
-          '</div>' +
-          '</div>';
-      }
-
-      function instructHtml() {
-        return '<div class="flex w-full flex-col items-center">' + tag("STEP 2 · TELL THE AI") +
-          '<div class="w-full max-w-[280px] rounded-xl border border-white/15 bg-white/5 p-3.5 text-left">' +
-          '<p class="font-sans text-[10px] uppercase tracking-wide text-white/40">Instruction to the AI</p>' +
-          '<p class="mt-1.5 font-sans text-[13px] leading-relaxed text-white" id="outreach-typed"></p>' +
-          '</div>' +
-          '</div>';
-      }
-
-      function draftingHtml() {
-        return '<div class="flex w-full flex-col items-center">' + tag("STEP 3 · AI DRAFTS IT") +
-          '<span class="mb-4 flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/15" style="border-top-color: rgb(206 247 158); animation: spin 900ms linear infinite;">' +
-          '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/60"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg></span>' +
-          '<p class="font-sans text-[13px] text-white/70">Writing a personalized message…</p>' +
-          '</div>';
-      }
-
-      function draftHtml() {
-        return '<div class="flex w-full flex-col items-center">' + tag("STEP 3 · AI DRAFTS IT") +
-          '<div class="flex w-full max-w-[280px] items-center gap-2 text-left">' +
-          '<img src="' + CANDIDATE_AVATAR + '" alt="Priya Nair" class="h-7 w-7 rounded-full object-cover" />' +
-          '<p class="font-sans text-[11px] font-medium text-white/70">To Priya Nair</p>' +
-          '</div>' +
-          '<div class="mt-2 w-full max-w-[280px] rounded-xl border border-white/15 bg-white/5 p-3.5 text-left">' +
-          '<p class="font-sans text-[12px] leading-relaxed text-white/85">Hi Priya, I\'m Jordan from Nimbus Robotics. We\'d love to invite you to a first-round interview for the Product Designer role — could you share your availability this week?</p>' +
-          '</div>' +
-          '<div class="mt-3 flex h-9 w-full max-w-[280px] items-center justify-center rounded-full bg-accent font-sans text-[12px] font-medium text-ink">Send to 2 candidates</div>' +
-          '</div>';
-      }
-
-      function sentHtml() {
-        return '<div class="flex w-full flex-col items-center">' + tag("STEP 4 · SENT") +
-          '<span class="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>' +
-          '<p class="mt-3 font-serif text-2xl font-medium text-white">Message sent!</p>' +
-          '<p class="mt-2 max-w-[240px] font-sans text-[12px] leading-relaxed text-white/50">2 candidates messaged. Replies land right in your built-in inbox.</p>' +
-          '</div>';
       }
 
       function typeInto(el, text) {
@@ -1500,30 +1423,30 @@
       async function cycle() {
         while (true) {
           setActiveStep(0);
-          await swapStage(pickStepHtml());
+          await swapStage("pickStep");
           await sleep(1700);
 
           setActiveStep(1);
-          await swapStage(instructHtml());
+          await swapStage("instruct");
           var typedEl = document.getElementById("outreach-typed");
           if (typedEl) { await typeInto(typedEl, "Invite them to a first-round interview next week."); }
           await sleep(700);
 
           setActiveStep(2);
-          await swapStage(draftingHtml());
+          await swapStage("drafting");
           await sleep(1300);
-          await swapStage(draftHtml());
+          await swapStage("draft");
           await sleep(2400);
 
           setActiveStep(3);
-          await swapStage(sentHtml());
+          await swapStage("sent");
           await sleep(3400);
         }
       }
 
       if (reduced) {
         setActiveStep(3);
-        swapStage(sentHtml());
+        swapStage("sent");
         return;
       }
 
@@ -1554,7 +1477,7 @@
     <div class="relative z-10 mx-auto max-w-[1400px] px-4 pt-16 lg:px-10">
       <div class="grid gap-14 lg:grid-cols-[1fr_1.9fr] lg:gap-10">
         <div>
-          <p id="foot-statement" class="max-w-[760px] text-[clamp(30px,3.6vw,54px)] leading-[1.1] tracking-[-0.02em]">We are building the hiring platform where every portfolio is confirmed by the people who did the work.</p>
+          <p id="foot-statement" class="max-w-[760px] text-[clamp(30px,3.6vw,54px)] leading-[1.1] tracking-[-0.02em]" aria-label="We are building the hiring platform where every portfolio is confirmed by the people who did the work."><span class="fw" aria-hidden="true" style="display:inline-block">We</span> <span class="fw" aria-hidden="true" style="display:inline-block">are</span> <span class="fw" aria-hidden="true" style="display:inline-block">building</span> <span class="fw" aria-hidden="true" style="display:inline-block">the</span> <span class="fw" aria-hidden="true" style="display:inline-block">hiring</span> <span class="fw" aria-hidden="true" style="display:inline-block">platform</span> <span class="fw" aria-hidden="true" style="display:inline-block">where</span> <span class="fw" aria-hidden="true" style="display:inline-block">every</span> <span class="fw" aria-hidden="true" style="display:inline-block">portfolio</span> <span class="fw" aria-hidden="true" style="display:inline-block">is</span> <span class="fw" aria-hidden="true" style="display:inline-block">confirmed</span> <span class="fw" aria-hidden="true" style="display:inline-block">by</span> <span class="fw" aria-hidden="true" style="display:inline-block">the</span> <span class="fw" aria-hidden="true" style="display:inline-block">people</span> <span class="fw" aria-hidden="true" style="display:inline-block">who</span> <span class="fw" aria-hidden="true" style="display:inline-block">did</span> <span class="fw" aria-hidden="true" style="display:inline-block">the</span> <span class="fw" aria-hidden="true" style="display:inline-block">work.</span></p>
           <div class="mt-10"><a class="ib-btn ib-btn--light" href="choose-role.html"><span class="lbl">Get Started<i class="corner"><svg viewBox="0 0 18 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h6c8 0 13.4 7.2 11.4 15L11 39a11.5 11.5 0 0 1-11 9V0Z"/></svg></i></span><i class="ico"><svg viewBox="0 0 51 48" preserveAspectRatio="none" aria-hidden="true"><path class="shape" d="M6.8 9.2A12 12 0 0 1 18.4 0H39c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H12.4C4.6 48-1.2 40.7.7 33.2L6.8 9.2Z"/><path class="arrow" d="M23 24h13m-5-5 5 5-5 5" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></a></div>
         </div>
         <div class="relative grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4 lg:pr-24">
@@ -1595,7 +1518,7 @@
           <button id="to-top" type="button" aria-label="Back to top" class="to-top absolute right-0 top-0 hidden h-[60px] w-[60px] items-center justify-center rounded-[12px] border border-white/40 text-white lg:flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></button>
         </div>
       </div>
-      <div id="foot-mark" class="mt-20 select-none text-[clamp(84px,22vw,340px)] leading-[0.82] tracking-[-0.045em] text-white" aria-label="arclent.">arclent.</div>
+      <div id="foot-mark" class="mt-20 select-none text-[clamp(84px,22vw,340px)] leading-[0.82] tracking-[-0.045em] text-white" aria-label="arclent."><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">a</span><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">r</span><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">c</span><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">l</span><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">e</span><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">n</span><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">t</span><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">.</span></div>
       <p id="foot-copy" class="pb-8 pt-10 font-mono text-[13px] uppercase tracking-[-0.02em] text-white/80">&copy; 2026 arclent. All rights reserved.</p>
     </div>
   </footer>
@@ -1623,23 +1546,14 @@
 
       // 2. statement: words resolve from blur, scrubbed with scroll
       var st = document.getElementById("foot-statement");
-      var text = st.textContent.trim();
-      st.setAttribute("aria-label", text);
-      st.innerHTML = text.split(/\s+/).map(function (w) {
-        return '<span class="fw" aria-hidden="true" style="display:inline-block">' + w + "</span>";
-      }).join(" ");
       gsap.fromTo(st.querySelectorAll(".fw"), { opacity: 0.12, filter: "blur(8px)" },
         { opacity: 1, filter: "blur(0px)", stagger: 0.09, ease: "none",
           scrollTrigger: { trigger: st, start: "top 92%", end: "top 40%", scrub: true } });
 
       // 3. wordmark letters (masked)
       var mark = document.getElementById("foot-mark");
-      var word = mark.textContent.trim();
       mark.style.overflow = "clip";
       mark.style.paddingBottom = "0.12em";
-      mark.innerHTML = word.split("").map(function (c) {
-        return '<span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">' + c + "</span>";
-      }).join("");
       var chars = mark.querySelectorAll(".fm-c");
       var ready = false;
 
@@ -1670,109 +1584,44 @@
   </script>
 
   <script>
-    const ICONS = {
-      link: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>',
-      shieldCheck: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>',
-      briefcase: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>',
-      badgeCheck: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>',
-      edit: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 21h8"/><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/></svg>',
-      target: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
-      handshake: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>',
-      building: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12h4"/><path d="M10 8h4"/><path d="M14 21v-3a2 2 0 0 0-4 0v3"/><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"/><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/></svg>',
-      clipboardList: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>',
-      send: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>',
-      trendingUp: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg>',
-    };
-
-    const journeys = {
-      talent: {
-        pill: "&#9733; TALENT JOURNEY",
-        steps: [
-          { icon: ICONS.link, title: "Add Your Work", body: "Paste the link to something you made — a video, a post, a stream — and tell us what you did on it." },
-          { icon: ICONS.shieldCheck, title: "Get Confirmed", special: "verify" },
-          { icon: ICONS.briefcase, title: "Apply or Sit Back", body: "Apply to jobs yourself, or let your verified profile bring the jobs to you." },
-          { icon: ICONS.badgeCheck, title: "Land the Job", body: "Recruiters see verified work instead of just claims — so you get hired for what you're actually good at." },
-        ],
-      },
-      "recruiter-creator": {
-        pill: "&#9733; CREATOR HIRING JOURNEY",
-        steps: [
-          { icon: ICONS.edit, title: "Post a Role in Seconds", body: "Describe what you need in a few prompts — AI drafts the full job post. No HR jargon required." },
-          { icon: ICONS.target, title: "Get Matched Talent", body: "Verified editors, designers, and creators who fit your channel apply — or get recommended to you directly." },
-          { icon: ICONS.shieldCheck, title: "Review Verified Profiles", body: "Every applicant's portfolio is peer-confirmed, so you're never guessing if the work claimed is real." },
-          { icon: ICONS.handshake, title: "Hire With Confidence", body: "Message and hire directly, all in one place — no spreadsheets, no back-and-forth." },
-        ],
-      },
-      "recruiter-company": {
-        pill: "&#9733; COMPANY HIRING JOURNEY",
-        steps: [
-          { icon: ICONS.building, title: "Set Up Your Company Profile", body: "Paste your company URL — AI autofills your profile through a quick 3-step wizard." },
-          { icon: ICONS.clipboardList, title: "Post Jobs & Review Applicants", body: "Post roles and manage every applicant with shortlist toggles built for fast decisions." },
-          { icon: ICONS.send, title: "Bulk AI Outreach", body: "Message applicants in bulk, filtered by status, with AI-drafted outreach ready to send." },
-          { icon: ICONS.trendingUp, title: "Hire at Scale", body: "Build your team on verified, trustworthy talent — across as many roles as you need." },
-        ],
-      },
-    };
-
     let mode = "talent";
     let sub = "creator";
     let verifyMode = "we";
 
-    const verifyCopy = {
-      we: "We find the email of the person you worked with. You confirm it's the right one, and we send them a one-click link to verify.",
-      you: "Can't find an email? We find their Instagram instead. You confirm it's them, then we hand you a ready-made message with the link — you just hit send.",
-    };
-
     function render() {
       const key = mode === "talent" ? "talent" : `recruiter-${sub}`;
-      const j = journeys[key];
-      document.getElementById("journeyPill").innerHTML = j.pill;
-
-      const cardsEl = document.getElementById("cards");
-      cardsEl.innerHTML = j.steps
-        .map((s, i) => `
-          <article class="step-row group relative flex gap-5 pb-10 last:pb-0 sm:gap-7">
-            <span class="sc-ico relative z-10 grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#2F3C3D] text-[#CEF79E] ring-4 ring-ink transition-colors duration-700 group-hover:bg-[#CEF79E] group-hover:text-ink">${s.icon}</span>
-            <div class="min-w-0 flex-1 pt-1.5">
-              <span class="sc-num mono text-white/40">Step 0${i + 1}</span>
-              <h3 class="mt-2 text-[clamp(22px,2.4vw,34px)] font-normal leading-[1.1] tracking-[-0.03em]">${s.title}</h3>
-              ${s.special === "verify" ? `
-                <div class="seg sm mt-4" id="verifyToggle"><button data-v="we" class="${verifyMode === "we" ? "on" : ""}">We reach out</button><button data-v="you" class="${verifyMode === "you" ? "on" : ""}">You reach out</button></div>
-                <p class="sc-body mt-4 max-w-[560px] text-[16px] leading-snug text-white/70 transition-colors duration-700">${verifyCopy[verifyMode]}</p>` : `
-                <p class="sc-body mt-4 max-w-[560px] text-[16px] leading-snug text-white/70 transition-colors duration-700">${s.body}</p>`}
-            </div>
-          </article>`)
-        .join("");
+      document.querySelectorAll("[data-pill]").forEach((el) => { el.hidden = el.dataset.pill !== key; });
+      document.querySelectorAll("[data-journey]").forEach((el) => { el.hidden = el.dataset.journey !== key; });
+      document.querySelectorAll("[data-verify-copy]").forEach((el) => { el.hidden = el.dataset.verifyCopy !== verifyMode; });
+      document.querySelectorAll("#verifyToggle button").forEach((b) => b.classList.toggle("on", b.dataset.v === verifyMode));
 
       document.getElementById("toggle2").hidden = mode !== "recruiter";
       document.getElementById("shortcut").style.display = mode === "talent" ? "block" : "none";
 
-      const vt = document.getElementById("verifyToggle");
-      if (vt) {
-        vt.addEventListener("click", (e) => {
-          if (e.target.tagName !== "BUTTON") return;
-          verifyMode = e.target.dataset.v;
-          render();
-        });
-      }
-
-      // Stagger the journey cards in on every render (initial load + role/mode switches).
-      const items = [...cardsEl.children];
+      // Stagger the visible journey's cards in on every switch (initial load + role/mode changes).
+      const items = [...document.querySelector(`[data-journey="${key}"]`).children];
       items.forEach((el, idx) => {
+        el.style.transition = "none";
         el.style.opacity = "0";
         el.style.transform = "translateY(14px)";
-        el.style.transition = "opacity .45s cubic-bezier(.2,0,0,1), transform .45s cubic-bezier(.2,0,0,1)";
-        el.style.transitionDelay = idx * 70 + "ms";
       });
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          items.forEach((el) => {
+          items.forEach((el, idx) => {
+            el.style.transition = "opacity .45s cubic-bezier(.2,0,0,1), transform .45s cubic-bezier(.2,0,0,1)";
+            el.style.transitionDelay = idx * 70 + "ms";
             el.style.opacity = "1";
             el.style.transform = "translateY(0)";
           });
         });
       });
     }
+
+    document.getElementById("verifyToggle").addEventListener("click", (e) => {
+      if (e.target.tagName !== "BUTTON") return;
+      verifyMode = e.target.dataset.v;
+      render();
+    });
 
     const seg = (id, key, set) => document.getElementById(id).addEventListener("click", (e) => {
       const b = e.target.closest("button"); if (!b) return;
@@ -2365,9 +2214,7 @@
       // ghost button: circle fill from the pointer
       document.querySelectorAll(".btn-ghost").forEach(function (b) {
         magnet(b, 0.16); press(b, 0.96);
-        var fill = document.createElement("span");
-        fill.className = "gfill"; fill.setAttribute("aria-hidden", "true");
-        b.appendChild(fill);
+        var fill = b.querySelector(".gfill");
         function place(e) {
           var r = b.getBoundingClientRect(), d = Math.hypot(r.width, r.height) * 2;
           gsap.set(fill, { width: d, height: d, x: e.clientX - r.left - d / 2, y: e.clientY - r.top - d / 2 });

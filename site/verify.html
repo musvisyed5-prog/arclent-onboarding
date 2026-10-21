@@ -401,7 +401,44 @@
     <div id="pg-title-mask" class="mt-8"><h1 id="pg-title" class="text-[clamp(40px,7vw,76px)] font-normal leading-[.98] tracking-[-0.05em] text-ink">Confirm this <span class="text-primary/55">collaboration</span></h1></div>
     <p id="pg-sub" class="mt-6 max-w-[560px] text-[clamp(18px,1.6vw,22px)] leading-[1.3] text-ink"><b id="vp-who" class="font-normal">Mosvie Media</b> added you as a collaborator on a piece of work on Arclent, the hiring platform built on verified work. Confirming takes one click and helps them get hired for work they actually did.</p>
 
-    <div id="vp-body" class="mt-12"></div>
+    <div id="vp-body" class="mt-12"><div id="vp-ask">
+        <article class="overflow-hidden rounded-[24px] bg-white">
+          <div class="relative aspect-video overflow-hidden bg-ink"><div id="vp-img" class="h-full w-full bg-cover bg-center opacity-80"></div>
+            <span id="vp-plat" class="mono absolute left-5 top-5 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-white"></span></div>
+          <div class="p-6 sm:p-8">
+            <h2 id="vp-work" class="text-[clamp(24px,2.6vw,32px)] font-normal leading-[1.1] tracking-[-0.03em] text-ink"></h2>
+            <div class="mt-5 flex items-center gap-4 border-t border-[#E7E8E1] pt-5">
+              <span id="vp-init" class="grid h-12 w-12 place-items-center rounded-full bg-ink font-mono text-[16px] text-[#CEF79E]"></span>
+              <div><p id="vp-name" class="text-[18px] text-ink"></p><p id="vp-role" class="mono mt-0.5 text-primary"></p></div>
+            </div>
+          </div>
+        </article>
+        <div class="mt-4 rounded-[20px] bg-ink p-6 text-white sm:p-8">
+          <p class="mono text-[#CEF79E]">Did you work on this together?</p>
+          <p class="mt-3 text-[16px] leading-snug text-white/70">Confirming marks this as verified work on <span data-first></span>’s profile. Denying lets them know so they can fix the submission. Either way, we will never message you again about this.</p>
+
+          <div class="mt-6 border-t border-white/15 pt-6">
+            <p class="mono text-white/60">Leave a review <span class="text-white/35">(optional)</span></p>
+            <div id="vp-stars" class="mt-3 flex gap-1.5"><button type="button" data-star="1" aria-label="1 star" aria-pressed="false" class="transition-transform hover:scale-110"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg></button><button type="button" data-star="2" aria-label="2 stars" aria-pressed="false" class="transition-transform hover:scale-110"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg></button><button type="button" data-star="3" aria-label="3 stars" aria-pressed="false" class="transition-transform hover:scale-110"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg></button><button type="button" data-star="4" aria-label="4 stars" aria-pressed="false" class="transition-transform hover:scale-110"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg></button><button type="button" data-star="5" aria-label="5 stars" aria-pressed="false" class="transition-transform hover:scale-110"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg></button></div>
+            <textarea id="vp-review" rows="4" placeholder="What was it like to work with them? Recruiters see this on their profile." class="field mt-3"></textarea>
+          </div>
+
+          <div class="mt-6 flex flex-wrap gap-3">
+            <button type="button" id="vp-yes" class="mono h-14 flex-1 rounded-[12px] bg-[#CEF79E] px-6 text-ink transition-colors hover:bg-white">Yes, confirm it</button>
+            <button type="button" id="vp-no" class="mono h-14 rounded-[12px] px-6 text-[#FF8A8A] outline outline-1 -outline-offset-1 outline-[#FF8A8A]/50 transition-colors hover:bg-[#FF8A8A] hover:text-ink">Not me / not accurate</button>
+          </div>
+        </div>
+      </div>
+      <div id="vp-done" class="step-in rounded-[24px] bg-white p-8 text-center sm:p-12" hidden>
+        <span id="vp-icon" class="mx-auto grid h-16 w-16 place-items-center rounded-full bg-[#CEF79E] text-ink">
+          <svg data-v="ok" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>
+          <svg data-v="no" hidden width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg>
+        </span>
+        <h2 class="mt-6 text-[clamp(30px,3.6vw,44px)] font-normal leading-none tracking-[-0.04em] text-ink"><span data-v="ok">Confirmed</span><span data-v="no" hidden>Thanks for letting us know</span></h2>
+        <p class="mx-auto mt-4 max-w-[420px] text-[17px] leading-snug text-primary"><span data-v="ok">This work is now marked as verified on <span data-talent></span>’s profile.<span data-has-review hidden> Your review will show there too.</span></span><span data-v="no" hidden>We’ve flagged this submission so <span data-talent></span> can take another look. No further action is needed from you.</span></p>
+        <div id="vp-done-stars" class="mx-auto mt-5 flex w-max gap-1" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9CBBE" stroke-width="1.5"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9CBBE" stroke-width="1.5"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9CBBE" stroke-width="1.5"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9CBBE" stroke-width="1.5"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9CBBE" stroke-width="1.5"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg></div>
+        <p id="vp-done-review" class="mx-auto mt-5 max-w-[420px] rounded-[14px] bg-[#F7F7F5] p-4 text-left text-[15px] leading-snug text-ink" hidden>“<span data-review></span>”</p>
+      </div></div>
 
     <p class="mono mt-14 text-center text-primary">New to Arclent? <a href="landing.html" class="tl text-ink">See what it is</a></p>
   </main>
@@ -475,7 +512,6 @@
 
   <script>
     const $ = (id) => document.getElementById(id);
-    const esc = (t) => String(t ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
     const PLAT_BG = { YouTube: "#FF0000", Discord: "#5865F2", Twitch: "#9146FF", Instagram: "#D62976", Other: "#4D5757" };
     const qp = new URLSearchParams(location.search);
     const req = {
@@ -488,59 +524,31 @@
     $("vp-who").textContent = req.talent;
     document.title = "arclent \u2014 Confirm collaboration";
 
-    function renderAsk() {
-      $("vp-body").innerHTML = `
-        <article class="overflow-hidden rounded-[24px] bg-white">
-          <div class="relative aspect-video overflow-hidden bg-ink"><div class="h-full w-full bg-cover bg-center opacity-80" style="background-image:url('${req.img}')"></div>
-            <span class="mono absolute left-5 top-5 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-white" style="background:${PLAT_BG[req.plat] || PLAT_BG.Other}CC">${esc(req.plat)}</span></div>
-          <div class="p-6 sm:p-8">
-            <h2 class="text-[clamp(24px,2.6vw,32px)] font-normal leading-[1.1] tracking-[-0.03em] text-ink">${esc(req.work)}</h2>
-            <div class="mt-5 flex items-center gap-4 border-t border-[#E7E8E1] pt-5">
-              <span class="grid h-12 w-12 place-items-center rounded-full bg-ink font-mono text-[16px] text-[#CEF79E]">${esc(req.talent.charAt(0))}</span>
-              <div><p class="text-[18px] text-ink">${esc(req.talent)}</p><p class="mono mt-0.5 text-primary">${esc(req.role)}</p></div>
-            </div>
-          </div>
-        </article>
-        <div class="mt-4 rounded-[20px] bg-ink p-6 text-white sm:p-8">
-          <p class="mono text-[#CEF79E]">Did you work on this together?</p>
-          <p class="mt-3 text-[16px] leading-snug text-white/70">Confirming marks this as verified work on ${esc(req.talent.split(" ")[0])}\u2019s profile. Denying lets them know so they can fix the submission. Either way, we will never message you again about this.</p>
+    // the request's details go into the page that is already there
+    $("vp-img").style.backgroundImage = `url('${req.img}')`;
+    $("vp-plat").textContent = req.plat; $("vp-plat").style.background = (PLAT_BG[req.plat] || PLAT_BG.Other) + "CC";
+    $("vp-work").textContent = req.work; $("vp-init").textContent = req.talent.charAt(0); $("vp-name").textContent = req.talent; $("vp-role").textContent = req.role;
+    document.querySelectorAll("[data-first]").forEach((e) => { e.textContent = req.talent.split(" ")[0]; });
+    document.querySelectorAll("[data-talent]").forEach((e) => { e.textContent = req.talent; });
+    $("vp-review").setAttribute("placeholder", `What was it like to work with ${req.talent.split(" ")[0]}? Recruiters see this on their profile.`);
 
-          <div class="mt-6 border-t border-white/15 pt-6">
-            <p class="mono text-white/60">Leave a review <span class="text-white/35">(optional)</span></p>
-            <div id="vp-stars" class="mt-3 flex gap-1.5"></div>
-            <textarea id="vp-review" rows="4" placeholder="What was it like to work with ${esc(req.talent.split(" ")[0])}? Recruiters see this on their profile." class="field mt-3"></textarea>
-          </div>
-
-          <div class="mt-6 flex flex-wrap gap-3">
-            <button type="button" id="vp-yes" class="mono h-14 flex-1 rounded-[12px] bg-[#CEF79E] px-6 text-ink transition-colors hover:bg-white">Yes, confirm it</button>
-            <button type="button" id="vp-no" class="mono h-14 rounded-[12px] px-6 text-[#FF8A8A] outline outline-1 -outline-offset-1 outline-[#FF8A8A]/50 transition-colors hover:bg-[#FF8A8A] hover:text-ink">Not me / not accurate</button>
-          </div>
-        </div>`;
-
-      const STAR = (filled) => `<svg width="26" height="26" viewBox="0 0 24 24" fill="${filled ? "#CEF79E" : "none"}" stroke="${filled ? "#CEF79E" : "rgba(255,255,255,.35)"}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg>`;
-      let rating = 0;
-      const drawStars = () => { $("vp-stars").innerHTML = [1, 2, 3, 4, 5].map((n) => `<button type="button" data-star="${n}" aria-label="${n} star${n > 1 ? "s" : ""}" aria-pressed="${n <= rating}" class="transition-transform hover:scale-110">${STAR(n <= rating)}</button>`).join(""); };
-      drawStars();
-      $("vp-stars").addEventListener("click", (e) => { const b = e.target.closest("[data-star]"); if (!b) return; rating = +b.dataset.star; drawStars(); });
-
-      $("vp-yes").addEventListener("click", () => renderDone(true, rating, $("vp-review").value.trim()));
-      $("vp-no").addEventListener("click", () => renderDone(false, 0, ""));
+    let rating = 0;
+    const paint = (box, rating) => box.querySelectorAll("[data-star]").forEach((b) => {
+      const on = +b.dataset.star <= rating, sv = b.querySelector("svg");
+      b.setAttribute("aria-pressed", on); sv.setAttribute("fill", on ? "#CEF79E" : "none"); sv.setAttribute("stroke", on ? "#CEF79E" : "rgba(255,255,255,.35)");
+    });
+    $("vp-stars").addEventListener("click", (e) => { const b = e.target.closest("[data-star]"); if (!b) return; rating = +b.dataset.star; paint($("vp-stars"), rating); });
+    function showDone(ok, rating, review) {
+      $("vp-ask").hidden = true; $("vp-done").hidden = false;
+      $("vp-icon").className = "mx-auto grid h-16 w-16 place-items-center rounded-full " + (ok ? "bg-[#CEF79E] text-ink" : "bg-[#F3F3F1] text-primary");
+      $("vp-done").querySelectorAll("[data-v]").forEach((e) => { e.hidden = e.dataset.v !== (ok ? "ok" : "no"); });
+      $("vp-done").querySelector("[data-has-review]").hidden = !review;
+      const st = $("vp-done-stars"); st.hidden = !rating;
+      st.querySelectorAll("svg").forEach((sv, i) => { const on = i + 1 <= rating; sv.setAttribute("fill", on ? "#CEF79E" : "none"); sv.setAttribute("stroke", on ? "#CEF79E" : "#C9CBBE"); });
+      $("vp-done-review").hidden = !review; $("vp-done-review").querySelector("[data-review]").textContent = review;
     }
-    function renderDone(ok, rating, review) {
-      const stars = rating ? `<div class="mx-auto mt-5 flex w-max gap-1">${[1, 2, 3, 4, 5].map((n) => `<svg width="18" height="18" viewBox="0 0 24 24" fill="${n <= rating ? "#CEF79E" : "none"}" stroke="${n <= rating ? "#CEF79E" : "#C9CBBE"}" stroke-width="1.5"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg>`).join("")}</div>` : "";
-      $("vp-body").innerHTML = `
-        <div class="step-in rounded-[24px] bg-white p-8 text-center sm:p-12">
-          <span class="mx-auto grid h-16 w-16 place-items-center rounded-full ${ok ? "bg-[#CEF79E] text-ink" : "bg-[#F3F3F1] text-primary"}">
-            ${ok ? '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>'
-                 : '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg>'}
-          </span>
-          <h2 class="mt-6 text-[clamp(30px,3.6vw,44px)] font-normal leading-none tracking-[-0.04em] text-ink">${ok ? "Confirmed" : "Thanks for letting us know"}</h2>
-          <p class="mx-auto mt-4 max-w-[420px] text-[17px] leading-snug text-primary">${ok ? `This work is now marked as verified on ${esc(req.talent)}\u2019s profile.${review ? " Your review will show there too." : ""}` : `We\u2019ve flagged this submission so ${esc(req.talent)} can take another look. No further action is needed from you.`}</p>
-          ${stars}
-          ${review ? `<p class="mx-auto mt-5 max-w-[420px] rounded-[14px] bg-[#F7F7F5] p-4 text-left text-[15px] leading-snug text-ink">\u201c${esc(review)}\u201d</p>` : ""}
-        </div>`;
-    }
-    renderAsk();
+    $("vp-yes").addEventListener("click", () => showDone(true, rating, $("vp-review").value.trim()));
+    $("vp-no").addEventListener("click", () => showDone(false, 0, ""));
   </script>
   <!-- FOOTER -->
   <footer id="site-footer" class="relative m-1.5 mt-3 overflow-hidden rounded-[20px] bg-ink text-white">
@@ -548,7 +556,7 @@
     <div class="relative z-10 mx-auto max-w-[1400px] px-4 pt-16 lg:px-10">
       <div class="grid gap-14 lg:grid-cols-[1fr_1.9fr] lg:gap-10">
         <div>
-          <p id="foot-statement" class="max-w-[760px] text-[clamp(30px,3.6vw,54px)] leading-[1.1] tracking-[-0.02em]">We are building the hiring platform where every portfolio is confirmed by the people who did the work.</p>
+          <p id="foot-statement" class="max-w-[760px] text-[clamp(30px,3.6vw,54px)] leading-[1.1] tracking-[-0.02em]" aria-label="We are building the hiring platform where every portfolio is confirmed by the people who did the work."><span class="fw" aria-hidden="true" style="display:inline-block">We</span> <span class="fw" aria-hidden="true" style="display:inline-block">are</span> <span class="fw" aria-hidden="true" style="display:inline-block">building</span> <span class="fw" aria-hidden="true" style="display:inline-block">the</span> <span class="fw" aria-hidden="true" style="display:inline-block">hiring</span> <span class="fw" aria-hidden="true" style="display:inline-block">platform</span> <span class="fw" aria-hidden="true" style="display:inline-block">where</span> <span class="fw" aria-hidden="true" style="display:inline-block">every</span> <span class="fw" aria-hidden="true" style="display:inline-block">portfolio</span> <span class="fw" aria-hidden="true" style="display:inline-block">is</span> <span class="fw" aria-hidden="true" style="display:inline-block">confirmed</span> <span class="fw" aria-hidden="true" style="display:inline-block">by</span> <span class="fw" aria-hidden="true" style="display:inline-block">the</span> <span class="fw" aria-hidden="true" style="display:inline-block">people</span> <span class="fw" aria-hidden="true" style="display:inline-block">who</span> <span class="fw" aria-hidden="true" style="display:inline-block">did</span> <span class="fw" aria-hidden="true" style="display:inline-block">the</span> <span class="fw" aria-hidden="true" style="display:inline-block">work.</span></p>
           <div class="mt-10"><a class="ib-btn ib-btn--light" href="choose-role.html"><span class="lbl">Get Started<i class="corner"><svg viewBox="0 0 18 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h6c8 0 13.4 7.2 11.4 15L11 39a11.5 11.5 0 0 1-11 9V0Z"/></svg></i></span><i class="ico"><svg viewBox="0 0 51 48" preserveAspectRatio="none" aria-hidden="true"><path class="shape" d="M6.8 9.2A12 12 0 0 1 18.4 0H39c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H12.4C4.6 48-1.2 40.7.7 33.2L6.8 9.2Z"/><path class="arrow" d="M23 24h13m-5-5 5 5-5 5" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></a></div>
         </div>
         <div class="relative grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4 lg:pr-24">
@@ -589,7 +597,7 @@
           <button id="to-top" type="button" aria-label="Back to top" class="to-top absolute right-0 top-0 hidden h-[60px] w-[60px] items-center justify-center rounded-[12px] border border-white/40 text-white lg:flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></button>
         </div>
       </div>
-      <div id="foot-mark" class="mt-20 select-none text-[clamp(84px,22vw,340px)] leading-[0.82] tracking-[-0.045em] text-white" aria-label="arclent.">arclent.</div>
+      <div id="foot-mark" class="mt-20 select-none text-[clamp(84px,22vw,340px)] leading-[0.82] tracking-[-0.045em] text-white" aria-label="arclent."><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">a</span><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">r</span><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">c</span><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">l</span><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">e</span><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">n</span><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">t</span><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">.</span></div>
       <p id="foot-copy" class="pb-8 pt-10 font-mono text-[13px] uppercase tracking-[-0.02em] text-white/80">&copy; 2026 arclent. All rights reserved.</p>
     </div>
   </footer>
@@ -617,23 +625,14 @@
 
       // 2. statement: words resolve from blur, scrubbed with scroll
       var st = document.getElementById("foot-statement");
-      var text = st.textContent.trim();
-      st.setAttribute("aria-label", text);
-      st.innerHTML = text.split(/\s+/).map(function (w) {
-        return '<span class="fw" aria-hidden="true" style="display:inline-block">' + w + "</span>";
-      }).join(" ");
       gsap.fromTo(st.querySelectorAll(".fw"), { opacity: 0.12, filter: "blur(8px)" },
         { opacity: 1, filter: "blur(0px)", stagger: 0.09, ease: "none",
           scrollTrigger: { trigger: st, start: "top 92%", end: "top 40%", scrub: true } });
 
       // 3. wordmark letters (masked)
       var mark = document.getElementById("foot-mark");
-      var word = mark.textContent.trim();
       mark.style.overflow = "clip";
       mark.style.paddingBottom = "0.12em";
-      mark.innerHTML = word.split("").map(function (c) {
-        return '<span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">' + c + "</span>";
-      }).join("");
       var chars = mark.querySelectorAll(".fm-c");
       var ready = false;
 
@@ -728,9 +727,7 @@
       // ghost button: circle fill from the pointer
       document.querySelectorAll(".btn-ghost").forEach(function (b) {
         magnet(b, 0.16); press(b, 0.96);
-        var fill = document.createElement("span");
-        fill.className = "gfill"; fill.setAttribute("aria-hidden", "true");
-        b.appendChild(fill);
+        var fill = b.querySelector(".gfill");
         function place(e) {
           var r = b.getBoundingClientRect(), d = Math.hypot(r.width, r.height) * 2;
           gsap.set(fill, { width: d, height: d, x: e.clientX - r.left - d / 2, y: e.clientY - r.top - d / 2 });

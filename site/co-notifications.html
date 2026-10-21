@@ -346,6 +346,17 @@
   </style>
   <script src="assets/sent-invites.js"></script>
   <script src="assets/applicant-meta.js"></script>
+  <link rel="stylesheet" href="assets/help-fab.css" />
+  <style>
+    /* list rows + readers: state is on the element (data-unread / data-sel); text variants swap with data-status */
+    #list li[data-unread="1"] .ic { background: #222F30; color: #CEF79E; }
+    #list li[data-unread="0"] .ic { background: #F3F3F1; color: #4D5757; }
+    #list li[data-unread="0"] .dot { display: none; }
+    #list li[data-sel="1"] > button { background: #EEF3E6; }
+    #list li[data-sel="0"] > button:hover { background: #F7F7F5; }
+    [data-status="Accepted"] .st-only:not(.st-Accepted), [data-status="Declined"] .st-only:not(.st-Declined) { display: none !important; }
+    [data-unread="1"] .lbl-unread, [data-unread="0"] .lbl-read { display: none; }
+  </style>
 </head>
 <body class="min-h-screen bg-surface font-sans text-ink">
   <div id="sidebar-backdrop" class="fixed inset-0 z-30 hidden bg-black/30"></div>
@@ -471,73 +482,217 @@
 
         <div class="mt-10 grid gap-4 lg:grid-cols-[420px_1fr] lg:items-start">
           <section class="min-w-0 rounded-[24px] bg-white p-3 sm:p-4">
-            <div id="tabs" class="inline-flex overflow-hidden rounded-[12px] bg-[#F3F3F1]" role="tablist"></div>
-            <ul id="list" class="mt-3 flex flex-col gap-1"></ul>
+            <div id="tabs" class="inline-flex overflow-hidden rounded-[12px] bg-[#F3F3F1]" role="tablist"><button type="button" role="tab" data-f="all" aria-selected="true" class="ntab on">All</button><button type="button" role="tab" data-f="unread" aria-selected="false" class="ntab">Unread<span class="rounded-full bg-[#CEF79E] px-2 py-0.5 text-ink hidden" id="unread-n"></span></button></div>
+            <ul id="list" class="mt-3 flex flex-col gap-1">
+            <li data-nid="verify" data-unread="1" data-sel="0" data-verify="1" hidden><button type="button" data-n class="flex w-full items-start gap-3 rounded-[16px] p-3 text-left transition-colors">
+              <span class="ic grid h-11 w-11 shrink-0 place-items-center rounded-full"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
+              <span class="min-w-0 flex-1"><span class="block truncate text-[17px] tracking-[-0.01em] text-ink">Get your verified badge</span><span class="mono mt-1 block truncate text-primary" data-when>Just now</span></span>
+              <i class="dot mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i></button></li>
+            <li data-nid="resp:sent:mosvie-media:hoops-video-editor:Accepted" data-unread="1" data-sel="0" data-resp="sent:mosvie-media:hoops-video-editor" data-want="Accepted"><button type="button" data-n class="flex w-full items-start gap-3 rounded-[16px] p-3 text-left transition-colors">
+              <span class="ic grid h-11 w-11 shrink-0 place-items-center rounded-full"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+              <span class="min-w-0 flex-1"><span class="block truncate text-[17px] tracking-[-0.01em] text-ink">Mosvie Media accepted your invitation</span><span class="mono mt-1 block truncate text-primary" data-when>Just now</span></span>
+              <i class="dot mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i></button></li>
+            <li data-nid="resp:sent:mosvie-media:hoops-video-editor:Declined" data-unread="1" data-sel="0" data-resp="sent:mosvie-media:hoops-video-editor" data-want="Declined"><button type="button" data-n class="flex w-full items-start gap-3 rounded-[16px] p-3 text-left transition-colors">
+              <span class="ic grid h-11 w-11 shrink-0 place-items-center rounded-full"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+              <span class="min-w-0 flex-1"><span class="block truncate text-[17px] tracking-[-0.01em] text-ink">Mosvie Media declined your invitation</span><span class="mono mt-1 block truncate text-primary" data-when>Just now</span></span>
+              <i class="dot mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i></button></li>
+            <li data-nid="resp:sent:mosvie-media:hoops-short-form-editor:Accepted" data-unread="1" data-sel="0" data-resp="sent:mosvie-media:hoops-short-form-editor" data-want="Accepted"><button type="button" data-n class="flex w-full items-start gap-3 rounded-[16px] p-3 text-left transition-colors">
+              <span class="ic grid h-11 w-11 shrink-0 place-items-center rounded-full"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+              <span class="min-w-0 flex-1"><span class="block truncate text-[17px] tracking-[-0.01em] text-ink">Mosvie Media accepted your invitation</span><span class="mono mt-1 block truncate text-primary" data-when>Just now</span></span>
+              <i class="dot mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i></button></li>
+            <li data-nid="resp:sent:mosvie-media:hoops-short-form-editor:Declined" data-unread="1" data-sel="0" data-resp="sent:mosvie-media:hoops-short-form-editor" data-want="Declined"><button type="button" data-n class="flex w-full items-start gap-3 rounded-[16px] p-3 text-left transition-colors">
+              <span class="ic grid h-11 w-11 shrink-0 place-items-center rounded-full"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+              <span class="min-w-0 flex-1"><span class="block truncate text-[17px] tracking-[-0.01em] text-ink">Mosvie Media declined your invitation</span><span class="mono mt-1 block truncate text-primary" data-when>Just now</span></span>
+              <i class="dot mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i></button></li>
+            <li data-nid="resp:s-3:Declined" data-unread="1" data-sel="0" data-resp="s-3" data-want="Declined"><button type="button" data-n class="flex w-full items-start gap-3 rounded-[16px] p-3 text-left transition-colors">
+              <span class="ic grid h-11 w-11 shrink-0 place-items-center rounded-full"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+              <span class="min-w-0 flex-1"><span class="block truncate text-[17px] tracking-[-0.01em] text-ink">Cauan Silva declined your invitation</span><span class="mono mt-1 block truncate text-primary" data-when>5 days ago</span></span>
+              <i class="dot mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i></button></li>
+            <li data-nid="resp:s-2:Accepted" data-unread="1" data-sel="0" data-resp="s-2" data-want="Accepted"><button type="button" data-n class="flex w-full items-start gap-3 rounded-[16px] p-3 text-left transition-colors">
+              <span class="ic grid h-11 w-11 shrink-0 place-items-center rounded-full"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+              <span class="min-w-0 flex-1"><span class="block truncate text-[17px] tracking-[-0.01em] text-ink">Freddy accepted your invitation</span><span class="mono mt-1 block truncate text-primary" data-when>1 week ago</span></span>
+              <i class="dot mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i></button></li>
+            <li data-nid="resp:s-5:Accepted" data-unread="1" data-sel="0" data-resp="s-5" data-want="Accepted"><button type="button" data-n class="flex w-full items-start gap-3 rounded-[16px] p-3 text-left transition-colors">
+              <span class="ic grid h-11 w-11 shrink-0 place-items-center rounded-full"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+              <span class="min-w-0 flex-1"><span class="block truncate text-[17px] tracking-[-0.01em] text-ink">Gabriel accepted your invitation</span><span class="mono mt-1 block truncate text-primary" data-when>2 weeks ago</span></span>
+              <i class="dot mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i></button></li>
+            <li data-nid="base-1" data-unread="1" data-sel="0"><button type="button" data-n class="flex w-full items-start gap-3 rounded-[16px] p-3 text-left transition-colors">
+              <span class="ic grid h-11 w-11 shrink-0 place-items-center rounded-full"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg></span>
+              <span class="min-w-0 flex-1"><span class="block truncate text-[17px] tracking-[-0.01em] text-ink">You are the best person on planet earth</span><span class="mono mt-1 block truncate text-primary" data-when>Today, 10:51 PM</span></span>
+              <i class="dot mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i></button></li>
+            <li data-nid="base-2" data-unread="1" data-sel="0"><button type="button" data-n class="flex w-full items-start gap-3 rounded-[16px] p-3 text-left transition-colors">
+              <span class="ic grid h-11 w-11 shrink-0 place-items-center rounded-full"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+              <span class="min-w-0 flex-1"><span class="block truncate text-[17px] tracking-[-0.01em] text-ink">New applicant for Video Editor</span><span class="mono mt-1 block truncate text-primary" data-when>Today, 9:12 AM</span></span>
+              <i class="dot mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i></button></li>
+            <li data-nid="base-3" data-unread="0" data-sel="0"><button type="button" data-n class="flex w-full items-start gap-3 rounded-[16px] p-3 text-left transition-colors">
+              <span class="ic grid h-11 w-11 shrink-0 place-items-center rounded-full"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+              <span class="min-w-0 flex-1"><span class="block truncate text-[17px] tracking-[-0.01em] text-ink">A job is about to expire</span><span class="mono mt-1 block truncate text-primary" data-when>Yesterday, 4:30 PM</span></span>
+              <i class="dot mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i></button></li>
+            <li data-nid="base-4" data-unread="0" data-sel="0"><button type="button" data-n class="flex w-full items-start gap-3 rounded-[16px] p-3 text-left transition-colors">
+              <span class="ic grid h-11 w-11 shrink-0 place-items-center rounded-full"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/></svg></span>
+              <span class="min-w-0 flex-1"><span class="block truncate text-[17px] tracking-[-0.01em] text-ink">Your company profile is live</span><span class="mono mt-1 block truncate text-primary" data-when>3 days ago</span></span>
+              <i class="dot mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i></button></li>
+              <li id="list-empty" class="mono px-4 py-14 text-center text-primary" hidden><span data-e="unread" hidden>You are all caught up</span><span data-e="all" hidden>No notifications</span></li>
+            </ul>
           </section>
-          <section id="reader" class="min-w-0 lg:sticky lg:top-24"></section>
+          <section id="reader" class="min-w-0 lg:sticky lg:top-24">
+          <article class="fadein relative overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-10" data-reader="verify" data-unread="1" hidden><svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="ntp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#ntp)"/></svg>
+            <div class="relative"><div class="flex items-center justify-between gap-4"><span class="grid h-12 w-12 place-items-center rounded-full bg-[#CEF79E] text-ink"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span><p class="mono text-white/60" data-when>Just now</p></div>
+              <h2 class="mt-8 text-[clamp(30px,3.6vw,56px)] font-normal leading-[1.02] tracking-[-0.04em]">Get your verified badge</h2>
+              <p class="mt-5 max-w-[620px] text-[18px] leading-snug text-white/75">Connect a platform account to earn the verified checkmark on your profile and every job you post. It only takes a minute.</p>
+              <div class="mt-8 flex flex-wrap items-center gap-3"><a href="co-connected-account.html" class="mono inline-flex h-12 items-center gap-3 rounded-[12px] bg-[#CEF79E] px-5 text-ink transition-colors hover:bg-white">Connect a platform <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+                <button type="button" data-un class="mono h-12 rounded-[12px] px-5 text-white outline outline-1 -outline-offset-1 outline-white/30 transition-colors hover:text-[#CEF79E] hover:outline-[#CEF79E]"><span class="lbl-unread">Mark as read</span><span class="lbl-read">Mark as unread</span></button>
+                <button type="button" data-rm class="mono h-12 px-3 text-white/60 transition-colors hover:text-[#FF8A8A]">Dismiss</button></div></div></article>
+          <article class="fadein relative overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-10" data-reader="resp:sent:mosvie-media:hoops-video-editor:Accepted" data-unread="1" hidden><svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="ntp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#ntp)"/></svg>
+            <div class="relative"><div class="flex items-center justify-between gap-4"><span class="grid h-12 w-12 place-items-center rounded-full bg-[#CEF79E] text-ink"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span><p class="mono text-white/60" data-when>Just now</p></div>
+              <h2 class="mt-8 text-[clamp(30px,3.6vw,56px)] font-normal leading-[1.02] tracking-[-0.04em]">Mosvie Media accepted your invitation</h2>
+              <p class="mt-5 max-w-[620px] text-[18px] leading-snug text-white/75">Mosvie Media accepted your invitation to apply for the Video Editor role. Send a message to take the next step.</p>
+              <div class="mt-8 flex flex-wrap items-center gap-3"><a href="co-messages.html" class="mono inline-flex h-12 items-center gap-3 rounded-[12px] bg-[#CEF79E] px-5 text-ink transition-colors hover:bg-white">Message Mosvie <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+                <button type="button" data-un class="mono h-12 rounded-[12px] px-5 text-white outline outline-1 -outline-offset-1 outline-white/30 transition-colors hover:text-[#CEF79E] hover:outline-[#CEF79E]"><span class="lbl-unread">Mark as read</span><span class="lbl-read">Mark as unread</span></button>
+                <button type="button" data-rm class="mono h-12 px-3 text-white/60 transition-colors hover:text-[#FF8A8A]">Dismiss</button></div></div></article>
+          <article class="fadein relative overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-10" data-reader="resp:sent:mosvie-media:hoops-video-editor:Declined" data-unread="1" hidden><svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="ntp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#ntp)"/></svg>
+            <div class="relative"><div class="flex items-center justify-between gap-4"><span class="grid h-12 w-12 place-items-center rounded-full bg-[#CEF79E] text-ink"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span><p class="mono text-white/60" data-when>Just now</p></div>
+              <h2 class="mt-8 text-[clamp(30px,3.6vw,56px)] font-normal leading-[1.02] tracking-[-0.04em]">Mosvie Media declined your invitation</h2>
+              <p class="mt-5 max-w-[620px] text-[18px] leading-snug text-white/75">Mosvie Media declined your invitation to the Video Editor role. You can keep looking for talent.</p>
+              <div class="mt-8 flex flex-wrap items-center gap-3"><a href="talents.html" class="mono inline-flex h-12 items-center gap-3 rounded-[12px] bg-[#CEF79E] px-5 text-ink transition-colors hover:bg-white">Find talent <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+                <button type="button" data-un class="mono h-12 rounded-[12px] px-5 text-white outline outline-1 -outline-offset-1 outline-white/30 transition-colors hover:text-[#CEF79E] hover:outline-[#CEF79E]"><span class="lbl-unread">Mark as read</span><span class="lbl-read">Mark as unread</span></button>
+                <button type="button" data-rm class="mono h-12 px-3 text-white/60 transition-colors hover:text-[#FF8A8A]">Dismiss</button></div></div></article>
+          <article class="fadein relative overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-10" data-reader="resp:sent:mosvie-media:hoops-short-form-editor:Accepted" data-unread="1" hidden><svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="ntp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#ntp)"/></svg>
+            <div class="relative"><div class="flex items-center justify-between gap-4"><span class="grid h-12 w-12 place-items-center rounded-full bg-[#CEF79E] text-ink"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span><p class="mono text-white/60" data-when>Just now</p></div>
+              <h2 class="mt-8 text-[clamp(30px,3.6vw,56px)] font-normal leading-[1.02] tracking-[-0.04em]">Mosvie Media accepted your invitation</h2>
+              <p class="mt-5 max-w-[620px] text-[18px] leading-snug text-white/75">Mosvie Media accepted your invitation to apply for the Short-form Editor role. Send a message to take the next step.</p>
+              <div class="mt-8 flex flex-wrap items-center gap-3"><a href="co-messages.html" class="mono inline-flex h-12 items-center gap-3 rounded-[12px] bg-[#CEF79E] px-5 text-ink transition-colors hover:bg-white">Message Mosvie <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+                <button type="button" data-un class="mono h-12 rounded-[12px] px-5 text-white outline outline-1 -outline-offset-1 outline-white/30 transition-colors hover:text-[#CEF79E] hover:outline-[#CEF79E]"><span class="lbl-unread">Mark as read</span><span class="lbl-read">Mark as unread</span></button>
+                <button type="button" data-rm class="mono h-12 px-3 text-white/60 transition-colors hover:text-[#FF8A8A]">Dismiss</button></div></div></article>
+          <article class="fadein relative overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-10" data-reader="resp:sent:mosvie-media:hoops-short-form-editor:Declined" data-unread="1" hidden><svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="ntp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#ntp)"/></svg>
+            <div class="relative"><div class="flex items-center justify-between gap-4"><span class="grid h-12 w-12 place-items-center rounded-full bg-[#CEF79E] text-ink"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span><p class="mono text-white/60" data-when>Just now</p></div>
+              <h2 class="mt-8 text-[clamp(30px,3.6vw,56px)] font-normal leading-[1.02] tracking-[-0.04em]">Mosvie Media declined your invitation</h2>
+              <p class="mt-5 max-w-[620px] text-[18px] leading-snug text-white/75">Mosvie Media declined your invitation to the Short-form Editor role. You can keep looking for talent.</p>
+              <div class="mt-8 flex flex-wrap items-center gap-3"><a href="talents.html" class="mono inline-flex h-12 items-center gap-3 rounded-[12px] bg-[#CEF79E] px-5 text-ink transition-colors hover:bg-white">Find talent <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+                <button type="button" data-un class="mono h-12 rounded-[12px] px-5 text-white outline outline-1 -outline-offset-1 outline-white/30 transition-colors hover:text-[#CEF79E] hover:outline-[#CEF79E]"><span class="lbl-unread">Mark as read</span><span class="lbl-read">Mark as unread</span></button>
+                <button type="button" data-rm class="mono h-12 px-3 text-white/60 transition-colors hover:text-[#FF8A8A]">Dismiss</button></div></div></article>
+          <article class="fadein relative overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-10" data-reader="resp:s-3:Declined" data-unread="1" hidden><svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="ntp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#ntp)"/></svg>
+            <div class="relative"><div class="flex items-center justify-between gap-4"><span class="grid h-12 w-12 place-items-center rounded-full bg-[#CEF79E] text-ink"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span><p class="mono text-white/60" data-when>5 days ago</p></div>
+              <h2 class="mt-8 text-[clamp(30px,3.6vw,56px)] font-normal leading-[1.02] tracking-[-0.04em]">Cauan Silva declined your invitation</h2>
+              <p class="mt-5 max-w-[620px] text-[18px] leading-snug text-white/75">Cauan Silva declined your invitation to the Short-form Editor role. You can keep looking for talent.</p>
+              <div class="mt-8 flex flex-wrap items-center gap-3"><a href="talents.html" class="mono inline-flex h-12 items-center gap-3 rounded-[12px] bg-[#CEF79E] px-5 text-ink transition-colors hover:bg-white">Find talent <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+                <button type="button" data-un class="mono h-12 rounded-[12px] px-5 text-white outline outline-1 -outline-offset-1 outline-white/30 transition-colors hover:text-[#CEF79E] hover:outline-[#CEF79E]"><span class="lbl-unread">Mark as read</span><span class="lbl-read">Mark as unread</span></button>
+                <button type="button" data-rm class="mono h-12 px-3 text-white/60 transition-colors hover:text-[#FF8A8A]">Dismiss</button></div></div></article>
+          <article class="fadein relative overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-10" data-reader="resp:s-2:Accepted" data-unread="1" hidden><svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="ntp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#ntp)"/></svg>
+            <div class="relative"><div class="flex items-center justify-between gap-4"><span class="grid h-12 w-12 place-items-center rounded-full bg-[#CEF79E] text-ink"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span><p class="mono text-white/60" data-when>1 week ago</p></div>
+              <h2 class="mt-8 text-[clamp(30px,3.6vw,56px)] font-normal leading-[1.02] tracking-[-0.04em]">Freddy accepted your invitation</h2>
+              <p class="mt-5 max-w-[620px] text-[18px] leading-snug text-white/75">Freddy accepted your invitation to apply for the Video Editor role. Send a message to take the next step.</p>
+              <div class="mt-8 flex flex-wrap items-center gap-3"><a href="co-messages.html" class="mono inline-flex h-12 items-center gap-3 rounded-[12px] bg-[#CEF79E] px-5 text-ink transition-colors hover:bg-white">Message Freddy <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+                <button type="button" data-un class="mono h-12 rounded-[12px] px-5 text-white outline outline-1 -outline-offset-1 outline-white/30 transition-colors hover:text-[#CEF79E] hover:outline-[#CEF79E]"><span class="lbl-unread">Mark as read</span><span class="lbl-read">Mark as unread</span></button>
+                <button type="button" data-rm class="mono h-12 px-3 text-white/60 transition-colors hover:text-[#FF8A8A]">Dismiss</button></div></div></article>
+          <article class="fadein relative overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-10" data-reader="resp:s-5:Accepted" data-unread="1" hidden><svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="ntp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#ntp)"/></svg>
+            <div class="relative"><div class="flex items-center justify-between gap-4"><span class="grid h-12 w-12 place-items-center rounded-full bg-[#CEF79E] text-ink"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span><p class="mono text-white/60" data-when>2 weeks ago</p></div>
+              <h2 class="mt-8 text-[clamp(30px,3.6vw,56px)] font-normal leading-[1.02] tracking-[-0.04em]">Gabriel accepted your invitation</h2>
+              <p class="mt-5 max-w-[620px] text-[18px] leading-snug text-white/75">Gabriel accepted your invitation to apply for the Short-form Editor role. Send a message to take the next step.</p>
+              <div class="mt-8 flex flex-wrap items-center gap-3"><a href="co-messages.html" class="mono inline-flex h-12 items-center gap-3 rounded-[12px] bg-[#CEF79E] px-5 text-ink transition-colors hover:bg-white">Message Gabriel <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+                <button type="button" data-un class="mono h-12 rounded-[12px] px-5 text-white outline outline-1 -outline-offset-1 outline-white/30 transition-colors hover:text-[#CEF79E] hover:outline-[#CEF79E]"><span class="lbl-unread">Mark as read</span><span class="lbl-read">Mark as unread</span></button>
+                <button type="button" data-rm class="mono h-12 px-3 text-white/60 transition-colors hover:text-[#FF8A8A]">Dismiss</button></div></div></article>
+          <article class="fadein relative overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-10" data-reader="base-1" data-unread="1" hidden><svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="ntp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#ntp)"/></svg>
+            <div class="relative"><div class="flex items-center justify-between gap-4"><span class="grid h-12 w-12 place-items-center rounded-full bg-[#CEF79E] text-ink"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg></span><p class="mono text-white/60" data-when>Today, 10:51 PM</p></div>
+              <h2 class="mt-8 text-[clamp(30px,3.6vw,56px)] font-normal leading-[1.02] tracking-[-0.04em]">You are the best person on planet earth</h2>
+              <p class="mt-5 max-w-[620px] text-[18px] leading-snug text-white/75">Hi Zeeshan, I want you to say that I have witnessed a burning desire in you to win and you will win surely.</p>
+              <div class="mt-8 flex flex-wrap items-center gap-3"><a href="#" class="mono inline-flex h-12 items-center gap-3 rounded-[12px] bg-[#CEF79E] px-5 text-ink transition-colors hover:bg-white">Earn your Badge <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+                <button type="button" data-un class="mono h-12 rounded-[12px] px-5 text-white outline outline-1 -outline-offset-1 outline-white/30 transition-colors hover:text-[#CEF79E] hover:outline-[#CEF79E]"><span class="lbl-unread">Mark as read</span><span class="lbl-read">Mark as unread</span></button>
+                <button type="button" data-rm class="mono h-12 px-3 text-white/60 transition-colors hover:text-[#FF8A8A]">Dismiss</button></div></div></article>
+          <article class="fadein relative overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-10" data-reader="base-2" data-unread="1" hidden><svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="ntp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#ntp)"/></svg>
+            <div class="relative"><div class="flex items-center justify-between gap-4"><span class="grid h-12 w-12 place-items-center rounded-full bg-[#CEF79E] text-ink"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><p class="mono text-white/60" data-when>Today, 9:12 AM</p></div>
+              <h2 class="mt-8 text-[clamp(30px,3.6vw,56px)] font-normal leading-[1.02] tracking-[-0.04em]">New applicant for Video Editor</h2>
+              <p class="mt-5 max-w-[620px] text-[18px] leading-snug text-white/75">Cristóvao Gonçalves applied to your Video Editor role. Review their portfolio and move them through your pipeline.</p>
+              <div class="mt-8 flex flex-wrap items-center gap-3"><a href="co-applicants.html" class="mono inline-flex h-12 items-center gap-3 rounded-[12px] bg-[#CEF79E] px-5 text-ink transition-colors hover:bg-white">Review applicants <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+                <button type="button" data-un class="mono h-12 rounded-[12px] px-5 text-white outline outline-1 -outline-offset-1 outline-white/30 transition-colors hover:text-[#CEF79E] hover:outline-[#CEF79E]"><span class="lbl-unread">Mark as read</span><span class="lbl-read">Mark as unread</span></button>
+                <button type="button" data-rm class="mono h-12 px-3 text-white/60 transition-colors hover:text-[#FF8A8A]">Dismiss</button></div></div></article>
+          <article class="fadein relative overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-10" data-reader="base-3" data-unread="0" hidden><svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="ntp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#ntp)"/></svg>
+            <div class="relative"><div class="flex items-center justify-between gap-4"><span class="grid h-12 w-12 place-items-center rounded-full bg-[#CEF79E] text-ink"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span><p class="mono text-white/60" data-when>Yesterday, 4:30 PM</p></div>
+              <h2 class="mt-8 text-[clamp(30px,3.6vw,56px)] font-normal leading-[1.02] tracking-[-0.04em]">A job is about to expire</h2>
+              <p class="mt-5 max-w-[620px] text-[18px] leading-snug text-white/75">Your Short-form Editor posting has 29 days left. Extend it from Manage Jobs to keep receiving applications.</p>
+              <div class="mt-8 flex flex-wrap items-center gap-3"><a href="co-manage-jobs.html" class="mono inline-flex h-12 items-center gap-3 rounded-[12px] bg-[#CEF79E] px-5 text-ink transition-colors hover:bg-white">Manage jobs <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+                <button type="button" data-un class="mono h-12 rounded-[12px] px-5 text-white outline outline-1 -outline-offset-1 outline-white/30 transition-colors hover:text-[#CEF79E] hover:outline-[#CEF79E]"><span class="lbl-unread">Mark as read</span><span class="lbl-read">Mark as unread</span></button>
+                <button type="button" data-rm class="mono h-12 px-3 text-white/60 transition-colors hover:text-[#FF8A8A]">Dismiss</button></div></div></article>
+          <article class="fadein relative overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-10" data-reader="base-4" data-unread="0" hidden><svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="ntp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#ntp)"/></svg>
+            <div class="relative"><div class="flex items-center justify-between gap-4"><span class="grid h-12 w-12 place-items-center rounded-full bg-[#CEF79E] text-ink"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/></svg></span><p class="mono text-white/60" data-when>3 days ago</p></div>
+              <h2 class="mt-8 text-[clamp(30px,3.6vw,56px)] font-normal leading-[1.02] tracking-[-0.04em]">Your company profile is live</h2>
+              <p class="mt-5 max-w-[620px] text-[18px] leading-snug text-white/75">Verified talent can now discover your company and jobs. Keep your details up to date in Manage Company.</p>
+              <div class="mt-8 flex flex-wrap items-center gap-3"><a href="co-manage-company.html" class="mono inline-flex h-12 items-center gap-3 rounded-[12px] bg-[#CEF79E] px-5 text-ink transition-colors hover:bg-white">Manage company <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+                <button type="button" data-un class="mono h-12 rounded-[12px] px-5 text-white outline outline-1 -outline-offset-1 outline-white/30 transition-colors hover:text-[#CEF79E] hover:outline-[#CEF79E]"><span class="lbl-unread">Mark as read</span><span class="lbl-read">Mark as unread</span></button>
+                <button type="button" data-rm class="mono h-12 px-3 text-white/60 transition-colors hover:text-[#FF8A8A]">Dismiss</button></div></div></article>
+            <div id="reader-empty" class="rounded-[24px] bg-white px-6 py-20 text-center" hidden><span class="mx-auto grid h-16 w-16 place-items-center rounded-full bg-ink text-[#CEF79E]"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg></span><p class="mono mt-5 text-primary"><span data-e2="has" hidden>Select a notification to read it</span><span data-e2="none" hidden>No notifications</span></p></div>
+          </section>
         </div>
       </div>
     </div>
   </div>
 
-  
-
+  <p id="toast" class="mono fixed bottom-24 right-6 z-40 rounded-[10px] bg-ink px-4 py-3 text-[#CEF79E]" hidden></p>
   <script src="assets/verify-badge.js"></script>
+  <script src="assets/sent-invites.js"></script>
   <script>
-    const $ = (i) => document.getElementById(i), esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-    let ITEMS = [{"id": 1, "k": "star", "t": "You are the best person on planet earth", "b": "Hi Zeeshan, I want you to say that I have witnessed a burning desire in you to win and you will win surely.", "w": "Today, 10:51 PM", "unread": true, "cta": "Earn your Badge", "href": "#"}, {"id": 2, "k": "user", "t": "New applicant for Video Editor", "b": "Cristóvao Gonçalves applied to your Video Editor role. Review their portfolio and move them through your pipeline.", "w": "Today, 9:12 AM", "unread": true, "cta": "Review applicants", "href": "co-applicants.html"}, {"id": 3, "k": "clock", "t": "A job is about to expire", "b": "Your Short-form Editor posting has 29 days left. Extend it from Manage Jobs to keep receiving applications.", "w": "Yesterday, 4:30 PM", "unread": false, "cta": "Manage jobs", "href": "co-manage-jobs.html"}, {"id": 4, "k": "building", "t": "Your company profile is live", "b": "Verified talent can now discover your company and jobs. Keep your details up to date in Manage Company.", "w": "3 days ago", "unread": false, "cta": "Manage company", "href": "co-manage-company.html"}];
-    const IC = {
-      star: '<path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/>',
-      user: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
-      clock: '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
-      shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
-      mail: '<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
-      building: '<rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/>',
+    const $ = (i) => document.getElementById(i);
+    const json = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) || d; } catch (e) { return d; } };
+    const lis = [...document.querySelectorAll("#list li[data-nid]")];
+    const readers = [...document.querySelectorAll("#reader [data-reader]")];
+    const tabs = [...document.querySelectorAll("#tabs [data-f]")];
+    const ROLE = "company";
+    let filter = "all", sel = "", timer;
+    const say = (m) => { const t = $("toast"); t.textContent = m; t.hidden = false; clearTimeout(timer); timer = setTimeout(() => { t.hidden = true; }, 2200); };
+
+    // which rows exist right now: the verify nudge until connected; a response row once that talent answered
+    const state = SentInvites.state(), seen = json("arclent_notif_seen", []);
+    lis.forEach((li) => {
+      if (li.dataset.verify) li.dataset.live = window.RVerify && !RVerify.get(ROLE) ? "1" : "";
+      else if (li.dataset.resp) {
+        const s = state[li.dataset.resp];
+        li.dataset.live = s && s.status === li.dataset.want ? "1" : "";
+        if (li.dataset.live) {
+          if (s.ts) li.querySelectorAll("[data-when]").forEach((e) => { e.textContent = SentInvites.ago(s.ts); });
+          li.dataset.unread = seen.includes("resp:" + li.dataset.resp) ? "0" : "1";
+        }
+      } else li.dataset.live = "1";
+    });
+    const reader = (nid) => readers.find((r) => r.dataset.reader === nid);
+    const unreadOf = (li) => li.dataset.unread === "1";
+    const saveSeen = () => {
+      const s = new Set(json("arclent_notif_seen", []));
+      lis.forEach((li) => { if (li.dataset.resp && li.dataset.live && !unreadOf(li)) s.add("resp:" + li.dataset.resp); });
+      try { localStorage.setItem("arclent_notif_seen", JSON.stringify([...s])); } catch (e) {}
     };
-    const svg = (k, n = 18) => `<svg width="${n}" height="${n}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${IC[k]}</svg>`;
-    const ARROW = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>';
-    const PATTERN = '<svg class="pointer-events-none absolute inset-0 h-full w-full opacity-40" aria-hidden="true"><defs><pattern id="ntp" width="260" height="180" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><rect x="8" y="8" width="240" height="160" rx="60" fill="none" stroke="#4D5757" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#ntp)"/></svg>';
-    if (window.RVerify && !RVerify.get("company")) ITEMS.unshift({ "id": 0, "k": "shield", "t": "Get your verified badge", "b": "Connect a platform account to earn the verified checkmark on your profile and every job you post. It only takes a minute.", "w": "Just now", "unread": true, "cta": "Connect a platform", "href": "co-connected-account.html" });
-    // seen state for derived invitation notifications
-    const SEEN_KEY = "arclent_notif_seen", seenSet = () => { try { return JSON.parse(localStorage.getItem(SEEN_KEY)) || []; } catch (e) { return []; } };
-    const saveSeen = () => { const s = new Set(seenSet()); ITEMS.forEach((i) => { if (i.key && !i.unread) s.add(i.key); }); try { localStorage.setItem(SEEN_KEY, JSON.stringify([...s])); } catch (e) {} };
-    if (window.SentInvites) {
-      const seen = seenSet();
-      SentInvites.list().filter((v) => v.status !== "Pending").reverse().forEach((v, k) => { const ok = v.status === "Accepted", key = "sent:" + v.id;
-        ITEMS.unshift({ id: 200 + k, key, k: "mail", t: v.name + (ok ? " accepted your invitation" : " declined your invitation"), b: ok ? v.name + " accepted your invitation to apply for the " + v.job + " role. Send a message to take the next step." : v.name + " declined your invitation to the " + v.job + " role. You can keep looking for talent.", w: v.when, unread: !seen.includes(key), cta: ok ? "Message " + v.name.split(" ")[0] : "Find talent", href: ok ? "co-messages.html" : "talents.html" }); });
-    }
-    let filter = "all", sel = (ITEMS.find((i) => i.unread) || ITEMS[0] || {}).id;
-    const say = (m) => { const t = document.createElement("p"); t.className = "mono fixed bottom-24 right-6 z-40 rounded-[10px] bg-ink px-4 py-3 text-[#CEF79E]"; t.textContent = m; document.body.appendChild(t); setTimeout(() => t.remove(), 2200); };
-    function render() {
-      saveSeen();
-      const n = ITEMS.filter((i) => i.unread).length;
-      $("tabs").innerHTML = [["all", "All"], ["unread", "Unread"]].map(([k, l]) => `<button type="button" role="tab" data-f="${k}" aria-selected="${filter === k}" class="ntab ${filter === k ? "on" : ""}">${l}${k === "unread" && n ? `<span class="rounded-full bg-[#CEF79E] px-2 py-0.5 text-ink">${n}</span>` : ""}</button>`).join("");
+    const here = () => lis.filter((li) => li.dataset.live && !li.dataset.gone);
+
+    const replay = (els) => els.forEach((el) => { el.style.animation = "none"; void el.offsetWidth; el.style.animation = ""; });
+    function refresh() {
+      const mine = here(), n = mine.filter(unreadOf).length;
+      const cnt = $("unread-n"); cnt.textContent = n; cnt.classList.toggle("hidden", !n);
       $("read-all").disabled = !n; $("read-all").classList.toggle("opacity-40", !n);
-      const list = ITEMS.filter((i) => filter === "all" || i.unread);
-      $("list").innerHTML = list.length ? list.map((i) => `<li><button type="button" data-n="${i.id}" class="flex w-full items-start gap-3 rounded-[16px] p-3 text-left transition-colors ${sel === i.id ? "bg-[#EEF3E6]" : "hover:bg-[#F7F7F5]"}">
-        <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full ${i.unread ? "bg-ink text-[#CEF79E]" : "bg-[#F3F3F1] text-primary"}">${svg(i.k)}</span>
-        <span class="min-w-0 flex-1"><span class="block truncate text-[17px] tracking-[-0.01em] text-ink">${esc(i.t)}</span><span class="mono mt-1 block truncate text-primary">${esc(i.w)}</span></span>
-        ${i.unread ? '<i class="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#7FD34A]" aria-label="Unread"></i>' : ""}</button></li>`).join("") : `<li class="mono px-4 py-14 text-center text-primary">${filter === "unread" ? "You are all caught up" : "No notifications to show"}</li>`;
-      const it = ITEMS.find((i) => i.id === sel);
-      $("reader").innerHTML = it ? `<article class="fadein relative overflow-hidden rounded-[24px] bg-ink p-6 text-white sm:p-10">${PATTERN}
-          <div class="relative"><div class="flex items-center justify-between gap-4"><span class="grid h-12 w-12 place-items-center rounded-full bg-[#CEF79E] text-ink">${svg(it.k, 22)}</span><p class="mono text-white/60">${esc(it.w)}</p></div>
-            <h2 class="mt-8 text-[clamp(30px,3.6vw,56px)] font-normal leading-[1.02] tracking-[-0.04em]">${esc(it.t)}</h2>
-            <p class="mt-5 max-w-[620px] text-[18px] leading-snug text-white/75">${esc(it.b)}</p>
-            <div class="mt-8 flex flex-wrap items-center gap-3"><a href="${it.href}" class="mono inline-flex h-12 items-center gap-3 rounded-[12px] bg-[#CEF79E] px-5 text-ink transition-colors hover:bg-white">${esc(it.cta)} ${ARROW}</a>
-              <button type="button" data-un="${it.id}" class="mono h-12 rounded-[12px] px-5 text-white outline outline-1 -outline-offset-1 outline-white/30 transition-colors hover:text-[#CEF79E] hover:outline-[#CEF79E]">${it.unread ? "Mark as read" : "Mark as unread"}</button>
-              <button type="button" data-rm="${it.id}" class="mono h-12 px-3 text-white/60 transition-colors hover:text-[#FF8A8A]">Dismiss</button></div></div></article>`
-        : `<div class="rounded-[24px] bg-white px-6 py-20 text-center"><span class="mx-auto grid h-16 w-16 place-items-center rounded-full bg-ink text-[#CEF79E]">${svg("star", 24)}</span><p class="mono mt-5 text-primary">${ITEMS.length ? "Select a notification to read it" : "No notifications to show"}</p></div>`;
+      tabs.forEach((t) => { const on = t.dataset.f === filter; t.classList.toggle("on", on); t.setAttribute("aria-selected", on); });
+      const shown = mine.filter((li) => filter === "all" || unreadOf(li));
+      lis.forEach((li) => { li.hidden = !shown.includes(li); li.dataset.sel = li.dataset.nid === sel ? "1" : "0"; });
+      $("list-empty").hidden = shown.length > 0;
+      document.querySelectorAll("[data-e]").forEach((e) => { e.hidden = e.dataset.e !== filter; });
+      readers.forEach((r) => {
+        const li = lis.find((x) => x.dataset.nid === r.dataset.reader);
+        r.dataset.unread = li.dataset.unread; r.hidden = !(r.dataset.reader === sel && mine.includes(li));
+      });
+      replay(readers.filter((r) => !r.hidden));
+      const one = readers.some((r) => !r.hidden);
+      $("reader-empty").hidden = one;
+      document.querySelectorAll("[data-e2]").forEach((e) => { e.hidden = e.dataset.e2 !== (mine.length ? "has" : "none"); });
+      saveSeen();
     }
     document.addEventListener("click", (e) => {
       const f = e.target.closest("[data-f]"), n = e.target.closest("[data-n]"), un = e.target.closest("[data-un]"), rm = e.target.closest("[data-rm]");
-      if (f) { filter = f.dataset.f; render(); }
-      else if (n) { sel = +n.dataset.n; const it = ITEMS.find((i) => i.id === sel); it.unread = false; render(); }
-      else if (un) { const it = ITEMS.find((i) => i.id === +un.dataset.un); it.unread = !it.unread; render(); }
-      else if (rm) { ITEMS = ITEMS.filter((i) => i.id !== +rm.dataset.rm); sel = (ITEMS[0] || {}).id; render(); say("Notification dismissed"); }
-      else if (e.target.closest("#read-all")) { ITEMS.forEach((i) => { i.unread = false; }); render(); say("All notifications marked as read"); }
+      if (f) { filter = f.dataset.f; refresh(); }
+      else if (n) { const li = n.closest("li"); sel = li.dataset.nid; li.dataset.unread = "0"; refresh(); }
+      else if (un) { const li = lis.find((x) => x.dataset.nid === sel); li.dataset.unread = unreadOf(li) ? "0" : "1"; refresh(); }
+      else if (rm) { const li = lis.find((x) => x.dataset.nid === sel); li.dataset.gone = "1"; sel = (here()[0] || { dataset: {} }).dataset.nid || ""; refresh(); say("Notification dismissed"); }
+      else if (e.target.closest("#read-all")) { here().forEach((li) => { li.dataset.unread = "0"; }); refresh(); say("All notifications marked as read"); }
     });
-    if (ITEMS.find((i) => i.id === sel)) ITEMS.find((i) => i.id === sel).unread = false;
-    render(); saveSeen();
+    const firstUnread = here().find(unreadOf) || here()[0];
+    if (firstUnread) { sel = firstUnread.dataset.nid; firstUnread.dataset.unread = "0"; }
+    refresh();
   </script>
 
   <script>
@@ -573,6 +728,15 @@
     applySidebarState();
   </script>
   <script src="motion.js"></script>
+    <!-- help button, feedback popup and founder-call popup (behaviour: assets/help-fab.js) -->
+  <div id="hf-scrim"></div>
+  <div id="hf-root"><div class="hf-row"><span class="hf-label">Feedback</span><button type="button" class="hf-tile" data-hf="feedback" aria-label="Send feedback"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="M15 5l4 4"/><path d="M12 22h10"/></svg></button></div><div class="hf-row"><span class="hf-label">Talk with founder</span><button type="button" class="hf-tile" data-hf="founder" aria-label="Talk with the founder"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="9" cy="13" r="2"/><circle cx="15" cy="13" r="2"/><path d="M11 13h2"/><path d="M8 17h8"/></svg></button></div><div class="hf-close-row"><span class="hf-label">Close</span><button type="button" id="hf-main" aria-label="Help" aria-expanded="false" aria-haspopup="true"><svg class="hf-hand" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0v5"/><path d="M14 10V4a2 2 0 0 0-4 0v6"/><path d="M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg><svg class="hf-x" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button></div></div>
+  <div class="hf-modal" id="hf-feedback" role="dialog" aria-modal="true"><div class="hf-card"><button type="button" class="hf-x2" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button><div class="hf-body"><p class="mono" style="color:#CEF79E">Feedback</p><h2>Tell us what you think</h2><div class="hf-chips"><button type="button" class="hf-chip" aria-pressed="true">Idea</button><button type="button" class="hf-chip" aria-pressed="false">Something is broken</button><button type="button" class="hf-chip" aria-pressed="false">Praise</button></div><textarea placeholder="Write your feedback" aria-label="Your feedback"></textarea><p class="hf-err mono">Please write a few words first.</p><button type="button" class="hf-send">Send feedback</button></div></div></div>
+  <div class="hf-modal" id="hf-founder" role="dialog" aria-modal="true"><div class="hf-card"><button type="button" class="hf-x2" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg></button><div class="hf-body">
+    <div data-hf-view="intro"><p class="mono" style="color:#CEF79E">Talk with the founder</p><h2>Let’s improve your results on Arclent</h2><p style="margin:14px 0 0;color:rgba(255,255,255,.7);font-size:17px;line-height:1.4">If something felt confusing, didn’t go as expected, or seemed missing while using Arclent, book a call with <b style="font-weight:400;color:#fff">Idris</b>, our co-founder, and share your experience so we can help and make things better.</p><div class="hf-founder-row"><div class="hf-founder-who"><span class="hf-founder-av" style="background-image:url('https://images.unsplash.com/photo-1741455620227-3b1c51e01419?crop=faces&fit=crop&w=100&h=100&q=80')"></span><div><p class="hf-founder-name">Idris Navarro</p><p class="mono hf-founder-role">Co-founder</p></div></div><button type="button" class="hf-cta" id="hf-book-cta">Book a Call with Idris</button></div></div>
+    <div data-hf-view="slots" hidden><button type="button" class="hf-back" id="hf-back">&larr; Back</button><p class="mono" style="color:#CEF79E;margin-top:14px">Book a call with Idris</p><h2>Pick a time</h2><p style="margin:14px 0 0;color:rgba(255,255,255,.7);font-size:17px;line-height:1.3">Questions, ideas or a problem you want solved? Pick a time and you will talk for 15 minutes.</p><div class="hf-chips"><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button><button type="button" class="hf-chip hf-slot" aria-pressed="false">&nbsp;</button></div><textarea placeholder="Anything we should know first? (optional)" aria-label="Note" style="min-height:90px"></textarea><p class="hf-err mono">Pick a time first.</p><button type="button" class="hf-send">Request call</button></div>
+  </div></div></div>
+  <p class="hf-toast" id="hf-toast" hidden></p>
   <script src="assets/help-fab.js" defer></script>
 </body>
 </html>

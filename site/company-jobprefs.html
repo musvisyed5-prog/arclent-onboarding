@@ -491,7 +491,7 @@
     <div class="relative z-10 mx-auto max-w-[1400px] px-4 pt-16 lg:px-10">
       <div class="grid gap-14 lg:grid-cols-[1fr_1.9fr] lg:gap-10">
         <div>
-          <p id="foot-statement" class="max-w-[760px] text-[clamp(30px,3.6vw,54px)] leading-[1.1] tracking-[-0.02em]">We are building the hiring platform where every portfolio is confirmed by the people who did the work.</p>
+          <p id="foot-statement" class="max-w-[760px] text-[clamp(30px,3.6vw,54px)] leading-[1.1] tracking-[-0.02em]" aria-label="We are building the hiring platform where every portfolio is confirmed by the people who did the work."><span class="fw" aria-hidden="true" style="display:inline-block">We</span> <span class="fw" aria-hidden="true" style="display:inline-block">are</span> <span class="fw" aria-hidden="true" style="display:inline-block">building</span> <span class="fw" aria-hidden="true" style="display:inline-block">the</span> <span class="fw" aria-hidden="true" style="display:inline-block">hiring</span> <span class="fw" aria-hidden="true" style="display:inline-block">platform</span> <span class="fw" aria-hidden="true" style="display:inline-block">where</span> <span class="fw" aria-hidden="true" style="display:inline-block">every</span> <span class="fw" aria-hidden="true" style="display:inline-block">portfolio</span> <span class="fw" aria-hidden="true" style="display:inline-block">is</span> <span class="fw" aria-hidden="true" style="display:inline-block">confirmed</span> <span class="fw" aria-hidden="true" style="display:inline-block">by</span> <span class="fw" aria-hidden="true" style="display:inline-block">the</span> <span class="fw" aria-hidden="true" style="display:inline-block">people</span> <span class="fw" aria-hidden="true" style="display:inline-block">who</span> <span class="fw" aria-hidden="true" style="display:inline-block">did</span> <span class="fw" aria-hidden="true" style="display:inline-block">the</span> <span class="fw" aria-hidden="true" style="display:inline-block">work.</span></p>
           <div class="mt-10"><a class="ib-btn ib-btn--light" href="choose-role.html"><span class="lbl">Get Started<i class="corner"><svg viewBox="0 0 18 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h6c8 0 13.4 7.2 11.4 15L11 39a11.5 11.5 0 0 1-11 9V0Z"/></svg></i></span><i class="ico"><svg viewBox="0 0 51 48" preserveAspectRatio="none" aria-hidden="true"><path class="shape" d="M6.8 9.2A12 12 0 0 1 18.4 0H39c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H12.4C4.6 48-1.2 40.7.7 33.2L6.8 9.2Z"/><path class="arrow" d="M23 24h13m-5-5 5 5-5 5" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></a></div>
         </div>
         <div class="relative grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4 lg:pr-24">
@@ -532,7 +532,7 @@
           <button id="to-top" type="button" aria-label="Back to top" class="to-top absolute right-0 top-0 hidden h-[60px] w-[60px] items-center justify-center rounded-[12px] border border-white/40 text-white lg:flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></button>
         </div>
       </div>
-      <div id="foot-mark" class="mt-20 select-none text-[clamp(84px,22vw,340px)] leading-[0.82] tracking-[-0.045em] text-white" aria-label="arclent.">arclent.</div>
+      <div id="foot-mark" class="mt-20 select-none text-[clamp(84px,22vw,340px)] leading-[0.82] tracking-[-0.045em] text-white" aria-label="arclent."><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">a</span><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">r</span><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">c</span><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">l</span><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">e</span><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">n</span><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">t</span><span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">.</span></div>
       <p id="foot-copy" class="pb-8 pt-10 font-mono text-[13px] uppercase tracking-[-0.02em] text-white/80">&copy; 2026 arclent. All rights reserved.</p>
     </div>
   </footer>
@@ -560,23 +560,14 @@
 
       // 2. statement: words resolve from blur, scrubbed with scroll
       var st = document.getElementById("foot-statement");
-      var text = st.textContent.trim();
-      st.setAttribute("aria-label", text);
-      st.innerHTML = text.split(/\s+/).map(function (w) {
-        return '<span class="fw" aria-hidden="true" style="display:inline-block">' + w + "</span>";
-      }).join(" ");
       gsap.fromTo(st.querySelectorAll(".fw"), { opacity: 0.12, filter: "blur(8px)" },
         { opacity: 1, filter: "blur(0px)", stagger: 0.09, ease: "none",
           scrollTrigger: { trigger: st, start: "top 92%", end: "top 40%", scrub: true } });
 
       // 3. wordmark letters (masked)
       var mark = document.getElementById("foot-mark");
-      var word = mark.textContent.trim();
       mark.style.overflow = "clip";
       mark.style.paddingBottom = "0.12em";
-      mark.innerHTML = word.split("").map(function (c) {
-        return '<span class="fm-c" aria-hidden="true" style="display:inline-block;will-change:transform">' + c + "</span>";
-      }).join("");
       var chars = mark.querySelectorAll(".fm-c");
       var ready = false;
 

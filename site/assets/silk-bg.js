@@ -83,9 +83,8 @@
   var COLORS = [0.03, 0.12, 0.06, 0.25, 0.41, 0.3, 0.48, 0.58, 0.46, 0.87, 0.87, 0.76]; // sampled from the arc photo
 
   window.SilkBackground = function (el) {
-    var cv = document.createElement("canvas");
-    cv.style.cssText = "position:absolute;inset:0;width:100%;height:100%;display:block";
-    el.appendChild(cv);
+    var cv = el.querySelector("canvas");   // the <canvas> is in the page markup
+    if (!cv) return;
     var gl = cv.getContext("webgl", { antialias: false, alpha: false, preserveDrawingBuffer: true });
     if (!gl) return;
     function sh(type, src) {
