@@ -412,7 +412,7 @@
       var cur = document.getElementById("scroller-cur");
       var bar = document.getElementById("scroller-bar");
       gsap.set(items, { autoAlpha: 0 });
-      gsap.set(".sc-char", { opacity: 0.4 });
+      gsap.set(".sc-char", { opacity: 0.1 });
       var tl = gsap.timeline({
         defaults: { ease: "none" },
         scrollTrigger: {
@@ -2196,7 +2196,7 @@
 
       // two-part buttons: magnet + press + arrow fly
       document.querySelectorAll(".ib-btn").forEach(function (b) {
-        magnet(b, 0.18); press(b, 0.96);
+        press(b, 0.96);
         var arrow = b.querySelector(".arrow");
         if (!arrow) return;
         b.addEventListener("pointerenter", function () {
@@ -2208,12 +2208,12 @@
       });
 
       // nav CTA, back-to-top, menu button: lighter magnet / press
-      document.querySelectorAll(".cta-wipe, .to-top").forEach(function (b) { magnet(b, 0.15); press(b, 0.95); });
+      document.querySelectorAll(".cta-wipe, .to-top").forEach(function (b) { press(b, 0.95); });
       document.querySelectorAll(".menu-btn").forEach(function (b) { press(b, 0.92); });
 
       // ghost button: circle fill from the pointer
       document.querySelectorAll(".btn-ghost").forEach(function (b) {
-        magnet(b, 0.16); press(b, 0.96);
+        press(b, 0.96);
         var fill = b.querySelector(".gfill");
         function place(e) {
           var r = b.getBoundingClientRect(), d = Math.hypot(r.width, r.height) * 2;
