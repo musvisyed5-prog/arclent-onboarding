@@ -539,7 +539,7 @@
         about: "We're looking for a Short-form Editor to turn raw footage into scroll-stopping vertical Shorts for a YouTube channel. You'll be responsible for cutting long-form recordings into tight, high-retention clips with punchy hooks, clean captions, and pacing built for the Shorts feed. This is a remote role, so you'll need to work independently, hit agreed turnaround times, and communicate clearly over async messaging. The strongest candidates have a feel for what makes a viewer stop scrolling in the first three seconds, and can show that instinct in a portfolio of past short-form work.",
         reqs: ["Proven experience editing short-form vertical video (YouTube Shorts, Reels, or TikTok), with a portfolio or sample clips", "Strong instinct for hooks, pacing, and retention in the first few seconds of a clip", "Comfortable working in a professional editing suite of your choice (e.g., Premiere Pro, DaVinci Resolve, or CapCut)", "Ability to source and repurpose clips from longer footage into standalone, self-contained Shorts", "Skilled at adding captions, subtitles, and on-screen text that stay legible on mobile", "Reliable with deadlines and able to handle feedback rounds without close supervision", "Clear, responsive async communication and organized file/project handoff"],
         platform: "YouTube", min: "", max: "", period: "/ month", expMin: "", expMax: "", expires: "", applicants: [], screening: [{ q: "Link to your best short-form edit", type: "Link", required: true }, { q: "When can you start?", type: "Multiple choice", required: false }] },
-      "hoops-video-editor": { title: "Video Editor", co: "Hoops", av: HOOPS, days: 0, posted: "3 days, 4 hours ago", type: "Full time", exp: "Freshers", pay: "600 -700 / month", loc: "remote",
+      "hoops-video-editor": { title: "Video Editor", co: "Hoops", av: HOOPS, days: 0, posted: "3 days, 4 hours ago", type: "Full time", exp: "Freshers", pay: "$600 - $700 USD / month", loc: "remote",
         tags: ["Basketball", "Sports", "Long Form"],
         about: "We are seeking a highly skilled and passionate individual with a deep understanding of basketball culture to join our team. The ideal candidate will possess a unique combination of skills and qualifications, including a genuine passion for basketball, accompanied by a nuanced understanding of its cultural significance and context.",
         reqs: ["Extensive experience in editing long-form YouTube content, with a portfolio that demonstrates expertise in crafting compelling narratives and engaging storylines", "Advanced proficiency in motion graphics and animated infographics, with the ability to design and create dynamic visual elements that enhance the viewing experience", "A keen sense of pacing and story structure for sports content"],
@@ -724,7 +724,7 @@
         <div>${ta("about", "Job description", j.about, 8)}${imp("about", "desc")}</div>
         <div>${ta("reqs", "Job requirements and skills (one per line)", j.reqs.join("\n"), 7)}${imp("reqs", "reqs")}</div>
         ${sec("Pay and experience")}
-        <div class="grid gap-5 sm:grid-cols-3">${f("min", "Minimum salary", j.min, "e.g. 600")}${f("max", "Maximum salary", j.max, "e.g. 900")}${sel("period", "Salary period", PERIODS, j.period)}</div>
+        <div class="grid gap-5 sm:grid-cols-3">${f("min", "Minimum salary in USD", j.min, "$ e.g. 600")}${f("max", "Maximum salary in USD", j.max, "$ e.g. 900")}${sel("period", "Salary period", PERIODS, j.period)}</div>
         <div class="grid gap-5 sm:grid-cols-2">${f("expmin", "Minimum experience (years)", j.expMin, "e.g. 1")}${f("expmax", "Maximum experience (years)", j.expMax, "e.g. 3")}</div>
         ${sec("Visibility")}
         <div>${f("tags", "Tags", j.tags.join(", "), "e.g. Premiere Pro, Shorts")}<p class="mono mt-3 text-white/60">Separate keywords with commas.</p></div>
@@ -747,7 +747,7 @@
       job.title = v("title"); job.loc = v("loc") || job.loc; job.type = v("type"); job.platform = v("platform"); job.about = v("about");
       job.reqs = $("e-reqs").value.split("\n").map((x) => x.trim()).filter(Boolean); job.tags = list(v("tags"));
       job.min = v("min"); job.max = v("max"); job.period = v("period"); job.expMin = v("expmin"); job.expMax = v("expmax"); job.expires = v("expires");
-      if (job.min || job.max) job.pay = [job.min, job.max].filter(Boolean).join(" - ") + " " + job.period;
+      if (job.min || job.max) job.pay = [job.min, job.max].filter(Boolean).map((x) => "$" + x).join(" - ") + " USD " + job.period;
       if (job.expMin || job.expMax) job.exp = [job.expMin, job.expMax].filter(Boolean).join(" - ") + " years";
       if (job.expires) { const d = Math.ceil((new Date(job.expires) - Date.now()) / 864e5); job.days = Math.max(d, 0); }
       closeEdit(); render(); say("Changes saved");
